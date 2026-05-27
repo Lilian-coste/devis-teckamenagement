@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teck Aménagement — Analyse de cohérence du projet</title>
+
+    <!-- Meta Pixel Code (PageView seul : ces visiteurs ne sont pas un lead qualifié) -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1276467600212409');
+      fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Tailwind + Inter : une seule fois pour toute la page -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ====== BASE ====== */
+        .apple-font { font-family: 'Inter', sans-serif !important; }
+        html { scroll-behavior: smooth; }
+        body { background-color: #f8f8f8; }
+
+        /* ====== HERO HEADER (photo Teck + bulle translucide) ====== */
+        .hero-section {
+            width: 100%;
+            background-image: linear-gradient(rgba(0,0,0,0.12), rgba(0,0,0,0.12)), url('images/eguilles-5.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 220px 40px 220px 129px;
+            min-height: 90vh;
+        }
+        .hero-bulle {
+            width: 100%;
+            max-width: 640px;
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45));
+            border-radius: 1.25rem;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .hero-section {
+                background-image: linear-gradient(rgba(0,0,0,0.12), rgba(0,0,0,0.12)), url('images/eguilles-mobile.jpg');
+                padding: 4rem 1rem;
+                min-height: 70vh;
+            }
+            .hero-bulle { width: 100%; padding: 2rem 1.25rem; }
+        }
+
+        /* ====== BADGE "Demande confirmée" (border beam) ====== */
+        .border-beam-container {
+            position: relative;
+            padding: 1px;
+            overflow: hidden;
+            border-radius: 9999px;
+            display: inline-block;
+        }
+        .border-beam-container::before {
+            content: "";
+            position: absolute;
+            inset: -100%;
+            background: conic-gradient(from 0deg, transparent 0%, transparent 70%, #0653A8 85%, transparent 100%);
+            animation: beam-rotate 4s linear infinite;
+        }
+        .border-beam-inner {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            border-radius: 9999px;
+            padding: 4px 16px;
+        }
+
+        /* ====== BOUTON CTA (chevron) ====== */
+        .btn-combo-final {
+            position: relative;
+            padding: 1.2px;
+            overflow: hidden;
+            border-radius: 9999px;
+            display: inline-flex;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .btn-combo-final::before {
+            content: "";
+            position: absolute;
+            inset: -200%;
+            background: conic-gradient(from 0deg, transparent 0%, transparent 60%, #0653A8 80%, #4facfe 90%, transparent 100%);
+            animation: beam-rotate 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .btn-combo-final:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(255, 255, 255, 0.3); }
+        .btn-combo-final:hover::before { opacity: 1; }
+        .btn-inner-final {
+            position: relative;
+            z-index: 1;
+            background: #ffffff;
+            color: #000000;
+            border-radius: 9999px;
+            padding: 10px 26px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @keyframes beam-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* ====== CARTES AVIS (bento) ====== */
+        .avis-1 .bento-card, .avis-2 .bento-card {
+            background: #FFFFFF !important;
+            border: 1px solid #D2D2D7;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            height: 100%;
+            overflow: hidden;
+        }
+        .avis-1 .bento-card { box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+        .avis-2 .bento-card { border-color: #E5E7EB; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .bento-card:hover { transform: translateY(-8px); border-color: #0653A8; }
+        .avis-1 .bento-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        .avis-2 .bento-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+        .img-container { width: 100%; overflow: hidden; position: relative; }
+        .img-container img {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: center;
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .bento-card:hover .img-container img { transform: scale(1.05); }
+        .stars-container { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+
+        /* ====== TITRE "Nos clients" (sparkle) ====== */
+        .sparkle-text {
+            color: #0653A8;
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            text-shadow: 0 0 1px rgba(131, 196, 255, 0.3), 0 0 5px rgba(255, 255, 255, 0.1);
+            animation: sparkle-glow 3s ease-in-out infinite;
+        }
+        .sparkle-text::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -150%; width: 8px; height: 100%;
+            background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0) 70%);
+            opacity: 0.5;
+            animation: spark-travel 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            pointer-events: none;
+        }
+        @keyframes sparkle-glow {
+            0%, 100% { text-shadow: 0 0 1px rgba(131, 196, 255, 0.3), 0 0 5px rgba(255, 255, 255, 0.1); color: #0653A8; }
+            50% { text-shadow: 0 0 3px rgba(131, 196, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.2); color: #004694; }
+        }
+        @keyframes spark-travel {
+            0% { left: -150%; opacity: 0; }
+            10% { opacity: 0.5; }
+            40% { left: 200%; opacity: 0.5; }
+            60% { left: 200%; opacity: 0; }
+            100% { left: -150%; opacity: 0; }
+        }
+
+        /* ====== BANDEAU DEFILANT (réalisations) ====== */
+        @keyframes scrollHorizontalStory {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-3648px); } /* 12 images x (280 + 24 gap) */
+        }
+        .animate-infinite-scroll-story {
+            display: flex;
+            width: max-content;
+            animation: scrollHorizontalStory 45s linear infinite;
+            will-change: transform;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .is-paused { animation-play-state: paused !important; }
+        .story-card {
+            width: 280px; height: 498px;
+            border-radius: 20px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: #eee;
+            border: none;
+        }
+        .story-card img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+            border-radius: 20px;
+            pointer-events: none;
+        }
+        .scroll-container-story { position: relative; width: 100%; overflow: hidden; padding: 20px 0 20px 0; }
+
+        /* ====== BLOC FELICITATIONS (parallax bas de page) ====== */
+        .parallax-section {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 196px 40px 196px 129px;
+            background-image: linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.08)), url('images/eguilles-5.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        @media (max-width: 768px) {
+            .parallax-section {
+                background-image: linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.08)), url('images/eguilles-mobile.jpg');
+                background-attachment: scroll;
+                padding: 5rem 1.25rem;
+            }
+        }
+
+        /* ====== SIMULATEUR (remplace le Calendly) ====== */
+        .range-container { display: flex; align-items: center; height: 28px; }
+        .master-slider {
+            -webkit-appearance: none !important; appearance: none;
+            width: 100%; height: 8px; border-radius: 10px;
+            outline: none; background: #e5e7eb; margin: 0;
+        }
+        .master-slider::-webkit-slider-thumb {
+            -webkit-appearance: none !important; appearance: none;
+            height: 28px; width: 28px; border-radius: 50%;
+            background: #ffffff; border: 0.5px solid rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15); cursor: pointer; z-index: 2;
+        }
+        .m-tva-btn {
+            flex: 1; padding: 12px 0; border-radius: 16px; font-weight: 500;
+            background: white; border: 1px solid #e5e7eb; color: #4b5563;
+            transition: all 0.2s; cursor: pointer;
+        }
+        .m-tva-active {
+            background: #007aff !important; color: white !important;
+            border-color: #007aff !important;
+        }
+
+        /* ====== BOUTON CONTACT (border beam noir) ====== */
+        .border-beam-btn-container {
+            position: relative; padding: 2.5px; overflow: hidden;
+            border-radius: 9999px; display: inline-block;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .border-beam-btn-container::before {
+            content: ""; position: absolute; inset: -200%;
+            background: conic-gradient(from 0deg, transparent 0%, transparent 60%, #007aff 80%, #4facfe 90%, transparent 100%);
+            animation: beam-rotate 3.5s linear infinite;
+        }
+        .btn-black-inner {
+            position: relative; z-index: 1;
+            background: #000000; color: #ffffff;
+            border-radius: 9999px; padding: 16px 40px;
+            display: flex; align-items: center; gap: 12px;
+            font-weight: 600; text-decoration: none;
+        }
+        .hover-scale-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        /* ====== BOUTON CTA HERO (avec texte + chevron) ====== */
+        .btn-cta-text {
+            position: relative; z-index: 1;
+            background: #ffffff; color: #000000;
+            border-radius: 9999px; padding: 12px 28px;
+            display: inline-flex; align-items: center; gap: 10px;
+            font-weight: 600; font-size: 0.95rem;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body class="apple-font">
+
+    <!-- =========================================================
+         1. HEADER — Analyse de cohérence
+         ========================================================= -->
+    <section class="hero-section">
+        <div class="hero-bulle">
+            <div class="border-beam-container mb-6">
+                <div class="border-beam-inner">
+                    <span style="letter-spacing: 0.15em;" class="text-[11px] font-semibold uppercase text-white leading-none">
+                        Analyse de cohérence
+                    </span>
+                </div>
+            </div>
+
+            <h1 class="text-3xl md:text-[40px] font-medium tracking-tight leading-tight mb-6 text-white">
+                Merci de votre demande de pergola !
+            </h1>
+
+            <div class="text-base text-white font-light leading-relaxed mb-8 px-2">
+                <span class="font-semibold text-white block mb-4 underline underline-offset-8 decoration-blue-500">
+                    Message important :
+                </span>
+                <p>Au vu de l'enveloppe budgétaire que vous avez renseignée, cette dernière semble insuffisante pour un projet de pergola haut de gamme.</p>
+            </div>
+
+            <div class="flex flex-col items-center gap-4">
+                <a href="#simulateur" class="btn-combo-final">
+                    <div class="btn-cta-text">
+                        Vérifiez le avec notre simulateur
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m6 9 6 6 6-6"/>
+                        </svg>
+                    </div>
+                </a>
+                <p class="text-white/70 text-sm font-medium flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Prend 10 secondes
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         2. SIMULATEUR (à la place du Calendly)
+         ========================================================= -->
+    <div id="simulateur" class="apple-font pt-20 md:pt-24 pb-8 px-4 flex justify-center bg-white text-gray-900">
+        <div class="w-full max-w-[1000px]" style="background: rgba(255, 255, 255, 0.8); border-radius: 28px; box-shadow: 0 12px 35px rgba(0,0,0,0.05), 0 0 0 25px #FDFDFD; border: 1px solid rgba(0,0,0,0.05); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); overflow: hidden;">
+            <div class="flex flex-col md:flex-row">
+
+                <div class="w-full md:w-[55%] p-7 md:p-10 border-b md:border-b-0 md:border-r border-gray-100">
+                    <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-gray-400 mb-9 text-center md:text-left">Configuration</h2>
+
+                    <div class="mb-10">
+                        <div class="flex justify-between items-end mb-5">
+                            <label class="text-lg md:text-xl font-medium">Pergola</label>
+                            <div class="text-right">
+                                <span id="vPM" class="text-3xl md:text-4xl font-light">0.0</span>
+                                <span class="text-gray-400 ml-1 text-xs">m²</span>
+                            </div>
+                        </div>
+                        <div class="range-container">
+                            <input type="range" id="rPM" min="0" max="130" step="0.1" value="0" class="master-slider">
+                        </div>
+                        <div class="flex justify-between mt-4 text-[9px] font-bold text-gray-400 uppercase tracking-widest">
+                            <span>0 m²</span>
+                            <span>130 m²</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-10">
+                        <div class="flex justify-between items-end mb-5">
+                            <label class="text-lg md:text-xl font-medium">Claustra bois</label>
+                            <div class="text-right">
+                                <span id="vCM" class="text-3xl md:text-4xl font-light">0.0</span>
+                                <span class="text-gray-400 ml-1 text-xs">m²</span>
+                            </div>
+                        </div>
+                        <div class="range-container">
+                            <input type="range" id="rCM" min="0" max="50" step="0.1" value="0" class="master-slider">
+                        </div>
+                        <div class="flex justify-between mt-4 text-[9px] font-bold text-gray-400 uppercase tracking-widest">
+                            <span>0 m²</span>
+                            <span>50 m²</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-base font-bold block mb-5 text-center">TVA appliquée</label>
+                        <div class="flex gap-3">
+                            <button id="b10" class="m-tva-btn m-tva-active">10%</button>
+                            <button id="b20" class="m-tva-btn">20%</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-[45%] p-8 md:p-10 pt-10 bg-gray-50/50 flex flex-col justify-center items-center text-center">
+                    <h3 class="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-7">Estimation investissement</h3>
+                    <div class="text-5xl md:text-7xl font-light tracking-tighter text-gray-900">
+                        <span id="tDisp">0</span><span class="text-2xl md:text-3xl ml-1 text-gray-400">€</span>
+                    </div>
+                    <p class="text-sm text-gray-400 font-light italic mt-4">TTC, incluant structure et pose</p>
+                    <div class="mt-12 pt-10 border-t border-gray-200 w-full">
+                        <p class="text-[12px] leading-[2] text-gray-400 text-center uppercase tracking-wider">
+                            Qualité Premium<br>
+                            Bois exotique sans entretien<br>
+                            Conception française sur-mesure
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         2bis. CONTACT (mailto si budget en adéquation)
+         ========================================================= -->
+    <div class="apple-font w-full py-16 px-6 bg-white text-center">
+        <div class="max-w-3xl mx-auto">
+            <div class="mb-10">
+                <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-black mb-6">
+                    Si votre budget est en adéquation avec votre projet :
+                </h2>
+                <p class="text-gray-600 font-light leading-relaxed text-base md:text-lg max-w-2xl mx-auto">
+                    Transmettez photos, dimensions ou plans de votre projet à l'adresse ci-dessous pour que nous réalisions un chiffrage plus précis.
+                </p>
+            </div>
+
+            <div class="flex flex-col items-center gap-6">
+                <div class="border-beam-btn-container hover-scale-btn">
+                    <a href="mailto:teckamenagement@gmail.com?subject=Demande%20de%20chiffrage%20-%20Projet%20Pergola&body=Bonjour%20l'%C3%A9quipe%20Teck%20Am%C3%A9nagement%2C%0D%0A%0D%0AJe%20souhaite%20vous%20transmettre%20les%20photos%20et%20dimensions%20de%20mon%20projet%20pour%20une%20pergola.%0D%0A%0D%0A%5BPr%C3%A9nom%20%26%20Nom%5D%0D%0A%5BNum%C3%A9ro%20de%20t%C3%A9l%C3%A9phone%5D"
+                       class="btn-black-inner text-base md:text-lg">
+                        Contactez-nous
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0-9.74 6.75L2.25 6.75"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         3. AVIS CLIENTS (section 1)
+         ========================================================= -->
+    <div class="avis-1 apple-font bg-[#F5F5F7] pt-16 md:pt-24 pb-24 px-6 md:px-4">
+        <div class="max-w-6xl mx-auto">
+
+            <div class="mb-10 text-center -mt-2">
+                <span class="font-light tracking-[0.05em] uppercase text-2xl block mb-0 sparkle-text">Nos clients</span>
+                <h2 class="text-[#1D1D1F] text-3xl md:text-5xl font-normal tracking-tight leading-tight">Parlent de nous</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <div class="lg:col-span-2 bento-card rounded-[2.5rem]">
+                    <div class="img-container h-64 md:h-[450px]">
+                        <img src="https://i.postimg.cc/8kY2YbgJ/TECK-AMENAGEMENT-FFF.jpg" alt="Réalisation">
+                    </div>
+                    <div class="p-8 md:p-12">
+                        <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                        <h3 class="text-[#1D1D1F] text-2xl font-medium mb-4">"Les photos parlent d'elles-mêmes !"</h3>
+                        <p class="text-[#424245] font-light leading-relaxed mb-8 italic max-w-2xl mx-auto">
+                            "Nous avons été vite convaincus par les solutions créatives et techniques pour réaliser le projet. Je recommande fortement cette société. Le matériel est de qualité. Sans hésiter, contactez-les, vous ne serez pas déçus !"
+                        </p>
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-[#F5F5F7] border border-[#D2D2D7] flex items-center justify-center text-[#0653A8] text-[10px] font-bold">AS</div>
+                            <div class="text-left">
+                                <p class="text-[#1D1D1F] font-medium text-sm">Anne Marie Spenser</p>
+                                <p class="text-[#86868B] text-xs">Éguilles</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-8">
+                    <div class="bento-card rounded-[2.5rem] p-8 md:p-10 flex-1 justify-center">
+                        <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                        <p class="text-[#1D1D1F] text-lg font-light italic leading-snug mb-8">
+                            "Nous déjeunons sous la pergola même sous le soleil marseillais, avec 4 à 5 degrés de moins que la solution que nous avions auparavant."
+                        </p>
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#D2D2D7] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">BL</div>
+                            <div class="text-left">
+                                <p class="text-[#1D1D1F] font-medium text-sm">Bliss</p>
+                                <p class="text-[#86868B] text-[10px]">Marseille</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bento-card rounded-[2.5rem] p-8 md:p-10 flex-1 justify-center">
+                        <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                        <p class="text-[#424245] text-sm font-light italic leading-snug mb-8">
+                            "Très grande satisfaction ! La luminosité reste la même à l'intérieur de la maison tout en protégeant ma terrasse du soleil."
+                        </p>
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#D2D2D7] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">M</div>
+                            <div class="text-left">
+                                <p class="text-[#1D1D1F] font-medium text-sm">Mathieu</p>
+                                <p class="text-[#86868B] text-[10px]">Cannes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-[2.5rem] p-8 md:p-10">
+                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                    <div class="flex-grow"></div>
+                    <div class="text-center">
+                        <p class="text-[#1D1D1F] text-lg font-semibold italic mb-4">"Un immense merci à Franck et toute son équipe !"</p>
+                        <p class="text-[#424245] text-sm font-light italic leading-relaxed">
+                            "La pergola remplit parfaitement son rôle : elle apporte un cachet à la maison, elle nous protège très bien des rayons du soleil même en étant exposés plein Sud, elle laisse circuler l'air pour améliorer le confort et elle n'assombrit pas notre salon !"
+                        </p>
+                    </div>
+                    <div class="flex-grow"></div>
+                    <div class="flex items-center justify-center gap-3 mt-8">
+                        <div class="w-10 h-10 rounded-full bg-[#F5F5F7] border border-[#D2D2D7] flex items-center justify-center text-[#0653A8] text-[10px] font-bold">VG</div>
+                        <div class="text-left">
+                            <p class="text-[#1D1D1F] font-medium text-sm">Guagliardo Valerie</p>
+                            <p class="text-[#86868B] text-xs">Le Bausset</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 bento-card rounded-[2.5rem]">
+                    <div class="img-container h-64 md:h-80">
+                        <img src="https://i.postimg.cc/gc3FLZZb/riera-teck-gvt-23.jpg" alt="Réalisation">
+                    </div>
+                    <div class="p-8 md:p-12">
+                        <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                        <h3 class="text-[#1D1D1F] text-2xl font-medium mb-4">"Franck a été très réactif, à l'écoute, et de très bons conseils."</h3>
+                        <p class="text-[#424245] font-light leading-relaxed mb-8 italic max-w-2xl mx-auto">
+                            "Je ne peux que vous recommander ces pergolas de très bonne qualité et au design juste DE FOLIE !!!"
+                        </p>
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-[#F5F5F7] border border-[#D2D2D7] flex items-center justify-center text-[#0653A8] text-[10px] font-bold">AR</div>
+                            <div class="text-left">
+                                <p class="text-[#1D1D1F] font-medium text-sm">Adrienne Riera</p>
+                                <p class="text-[#86868B] text-xs">Aix-en-Provence</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         4. BANDEAU DEFILANT — réalisations
+         ========================================================= -->
+    <div style="background-color: #f8f8f8;" class="w-full">
+        <div class="scroll-container-story">
+            <div id="scroll-wrapper" class="animate-infinite-scroll-story gap-6">
+                <div class="story-card"><img src='https://i.postimg.cc/0jPjNN0N/1.jpg' alt='1'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Xq4qvvk9/2.jpg' alt='2'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/0jnQKqVw/3.jpg' alt='3'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/qqwR6d1s/4.jpg' alt='4'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/vThBxd0n/5.jpg' alt='5'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/2yG6Lf0T/6.jpg' alt='6'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/NFDM2wdS/7.jpg' alt='7'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/sf41Np3j/8.jpg' alt='8'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/VsW5Vjzs/9.jpg' alt='9'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/c1B6bQdL/10.jpg' alt='10'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Y2zjs1t0/11.jpg' alt='11'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/6Q6JhyTZ/0-Maison-R-Aix-10-Filter.jpg' alt='0-Maison-R-Aix-10-Filter'></div>
+
+                <div class="story-card"><img src='https://i.postimg.cc/0jPjNN0N/1.jpg' alt='1'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Xq4qvvk9/2.jpg' alt='2'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/0jnQKqVw/3.jpg' alt='3'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/qqwR6d1s/4.jpg' alt='4'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/vThBxd0n/5.jpg' alt='5'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/2yG6Lf0T/6.jpg' alt='6'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/NFDM2wdS/7.jpg' alt='7'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/sf41Np3j/8.jpg' alt='8'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/VsW5Vjzs/9.jpg' alt='9'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/c1B6bQdL/10.jpg' alt='10'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Y2zjs1t0/11.jpg' alt='11'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/6Q6JhyTZ/0-Maison-R-Aix-10-Filter.jpg' alt='0-Maison-R-Aix-10-Filter'></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         5. AVIS CLIENTS (section 2)
+         ========================================================= -->
+    <div class="avis-2 apple-font bg-[#F5F5F7] pt-12 pb-24 px-6 md:px-4">
+        <div class="max-w-6xl mx-auto">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
+
+                <div class="md:col-span-3 bento-card rounded-[3rem] overflow-hidden">
+                    <div class="img-container h-64 md:h-[450px]">
+                        <img src="https://i.postimg.cc/NfY6B3cZ/karine-gvt-61.jpg" alt="Réalisation Teck Aménagement - Karine Parra">
+                    </div>
+                    <div class="p-8 md:p-16">
+                        <div class="stars-container text-[#0653A8] text-sm">★★★★★</div>
+                        <h3 class="text-[#1D1D1F] text-3xl md:text-4xl font-medium mb-6">"Super produit, confort incroyable, design moderne et intemporel"</h3>
+                        <p class="text-[#424245] text-lg font-light leading-relaxed mb-10 italic max-w-4xl mx-auto">
+                            "Foncez les yeux fermés, en plus d'un professionnalisme et d'un savoir faire au rendez-vous ce qui est très rare!"
+                        </p>
+                        <div class="flex items-center justify-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-xs font-bold">KP</div>
+                            <div class="text-left">
+                                <p class="text-[#1D1D1F] font-medium text-base">Karine Parra</p>
+                                <p class="text-[#86868B] text-sm">Marseille</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-[2rem] p-8 justify-center">
+                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                    <p class="text-[#424245] text-sm font-light italic leading-relaxed mb-8">
+                        "Des professionnels, des vrais ! Je recommande les yeux fermés, cette entreprise. <span class="text-[#1D1D1F] font-medium">Si tous les artisans étaient aussi sérieux, la France se porterait tellement mieux !</span> Encore merci, le résultat est superbe."
+                    </p>
+                    <div class="flex items-center justify-center gap-3 mt-auto">
+                        <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">SE</div>
+                        <div class="text-left">
+                            <p class="text-[#1D1D1F] font-medium text-xs">Sébastien & Ellena</p>
+                            <p class="text-[#86868B] text-[10px]">Salon-de-Provence</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-[2rem] p-8 justify-center">
+                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                    <p class="text-[#424245] text-sm font-light italic leading-relaxed mb-8">
+                        "Nous recommandons vivement l'entreprise Teck Amenagement son directeur Mr Joncheray Franck et toute son équipe. Les conseils, l'expérience, l'écoute, tout est au rdv. <span class="text-[#1D1D1F] font-medium">Il est rare de rencontrer des artisans autant impliqués dans la recherche de la perfection.</span>"
+                    </p>
+                    <div class="flex items-center justify-center gap-3 mt-auto">
+                        <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">V</div>
+                        <div class="text-left">
+                            <p class="text-[#1D1D1F] font-medium text-xs">Véro</p>
+                            <p class="text-[#86868B] text-[10px]">Velaux</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-[2rem] p-8 justify-center">
+                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                    <p class="text-[#424245] text-sm font-light italic leading-relaxed mb-8">
+                        "Teck Amenagement propose un conseil et un produit fini de grande qualité, adapté au besoin, au contraintes. Le design est magnifique et <span class="text-[#1D1D1F] font-medium">la sensation sous la pergola vraiment très agréable. Je recommande vivement.</span>"
+                    </p>
+                    <div class="flex items-center justify-center gap-3 mt-auto">
+                        <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">DB</div>
+                        <div class="text-left">
+                            <p class="text-[#1D1D1F] font-medium text-xs">Didier Brother</p>
+                            <p class="text-[#86868B] text-[10px]">Sainte-Maxime</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         6. BLOC "Créez / Révolutionnez / Vivez"
+         ========================================================= -->
+    <section class="apple-font" style="background-color:#f8f8f8;">
+        <div class="max-w-6xl mx-auto px-6 md:px-4 py-16 md:py-24">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+
+                <!-- Colonne gauche : 3 cartes + accroche (couleurs / tailles fidèles Systeme.io) -->
+                <div class="flex flex-col gap-5">
+                    <div class="bg-white rounded-[20px] p-6 shadow-[0_4px_15px_rgba(0,0,0,0.03)]">
+                        <h3 class="text-[#0A1F44] text-[28px] md:text-[36px] leading-[40px] tracking-[-1px] font-semibold mb-2">Créez</h3>
+                        <p class="text-[#0A1F44] text-[17px] md:text-[18px] leading-[28px] font-normal">Une protection solaire sans perte de luminosité grâce à ses carrelets en bois exotique sans entretien.</p>
+                    </div>
+                    <div class="bg-white rounded-[20px] p-6 shadow-[0_4px_15px_rgba(0,0,0,0.03)]">
+                        <h3 class="text-[#0A1F44] text-[28px] md:text-[36px] leading-[40px] tracking-[-1px] font-semibold mb-2">Révolutionnez</h3>
+                        <p class="text-[#0A1F44] text-[17px] md:text-[19px] leading-[28px] font-normal">Votre extérieur avec un projet unique, fin et élégant qui se fond dans le décor.</p>
+                    </div>
+                    <div class="bg-white rounded-[20px] p-6 shadow-[0_4px_15px_rgba(0,0,0,0.03)]">
+                        <h3 class="text-[#0A1F44] text-[28px] md:text-[36px] leading-[40px] tracking-[-1px] font-semibold mb-2">Vivez</h3>
+                        <p class="text-[#0A1F44] text-[17px] md:text-[19px] leading-[28px] font-normal">Sous le confort d'une pergola qui vous procure une sensation de fraîcheur en plein été.</p>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <p class="text-black text-[20px] md:text-[24px] leading-[32px] md:leading-[40px] tracking-[-1px] font-semibold">
+                            Nous ne concevons pas des pergolas.<br>
+                            Nous créons des <strong class="font-bold">expériences de vie extérieure</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Colonne droite : image (Maison Cabriès) — 410px / coins légèrement arrondis -->
+                <div class="w-full flex justify-center">
+                    <img src="images/maison-cabries-5.jpg" alt="Réalisation Teck Aménagement - Maison Cabriès" class="w-full max-w-[360px] md:max-w-[410px] h-auto rounded-[5px] object-cover">
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         7. BLOC PARALLAX BAS — Budget en adéquation (mailto)
+         ========================================================= -->
+    <section class="parallax-section apple-font">
+        <div class="hero-bulle">
+            <div class="border-beam-container mb-6">
+                <div class="border-beam-inner">
+                    <span style="letter-spacing: 0.15em;" class="text-[11px] font-semibold uppercase text-white leading-none">
+                        Analyse de cohérence
+                    </span>
+                </div>
+            </div>
+
+            <h1 class="text-3xl md:text-[44px] font-medium tracking-tight leading-tight mb-10 text-white">
+                Votre budget est en adéquation<br class="hidden md:block"> avec votre projet ?
+            </h1>
+
+            <div class="flex flex-col items-center gap-4">
+                <a href="mailto:teckamenagement@gmail.com?subject=Demande%20de%20chiffrage%20-%20Projet%20Pergola&body=Bonjour%20l'%C3%A9quipe%20Teck%20Am%C3%A9nagement%2C%0D%0A%0D%0AJe%20souhaite%20vous%20transmettre%20les%20photos%20et%20dimensions%20de%20mon%20projet%20pour%20une%20pergola.%0D%0A%0D%0A%5BPr%C3%A9nom%20%26%20Nom%5D%0D%0A%5BNum%C3%A9ro%20de%20t%C3%A9l%C3%A9phone%5D"
+                   class="btn-combo-final">
+                    <div class="btn-cta-text">
+                        Contactez-nous par e-mail
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0-9.74 6.75L2.25 6.75"/>
+                        </svg>
+                    </div>
+                </a>
+                <p class="text-white/70 text-xs font-light italic flex items-center gap-2 mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                    Ouverture immédiate de votre messagerie e-mail
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         8. FOOTER
+         ========================================================= -->
+    <footer class="apple-font" style="background-color:#ffffff;">
+        <div class="max-w-4xl mx-auto px-4 pt-8 pb-4 text-center">
+            <img src="images/logo-teck.png" alt="Teck Aménagement — Pergola, terrasse, mobilier en bois exotique" class="mx-auto w-full max-w-[334px] md:max-w-[540px] h-auto mb-2">
+            <a href="https://teckamenagement.fr/mentions-legales/" class="text-black text-[13px] italic underline">Politique de confidentialité</a>
+        </div>
+    </footer>
+
+    <!-- =========================================================
+         SCRIPTS
+         ========================================================= -->
+    <!-- Simulateur : calcul du total pergola + claustra avec bascule TVA -->
+    <script>
+        (function() {
+            const prixP = 900;
+            const prixC = 600;
+            let currentTVA = 1.10;
+
+            const rP = document.getElementById('rPM');
+            const rC = document.getElementById('rCM');
+            const vP = document.getElementById('vPM');
+            const vC = document.getElementById('vCM');
+            const tD = document.getElementById('tDisp');
+
+            function update() {
+                const p = parseFloat(rP.value) || 0;
+                const c = parseFloat(rC.value) || 0;
+
+                vP.textContent = p.toFixed(1);
+                vC.textContent = c.toFixed(1);
+
+                [rP, rC].forEach(el => {
+                    const ratio = (el.value - el.min) / (el.max - el.min) * 100;
+                    el.style.background = `linear-gradient(to right, #007aff ${ratio}%, #e5e7eb ${ratio}%)`;
+                });
+
+                const total = ((p * prixP) + (c * prixC)) * currentTVA;
+                tD.textContent = Math.round(total).toLocaleString('fr-FR');
+            }
+
+            rP.addEventListener('input', update);
+            rC.addEventListener('input', update);
+
+            document.getElementById('b10').onclick = function() {
+                currentTVA = 1.10;
+                this.classList.add('m-tva-active');
+                document.getElementById('b20').classList.remove('m-tva-active');
+                update();
+            };
+            document.getElementById('b20').onclick = function() {
+                currentTVA = 1.20;
+                this.classList.add('m-tva-active');
+                document.getElementById('b10').classList.remove('m-tva-active');
+                update();
+            };
+
+            update();
+        })();
+    </script>
+
+    <!-- Pause au tap sur le bandeau défilant -->
+    <script>
+        (function () {
+            const scrollWrapper = document.getElementById('scroll-wrapper');
+            if (!scrollWrapper) return;
+            let timer;
+            const handlePause = () => {
+                clearTimeout(timer);
+                scrollWrapper.classList.add('is-paused');
+                timer = setTimeout(() => scrollWrapper.classList.remove('is-paused'), 1500);
+            };
+            scrollWrapper.addEventListener('click', handlePause);
+            scrollWrapper.addEventListener('touchend', handlePause);
+        })();
+    </script>
+
+</body>
+</html>

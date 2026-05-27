@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teck Aménagement — Demande confirmée</title>
+
+    <!-- Meta Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1276467600212409');
+      fbq('track', 'PageView');
+      fbq('track', 'Lead');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Tailwind + Inter : une seule fois pour toute la page -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ====== BASE ====== */
+        .apple-font { font-family: 'Inter', sans-serif !important; }
+        html { scroll-behavior: smooth; }
+        body { background-color: #f8f8f8; }
+
+        /* ====== HERO HEADER (photo Teck + bulle translucide) ====== */
+        .hero-section {
+            width: 100%;
+            background-image: linear-gradient(rgba(0,0,0,0.12), rgba(0,0,0,0.12)), url('images/eguilles-5.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 220px 40px 220px 129px;
+            min-height: 90vh;
+        }
+        .hero-bulle {
+            width: 100%;
+            max-width: 640px;
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45));
+            border-radius: 1.25rem;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .hero-section {
+                background-image: linear-gradient(rgba(0,0,0,0.12), rgba(0,0,0,0.12)), url('images/eguilles-mobile.jpg');
+                padding: 4rem 1rem;
+                min-height: 70vh;
+            }
+            .hero-bulle { width: 100%; padding: 2rem 1.25rem; }
+        }
+
+        /* ====== BADGE "Demande confirmée" (border beam) ====== */
+        .border-beam-container {
+            position: relative;
+            padding: 1px;
+            overflow: hidden;
+            border-radius: 9999px;
+            display: inline-block;
+        }
+        .border-beam-container::before {
+            content: "";
+            position: absolute;
+            inset: -100%;
+            background: conic-gradient(from 0deg, transparent 0%, transparent 70%, #0653A8 85%, transparent 100%);
+            animation: beam-rotate 4s linear infinite;
+        }
+        .border-beam-inner {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            border-radius: 9999px;
+            padding: 4px 16px;
+        }
+
+        /* ====== BOUTON CTA (chevron) ====== */
+        .btn-combo-final {
+            position: relative;
+            padding: 1.2px;
+            overflow: hidden;
+            border-radius: 9999px;
+            display: inline-flex;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .btn-combo-final::before {
+            content: "";
+            position: absolute;
+            inset: -200%;
+            background: conic-gradient(from 0deg, transparent 0%, transparent 60%, #0653A8 80%, #4facfe 90%, transparent 100%);
+            animation: beam-rotate 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .btn-combo-final:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(255, 255, 255, 0.3); }
+        .btn-combo-final:hover::before { opacity: 1; }
+        .btn-inner-final {
+            position: relative;
+            z-index: 1;
+            background: #ffffff;
+            color: #000000;
+            border-radius: 9999px;
+            padding: 10px 26px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @keyframes beam-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* ====== CARTES AVIS (bento) ====== */
+        .avis-1 .bento-card, .avis-2 .bento-card {
+            background: #FFFFFF !important;
+            border: 1px solid #D2D2D7;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            height: 100%;
+            overflow: hidden;
+        }
+        .avis-1 .bento-card { box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+        .avis-2 .bento-card { border-color: #E5E7EB; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .bento-card:hover { transform: translateY(-8px); border-color: #0653A8; }
+        .avis-1 .bento-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        .avis-2 .bento-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+        .img-container { width: 100%; overflow: hidden; position: relative; }
+        .img-container img {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: center;
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .bento-card:hover .img-container img { transform: scale(1.05); }
+        .stars-container { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+
+        /* ====== TITRE "Nos clients" (sparkle) ====== */
+        .sparkle-text {
+            color: #0653A8;
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            text-shadow: 0 0 1px rgba(131, 196, 255, 0.3), 0 0 5px rgba(255, 255, 255, 0.1);
+            animation: sparkle-glow 3s ease-in-out infinite;
+        }
+        .sparkle-text::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -150%; width: 8px; height: 100%;
+            background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0) 70%);
+            opacity: 0.5;
+            animation: spark-travel 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            pointer-events: none;
+        }
+        @keyframes sparkle-glow {
+            0%, 100% { text-shadow: 0 0 1px rgba(131, 196, 255, 0.3), 0 0 5px rgba(255, 255, 255, 0.1); color: #0653A8; }
+            50% { text-shadow: 0 0 3px rgba(131, 196, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.2); color: #004694; }
+        }
+        @keyframes spark-travel {
+            0% { left: -150%; opacity: 0; }
+            10% { opacity: 0.5; }
+            40% { left: 200%; opacity: 0.5; }
+            60% { left: 200%; opacity: 0; }
+            100% { left: -150%; opacity: 0; }
+        }
+
+        /* ====== BANDEAU DEFILANT (réalisations) ====== */
+        @keyframes scrollHorizontalStory {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-3648px); } /* 12 images x (280 + 24 gap) */
+        }
+        .animate-infinite-scroll-story {
+            display: flex;
+            width: max-content;
+            animation: scrollHorizontalStory 45s linear infinite;
+            will-change: transform;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .is-paused { animation-play-state: paused !important; }
+        .story-card {
+            width: 280px; height: 498px;
+            border-radius: 20px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: #eee;
+            border: none;
+        }
+        .story-card img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+            border-radius: 20px;
+            pointer-events: none;
+        }
+        .scroll-container-story { position: relative; width: 100%; overflow: hidden; padding: 20px 0 20px 0; }
+
+        /* ====== BLOC FELICITATIONS (parallax bas de page) ====== */
+        .parallax-section {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 196px 40px 196px 129px;
+            background-image: linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.08)), url('images/eguilles-5.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        @media (max-width: 768px) {
+            .parallax-section {
+                background-image: linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.08)), url('images/eguilles-mobile.jpg');
+                background-attachment: scroll;
+                padding: 5rem 1.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="apple-font">
+
+    <!-- =========================================================
+         1. HEADER — Réservez votre appel
+         ========================================================= -->
+    <section class="hero-section">
+        <div class="hero-bulle">
+            <div class="border-beam-container mb-6">
+                <div class="border-beam-inner">
+                    <span style="letter-spacing: 0.2em;" class="text-[10px] font-medium uppercase text-white leading-none">
+                        Demande confirmée
+                    </span>
+                </div>
+            </div>
+
+            <h1 class="text-3xl md:text-[40px] font-medium tracking-tight leading-tight mb-6 text-white">
+                Réservez maintenant votre appel...
+            </h1>
+
+            <div class="text-base text-white font-light leading-relaxed mb-8 px-2">
+                <p class="mb-6">Avec notre professionnel qui s'occupera de l'étude de votre projet</p>
+                <p>
+                    Choisissez le créneau qui vous convient le mieux ci-dessous<br>
+                    <span class="text-base text-white/80 italic">(ça vous prendra moins d'une minute).</span>
+                </p>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <a href="#calendrier" class="btn-combo-final">
+                    <div class="btn-inner-final">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m6 9 6 6 6-6"/>
+                        </svg>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         2. CALENDLY
+         ========================================================= -->
+    <div class="bg-[#f8f8f8] px-4 py-8">
+        <div id="calendrier" class="mx-auto max-w-[1024px]" style="min-width:320px;height:720px;"></div>
+    </div>
+
+    <!-- =========================================================
+         3. AVIS CLIENTS (section 1)
+         ========================================================= -->
+    <div class="avis-1 apple-font bg-[#F5F5F7] pt-2 pb-24 px-6 md:px-4">
+        <div class="max-w-6xl mx-auto">
+
+            <div class="mb-10 text-center -mt-2">
+                <span class="font-light tracking-[0.05em] uppercase text-2xl block mb-0 sparkle-text">Nos clients</span>
+                <h2 class="text-[#1D1D1F] text-3xl md:text-5xl font-normal tracking-tight leading-tight">Parlent de nous</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <div class="lg:col-span-2 bento-card rounded-[2.5rem]">
+                    <div class="img-container h-64 md:h-[450px]">
+                        <img src="https://i.postimg.cc/8kY2YbgJ/TECK-AMENAGEMENT-FFF.jpg" alt="Réalisation">
+                    </div>
+                    <div class="p-8 md:p-12">
+                        <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                        <h3 class="text-[#1D1D1F] text-2xl font-medium mb-4">"Les photos parlent d'elles-mêmes !"</h3>
+                        <p class="text-[#424245] font-light leading-relaxed mb-8 italic max-w-2xl mx-auto">
+                            "Nous avons été vite convaincus par les solutions créatives et techniques pour réaliser le projet. Je recommande fortement cette société. Le matériel est de qualité. Sans hésiter, contactez-les, vous ne serez pas déçus !"
+                        </p>
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-[#F5F5F7] border border-[#D2D2D7] flex items-center justify-center text-[#0653A8] text-[10px] font-bold">AS</div>
+                            <div class="text-left">
+                                <p class="text-[#1D1D1F] font-medium text-sm">Anne Marie Spenser</p>
+                                <p class="text-[#86868B] text-xs">Éguilles</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-8">
+                    <div class="bento-card rounded-[2.5rem] p-8 md:p-10 flex-1 justify-center">
+                        <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                        <p class="text-[#1D1D1F] text-lg font-light italic leading-snug mb-8">
+                            "Nous déjeunons sous la pergola même sous le soleil marseillais, avec 4 à 5 degrés de moins que la solution que nous avions auparavant."
+                        </p>
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#D2D2D7] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">BL</div>
+                            <div class="text-left">
+                                <p class="text-[#1D1D1F] font-medium text-sm">Bliss</p>
+                                <p class="text-[#86868B] text-[10px]">Marseille</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bento-card rounded-[2.5rem] p-8 md:p-10 flex-1 justify-center">
+                        <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                        <p class="text-[#424245] text-sm font-light italic leading-snug mb-8">
+                            "Très grande satisfaction ! La luminosité reste la même à l'intérieur de la maison tout en protégeant ma terrasse du soleil."
+                        </p>
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#D2D2D7] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">M</div>
+                            <div class="text-left">
+                                <p class="text-[#1D1D1F] font-medium text-sm">Mathieu</p>
+                                <p class="text-[#86868B] text-[10px]">Cannes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-[2.5rem] p-8 md:p-10">
+                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                    <div class="flex-grow"></div>
+                    <div class="text-center">
+                        <p class="text-[#1D1D1F] text-lg font-semibold italic mb-4">"Un immense merci à Franck et toute son équipe !"</p>
+                        <p class="text-[#424245] text-sm font-light italic leading-relaxed">
+                            "La pergola remplit parfaitement son rôle : elle apporte un cachet à la maison, elle nous protège très bien des rayons du soleil même en étant exposés plein Sud, elle laisse circuler l'air pour améliorer le confort et elle n'assombrit pas notre salon !"
+                        </p>
+                    </div>
+                    <div class="flex-grow"></div>
+                    <div class="flex items-center justify-center gap-3 mt-8">
+                        <div class="w-10 h-10 rounded-full bg-[#F5F5F7] border border-[#D2D2D7] flex items-center justify-center text-[#0653A8] text-[10px] font-bold">VG</div>
+                        <div class="text-left">
+                            <p class="text-[#1D1D1F] font-medium text-sm">Guagliardo Valerie</p>
+                            <p class="text-[#86868B] text-xs">Le Bausset</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 bento-card rounded-[2.5rem]">
+                    <div class="img-container h-64 md:h-80">
+                        <img src="https://i.postimg.cc/gc3FLZZb/riera-teck-gvt-23.jpg" alt="Réalisation">
+                    </div>
+                    <div class="p-8 md:p-12">
+                        <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                        <h3 class="text-[#1D1D1F] text-2xl font-medium mb-4">"Franck a été très réactif, à l'écoute, et de très bons conseils."</h3>
+                        <p class="text-[#424245] font-light leading-relaxed mb-8 italic max-w-2xl mx-auto">
+                            "Je ne peux que vous recommander ces pergolas de très bonne qualité et au design juste DE FOLIE !!!"
+                        </p>
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-[#F5F5F7] border border-[#D2D2D7] flex items-center justify-center text-[#0653A8] text-[10px] font-bold">AR</div>
+                            <div class="text-left">
+                                <p class="text-[#1D1D1F] font-medium text-sm">Adrienne Riera</p>
+                                <p class="text-[#86868B] text-xs">Aix-en-Provence</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         4. BANDEAU DEFILANT — réalisations
+         ========================================================= -->
+    <div style="background-color: #f8f8f8;" class="w-full">
+        <div class="scroll-container-story">
+            <div id="scroll-wrapper" class="animate-infinite-scroll-story gap-6">
+                <div class="story-card"><img src='https://i.postimg.cc/0jPjNN0N/1.jpg' alt='1'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Xq4qvvk9/2.jpg' alt='2'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/0jnQKqVw/3.jpg' alt='3'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/qqwR6d1s/4.jpg' alt='4'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/vThBxd0n/5.jpg' alt='5'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/2yG6Lf0T/6.jpg' alt='6'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/NFDM2wdS/7.jpg' alt='7'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/sf41Np3j/8.jpg' alt='8'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/VsW5Vjzs/9.jpg' alt='9'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/c1B6bQdL/10.jpg' alt='10'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Y2zjs1t0/11.jpg' alt='11'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/6Q6JhyTZ/0-Maison-R-Aix-10-Filter.jpg' alt='0-Maison-R-Aix-10-Filter'></div>
+
+                <div class="story-card"><img src='https://i.postimg.cc/0jPjNN0N/1.jpg' alt='1'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Xq4qvvk9/2.jpg' alt='2'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/0jnQKqVw/3.jpg' alt='3'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/qqwR6d1s/4.jpg' alt='4'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/vThBxd0n/5.jpg' alt='5'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/2yG6Lf0T/6.jpg' alt='6'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/NFDM2wdS/7.jpg' alt='7'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/sf41Np3j/8.jpg' alt='8'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/VsW5Vjzs/9.jpg' alt='9'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/c1B6bQdL/10.jpg' alt='10'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Y2zjs1t0/11.jpg' alt='11'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/6Q6JhyTZ/0-Maison-R-Aix-10-Filter.jpg' alt='0-Maison-R-Aix-10-Filter'></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         5. AVIS CLIENTS (section 2)
+         ========================================================= -->
+    <div class="avis-2 apple-font bg-[#F5F5F7] pt-12 pb-24 px-6 md:px-4">
+        <div class="max-w-6xl mx-auto">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
+
+                <div class="md:col-span-3 bento-card rounded-[3rem] overflow-hidden">
+                    <div class="img-container h-64 md:h-[450px]">
+                        <img src="https://i.postimg.cc/NfY6B3cZ/karine-gvt-61.jpg" alt="Réalisation Teck Aménagement - Karine Parra">
+                    </div>
+                    <div class="p-8 md:p-16">
+                        <div class="stars-container text-[#0653A8] text-sm">★★★★★</div>
+                        <h3 class="text-[#1D1D1F] text-3xl md:text-4xl font-medium mb-6">"Super produit, confort incroyable, design moderne et intemporel"</h3>
+                        <p class="text-[#424245] text-lg font-light leading-relaxed mb-10 italic max-w-4xl mx-auto">
+                            "Foncez les yeux fermés, en plus d'un professionnalisme et d'un savoir faire au rendez-vous ce qui est très rare!"
+                        </p>
+                        <div class="flex items-center justify-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-xs font-bold">KP</div>
+                            <div class="text-left">
+                                <p class="text-[#1D1D1F] font-medium text-base">Karine Parra</p>
+                                <p class="text-[#86868B] text-sm">Marseille</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-[2rem] p-8 justify-center">
+                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                    <p class="text-[#424245] text-sm font-light italic leading-relaxed mb-8">
+                        "Des professionnels, des vrais ! Je recommande les yeux fermés, cette entreprise. <span class="text-[#1D1D1F] font-medium">Si tous les artisans étaient aussi sérieux, la France se porterait tellement mieux !</span> Encore merci, le résultat est superbe."
+                    </p>
+                    <div class="flex items-center justify-center gap-3 mt-auto">
+                        <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">SE</div>
+                        <div class="text-left">
+                            <p class="text-[#1D1D1F] font-medium text-xs">Sébastien & Ellena</p>
+                            <p class="text-[#86868B] text-[10px]">Salon-de-Provence</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-[2rem] p-8 justify-center">
+                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                    <p class="text-[#424245] text-sm font-light italic leading-relaxed mb-8">
+                        "Nous recommandons vivement l'entreprise Teck Amenagement son directeur Mr Joncheray Franck et toute son équipe. Les conseils, l'expérience, l'écoute, tout est au rdv. <span class="text-[#1D1D1F] font-medium">Il est rare de rencontrer des artisans autant impliqués dans la recherche de la perfection.</span>"
+                    </p>
+                    <div class="flex items-center justify-center gap-3 mt-auto">
+                        <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">V</div>
+                        <div class="text-left">
+                            <p class="text-[#1D1D1F] font-medium text-xs">Véro</p>
+                            <p class="text-[#86868B] text-[10px]">Velaux</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-[2rem] p-8 justify-center">
+                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                    <p class="text-[#424245] text-sm font-light italic leading-relaxed mb-8">
+                        "Teck Amenagement propose un conseil et un produit fini de grande qualité, adapté au besoin, au contraintes. Le design est magnifique et <span class="text-[#1D1D1F] font-medium">la sensation sous la pergola vraiment très agréable. Je recommande vivement.</span>"
+                    </p>
+                    <div class="flex items-center justify-center gap-3 mt-auto">
+                        <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">DB</div>
+                        <div class="text-left">
+                            <p class="text-[#1D1D1F] font-medium text-xs">Didier Brother</p>
+                            <p class="text-[#86868B] text-[10px]">Sainte-Maxime</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         6. BLOC "Créez / Révolutionnez / Vivez"
+         ========================================================= -->
+    <section class="apple-font" style="background-color:#f8f8f8;">
+        <div class="max-w-6xl mx-auto px-6 md:px-4 py-16 md:py-24">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+
+                <!-- Colonne gauche : 3 cartes + accroche (couleurs / tailles fidèles Systeme.io) -->
+                <div class="flex flex-col gap-5">
+                    <div class="bg-white rounded-[20px] p-6 shadow-[0_4px_15px_rgba(0,0,0,0.03)]">
+                        <h3 class="text-[#0A1F44] text-[28px] md:text-[36px] leading-[40px] tracking-[-1px] font-semibold mb-2">Créez</h3>
+                        <p class="text-[#0A1F44] text-[17px] md:text-[18px] leading-[28px] font-normal">Une protection solaire sans perte de luminosité grâce à ses carrelets en bois exotique sans entretien.</p>
+                    </div>
+                    <div class="bg-white rounded-[20px] p-6 shadow-[0_4px_15px_rgba(0,0,0,0.03)]">
+                        <h3 class="text-[#0A1F44] text-[28px] md:text-[36px] leading-[40px] tracking-[-1px] font-semibold mb-2">Révolutionnez</h3>
+                        <p class="text-[#0A1F44] text-[17px] md:text-[19px] leading-[28px] font-normal">Votre extérieur avec un projet unique, fin et élégant qui se fond dans le décor.</p>
+                    </div>
+                    <div class="bg-white rounded-[20px] p-6 shadow-[0_4px_15px_rgba(0,0,0,0.03)]">
+                        <h3 class="text-[#0A1F44] text-[28px] md:text-[36px] leading-[40px] tracking-[-1px] font-semibold mb-2">Vivez</h3>
+                        <p class="text-[#0A1F44] text-[17px] md:text-[19px] leading-[28px] font-normal">Sous le confort d'une pergola qui vous procure une sensation de fraîcheur en plein été.</p>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <p class="text-black text-[20px] md:text-[24px] leading-[32px] md:leading-[40px] tracking-[-1px] font-semibold">
+                            Nous ne concevons pas des pergolas.<br>
+                            Nous créons des <strong class="font-bold">expériences de vie extérieure</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Colonne droite : image (Maison Cabriès) — 410px / coins légèrement arrondis -->
+                <div class="w-full flex justify-center">
+                    <img src="images/maison-cabries-5.jpg" alt="Réalisation Teck Aménagement - Maison Cabriès" class="w-full max-w-[360px] md:max-w-[410px] h-auto rounded-[5px] object-cover">
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         7. BLOC FELICITATIONS (parallax)
+         ========================================================= -->
+    <section class="parallax-section apple-font">
+        <div class="hero-bulle">
+            <div class="border-beam-container mb-6">
+                <div class="border-beam-inner">
+                    <span style="letter-spacing: 0.2em;" class="text-[10px] font-medium uppercase text-white leading-none">
+                        Demande confirmée
+                    </span>
+                </div>
+            </div>
+
+            <h1 class="text-4xl md:text-[48px] font-medium tracking-tight leading-tight mb-6 text-white">
+                Félicitations !
+            </h1>
+
+            <div class="text-base text-white font-light leading-relaxed mb-8 px-2">
+                <p class="mb-6">Réservez maintenant votre appel avec un expert pour analyser votre projet et voir concrètement comment avancer.</p>
+                <p>
+                    Choisissez le créneau qui vous convient le mieux ci-dessous<br>
+                    <span class="text-base text-white/80 italic">(ça prend moins d'une minute).</span>
+                </p>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <a href="#calendrier" class="btn-combo-final">
+                    <div class="btn-inner-final">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m18 15-6-6-6 6"/>
+                        </svg>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         8. FOOTER
+         ========================================================= -->
+    <footer class="apple-font" style="background-color:#ffffff;">
+        <div class="max-w-4xl mx-auto px-4 pt-8 pb-4 text-center">
+            <img src="images/logo-teck.png" alt="Teck Aménagement — Pergola, terrasse, mobilier en bois exotique" class="mx-auto w-full max-w-[334px] md:max-w-[540px] h-auto mb-2">
+            <a href="https://teckamenagement.fr/mentions-legales/" class="text-black text-[13px] italic underline">Politique de confidentialité</a>
+        </div>
+    </footer>
+
+    <!-- =========================================================
+         SCRIPTS
+         ========================================================= -->
+    <!-- Calendly : suivi de la source (séquence mail site / meta) -->
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+    <script>
+        (function () {
+            // Lit ?source=site ou ?source=meta dans l'URL (défaut : site).
+            function initCalendly() {
+                var params  = new URLSearchParams(window.location.search);
+                var isMeta  = params.get('source') === 'meta';
+                var origine = isMeta ? 'Réseaux sociaux' : 'Site internet';
+
+                Calendly.initInlineWidget({
+                    url: 'https://calendly.com/teckamenagement/30min?hide_gdpr_banner=1',
+                    parentElement: document.getElementById('calendrier'),
+                    prefill: {
+                        // a2 = 2e question de l'event : "Comment avez-vous connu Teck Aménagement ?"
+                        // Pré-remplie selon la source -> apparaît dans la notif + le Google Agenda de Franck.
+                        // (Si tu changes l'ordre des questions dans Calendly, préviens-moi : a1=1re, a2=2e, etc.)
+                        customAnswers: { a2: origine }
+                    },
+                    utm: {
+                        // Filet de sécurité invisible, consultable dans le tableau de bord Calendly.
+                        utmSource: isMeta ? 'meta' : 'site',
+                        utmMedium: 'email',
+                        utmCampaign: 'sequence-bienvenue'
+                    }
+                });
+            }
+            if (window.Calendly) { initCalendly(); }
+            else { window.addEventListener('load', initCalendly); }
+        })();
+    </script>
+
+    <!-- Pause au tap sur le bandeau défilant -->
+    <script>
+        (function () {
+            const scrollWrapper = document.getElementById('scroll-wrapper');
+            if (!scrollWrapper) return;
+            let timer;
+            const handlePause = () => {
+                clearTimeout(timer);
+                scrollWrapper.classList.add('is-paused');
+                timer = setTimeout(() => scrollWrapper.classList.remove('is-paused'), 1500);
+            };
+            scrollWrapper.addEventListener('click', handlePause);
+            scrollWrapper.addEventListener('touchend', handlePause);
+        })();
+    </script>
+
+</body>
+</html>
