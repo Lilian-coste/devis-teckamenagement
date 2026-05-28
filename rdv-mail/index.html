@@ -17,6 +17,7 @@
 
         /* ====== HERO HEADER (photo Teck + bulle translucide) ====== */
         .hero-section {
+            position: relative;
             width: 100%;
             background-image: linear-gradient(rgba(0,0,0,0.12), rgba(0,0,0,0.12)), url('images/eguilles-5.jpg');
             background-size: cover;
@@ -34,6 +35,24 @@
             border-radius: 1.25rem;
             padding: 3rem 2rem;
             text-align: center;
+        }
+        /* Logo overlay : centré horizontalement sur mobile, en haut-gauche sur desktop */
+        .hero-section .logo-overlay {
+            position: absolute;
+            top: 0.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 260px;
+            height: auto;
+            z-index: 10;
+        }
+        @media (min-width: 768px) {
+            .hero-section .logo-overlay {
+                top: 1rem;
+                left: 1.25rem;
+                transform: none;
+                width: 520px;
+            }
         }
         @media (max-width: 768px) {
             .hero-section {
@@ -217,6 +236,7 @@
          1. HEADER — Réservez votre appel
          ========================================================= -->
     <section class="hero-section">
+        <img src="images/logo-teck-overlay.png" alt="Teck Aménagement" class="logo-overlay">
         <div class="hero-bulle">
             <div class="border-beam-container mb-6">
                 <div class="border-beam-inner">
