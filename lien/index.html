@@ -157,7 +157,20 @@
     place-items: center;
   }
   .link .icon svg { width: 22px; height: 22px; display: block; }
-  .link .label { flex: 1; text-align: center; }
+  .link .label {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.15;
+  }
+  .link .note {
+    font-size: 0.76em;
+    font-weight: 400;
+    font-style: italic;
+    opacity: 0.82;
+    margin-top: 2px;
+  }
   /* petit espace pour compenser l'icône et garder le texte centré */
   .link .spacer { flex: 0 0 24px; }
 
@@ -246,7 +259,8 @@ const LINKS = [
   { label: "Instagram",                  url: "https://www.instagram.com/teck_amenagement/",                         icon: "instagram" },
   { label: "Nous écrire sur WhatsApp",   url: "https://wa.me/33616908218",                                           icon: "whatsapp" },
   // Fiche Google Teck : ouvre TOUS les avis (scrollables). L'ordre du tri n'est pas contrôlable par URL.
-  { label: "Voir nos avis Google",       url: "https://www.google.com/maps/place/TECK+AMENAGEMENT/@43.4136554,5.2525097,17z/data=!3m1!4b1!4m6!3m5!1s0x12c9e8ef4b8f1af1:0xf7b46f6331934b93!8m2!3d43.4136515!4d5.2550846!16s%2Fg%2F113dv66mq?hl=fr", icon: "avis" },
+  // note : sous-texte en italique. ⚠️ Vérifier que "4,9" et "137 avis" correspondent EXACTEMENT à la fiche live.
+  { label: "Voir nos avis", note: "(4,9 ★ · 137 avis)", url: "https://www.google.com/maps/place/TECK+AMENAGEMENT/@43.4136554,5.2525097,17z/data=!3m1!4b1!4m6!3m5!1s0x12c9e8ef4b8f1af1:0xf7b46f6331934b93!8m2!3d43.4136515!4d5.2550846!16s%2Fg%2F113dv66mq?hl=fr", icon: "avis" },
 ];
 
 /* ================================================================= */
@@ -389,7 +403,15 @@ function render() {
 
     const labelSpan = document.createElement('span');
     labelSpan.className = 'label';
-    labelSpan.textContent = link.label;
+    const labelText = document.createElement('span');
+    labelText.textContent = link.label;
+    labelSpan.appendChild(labelText);
+    if (link.note) {
+      const noteSpan = document.createElement('span');
+      noteSpan.className = 'note';
+      noteSpan.textContent = link.note;
+      labelSpan.appendChild(noteSpan);
+    }
 
     const spacer = document.createElement('span');
     spacer.className = 'spacer';
