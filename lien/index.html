@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Teck Aménagement — Liens</title>
+<meta name="description" content="Retrouvez tous les liens de Teck Aménagement." />
+
+<!-- ============================================================= -->
+<!--  TECK AMÉNAGEMENT — PAGE DE LIENS (style « Linktree »)        -->
+<!--                                                               -->
+<!--  ⚙️  TOUT SE PERSONNALISE DANS LE BLOC <script> EN BAS        -->
+<!--      DE CE FICHIER (cherche « ZONE À MODIFIER »).             -->
+<!--                                                               -->
+<!--  📂  Images à déposer dans le dossier  assets/  :             -->
+<!--        - bg-desktop.jpg   (fond ordinateur, paysage)         -->
+<!--        - bg-mobile.jpg    (fond mobile, portrait)            -->
+<!--        - logo.png         (logo, idéalement transparent)     -->
+<!-- ============================================================= -->
+
+<style>
+  /* ---------- VARIABLES DE MARQUE (modifiables) ---------- */
+  :root {
+    --accent: #1f2a24;          /* couleur des accents (vert profond bois) */
+    --accent-text: #ffffff;     /* texte sur les accents */
+    --bubble-bg: #ffffff;       /* fond des boutons « bulles blanches » */
+    --bubble-text: #1c1c1c;     /* texte des boutons */
+    --radius: 16px;             /* arrondi des boutons */
+    --max-width: 520px;         /* largeur max de la colonne de liens */
+    --font: "Helvetica Neue", Arial, system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: var(--font);
+    color: #fff;
+    min-height: 100dvh;
+    /* La colonne est centrée horizontalement ; la répartition verticale
+       (header en haut, bulles au centre, footer en bas) est gérée dans .page */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    /* Fond mobile par défaut */
+    background-image: url('assets/bg-mobile.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll;
+    background-color: #2a2a2a; /* couleur de secours si l'image manque */
+  }
+
+  /* Fond ordinateur à partir de 768px de large */
+  @media (min-width: 768px) {
+    body {
+      background-image: url('assets/bg-desktop.jpg');
+      background-attachment: fixed;
+    }
+  }
+
+  /* Voile dégradé pour la lisibilité du texte par-dessus la photo */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.55) 100%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: var(--max-width);
+    min-height: 100dvh;          /* occupe toute la hauteur de l'écran */
+    /* haut réduit = logo remonté ; bas réduit = copyright collé en bas */
+    padding: 26px 18px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  @media (min-width: 768px) {
+    .page { padding: 42px 22px 22px; }
+  }
+
+  /* ---------- EN-TÊTE : LOGO + TITRE ---------- */
+  .brand-logo {
+    width: min(280px, 80%);
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 6px;
+    filter: drop-shadow(0 6px 18px rgba(0,0,0,0.45));
+  }
+  @media (min-width: 768px) {
+    .brand-logo { width: 400px; margin-bottom: 10px; }
+  }
+  /* Masqué automatiquement s'il est vide (le logo porte déjà le nom) */
+  .brand-name:empty, .brand-tagline:empty { display: none; }
+  .brand-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-align: center;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.45);
+  }
+  .brand-tagline {
+    margin-top: 4px;
+    font-size: 0.86rem;
+    line-height: 1.3;
+    font-weight: 400;
+    opacity: 0.92;
+    text-align: center;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.45);
+  }
+  @media (min-width: 768px) {
+    .brand-tagline { margin-top: 6px; font-size: 0.95rem; }
+  }
+
+  /* ---------- LISTE DES LIENS ---------- */
+  .links {
+    width: 100%;
+    margin: auto 0;            /* centre les bulles verticalement dans l'espace libre */
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  @media (min-width: 768px) {
+    .links { gap: 15px; }
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 11px 16px;
+    border-radius: 13px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+    will-change: transform;
+  }
+  @media (min-width: 768px) {
+    .link { gap: 14px; padding: 16px 20px; border-radius: var(--radius); font-size: 1.02rem; }
+  }
+  .link:active { transform: scale(0.985); }
+
+  .link .icon {
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+  }
+  .link .icon svg { width: 22px; height: 22px; display: block; }
+  .link .label { flex: 1; text-align: center; }
+  /* petit espace pour compenser l'icône et garder le texte centré */
+  .link .spacer { flex: 0 0 24px; }
+
+  /* ===== STYLE 1 : BULLES BLANCHES ===== */
+  body[data-style="bubbles"] .link {
+    background: var(--bubble-bg);
+    color: var(--bubble-text);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+  }
+  body[data-style="bubbles"] .link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.30);
+  }
+  body[data-style="bubbles"] .link .icon { color: var(--accent); }
+
+  /* ===== STYLE 2 : VERRE DÉPOLI (glassmorphism) ===== */
+  body[data-style="glass"] .link {
+    background: rgba(255,255,255,0.14);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.30);
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    text-shadow: 0 1px 6px rgba(0,0,0,0.35);
+  }
+  body[data-style="glass"] .link:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,0.22);
+  }
+  body[data-style="glass"] .link .icon { color: #fff; }
+
+  /* ---------- PIED DE PAGE ---------- */
+  .footer {
+    margin-top: 0;             /* collé en bas grâce au centrage auto des bulles */
+    font-size: 0.72rem;
+    opacity: 0.8;
+    text-align: center;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+  }
+  @media (min-width: 768px) {
+    .footer { font-size: 0.78rem; }
+  }
+  .footer a { color: inherit; text-decoration: underline; }
+</style>
+</head>
+<body data-style="glass" data-icons="color">
+
+  <main class="page">
+    <img class="brand-logo" id="brand-logo" src="assets/logo.png" alt="" />
+    <h1 class="brand-name" id="brand-name"></h1>
+    <p class="brand-tagline" id="brand-tagline"></p>
+
+    <nav class="links" id="links"></nav>
+
+    <p class="footer" id="footer"></p>
+  </main>
+
+<script>
+/* ================================================================= */
+/*   ZONE À MODIFIER  —  tout se passe ici                           */
+/* ================================================================= */
+
+const SETTINGS = {
+  brandName: "",   // vide : le logo contient déjà le nom. Mets du texte ici si tu n'as pas de logo.
+  tagline:   "Pergolas & aménagements extérieurs sur-mesure",
+  footer:    "© Teck Aménagement",
+};
+
+/*
+  Chaque lien = un objet :
+    label : le texte affiché dans la bulle
+    url   : le lien de redirection
+    icon  : le logo affiché à gauche (voir la liste des icônes dispo plus bas)
+
+  Icônes disponibles :
+    "instagram", "facebook", "tiktok", "youtube", "linkedin",
+    "whatsapp", "site", "devis", "phone", "email", "maps", "avis"
+
+  ➕ Pour ajouter un lien : copie une ligne et change les valeurs.
+  ➖ Pour en retirer un : supprime sa ligne.
+  🔃 L'ordre d'affichage = l'ordre dans la liste.
+*/
+const LINKS = [
+  { label: "Demander mon devis gratuit", url: "https://teckamenagement.fillout.com/t/uDkMH84NFbus?source=linkinbio", icon: "devis" },
+  { label: "Notre site internet",        url: "https://teckamenagement.fr",                                          icon: "site" },
+  { label: "Instagram",                  url: "https://www.instagram.com/teck_amenagement/",                         icon: "instagram" },
+  { label: "Nous écrire sur WhatsApp",   url: "https://wa.me/33616908218",                                           icon: "whatsapp" },
+  // Lien direct vers l'avis 5★ de Mme Muriel (pour ne pas atterrir sur les avis "pertinents" par défaut).
+  // Pour pointer vers la fiche complète à la place, voir le lien en commentaire dans le README.
+  { label: "Voir nos avis Google",       url: "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2tabmIwNUphVEkwUzBzelVuZEdWM2h2TWtaclJVRRAB!2m1!1s0x0:0xf7b46f6331934b93!3m1!1s2@1:CAIQACodChtycF9oOkZnb05JaTI0S0szUndGV3hvMkZrRUE%7C%7C?hl=fr", icon: "avis" },
+];
+
+/* ================================================================= */
+/*   FIN DE LA ZONE À MODIFIER                                       */
+/* ================================================================= */
+
+
+/* ---------- Bibliothèque d'icônes ----------
+   color    : couleur de marque utilisée en version B (icônes couleur)
+   gradient : dégradé (Instagram) appliqué en version B
+   En version A (icônes blanches), tout reste en blanc.
+   --accent-teck = bleu du carré du logo Teck (pour les boutons non-réseaux). */
+const TECK = "#3E8EB4";
+const ICONS = {
+  instagram: { stroke: true, gradient: ["#F58529", "#DD2A7B", "#8134AF"], shapes: [
+    { tag: "rect", attrs: { x:2, y:2, width:20, height:20, rx:5 } },
+    { tag: "circle", attrs: { cx:12, cy:12, r:4 } },
+    { tag: "circle", attrs: { cx:17.5, cy:6.5, r:1.2, fill:"currentColor", stroke:"none" } },
+  ]},
+  facebook:  { fill: true, color: "#1877F2", shapes: [
+    { tag: "path", attrs: { d:"M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0022 12z" } },
+  ]},
+  tiktok:    { fill: true, color: "#FE2C55", shapes: [
+    { tag: "path", attrs: { d:"M16 3c.3 2.2 1.6 3.8 3.7 4v2.6c-1.3 0-2.6-.4-3.7-1.1v6.1a5.6 5.6 0 11-5.6-5.6c.3 0 .6 0 .9.1v2.7a2.9 2.9 0 102 2.8V3H16z" } },
+  ]},
+  youtube:   { fill: true, color: "#FF0000", shapes: [
+    { tag: "path", attrs: { d:"M23 12s0-3.1-.4-4.6c-.2-.8-.9-1.5-1.7-1.7C19.3 5.3 12 5.3 12 5.3s-7.3 0-8.9.4c-.8.2-1.5.9-1.7 1.7C1 8.9 1 12 1 12s0 3.1.4 4.6c.2.8.9 1.5 1.7 1.7 1.6.4 8.9.4 8.9.4s7.3 0 8.9-.4c.8-.2 1.5-.9 1.7-1.7.4-1.5.4-4.6.4-4.6zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z" } },
+  ]},
+  linkedin:  { fill: true, color: "#0A66C2", shapes: [
+    { tag: "path", attrs: { d:"M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14zM8.3 18.3v-7H6v7h2.3zM7.1 10a1.3 1.3 0 100-2.7 1.3 1.3 0 000 2.7zm11.2 8.3v-3.9c0-2-1.1-3-2.5-3-1.2 0-1.7.7-2 1.1v-1H11.5v7h2.3v-3.9c0-1 .2-1.9 1.4-1.9s1.2 1.1 1.2 2v3.8h2.3z" } },
+  ]},
+  whatsapp:  { fill: true, color: "#25D366", shapes: [
+    { tag: "path", attrs: { d:"M12 2a10 10 0 00-8.5 15.2L2 22l4.9-1.3A10 10 0 1012 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-2.9.8.8-2.8-.2-.3A8.2 8.2 0 1112 20.2zm4.5-6.1c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.7 6.7 0 01-3.3-2.9c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.1-.3 0-.5l-.7-1.7c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3a3 3 0 00-.9 2.2c0 1.3 1 2.6 1.1 2.8.1.2 1.9 2.9 4.6 4 .6.3 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1l-.4-.3z" } },
+  ]},
+  site:      { stroke: true, color: TECK, shapes: [
+    { tag: "circle", attrs: { cx:12, cy:12, r:9 } },
+    { tag: "path", attrs: { d:"M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18" } },
+  ]},
+  devis:     { stroke: true, round: true, color: TECK, shapes: [
+    { tag: "path", attrs: { d:"M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" } },
+    { tag: "path", attrs: { d:"M14 2v6h6M9 13h6M9 17h4" } },
+  ]},
+  phone:     { fill: true, color: "#25D366", shapes: [
+    { tag: "path", attrs: { d:"M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 013 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z" } },
+  ]},
+  email:     { stroke: true, round: true, color: TECK, shapes: [
+    { tag: "rect", attrs: { x:2, y:4, width:20, height:16, rx:2 } },
+    { tag: "path", attrs: { d:"M2 6l10 7 10-7" } },
+  ]},
+  maps:      { stroke: true, round: true, color: "#EA4335", shapes: [
+    { tag: "path", attrs: { d:"M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z" } },
+    { tag: "circle", attrs: { cx:12, cy:10, r:3 } },
+  ]},
+  avis:      { fill: true, color: "#FBBC05", shapes: [
+    { tag: "path", attrs: { d:"M12 2l2.9 6 6.6.5-5 4.3 1.5 6.4L12 16.3 5.9 19.2 7.4 12.8l-5-4.3L9 8z" } },
+  ]},
+};
+
+const SVG_NS = "http://www.w3.org/2000/svg";
+let gradCounter = 0;
+
+/* Construit un noeud <svg> selon la version active (blanche = A, couleur = B). */
+function buildIcon(key) {
+  const def = ICONS[key] || ICONS.site;
+  const colorMode = document.body.getAttribute("data-icons") === "color";
+  const svg = document.createElementNS(SVG_NS, "svg");
+  svg.setAttribute("viewBox", "0 0 24 24");
+
+  /* Détermine la couleur de "peinture" appliquée aux tracés */
+  let paint = "currentColor"; /* version A : hérite du blanc défini en CSS */
+  if (colorMode) {
+    if (def.gradient) {
+      gradCounter += 1;
+      const gid = "grad-" + gradCounter;
+      const defs = document.createElementNS(SVG_NS, "defs");
+      const lg = document.createElementNS(SVG_NS, "linearGradient");
+      lg.setAttribute("id", gid);
+      lg.setAttribute("x1", "0"); lg.setAttribute("y1", "0");
+      lg.setAttribute("x2", "1"); lg.setAttribute("y2", "1");
+      def.gradient.forEach(function (stopColor, i) {
+        const stop = document.createElementNS(SVG_NS, "stop");
+        stop.setAttribute("offset", (i / (def.gradient.length - 1) * 100) + "%");
+        stop.setAttribute("stop-color", stopColor);
+        lg.appendChild(stop);
+      });
+      defs.appendChild(lg);
+      svg.appendChild(defs);
+      paint = "url(#" + gid + ")";
+    } else if (def.color) {
+      paint = def.color;
+    }
+  }
+
+  if (def.stroke) {
+    svg.setAttribute("fill", "none");
+    svg.setAttribute("stroke", paint);
+    svg.setAttribute("stroke-width", "2");
+    if (def.round) {
+      svg.setAttribute("stroke-linecap", "round");
+      svg.setAttribute("stroke-linejoin", "round");
+    }
+  } else {
+    svg.setAttribute("fill", paint);
+  }
+
+  def.shapes.forEach(function (shape) {
+    const el = document.createElementNS(SVG_NS, shape.tag);
+    Object.keys(shape.attrs).forEach(function (name) {
+      let value = shape.attrs[name];
+      if (value === "currentColor") value = paint; /* la pastille Insta suit le dégradé */
+      el.setAttribute(name, value);
+    });
+    svg.appendChild(el);
+  });
+  return svg;
+}
+
+function render() {
+  document.title = SETTINGS.brandName + " — Liens";
+  document.getElementById('brand-name').textContent = SETTINGS.brandName;
+  document.getElementById('brand-logo').alt = SETTINGS.brandName;
+  document.getElementById('brand-tagline').textContent = SETTINGS.tagline;
+  document.getElementById('footer').textContent = SETTINGS.footer;
+
+  const container = document.getElementById('links');
+  while (container.firstChild) container.removeChild(container.firstChild);
+
+  LINKS.forEach(function (link) {
+    const a = document.createElement('a');
+    a.className = 'link';
+    a.href = link.url;
+    if (/^https?:/.test(link.url)) {
+      a.target = '_blank';
+      a.rel = 'noopener';
+    }
+
+    const iconSpan = document.createElement('span');
+    iconSpan.className = 'icon';
+    iconSpan.appendChild(buildIcon(link.icon));
+
+    const labelSpan = document.createElement('span');
+    labelSpan.className = 'label';
+    labelSpan.textContent = link.label;
+
+    const spacer = document.createElement('span');
+    spacer.className = 'spacer';
+
+    a.appendChild(iconSpan);
+    a.appendChild(labelSpan);
+    a.appendChild(spacer);
+    container.appendChild(a);
+  });
+}
+
+render();
+</script>
+</body>
+</html>
