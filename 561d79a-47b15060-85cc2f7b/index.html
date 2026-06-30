@@ -731,7 +731,7 @@
                                 setTimeout(function () {
                                     el.classList.add('tw-typing');
                                     typeNodes(saved, el, function () { el.classList.remove('tw-typing'); });
-                                }, 420); // laisse le bloc finir de glisser avant de taper
+                                }, 150); // court délai avant de taper
                             }
                         });
                     }, { threshold: 0.6 });
