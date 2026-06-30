@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Teck Aménagement — Faites votre demande</title>
+
+<!-- Meta Pixel (PageView seul) -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1276467600212409');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
+
+<!-- Préchargement du quiz Fillout (clic quasi instantané, mobile + ordi) -->
+<link rel="preconnect" href="https://teckamenagement.fillout.com" crossorigin>
+<link rel="dns-prefetch" href="https://teckamenagement.fillout.com">
+<link rel="prefetch" href="https://teckamenagement.fillout.com/t/uDkMH84NFbus" as="document">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{ --teck:#0653A8; --ink:#1D1D1F; }
+  *{box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;margin:0;color:var(--ink);background:#fff;}
+
+  /* ====== HERO (fond responsive ordi/mobile + voile) ====== */
+  /* Fond image commun au hero ET à la bande d'avis (un seul calque -> couleurs identiques, zéro raccord) */
+  .cover-bg{
+    position:relative;
+    background-image:linear-gradient(to bottom,rgba(8,16,24,.50) 0%,rgba(8,16,24,.60) 62%,rgba(8,16,24,.66) 100%), url('assets/bg-desktop.jpg');
+    background-size:cover; background-position:center;
+  }
+  .hero{
+    position:relative; height:100svh; min-height:600px; text-align:center;
+    color:#fff; overflow:hidden; background:none;
+  }
+  @media (max-width:768px){
+    .cover-bg{ background-image:linear-gradient(to bottom,rgba(8,16,24,.48) 0%,rgba(8,16,24,.60) 62%,rgba(8,16,24,.66) 100%), url('assets/bg-mobile.jpg'); }
+  }
+  /* Variante A : titre centré, espacements symétriques autour du titre */
+  .hero > .eyebrow, .hero > h1, .hero > .desc, .hero > .btn-black, .hero > .rating-wrap{
+    position:absolute; left:50%; transform:translate(-50%,-50%); margin:0; }
+  /* positions MOBILE (base) */
+  .eyebrow{ top:22%; font-size:18px; line-height:1.4; color:#E5E7EB; width:640px; max-width:88%; font-weight:300; }
+  .hero h1{ top:41%; font-size:36px; line-height:1.12; font-weight:700; letter-spacing:-.02em; width:760px; max-width:92%; }
+  .hero h1 .accent{ color:#3B82F6; }
+  .hero .desc{ top:60%; font-size:16px; line-height:1.5; font-weight:400; color:#E5E7EB; width:620px; max-width:88%; }
+  .hero .desc i{ font-style:italic; }
+  .hero .btn-black{ top:78%; white-space:nowrap; width:max-content; }
+  .hero .rating-wrap{ top:86%; white-space:nowrap; }
+  /* positions + tailles DESKTOP */
+  @media (min-width:768px){
+    .eyebrow{ top:21%; font-size:23px; }
+    .hero h1{ top:38%; font-size:58px; }
+    .hero .desc{ top:55%; font-size:20px; }
+    .hero .btn-black{ top:70%; }
+    .hero .rating-wrap{ top:79%; }
+  }
+
+  /* Bouton noir (repris de ta DA devis) */
+  .btn-black{ display:inline-flex; align-items:center; gap:10px; background:#000; color:#fff;
+    border:none; border-radius:14px; padding:16px 34px; font-size:16px; font-weight:600; cursor:pointer;
+    text-decoration:none; transition:transform .35s cubic-bezier(.175,.885,.32,1.275), box-shadow .35s; }
+  .btn-black:hover{ transform:scale(1.03); box-shadow:0 14px 34px rgba(0,0,0,.35); }
+  /* le bouton du hero est centré en absolu → le hover doit garder le translate */
+  .hero .btn-black:hover{ transform:translate(-50%,-50%) scale(1.03); }
+
+  /* Bandeau note + taches de lueur */
+  .rating-wrap{ position:relative; margin-top:30px; display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .rating{ display:flex; align-items:center; gap:0; font-size:16px; font-weight:600; z-index:2; }
+  .rating .ystar{ color:#FBBF24; font-size:1em; line-height:1; margin:0; }
+  .rating .muted{ font-weight:400; opacity:.85; }
+  .glow{ position:absolute; border-radius:50%; filter:blur(45px); pointer-events:none; z-index:1; }
+  .glow.a{ width:220px;height:220px; background:#3E8EB4; left:-40px; top:-70px; opacity:.32; }
+  .glow.b{ width:160px;height:160px; background:#7EC4FF; right:-30px; top:-40px; opacity:.28; }
+
+  /* ====== MARQUEE générique ====== */
+  .marquee{ overflow:hidden; width:100%; }
+  .mq-track{ display:flex; width:max-content; gap:16px; align-items:center; }
+  #reviewsTrack{ align-items:flex-start; }
+  .mq-left{ animation:scrollLeft 48s linear infinite; }      /* avis : droite -> gauche */
+  .mq-right{ animation:scrollRight 40s linear infinite; }    /* presse : gauche -> droite */
+  .marquee:hover .mq-track{ animation-play-state:paused; }
+  @keyframes scrollLeft{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @keyframes scrollRight{ from{transform:translateX(-50%);} to{transform:translateX(0);} }
+
+  /* ====== Cartes avis (style identique page de remerciement) ====== */
+  .reviews-section{ background:transparent; padding:0 0 40px; margin-top:-78px; position:relative; z-index:3; }
+  @media(max-width:768px){ .reviews-section{ margin-top:-48px; } }
+  /* La photo continue désormais sous les cartes via .cover-bg (couleurs identiques au hero). */
+  .reviews-section::before{ display:none; }
+  .review-card{ width:330px; flex-shrink:0; background:#fff; border:1px solid #D2D2D7; border-radius:28px;
+    padding:26px 24px; display:flex; flex-direction:column; box-shadow:0 4px 20px rgba(0,0,0,.04);
+    transition:transform .4s, box-shadow .4s, border-color .4s; }
+  .review-card:hover{ transform:translateY(-6px); border-color:var(--teck); box-shadow:0 18px 38px rgba(0,0,0,.08); }
+  .review-card .stars{ color:var(--teck); font-size:13px; letter-spacing:1px; margin-bottom:12px; }
+  .review-card .txt{ color:#424245; font-size:13.5px; line-height:1.55; font-weight:300; font-style:italic; flex:1; }
+  .review-card .who{ display:flex; align-items:center; gap:10px; margin-top:18px; }
+  .review-card .ava{ width:42px; height:42px; border-radius:50%; background:#F5F5F7; border:1px solid #D2D2D7;
+    display:flex; align-items:center; justify-content:center; color:var(--teck); font-size:11px; font-weight:700; flex-shrink:0; }
+  .review-card .nm{ font-size:13px; font-weight:600; color:var(--ink); text-align:left; }
+  .review-card .sub{ font-size:11px; color:#86868B; text-align:left; }
+
+  /* ====== Presse ====== */
+  .press-section{ background:#fff; padding:56px 0; border-top:1px solid #EEE; border-bottom:1px solid #EEE; }
+  .press-ttl{ text-align:center; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#0653A8; font-weight:600; margin-bottom:34px; }
+  /* Bandeau resserré (≈ largeur du titre) + fondu sur les bords → 4-5 logos visibles */
+  .press-section .marquee{ max-width:780px; margin:0 auto;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%);
+    mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%); }
+  /* Bandeau presse DÉFILANT — logos plus gros, hauteur visuelle uniforme */
+  .press-track{ gap:52px; align-items:center; padding:0 25px; }
+  .press-track img{ width:auto; object-fit:contain; display:block; mix-blend-mode:multiply; flex-shrink:0; }
+  .press-track .elle{ height:52px; }
+  .press-track .cotesud{ height:54px; }
+  .press-track .ideat{ height:50px; }
+  .press-track .cotemag{ height:40px; }
+  .press-track .ab{ height:60px; }
+  .press-track .anous{ height:42px; }
+  .press-track .artdeco{ height:42px; }
+  .press-logotext{ font-family:'Playfair Display',Georgia,serif; font-size:36px; font-weight:700; color:#1D1D1F; line-height:1; white-space:nowrap; }
+  .press-logotext .amp{ color:#E9D46E; }
+
+  /* ====== 3 avantages (bulles) ====== */
+  .adv-section{ position:relative; background:linear-gradient(180deg,#EFF4FA 0%,#FFFFFF 88%); padding:64px 22px 70px; overflow:hidden; }
+  .adv-ttl{ text-align:center; font-size:28px; font-weight:500; letter-spacing:-.02em; margin-bottom:8px; color:#1D1D1F; }
+  @media(min-width:768px){ .adv-ttl{ font-size:38px; } }
+  /* Bloc CTA bas */
+  .bottom-cta{ background:#FFFFFF; text-align:center; padding:10px 22px 26px; display:flex; flex-direction:column; align-items:center; gap:16px; }
+  .bottom-cta .rating{ color:#1D1D1F; }
+  .bottom-cta .rating .muted{ opacity:.7; }
+  .adv-sub{ text-align:center; color:#86868B; font-size:14px; margin-bottom:40px; }
+  .bubbles{ position:relative; max-width:980px; margin:0 auto; display:flex; flex-direction:column; gap:18px; }
+  .bubble{ background:#fff; border:1px solid #E4E8EC; border-radius:26px; padding:26px 24px; text-align:center; box-shadow:0 12px 40px rgba(10,61,92,.08); }
+  .bubble .ico{ width:54px;height:54px;border-radius:16px;background:#E6F1FA;display:flex;align-items:center;justify-content:center;margin:0 auto 14px; }
+  .bubble h4{ font-size:17px; font-weight:600; margin:0 0 6px; }
+  .bubble p{ font-size:13.5px; color:#6b7780; line-height:1.5; margin:0; }
+  /* Animation flottante des bulles sur MOBILE (équivalent du desktop) */
+  .bubble.b1{ animation:floatM 6s ease-in-out infinite; }
+  .bubble.b2{ animation:floatM 7s ease-in-out infinite .5s; }
+  .bubble.b3{ animation:floatM 8s ease-in-out infinite 1s; }
+  @keyframes floatM{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-12px); } }
+  @media (min-width:768px){
+    .bubbles{ display:block; min-height:360px; }
+    .bubble{ position:absolute; width:300px; }
+    .bubble.b1{ left:0; top:30px; animation:float1 7s ease-in-out infinite; }
+    .bubble.b2{ right:0; top:0; animation:float2 8s ease-in-out infinite; }
+    .bubble.b3{ left:50%; top:170px; animation:float3 9s ease-in-out infinite; }
+  }
+  @keyframes float1{ 0%,100%{transform:translate(0,0);} 50%{transform:translate(14px,-18px);} }
+  @keyframes float2{ 0%,100%{transform:translate(0,0);} 50%{transform:translate(-16px,16px);} }
+  @keyframes float3{ 0%,100%{transform:translate(-50%,0);} 50%{transform:translate(-50%,-16px);} }
+
+  /* ====== Footer (identique aux pages résultats : fond blanc + logo) ====== */
+  .footer{ background:#FFFFFF; text-align:center; padding:24px 16px 24px; }
+  .footer img{ display:block; margin:0 auto 10px; width:100%; max-width:334px; height:auto; }
+  @media (min-width:768px){ .footer img{ max-width:540px; } }
+  .footer .legal{ font-size:13px; color:#000; }
+  .footer .legal a{ color:#000; font-style:italic; text-decoration:none; }
+  .footer .legal .sep{ color:#C7C7CC; margin:0 8px; }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO + AVIS (fond image commun, continu) ============ -->
+<div class="cover-bg">
+<section class="hero">
+  <p class="eyebrow">Pour toutes les personnes qui veulent enfin profiter de leur extérieur l'été, même sous +35°…</p>
+
+  <!-- ⚠️ "-10°C" = USP à VALIDER avec données réelles (page de présentation client, pas encore en prod) -->
+  <h1>Jusqu'à <span class="accent">10°C de moins</span> sous votre pergola</h1>
+
+  <p class="desc">Une pergola en bois exotique sans entretien, qui se fond naturellement dans le décor de votre extérieur.</p>
+
+  <a class="btn-black" href="https://teckamenagement.fillout.com/t/uDkMH84NFbus?source=cover">
+    Je fais ma demande
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+  </a>
+
+  <div class="rating-wrap">
+    <span class="glow a"></span><span class="glow b"></span>
+    <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +130 avis</span></div>
+  </div>
+</section>
+
+<!-- ======================= AVIS (marquee droite -> gauche) ======================= -->
+<section class="reviews-section">
+  <div class="marquee">
+    <div class="mq-track mq-left" id="reviewsTrack">
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Excellentes prestations avec Teck Aménagement pour la réalisation de nos deux pergolas / ombrières. Des artisans rigoureux, un travail soigné, des délais respectés et un très beau rendu esthétique. Nous recommandons vivement !"</p><div class="who"><div class="ava">AC</div><div><div class="nm">Anne Cayron</div><div class="sub">Avis Google</div></div></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Une superbe pergola, très design… à la hauteur de nos espérances. Une vraie plus-value pour la maison. Une entreprise sérieuse et réactive qui a respecté tous ses engagements."</p><div class="who"><div class="ava">MB</div><div><div class="nm">Muriel Baccigalupo</div><div class="sub">Avis Google</div></div></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Nous sommes ravis ! Une prestation de qualité, des conseils avisés et un suivi au millimètre de la commande à l'installation. On réfléchit déjà à un autre projet avec eux, je recommande à 1000 % !"</p><div class="who"><div class="ava">CT</div><div><div class="nm">Catherine Tonda</div><div class="sub">Avis Google</div></div></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Je suis très satisfaite de la magnifique pergola. Franck a été très réactif, à l'écoute, et de très bons conseils. Son équipe était adorable et très pro ! Un design juste DE FOLIE !!!"</p><div class="who"><div class="ava">AR</div><div><div class="nm">Adrienne Riera</div><div class="sub">Avis Google</div></div></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Rénovation de nos extérieurs, terrasse en bois exotique et pergola sur toute la longueur de la maison. Une merveille, très belle prestation, chantier terminé dans les temps. Je recommande à 200 %."</p><div class="who"><div class="ava">FB</div><div><div class="nm">Fabienne Bongiovanni</div><div class="sub">Avis Google</div></div></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Très grande satisfaction ! La luminosité reste la même à l'intérieur de la maison tout en protégeant ma terrasse du soleil. Résultat impeccable et conforme à ce qui avait été annoncé. Je recommande les yeux fermés."</p><div class="who"><div class="ava">M</div><div><div class="nm">Mathieu</div><div class="sub">Avis Google</div></div></div></div>
+    </div>
+  </div>
+</section>
+</div><!-- /cover-bg : fin du fond image commun -->
+
+<!-- ======================= VU DANS (marquee gauche -> droite) ======================= -->
+<section class="press-section">
+  <div class="press-ttl">Vu dans la presse</div>
+  <div class="marquee">
+    <div class="mq-track mq-right press-track" id="pressTrack">
+      <img class="artdeco" src="assets/presse/art-decoration.png" alt="Art&Décoration">
+      <img class="elle" src="assets/presse/elle-decoration.png" alt="Elle Décoration">
+      <img class="cotesud" src="assets/presse/cote-sud.png" alt="Maisons Côté Sud">
+      <img class="ideat" src="assets/presse/ideat.png" alt="IDEAT">
+      <img class="cotemag" src="assets/presse/cote-magazine.png" alt="Côté Magazine">
+      <img class="ab" src="assets/presse/architecture-bois.png" alt="Architecture Bois">
+      <img class="anous" src="assets/presse/anous.png" alt="ANous Aix Marseille">
+      <span class="press-logotext" style="font-weight:600;">Décoration</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 3 AVANTAGES ======================= -->
+<section class="adv-section">
+  <h2 class="adv-ttl">Pourquoi choisir Teck Aménagement</h2>
+  <p class="adv-sub">3 raisons qui font toute la différence</p>
+  <div class="bubbles">
+    <div class="bubble b1">
+      <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 5l14 14M19 5 5 19M2 12h20"/></svg></div>
+      <h4>Jusqu'à 10°C de moins</h4>
+      <p>Une vraie sensation de fraîcheur sous la pergola, même en pleine chaleur.</p>
+    </div>
+    <div class="bubble b2">
+      <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h11a4 4 0 1 0-4-4M3 13h15a4 4 0 1 1-4 4M3 18h9"/></svg></div>
+      <h4>Structure légère &amp; aérée</h4>
+      <p>Un design fin qui laisse circuler l'air et s'intègre avec élégance.</p>
+    </div>
+    <div class="bubble b3">
+      <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+      <h4>Garde la luminosité l'hiver</h4>
+      <p>Votre intérieur reste lumineux toute l'année, sans assombrir vos pièces.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= BLOC CTA BAS ======================= -->
+<section class="bottom-cta">
+  <a class="btn-black" href="https://teckamenagement.fillout.com/t/uDkMH84NFbus?source=cover">Je fais ma demande
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+  </a>
+  <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +130 avis</span></div>
+</section>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="footer">
+  <img src="assets/logo-teck.png" alt="Teck Aménagement — Pergola, terrasse, mobilier en bois exotique">
+  <div class="legal">
+    <a href="https://teckamenagement.fr/mentions-legales/">Politique de confidentialité</a>
+    <span class="sep">·</span>© Teck Aménagement. Tous droits réservés.
+  </div>
+</footer>
+
+<script>
+/* Duplique le contenu des marquees pour une boucle infinie fluide (cloneNode = sûr, pas d'innerHTML) */
+['reviewsTrack','pressTrack'].forEach(function(id){
+  var t = document.getElementById(id);
+  [].slice.call(t.children).forEach(function(node){ t.appendChild(node.cloneNode(true)); });
+});
+</script>
+</body>
+</html>
