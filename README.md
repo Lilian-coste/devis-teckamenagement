@@ -6,6 +6,7 @@ Projet Vercel combiné qui sert l'intégralité du sous-domaine **devis.teckamen
 
 | Page | URL | Public |
 |---|---|---|
+| Cover page d'accueil (top de tunnel pergola) | [devis.teckamenagement.fr/pergola/page-accueil/](https://devis.teckamenagement.fr/pergola/page-accueil/) | Meta ads — pixel `PageView` seul · bouton → quiz Fillout |
 | Réservation après quiz (budget >15K€) | [devis.teckamenagement.fr/561d79a-47b15060-85cc2f7b/](https://devis.teckamenagement.fr/561d79a-47b15060-85cc2f7b/) | Meta ads — pixel `PageView + Lead` |
 | Page <15K€ + simulateur surface | [devis.teckamenagement.fr/561d79a-47b15060-3631b3c8/](https://devis.teckamenagement.fr/561d79a-47b15060-3631b3c8/) | Meta ads budget faible — pixel `PageView` seul |
 | Simulateur prix dépt 1 (800/500 €/m²) | [devis.teckamenagement.fr/simulez-votre-projet-65bd92/](https://devis.teckamenagement.fr/simulez-votre-projet-65bd92/) | Page d'entrée organique / lien direct |
@@ -18,7 +19,7 @@ La racine [devis.teckamenagement.fr/](https://devis.teckamenagement.fr/) redirig
 
 ID `1276467600212409`. Configuré pour accepter `teckamenagement.fr` et tous ses sous-domaines (Traffic Permission OK).
 
-- Pages **avec pixel** : `561d79a-47b15060-85cc2f7b/` (PageView + Lead) et `561d79a-47b15060-3631b3c8/` (PageView seul).
+- Pages **avec pixel** : `pergola/page-accueil/` (PageView seul, cover top de tunnel), `561d79a-47b15060-85cc2f7b/` (PageView + Lead) et `561d79a-47b15060-3631b3c8/` (PageView seul).
 - Pages **sans pixel** : `rdv-mail/`, `simulez-votre-projet-65bd92/`, `simulez-votre-projet-65pc92/`.
 
 ## Stack technique
