@@ -670,7 +670,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
                 <!-- Colonne gauche : 3 cartes + accroche (couleurs / tailles fidèles Systeme.io) -->
-                <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-5 reveal-left">
                     <div class="bg-white rounded-[20px] p-6 shadow-[0_4px_15px_rgba(0,0,0,0.03)]">
                         <h3 class="text-[#0A1F44] text-[28px] md:text-[36px] leading-[40px] tracking-[-1px] font-semibold mb-2">Créez</h3>
                         <p class="text-[#0A1F44] text-[17px] md:text-[18px] leading-[28px] font-normal">Une protection solaire sans perte de luminosité grâce à ses carrelets en bois exotique sans entretien.</p>
@@ -685,7 +685,7 @@
                     </div>
 
                     <div class="text-center mt-3">
-                        <p class="text-black text-[20px] md:text-[24px] leading-[32px] md:leading-[40px] tracking-[-1px] font-semibold">
+                        <p class="text-black text-[20px] md:text-[24px] leading-[32px] md:leading-[40px] tracking-[-1px] font-semibold tw-typewriter">
                             Nous ne concevons pas des pergolas.<br>
                             Nous créons des <strong class="font-bold">expériences de vie extérieure</strong>.
                         </p>
@@ -693,7 +693,7 @@
                 </div>
 
                 <!-- Colonne droite : image (Maison Cabriès) — 410px / coins légèrement arrondis -->
-                <div class="w-full flex justify-center">
+                <div class="w-full flex justify-center reveal-right">
                     <img src="images/maison-cabries-5.jpg" alt="Réalisation Teck Aménagement - Maison Cabriès" class="w-full max-w-[360px] md:max-w-[410px] h-auto rounded-[5px] object-cover">
                 </div>
 
@@ -742,7 +742,7 @@
     <footer class="apple-font" style="background-color:#ffffff;">
         <div class="max-w-4xl mx-auto px-4 pt-8 pb-4 text-center">
             <img src="images/logo-teck.png" alt="Teck Aménagement — Pergola, terrasse, mobilier en bois exotique" class="mx-auto w-full max-w-[334px] md:max-w-[540px] h-auto mb-2">
-            <a href="https://teckamenagement.fr/mentions-legales/" class="text-black text-[13px] italic underline">Politique de confidentialité</a>
+            <p class="text-[13px] text-black"><a href="https://teckamenagement.fr/mentions-legales/" class="text-black italic">Politique de confidentialité</a> <span class="text-[#C7C7CC]">·</span> © Teck Aménagement. Tous droits réservés.</p>
         </div>
     </footer>
 
@@ -811,6 +811,99 @@
             };
             scrollWrapper.addEventListener('click', handlePause);
             scrollWrapper.addEventListener('touchend', handlePause);
+        })();
+    </script>
+
+    <!-- =========================================================
+         Animations d'apparition au scroll
+         - bloc "Créez/Révolutionnez/Vivez" glisse depuis la gauche
+         - image associée glisse depuis la droite
+         - phrase "Nous ne concevons pas..." en machine à écrire
+         ========================================================= -->
+    <style>
+        .reveal-left, .reveal-right {
+            opacity: 0;
+            will-change: opacity, transform;
+            transition: opacity .9s ease, transform .9s cubic-bezier(.16,1,.3,1);
+        }
+        .reveal-left  { transform: translateX(-44px); }
+        .reveal-right { transform: translateX(44px); }
+        .reveal-left.reveal-in, .reveal-right.reveal-in { opacity: 1; transform: none; }
+        .tw-typewriter.tw-typing::after {
+            content: '|';
+            margin-left: 2px;
+            font-weight: 400;
+            animation: tw-blink .9s steps(1) infinite;
+        }
+        @keyframes tw-blink { 50% { opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-left, .reveal-right { opacity: 1 !important; transform: none !important; transition: none !important; }
+        }
+    </style>
+    <script>
+        (function () {
+            var reduce  = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var reveals = document.querySelectorAll('.reveal-left, .reveal-right');
+            var typers  = document.querySelectorAll('.tw-typewriter');
+
+            if (!('IntersectionObserver' in window) || reduce) {
+                for (var i = 0; i < reveals.length; i++) reveals[i].classList.add('reveal-in');
+                return; // texte machine à écrire laissé tel quel, déjà lisible
+            }
+
+            // 1) Glissement gauche / droite au scroll
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) { e.target.classList.add('reveal-in'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.2 });
+            for (var j = 0; j < reveals.length; j++) io.observe(reveals[j]);
+
+            // 2) Effet machine à écrire (préserve <br> et <strong>)
+            var SPEED = 34; // ms par caractère
+            function clearEl(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+            function typeNodes(list, parent, done) {
+                var i = 0;
+                (function step() {
+                    if (i >= list.length) { done(); return; }
+                    var node = list[i++];
+                    if (node.nodeType === 3) {
+                        var full = node.nodeValue, c = 0, tn = document.createTextNode('');
+                        parent.appendChild(tn);
+                        (function typeChar() {
+                            if (c < full.length) { tn.nodeValue += full.charAt(c++); setTimeout(typeChar, SPEED); }
+                            else step();
+                        })();
+                    } else if (node.nodeName === 'BR') {
+                        parent.appendChild(document.createElement('br')); step();
+                    } else {
+                        var clone = node.cloneNode(false);
+                        parent.appendChild(clone);
+                        typeNodes(Array.prototype.slice.call(node.childNodes), clone, step);
+                    }
+                })();
+            }
+            for (var k = 0; k < typers.length; k++) {
+                (function (el) {
+                    var saved = Array.prototype.slice.call(el.childNodes).map(function (n) { return n.cloneNode(true); });
+                    el.style.minHeight = el.offsetHeight + 'px'; // réserve la place, évite le saut de mise en page
+                    clearEl(el);
+                    var started = false;
+                    var twIO = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (e) {
+                            if (e.isIntersecting && !started) {
+                                started = true;
+                                twIO.unobserve(e.target);
+                                setTimeout(function () {
+                                    el.classList.add('tw-typing');
+                                    typeNodes(saved, el, function () { el.classList.remove('tw-typing'); });
+                                }, 420); // laisse le bloc finir de glisser avant de taper
+                            }
+                        });
+                    }, { threshold: 0.6 });
+                    twIO.observe(el);
+                })(typers[k]);
+            }
         })();
     </script>
 
