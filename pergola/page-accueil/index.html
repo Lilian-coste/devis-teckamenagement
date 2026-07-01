@@ -33,18 +33,19 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
   body{font-family:'Inter',sans-serif;margin:0;color:var(--ink);background:#fff;}
 
   /* ====== HERO (fond responsive ordi/mobile + voile) ====== */
-  /* Fond image commun au hero ET à la bande d'avis (un seul calque -> couleurs identiques, zéro raccord) */
-  .cover-bg{
-    position:relative;
-    background-image:linear-gradient(to bottom,rgba(8,16,24,.50) 0%,rgba(8,16,24,.60) 62%,rgba(8,16,24,.66) 100%), url('assets/bg-desktop.jpg');
-    background-size:cover; background-position:center;
-  }
+  /* Wrapper hero+avis : transparent sur ORDI (le hero porte son fond), porte le fond MOBILE prolongé (herbe+bois). */
+  .cover-bg{ position:relative; }
   .hero{
     position:relative; height:100svh; min-height:600px; text-align:center;
-    color:#fff; overflow:hidden; background:none;
+    color:#fff; overflow:hidden;
+    background-image:linear-gradient(rgba(8,16,24,.52),rgba(8,16,24,.62)), url('assets/bg-desktop.jpg');
+    background-size:cover; background-position:center;
   }
   @media (max-width:768px){
-    .cover-bg{ background-image:linear-gradient(to bottom,rgba(8,16,24,.48) 0%,rgba(8,16,24,.60) 62%,rgba(8,16,24,.66) 100%), url('assets/bg-mobile.jpg'); }
+    /* Mobile (validé) : fond porté par le wrapper = image prolongée (herbe+bois), hero transparent. */
+    .hero{ background:none; }
+    .cover-bg{ background-image:linear-gradient(to bottom,rgba(8,16,24,.50) 0%,rgba(8,16,24,.58) 48%,rgba(8,16,24,.30) 100%), url('assets/bg-mobile-ext.jpg');
+      background-size:cover; background-position:center; }
   }
   /* Variante A : titre centré, espacements symétriques autour du titre */
   .hero > .eyebrow, .hero > h1, .hero > .desc, .hero > .btn-black, .hero > .rating-wrap{
@@ -94,9 +95,19 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
   @keyframes scrollRight{ from{transform:translateX(-50%);} to{transform:translateX(0);} }
 
   /* ====== Cartes avis (style identique page de remerciement) ====== */
-  .reviews-section{ background:transparent; padding:0 0 40px; margin-top:-78px; position:relative; z-index:3; }
-  @media(max-width:768px){ .reviews-section{ margin-top:-48px; } }
-  /* La photo continue désormais sous les cartes via .cover-bg (couleurs identiques au hero). */
+  /* Sous les avis : PROJECTION de l'image du hero (herbe + bois), calque ::after qui DÉMARRE pile au bas du hero. */
+  .reviews-section{ background:transparent; padding:0 0 28px; margin-top:-78px; position:relative; z-index:3; }
+  .reviews-section::after{
+    content:''; position:absolute; left:0; right:0; top:78px; bottom:0; z-index:-1; pointer-events:none;
+    /* voile haut = même teinte assombrie que le bas du hero → raccord invisible, puis s'éclaircit */
+    background-image:linear-gradient(to bottom, rgba(8,16,24,.60) 0%, rgba(8,16,24,.34) 45%, rgba(8,16,24,.14) 100%), url('assets/bg-desktop-proj.jpg');
+    background-size:cover, cover; background-position:center top, center top; background-repeat:no-repeat, no-repeat;
+  }
+  @media(max-width:768px){
+    .reviews-section{ margin-top:-48px; padding:0 0 22px; }
+    /* Mobile : la continuité vient du fond prolongé (.cover-bg), pas de la projection ordi. */
+    .reviews-section::after{ display:none; }
+  }
   .reviews-section::before{ display:none; }
   .review-card{ width:330px; flex-shrink:0; background:#fff; border:1px solid #D2D2D7; border-radius:28px;
     padding:26px 24px; display:flex; flex-direction:column; box-shadow:0 4px 20px rgba(0,0,0,.04);
@@ -111,7 +122,7 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
   .review-card .sub{ font-size:11px; color:#86868B; text-align:left; }
 
   /* ====== Presse ====== */
-  .press-section{ background:#fff; padding:56px 0; border-top:1px solid #EEE; border-bottom:1px solid #EEE; }
+  .press-section{ background:#fff; padding:16px 0 56px; }
   .press-ttl{ text-align:center; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#0653A8; font-weight:600; margin-bottom:34px; }
   /* Bandeau resserré (≈ largeur du titre) + fondu sur les bords → 4-5 logos visibles */
   .press-section .marquee{ max-width:780px; margin:0 auto;
@@ -171,8 +182,9 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
 </head>
 <body>
 
-<!-- ============ HERO + AVIS (fond image commun, continu) ============ -->
+<!-- ============ HERO + AVIS (wrapper : fond mobile prolongé) ============ -->
 <div class="cover-bg">
+<!-- ======================= HERO ======================= -->
 <section class="hero">
   <p class="eyebrow">Pour toutes les personnes qui veulent enfin profiter de leur extérieur l'été, même sous +35°…</p>
 
@@ -205,7 +217,7 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
     </div>
   </div>
 </section>
-</div><!-- /cover-bg : fin du fond image commun -->
+</div><!-- /cover-bg -->
 
 <!-- ======================= VU DANS (marquee gauche -> droite) ======================= -->
 <section class="press-section">
