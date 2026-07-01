@@ -42,10 +42,9 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
     background-size:cover; background-position:center;
   }
   @media (max-width:768px){
-    /* Mobile (validé) : fond porté par le wrapper = image prolongée (herbe+bois), hero transparent. */
-    .hero{ background:none; }
-    .cover-bg{ background-image:linear-gradient(to bottom,rgba(8,16,24,.50) 0%,rgba(8,16,24,.58) 48%,rgba(8,16,24,.30) 100%), url('assets/bg-mobile-ext.jpg');
-      background-size:cover; background-position:center; }
+    /* Mobile : VRAIE image (fini les pixels générés / la bande floue). Sous les avis = bandeau transparent + herbe via ::after, comme desktop. */
+    .hero{ background-image:linear-gradient(rgba(8,16,24,.5),rgba(8,16,24,.62)), url('assets/bg-mobile.jpg'); background-size:cover; background-position:center; }
+    .cover-bg{ background:none; }
   }
   /* Variante A : titre centré, espacements symétriques autour du titre */
   .hero > .eyebrow, .hero > h1, .hero > .desc, .hero > .btn-black, .hero > .rating-wrap{
@@ -105,8 +104,8 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
   }
   @media(max-width:768px){
     .reviews-section{ margin-top:-48px; padding:0 0 22px; }
-    /* Mobile : la continuité vient du fond prolongé (.cover-bg), pas de la projection ordi. */
-    .reviews-section::after{ display:none; }
+    /* Mobile : même bandeau transparent + herbe que desktop, démarrage au bas du hero (top:48px). */
+    .reviews-section::after{ top:48px; }
   }
   .reviews-section::before{ display:none; }
   .review-card{ width:330px; flex-shrink:0; background:#fff; border:1px solid #D2D2D7; border-radius:28px;
