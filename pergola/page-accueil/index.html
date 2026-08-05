@@ -190,8 +190,8 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
   <!-- Preuve "-10°C" : test thermomètre filmé (rush IMG_4477, 29/07/2026) : 32/32 au départ, 42°C au soleil / 32°C sous pergola à l'arrivée -->
   <h1>Restez dehors quand tout le monde rentre : <span class="accent">10°C de moins</span> sous votre pergola</h1>
 
-  <p class="desc">Une pergola en bois exotique qui ne vous demande aucun entretien et se fond naturellement dans le décor de votre extérieur.</p>
-
+  <!-- Le subheader (« Une pergola en bois exotique… ») a été retiré le 05/08/2026 :
+       Lilian réfléchit à le replacer ailleurs sur la page. -->
   <a class="btn-black" href="https://teckamenagement.fillout.com/t/uDkMH84NFbus?source=cover">
     Je fais ma demande
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
@@ -199,7 +199,7 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
 
   <div class="rating-wrap">
     <span class="glow a"></span><span class="glow b"></span>
-    <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +130 avis</span></div>
+    <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
   </div>
 </section>
 
@@ -239,24 +239,52 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
 <section class="adv-section">
   <h2 class="adv-ttl">Pourquoi choisir Teck Aménagement</h2>
   <p class="adv-sub">3 raisons qui font toute la différence</p>
-  <div class="bubbles">
+  <!-- DEUX versions des 3 cartes (demande de Lilian, 05/08/2026) :
+       défaut = revendications « Plus de… » (Décodez la persuasion) ; `?cartes=avant`
+       affiche l'ancienne version. Le script en bas de page fait la bascule.
+       « Plus de fraîcheur » est sourcé par le test thermomètre filmé (rush IMG_4477,
+       29/07/2026). La vidéo du test n'est PAS dans la carte : elle vivra juste au-dessus
+       de la section (fichier prêt dans assets/videos/test-thermometre.mp4). -->
+  <div class="bubbles" id="cartesRevendications">
     <div class="bubble b1">
       <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 5l14 14M19 5 5 19M2 12h20"/></svg></div>
       <h4>Plus de fraîcheur</h4>
       <p>Nous l'avons mesuré au thermomètre : 42°C en plein soleil contre 32°C sous la pergola, soit 10°C d'écart filmés en vidéo.</p>
-      <video src="assets/videos/test-thermometre.mp4" autoplay muted loop playsinline style="width:100%; max-width:240px; border-radius:12px; margin-top:14px; display:block; margin-left:auto; margin-right:auto;"></video>
     </div>
     <div class="bubble b2">
-      <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
-      <h4>Plus de confort</h4>
-      <p>Installez-vous confortablement, à l'abri du soleil, sans aucun entretien du bois à prévoir.</p>
-    </div>
-    <div class="bubble b3">
       <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h11a4 4 0 1 0-4-4M3 13h15a4 4 0 1 1-4 4M3 18h9"/></svg></div>
       <h4>Plus d'esthétisme</h4>
       <p>La couleur naturelle et la chaleur du bois se fondent dans votre décor, portées par une structure légère, épurée et aérée.</p>
     </div>
+    <div class="bubble b3">
+      <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+      <h4>Plus de confort</h4>
+      <p>Installez-vous confortablement, à l'abri du soleil, sans aucun entretien du bois à prévoir.</p>
+    </div>
   </div>
+  <div class="bubbles" id="cartesAvant" hidden>
+    <div class="bubble b1">
+      <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 5l14 14M19 5 5 19M2 12h20"/></svg></div>
+      <h4>Jusqu'à 10°C de moins</h4>
+      <p>Une vraie sensation de fraîcheur sous la pergola, même en pleine chaleur.</p>
+    </div>
+    <div class="bubble b2">
+      <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h11a4 4 0 1 0-4-4M3 13h15a4 4 0 1 1-4 4M3 18h9"/></svg></div>
+      <h4>Structure légère &amp; aérée</h4>
+      <p>Un design fin qui laisse circuler l'air et s'intègre avec élégance.</p>
+    </div>
+    <div class="bubble b3">
+      <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+      <h4>Garde la luminosité l'hiver</h4>
+      <p>Votre intérieur reste lumineux toute l'année, sans assombrir vos pièces.</p>
+    </div>
+  </div>
+  <script>
+    if (new URLSearchParams(location.search).get("cartes") === "avant") {
+      document.getElementById("cartesRevendications").hidden = true;
+      document.getElementById("cartesAvant").hidden = false;
+    }
+  </script>
 </section>
 
 <!-- ======================= BLOC CTA BAS ======================= -->
@@ -264,7 +292,7 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
   <a class="btn-black" href="https://teckamenagement.fillout.com/t/uDkMH84NFbus?source=cover">Je fais ma demande
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
   </a>
-  <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +130 avis</span></div>
+  <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
 </section>
 
 <!-- ======================= FOOTER ======================= -->
