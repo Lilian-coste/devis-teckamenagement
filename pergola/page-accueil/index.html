@@ -120,6 +120,10 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
     display:flex; align-items:center; justify-content:center; color:var(--teck); font-size:11px; font-weight:700; flex-shrink:0; }
   .review-card .nm{ font-size:13px; font-weight:600; color:var(--ink); text-align:left; }
   .review-card .sub{ font-size:11px; color:#86868B; text-align:left; }
+  /* Mention 4,9★ en bas de CHAQUE carte (demande Lilian 06/08/2026 — règle de repli :
+     pas la place à droite des noms longs → tout en bas au centre, pour toutes). */
+  .review-card .rating{ margin-top:auto; padding-top:14px; justify-content:center; font-size:13px; color:#1D1D1F; }
+  .review-card .rating .muted{ opacity:.7; }
 
   /* ====== Presse ====== */
   .press-section{ background:#fff; padding:32px 0 56px; }
@@ -207,8 +211,8 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
 
   <div class="rating-wrap">
     <span class="glow a"></span><span class="glow b"></span>
+    <!-- La mention 4,9★ a quitté le hero (Lilian 06/08/2026) : elle vit en bas de chaque carte avis. -->
     <div class="quiz-count">+635 personnes ont déjà fait ce quiz</div>
-    <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
   </div>
 </section>
 
@@ -216,12 +220,12 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
 <section class="reviews-section">
   <div class="marquee">
     <div class="mq-track mq-left" id="reviewsTrack">
-      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Excellentes prestations avec Teck Aménagement pour la réalisation de nos deux pergolas / ombrières. Des artisans rigoureux, un travail soigné, des délais respectés et un très beau rendu esthétique. Nous recommandons vivement !"</p><div class="who"><div class="ava">AC</div><div><div class="nm">Anne Cayron</div><div class="sub">Avis Google</div></div></div></div>
-      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Une superbe pergola, très design… à la hauteur de nos espérances. Une vraie plus-value pour la maison. Une entreprise sérieuse et réactive qui a respecté tous ses engagements."</p><div class="who"><div class="ava">MB</div><div><div class="nm">Muriel Baccigalupo</div><div class="sub">Avis Google</div></div></div></div>
-      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Nous sommes ravis ! Une prestation de qualité, des conseils avisés et un suivi au millimètre de la commande à l'installation. On réfléchit déjà à un autre projet avec eux, je recommande à 1000 % !"</p><div class="who"><div class="ava">CT</div><div><div class="nm">Catherine Tonda</div><div class="sub">Avis Google</div></div></div></div>
-      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Je suis très satisfaite de la magnifique pergola. Franck a été très réactif, à l'écoute, et de très bons conseils. Son équipe était adorable et très pro ! Un design juste DE FOLIE !!!"</p><div class="who"><div class="ava">AR</div><div><div class="nm">Adrienne Riera</div><div class="sub">Avis Google</div></div></div></div>
-      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Rénovation de nos extérieurs, terrasse en bois exotique et pergola sur toute la longueur de la maison. Une merveille, très belle prestation, chantier terminé dans les temps. Je recommande à 200 %."</p><div class="who"><div class="ava">FB</div><div><div class="nm">Fabienne Bongiovanni</div><div class="sub">Avis Google</div></div></div></div>
-      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Très grande satisfaction ! La luminosité reste la même à l'intérieur de la maison tout en protégeant ma terrasse du soleil. Résultat impeccable et conforme à ce qui avait été annoncé. Je recommande les yeux fermés."</p><div class="who"><div class="ava">M</div><div><div class="nm">Mathieu</div><div class="sub">Avis Google</div></div></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Excellentes prestations avec Teck Aménagement pour la réalisation de nos deux pergolas / ombrières. Des artisans rigoureux, un travail soigné, des délais respectés et un très beau rendu esthétique. Nous recommandons vivement !"</p><div class="who"><div class="ava">AC</div><div><div class="nm">Anne Cayron</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Une superbe pergola, très design… à la hauteur de nos espérances. Une vraie plus-value pour la maison. Une entreprise sérieuse et réactive qui a respecté tous ses engagements."</p><div class="who"><div class="ava">MB</div><div><div class="nm">Muriel Baccigalupo</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Nous sommes ravis ! Une prestation de qualité, des conseils avisés et un suivi au millimètre de la commande à l'installation. On réfléchit déjà à un autre projet avec eux, je recommande à 1000 % !"</p><div class="who"><div class="ava">CT</div><div><div class="nm">Catherine Tonda</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Je suis très satisfaite de la magnifique pergola. Franck a été très réactif, à l'écoute, et de très bons conseils. Son équipe était adorable et très pro ! Un design juste DE FOLIE !!!"</p><div class="who"><div class="ava">AR</div><div><div class="nm">Adrienne Riera</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Rénovation de nos extérieurs, terrasse en bois exotique et pergola sur toute la longueur de la maison. Une merveille, très belle prestation, chantier terminé dans les temps. Je recommande à 200 %."</p><div class="who"><div class="ava">FB</div><div><div class="nm">Fabienne Bongiovanni</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Très grande satisfaction ! La luminosité reste la même à l'intérieur de la maison tout en protégeant ma terrasse du soleil. Résultat impeccable et conforme à ce qui avait été annoncé. Je recommande les yeux fermés."</p><div class="who"><div class="ava">M</div><div><div class="nm">Mathieu</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
     </div>
   </div>
 </section>
