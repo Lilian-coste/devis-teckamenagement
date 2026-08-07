@@ -271,6 +271,9 @@
 
             <div class="text-base text-white font-light leading-relaxed mb-8 px-2">
                 <p class="mb-6">Avec notre professionnel qui s'occupera de l'étude de votre projet</p>
+                <!-- Touche PROFIL (quiz maison, 07/08/2026) : remplie par le script profil en
+                     bas de page quand l'URL porte ?profil=… ; sans paramètre, invisible. -->
+                <p id="profil-note" class="mb-6 text-white/90 italic" style="display:none"></p>
                 <p>
                     Choisissez le créneau qui vous convient le mieux ci-dessous<br>
                     <span class="text-base text-white/80 italic">(ça vous prendra moins d'une minute).</span>
@@ -739,6 +742,31 @@
                 })(typers[k]);
             }
         })();
+    </script>
+
+    <script>
+    /* Personnalisation PROFIL (quiz maison, 07/08/2026). L'URL de redirection du quiz
+       porte ?profil=receveurs|cocon|quotidien (+ &aussi=… pour les profils
+       secondaires). Sans paramètre (trafic Fillout actuel), rien ne change. */
+    (function () {
+        var DIT = {
+            receveurs: "aimer recevoir votre famille et vos amis",
+            cocon: "vouloir un coin à vous, au calme",
+            quotidien: "vouloir profiter de votre extérieur au quotidien"
+        };
+        var q = new URLSearchParams(window.location.search);
+        var ids = [q.get("profil")].concat((q.get("aussi") || "").split(","))
+            .filter(function (p, i, tous) { return DIT[p] && tous.indexOf(p) === i; });
+        if (!ids.length) return;
+        var parts = ids.map(function (p) { return DIT[p]; });
+        var texte = parts.length === 1 ? parts[0]
+            : parts.length === 2 ? parts[0] + ", et en même temps " + parts[1]
+            : parts[0] + ", " + parts[1] + " et " + parts[2];
+        var el = document.getElementById("profil-note");
+        if (!el) return;
+        el.textContent = "Vous nous avez dit " + texte + " : il en tiendra compte dans l'étude de votre projet.";
+        el.style.display = "";
+    })();
     </script>
 
 </body>

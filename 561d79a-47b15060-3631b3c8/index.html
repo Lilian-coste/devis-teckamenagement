@@ -349,6 +349,27 @@
     </section>
 
     <!-- =========================================================
+         1bis. BLOC PROFIL (quiz maison, 07/08/2026) — rempli par le script profil en
+         bas de page quand l'URL porte ?profil=… ; sans paramètre, invisible.
+         ⚠️ Copy de la pédagogie enveloppe : brouillon à valider par Lilian/Franck.
+         ========================================================= -->
+    <div id="profil-bloc" class="apple-font w-full pt-16 px-6 bg-white text-center" style="display:none">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-black mb-6">
+                Votre projet, tel que vous nous l'avez décrit
+            </h2>
+            <p id="profil-cherche" class="text-gray-600 font-light leading-relaxed text-base md:text-lg max-w-2xl mx-auto mb-4"></p>
+            <p class="text-gray-600 font-light leading-relaxed text-base md:text-lg max-w-2xl mx-auto">
+                Un espace comme celui-là repose sur des matériaux faits pour durer des dizaines
+                d'années et sur un travail sur mesure adapté à votre terrain. C'est ce qui explique
+                l'enveloppe qu'un tel projet demande, qu'il s'agisse de nos pergolas ou d'autres
+                pergolas de qualité. Le simulateur ci-dessous vous donne un ordre d'idée pour votre
+                surface.
+            </p>
+        </div>
+    </div>
+
+    <!-- =========================================================
          2. SIMULATEUR (à la place du Calendly)
          ========================================================= -->
     <div id="simulateur" class="apple-font pt-20 md:pt-24 pb-8 px-4 flex justify-center bg-white text-gray-900">
@@ -905,6 +926,32 @@
                 })(typers[k]);
             }
         })();
+    </script>
+
+    <script>
+    /* Personnalisation PROFIL (quiz maison, 07/08/2026). L'URL de redirection du quiz
+       porte ?profil=receveurs|cocon|quotidien (+ &aussi=… pour les profils
+       secondaires). Sans paramètre (trafic Fillout actuel), rien ne change. */
+    (function () {
+        var CHERCHE = {
+            receveurs: "un espace pour recevoir votre famille et vos amis autour de grandes tablées",
+            cocon: "un coin à vous, au calme et à l'ombre",
+            quotidien: "un extérieur à vivre au quotidien, du déjeuner aux après-midis"
+        };
+        var q = new URLSearchParams(window.location.search);
+        var ids = [q.get("profil")].concat((q.get("aussi") || "").split(","))
+            .filter(function (p, i, tous) { return CHERCHE[p] && tous.indexOf(p) === i; });
+        if (!ids.length) return;
+        var parts = ids.map(function (p) { return CHERCHE[p]; });
+        var texte = parts.length === 1 ? parts[0]
+            : parts.length === 2 ? parts[0] + ", et en même temps " + parts[1]
+            : parts[0] + ", " + parts[1] + " et " + parts[2];
+        var cherche = document.getElementById("profil-cherche");
+        var bloc = document.getElementById("profil-bloc");
+        if (!cherche || !bloc) return;
+        cherche.textContent = "D'après vos réponses, vous cherchez " + texte + ".";
+        bloc.style.display = "";
+    })();
     </script>
 
 </body>
