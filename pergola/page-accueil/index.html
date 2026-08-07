@@ -57,14 +57,15 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
   .hero .desc i{ font-style:italic; }
   /* Mobile : même respiration titre→bouton que préheader→titre (retour Lilian 06/08) */
   .hero .btn-black{ top:67%; white-space:nowrap; width:max-content; }
-  .hero .rating-wrap{ top:77%; white-space:nowrap; }
+  /* Mention calée sur le BOUTON, plus en % (Lilian 07/08) : même respiration que le
+     bloc CTA du bas (gap 16px) = demi-bouton 26px + 16px + demi-mention 9px. */
+  .hero .rating-wrap{ top:calc(67% + 51px); white-space:nowrap; }
   /* positions + tailles DESKTOP */
   @media (min-width:768px){
     .eyebrow{ top:24%; font-size:23px; }
     .hero h1{ top:44%; font-size:58px; }
     .hero .desc{ top:55%; font-size:20px; }
     .hero .btn-black{ top:67%; }
-    .hero .rating-wrap{ top:76%; }
   }
 
   /* Bouton noir (repris de ta DA devis) */
