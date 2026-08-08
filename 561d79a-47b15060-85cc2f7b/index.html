@@ -759,9 +759,9 @@
             .filter(function (p, i, tous) { return DIT[p] && tous.indexOf(p) === i; });
         if (!ids.length) return;
         var parts = ids.map(function (p) { return DIT[p]; });
-        /* Pas de virgule avant « et » (règle de copy de Lilian). */
+        /* Règle de copy (08/08/2026) : virgule avant « et » autorisée, jamais après. */
         var texte = parts.length === 1 ? parts[0]
-            : parts.length === 2 ? parts[0] + " et en même temps " + parts[1]
+            : parts.length === 2 ? parts[0] + ", et en même temps " + parts[1]
             : parts[0] + ", " + parts[1] + " et " + parts[2];
         var el = document.getElementById("profil-note");
         if (!el) return;
