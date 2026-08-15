@@ -50,32 +50,38 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
     .hero{ background-image:linear-gradient(rgba(8,16,24,.5),rgba(8,16,24,.62)), url('assets/bg-mobile.jpg'); background-size:cover; background-position:center; }
     .cover-bg{ background:none; }
   }
-  /* Variante A : titre centré, espacements symétriques autour du titre */
-  .hero > .eyebrow, .hero > h1, .hero > .desc, .hero > .btn-black, .hero > .rating-wrap{
-    position:absolute; left:50%; transform:translate(-50%,-50%); margin:0; }
-  /* positions MOBILE (base) — re-réparties le 15/08/2026 quand le sous-titre est revenu.
-     Les quatre blocs sont en absolu : toute nouvelle ligne oblige à re-caler les %. */
-  .eyebrow{ top:20%; font-size:18px; line-height:1.4; color:#E5E7EB; width:640px; max-width:88%; font-weight:300; }
-  .hero h1{ top:41%; font-size:36px; line-height:1.12; font-weight:700; letter-spacing:-.02em; width:760px; max-width:92%; }
+  /* Le hero est en FLUX, plus en positionnement absolu (retour Lilian du 15/08/2026 :
+     « entre le préheader et le titre il y a un certain espace, puis entre le titre et le
+     sous-titre ce n'est pas le même sur mobile »).
+     Les blocs étaient calés par des `top` en POURCENTAGE d'un écran de hauteur variable.
+     Deux conséquences : des pourcentages identiques ne donnent pas les mêmes pixels sur
+     un écran de 844 px et sur un de 900 px, et le préheader comme le titre passent à plus
+     de lignes sur téléphone, donc mangent l'écart depuis leur centre. Le rythme divergeait
+     par construction (mesuré : 79/55 px sur mobile contre 33/26 px sur ordinateur).
+     En colonne flex centrée les écarts sont écrits en PIXELS, donc identiques partout. */
+  .hero{ display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 18px; }
+  .hero > .eyebrow, .hero > h1, .hero > .desc, .hero > .btn-black, .hero > .rating-wrap{ margin:0; }
+  /* tailles + écarts MOBILE (base). Un seul écart pour préheader→titre et titre→sous-titre. */
+  .eyebrow{ font-size:18px; line-height:1.4; color:#E5E7EB; width:640px; max-width:88%; font-weight:300; }
+  .hero h1{ margin-top:26px; font-size:36px; line-height:1.12; font-weight:700; letter-spacing:-.02em; width:760px; max-width:92%; }
   /* Bleu d'accent, dans le TITRE comme dans le PRÉHEADER (retour Lilian 15/08 au soir) :
      dans le titre il ne surligne plus que « +35°C », dans le préheader « le plus agréable ».
      Pas de graisse ajoutée : le mot reste dans le poids de sa ligne (300 pour le préheader). */
   .hero .accent{ color:#3B82F6; }
-  .hero .desc{ top:59%; font-size:16px; line-height:1.5; font-weight:400; color:#E5E7EB; width:620px; max-width:88%; }
+  .hero .desc{ margin-top:26px; font-size:16px; line-height:1.5; font-weight:400; color:#E5E7EB; width:620px; max-width:88%; }
   .hero .desc i{ font-style:italic; }
   .hero .desc b{ font-weight:600; color:#fff; }
-  .hero .btn-black{ top:76%; white-space:nowrap; width:max-content; }
-  /* Mention calée sur le BOUTON, plus en % (Lilian 07/08) : même respiration que le
-     bloc CTA du bas (gap 16px) = demi-bouton 33px (il porte désormais sa 2e ligne
-     « 100% gratuit ») + 16px + demi-mention 9px. */
-  .hero .rating-wrap{ top:calc(76% + 58px); white-space:nowrap; }
-  /* positions + tailles DESKTOP */
+  /* Le bouton respire plus que le texte : c'est le passage à l'action, pas une ligne de plus. */
+  .hero .btn-black{ margin-top:38px; white-space:nowrap; width:max-content; }
+  /* 16px, la même respiration que le bloc CTA du bas de page (retour Lilian 07/08). */
+  .hero .rating-wrap{ margin-top:16px; white-space:nowrap; }
+  /* tailles + écarts DESKTOP. Les écarts grandissent avec le corps du texte, mais les
+     deux premiers restent ÉGAUX entre eux, comme sur mobile. */
   @media (min-width:768px){
-    .eyebrow{ top:20%; font-size:23px; }
-    .hero h1{ top:38%; font-size:58px; }
-    .hero .desc{ top:55%; font-size:20px; }
-    .hero .btn-black{ top:70%; }
-    .hero .rating-wrap{ top:calc(70% + 58px); }
+    .eyebrow{ font-size:23px; }
+    .hero h1{ margin-top:30px; font-size:58px; }
+    .hero .desc{ margin-top:30px; font-size:20px; }
+    .hero .btn-black{ margin-top:46px; }
   }
 
   /* Bouton noir (repris de ta DA devis).
@@ -88,8 +94,6 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
   .btn-ligne{ display:inline-flex; align-items:center; gap:10px; }
   .btn-gratuit{ font-style:italic; font-weight:400; font-size:12.5px; opacity:.78; }
   .btn-black:hover{ transform:scale(1.03); box-shadow:0 14px 34px rgba(0,0,0,.35); }
-  /* le bouton du hero est centré en absolu → le hover doit garder le translate */
-  .hero .btn-black:hover{ transform:translate(-50%,-50%) scale(1.03); }
 
   /* Bandeau note + taches de lueur */
   .rating-wrap{ position:relative; margin-top:30px; display:flex; flex-direction:column; align-items:center; gap:4px; }
