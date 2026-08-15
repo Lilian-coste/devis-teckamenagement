@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teck Aménagement — Votre projet a été analysé</title>
+    <title>Teck Aménagement — Demande confirmée</title>
 
     <!-- Meta Pixel Code -->
     <script>
@@ -46,80 +46,55 @@
         html { scroll-behavior: smooth; }
         body { background-color: #f8f8f8; }
 
-        /* Les deux barres de défilement que Lilian voyait sur son téléphone le
-           15/08/2026 : une horizontale tout en bas, une verticale à droite.
-           - L'horizontale venait des bandeaux défilants. Leurs pistes font plusieurs
-             milliers de pixels de large ; elles sont bien coupées par un overflow:hidden
-             local, mais iOS laisse malgré tout le DOCUMENT défiler latéralement. Le
-             overflow-x:hidden posé ici, sur html ET body, ferme la porte pour de bon.
-           - La verticale est l'indicateur natif du navigateur. On le masque à sa
-             demande. ⚠️ Contrepartie assumée : le lecteur perd le repère visuel de sa
-             position dans la page. La page reste évidemment défilable. */
-        html, body { overflow-x: hidden; max-width: 100%; }
-        html { scrollbar-width: none; -ms-overflow-style: none; }
-        html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display: none; }
-
-        /* ====== HERO HEADER ======
-           La photo de fond et la bulle noire translucide ont sauté le 15/08/2026
-           (Lilian : « ça ne rend pas beau du tout »). Le hero prend le MÊME dégradé
-           que la section « Pourquoi choisir Teck Aménagement » plus bas, et son titre
-           la même typo : la page n'a plus qu'un seul registre visuel du haut en bas.
-           Conséquence directe : tout le texte passe en sombre, il n'y a plus de voile
-           noir pour porter du blanc. */
+        /* ====== HERO HEADER (photo Teck + bulle translucide) ====== */
         .hero-section {
             position: relative;
             width: 100%;
-            background: linear-gradient(180deg,#EFF4FA 0%,#FFFFFF 88%);
+            background-image: linear-gradient(rgba(0,0,0,0.12), rgba(0,0,0,0.12)), url('images/eguilles-5.jpg');
+            background-size: cover;
+            background-position: center;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            /* Le hero tient dans UN écran : badge, titre, texte, vidéo entière et bouton
-               (Lilian, 15/08/2026). D'où le min-height, les paddings resserrés en haut
-               pour remonter le badge, et surtout la vidéo bornée en HAUTEUR plus bas.
-               Sur téléphone le contenu dépasse forcément, le hero grandit alors tout seul. */
-            min-height: 100svh;
-            /* ÉCHELLE D'ESPACEMENTS DU HERO (Lilian, 15/08/2026 : « c'est trop collé »).
-               Trois valeurs seulement, et elles respirent avec la hauteur de la fenêtre au
-               lieu d'être figées : sur un grand écran le bloc s'aère, sur un écran bas il
-               se resserre tout seul plutôt que de pousser le bouton hors de vue. Les
-               bornes du clamp évitent les deux excès.
-                 --gap-s : entre deux paragraphes (le lien le plus fort) ;
-                 --gap-m : badge -> titre, titre -> texte, vidéo -> bouton ;
-                 --gap-l : texte -> vidéo, la seule vraie rupture du bloc. */
-            --gap-s: clamp(14px, 2svh, 20px);
-            --gap-m: clamp(20px, 3.2svh, 32px);
-            --gap-l: clamp(24px, 3.8svh, 38px);
-            padding: clamp(24px, 3svh, 40px) 22px clamp(28px, 3.5svh, 48px);
+            padding: 220px 40px 220px 129px;
+            min-height: 90vh;
         }
-        /* 880px et plus 640 (Lilian, 15/08/2026) : le texte du hero tenait sur une
-           colonne étroite et se lisait mal, la vidéo était d'autant plus petite.
-           Le logo a été retiré du hero à la même occasion. */
         .hero-bulle {
             width: 100%;
-            max-width: 880px;
+            max-width: 640px;
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45));
+            border-radius: 1.25rem;
+            padding: 3rem 2rem;
             text-align: center;
         }
-        /* La pastille « Félicitations [Prénom] » prend l'écart moyen de l'échelle, à la
-           place du mb-6 de Tailwind qui était figé à 24px. */
-        .hero-bulle .border-beam-container { margin-bottom: var(--gap-m); }
-        /* Titre du hero : exactement la typo de .adv-ttl (demande de Lilian, 15/08/2026). */
-        .hero-ttl {
-            text-align: center;
-            font-size: 28px;
-            font-weight: 500;
-            letter-spacing: -.02em;
-            line-height: 1.15;
-            color: #1D1D1F;
-            margin: 0 auto var(--gap-m);
+        /* Logo overlay : centré horizontalement sur mobile, en haut-gauche sur desktop */
+        .hero-section .logo-overlay {
+            position: absolute;
+            top: 0.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 260px;
+            height: auto;
+            z-index: 10;
         }
-        @media (min-width: 768px) { .hero-ttl { font-size: 38px; } }
-        /* « étudié » dans le bleu du bandeau de préqualification (Lilian, 15/08/2026) :
-           le mot qui porte tout l'angle « analyse » se surligne, et la page n'a qu'un
-           seul bleu du haut en bas. */
-        .hero-ttl .mot-bleu { color: #0653A8; }
+        @media (min-width: 768px) {
+            .hero-section .logo-overlay {
+                top: 1rem;
+                left: 1.25rem;
+                transform: none;
+                width: 520px;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero-section {
+                background-image: linear-gradient(rgba(0,0,0,0.12), rgba(0,0,0,0.12)), url('images/eguilles-mobile.jpg');
+                padding: 4rem 1rem;
+                min-height: 70vh;
+            }
+            .hero-bulle { width: 100%; padding: 2rem 1.25rem; margin-top: 2.5rem; }
+        }
 
-        /* ====== BADGE "Félicitations [Prénom]" (border beam) ====== */
+        /* ====== BADGE "Demande confirmée" (border beam) ====== */
         .border-beam-container {
             position: relative;
             padding: 1px;
@@ -238,11 +213,8 @@
            jusqu'aux avis, un dégradé vers le blanc pour poser le bouton, le bandeau
            presse en blanc, puis blanc -> bleu (#eff4fa) et bleu -> blanc, exactement
            comme .proof-section et .adv-section de pergola/page-accueil. */
-        .avis-1 { background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 35%, #f8f8f8 52%, #ffffff 88%, #ffffff 100%); }
-        /* Le haut part du BLANC depuis le 15/08/2026 (demande de Lilian) : le hero finit
-           en blanc, la section enchaînait sur du gris franc et la couture se voyait. Le
-           gris ne s'installe donc qu'au fil du titre et de la première rangée d'avis (35%).
-           52% = le haut de la derniere rangee d'avis (mesure au navigateur), 88% = juste
+        .avis-1 { background: linear-gradient(180deg, #f8f8f8 0%, #f8f8f8 52%, #ffffff 88%, #ffffff 100%); }
+        /* 52% = le haut de la derniere rangee d'avis (mesure au navigateur), 88% = juste
            avant le bouton, qui tombe a 93% : il se pose donc sur du blanc franc. */
         /* Le bloc « Vivez » prend le dégradé blanc -> bleu de .proof-section. */
         .bloc-vivez { background: linear-gradient(180deg, #ffffff 0%, #eff4fa 100%); }
@@ -278,9 +250,19 @@
         }
         .scroll-container-story { position: relative; width: 100%; overflow: hidden; padding: 20px 0 20px 0; }
 
-        /* La VSL avait sa propre section entre le hero et le Calendly. Depuis le
-           15/08/2026 elle vit DANS le hero (règles .hero-video plus bas), le CSS de
-           l'ancienne section est donc supprimé. */
+        /* ====== VSL (bloc 2) ====== */
+        .vsl-section { background-color: #f8f8f8; padding: 72px 20px; }
+        .vsl-section video {
+            display: block;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 12px;
+            background: #000;
+        }
+        @media (max-width: 768px) {
+            .vsl-section { padding: 48px 16px; }
+        }
 
         /* ====== BANDEAU PRESSE (bloc 3) ======
            Repris tel quel de pergola/page-accueil/index.html (marquee gauche -> droite). */
@@ -346,61 +328,6 @@
             border: none; border-radius: 14px; padding: 16px 34px; font-size: 16px; font-weight: 600; cursor: pointer;
             text-decoration: none; transition: transform .35s cubic-bezier(.175,.885,.32,1.275), box-shadow .35s; }
         .btn-black:hover { transform: scale(1.03); box-shadow: 0 14px 34px rgba(0,0,0,.35); }
-        /* Le bouton porte DEUX lignes depuis le 15/08/2026 : le libellé, puis la mention
-           de gratuité en dessous. Même principe que le bouton de pergola/page-accueil, et
-           même formulation que le quiz de Clément (« RÉSERVER MON BILAN OFFERT / 100%
-           gratuit - sans engagement »), « bilan » remplacé par « appel ».
-           ⚠️ Libellé PROVISOIRE : Lilian le tranchera quand la VSL sera écrite. */
-        .btn-black.btn-appel { flex-direction: column; gap: 3px; padding: 14px 34px; }
-        .btn-appel .btn-ligne { display: inline-flex; align-items: center; gap: 10px; }
-        .btn-appel .btn-gratuit { font-style: italic; font-weight: 400; font-size: 12.5px; opacity: .78; }
-
-        /* Bandeau de préqualification, pleine largeur, AVANT le hero. Il dit à qui
-           s'adresse la suite. « réservé » et pas « destiné » : décision de Lilian du
-           15/08/2026, « destiné » sonnait plus agressif. */
-        .bandeau-diagnostic {
-            background: #0653A8;
-            color: #fff;
-            text-align: center;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            font-weight: 600;
-            line-height: 1.45;
-            padding: 14px 20px;
-        }
-        @media (max-width: 768px) { .bandeau-diagnostic { font-size: 14px; padding: 12px 16px; } }
-
-        /* La VSL vit DANS le hero (demande de Lilian, 15/08/2026), plus dans sa propre
-           section. Le bouton la suit immédiatement. */
-        /* La vidéo est bornée en HAUTEUR, pas en largeur : c'est ce qui la fait tenir
-           entière dans le hero sans rétrécir le texte, qui garde ses 880px. Sur un grand
-           écran elle occupe toute la largeur du bloc, sur un écran bas elle se réduit
-           d'elle-même en gardant ses proportions. Sur téléphone la borne ne mord jamais
-           (une vidéo 16:9 large de 350px ne fait que 197px de haut). */
-        .hero-video {
-            width: auto;
-            max-width: 100%;
-            max-height: 38svh;
-            border-radius: 12px;
-            display: block;
-            margin: 0 auto var(--gap-m);
-            background: #000;
-            box-shadow: 0 12px 40px rgba(10,61,92,.12);
-        }
-        /* Le titre et le texte sont calés sur la LARGEUR RÉELLE de la vidéo (Lilian,
-           15/08/2026). Cette largeur n'est pas fixe : la vidéo est bornée en hauteur, donc
-           elle change avec la hauteur de la fenêtre. Un script la mesure et la reporte ici,
-           dans --largeur-video. La valeur par défaut sert avant que le script tourne et si
-           jamais il ne tournait pas : la page reste correcte, simplement pas alignée. */
-        .hero-ttl, .hero-texte {
-            max-width: var(--largeur-video, 100%);
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .hero-texte { font-size: 16px; line-height: 1.65; color: #4b5563; font-weight: 400; margin-bottom: var(--gap-l); }
-        .hero-texte p { margin-bottom: var(--gap-s); }
-        .hero-texte p:last-child { margin-bottom: 0; }
-        .hero-texte b { font-weight: 600; color: #1D1D1F; }
         /* Mention 4,9★ — markup et style repris des cartes avis de pergola/page-accueil. */
         .rating { display: flex; align-items: center; gap: 0; font-size: 13px; font-weight: 600; justify-content: center; color: #86868B; }
         .rating .ystar { color: #FBBF24; font-size: 1em; line-height: 1; margin: 0; }
@@ -413,59 +340,55 @@
     <!-- =========================================================
          1. HEADER — Réservez votre appel
          ========================================================= -->
-    <!-- Bandeau de préqualification : il dit à qui s'adresse ce qui suit, avant même le
-         hero. Formulation validée par Lilian le 15/08/2026. -->
-    <div class="bandeau-diagnostic">
-        Diagnostic réservé aux propriétaires ayant un projet de pergola sur mesure.
-    </div>
-
     <section class="hero-section">
+        <img src="images/logo-teck-overlay.png" alt="Teck Aménagement" class="logo-overlay">
         <div class="hero-bulle">
-            <!-- Le badge portait « Demande confirmée », registre collecte. Il porte
-                 maintenant la félicitation nominative (angle « J'ai fait analyser mon
-                 projet »). Sans prénom dans l'URL, il affiche « Félicitations ! » seul :
-                 le trafic Fillout actuel n'envoie pas de prénom. -->
             <div class="border-beam-container mb-6">
                 <div class="border-beam-inner">
-                    <span style="letter-spacing: 0.2em;" class="text-[10px] font-medium uppercase text-white leading-none" id="badge-felicitations">
-                        Félicitations !
+                    <span style="letter-spacing: 0.2em;" class="text-[10px] font-medium uppercase text-white leading-none">
+                        Demande confirmée
                     </span>
                 </div>
             </div>
 
-            <h1 class="hero-ttl">
-                Votre projet mérite maintenant d'être <span class="mot-bleu">étudié</span> plus précisément
+            <h1 class="text-3xl md:text-[40px] font-medium tracking-tight leading-tight mb-6 text-white">
+                Réservez maintenant votre appel...
             </h1>
 
-            <div class="hero-texte">
-                <!-- Le profil n'a plus sa phrase à lui : il termine CETTE phrase, après les
-                     deux points (Lilian, 15/08/2026 — deux phrases séparées répétaient
-                     « ce qui compte le plus »). Sans ?profil= dans l'URL (trafic Fillout
-                     actuel), le span reste vide et la phrase se ferme sur le point. -->
+            <div class="text-base text-white font-light leading-relaxed mb-8 px-2">
+                <p class="mb-6">Avec notre professionnel qui s'occupera de l'étude de votre projet</p>
+                <!-- Touche PROFIL (quiz maison, 07/08/2026) : remplie par le script profil en
+                     bas de page quand l'URL porte ?profil=… ; sans paramètre, invisible. -->
+                <p id="profil-note" class="mb-6 text-white/90 italic" style="display:none"></p>
                 <p>
-                    Grâce à vos réponses, nous avons identifié <b>ce qui compte le plus dans
-                    votre projet de pergola</b><span id="profil-note"></span>.
-                </p>
-                <p>
-                    Nous avons justement préparé une courte vidéo qui montre ce que nous
-                    regarderions en premier dans un projet comme le vôtre.
+                    Choisissez le créneau qui vous convient le mieux ci-dessous<br>
+                    <span class="text-base text-white/80 italic">(ça vous prendra moins d'une minute).</span>
                 </p>
             </div>
 
-            <!-- VSL — vidéo PROVISOIRE (Villa Impian) en attendant le tournage de la vraie
-                 VSL par Franck. À remplacer, même chemin, même nom. -->
-            <video class="hero-video" controls playsinline preload="metadata" src="videos/vsl-provisoire-villa-impian.mp4"></video>
-
             <div class="flex flex-col items-center">
-                <a href="../reserver/" class="btn-black btn-appel js-reserver">
-                    <span class="btn-ligne">Réserver mon appel offert
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                    </span>
-                    <span class="btn-gratuit">100% gratuit · sans engagement</span>
+                <a href="#calendrier" class="btn-combo-final">
+                    <div class="btn-inner-final">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m6 9 6 6 6-6"/>
+                        </svg>
+                    </div>
                 </a>
             </div>
         </div>
     </section>
+
+    <!-- 2. VSL — vidéo PROVISOIRE (Villa Impian) en attendant le tournage de la vraie VSL par Franck. À remplacer. -->
+    <section class="vsl-section">
+        <video controls playsinline preload="metadata" src="videos/vsl-provisoire-villa-impian.mp4"></video>
+    </section>
+
+    <!-- =========================================================
+         4. CALENDLY
+         ========================================================= -->
+    <div class="bg-[#f8f8f8] px-4 py-8">
+        <div id="calendrier" class="mx-auto max-w-[1024px]" style="min-width:320px;height:720px;"></div>
+    </div>
 
     <!-- =========================================================
          5. AVIS CLIENTS — « Nos clients / Parlent de nous »
@@ -575,9 +498,9 @@
                  dans « Pourquoi choisir », il remonte au Calendly. La mention d'avis le
                  suit, comme sur la page d'accueil pergola. -->
             <div class="adv-cta" style="margin-top:56px;">
-                <a href="../reserver/" class="btn-black btn-appel js-reserver"><span class="btn-ligne">Réserver mon appel offert
+                <a href="#calendrier" class="btn-black">Je réserve mon appel
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                </span><span class="btn-gratuit">100% gratuit · sans engagement</span></a>
+                </a>
                 <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
             </div>
         </div>
@@ -695,9 +618,9 @@
             <!-- Deuxième CTA : même bouton noir, sous la seconde série d'avis
                  (demande Lilian, enregistrement du 15/08/2026 14h02). -->
             <div class="adv-cta" style="margin-top:40px;">
-                <a href="../reserver/" class="btn-black btn-appel js-reserver"><span class="btn-ligne">Réserver mon appel offert
+                <a href="#calendrier" class="btn-black">Je réserve mon appel
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                </span><span class="btn-gratuit">100% gratuit · sans engagement</span></a>
+                </a>
                 <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
             </div>
         </div>
@@ -787,9 +710,9 @@
             <!-- Le bouton NOIR de la page d'accueil pergola (.btn-black), pas le chevron
                  blanc de l'ancien bloc parallax : demande de Lilian du 08/08/2026. Il
                  remonte au Calendly au lieu d'ouvrir le quiz. -->
-            <a href="../reserver/" class="btn-black btn-appel js-reserver"><span class="btn-ligne">Réserver mon appel offert
+            <a href="#calendrier" class="btn-black">Je réserve mon appel
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </span><span class="btn-gratuit">100% gratuit · sans engagement</span></a>
+            </a>
             <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
         </div>
     </section>
@@ -807,10 +730,37 @@
     <!-- =========================================================
          SCRIPTS
          ========================================================= -->
-    <!-- Le Calendly ne vit PLUS sur cette page (demande de Lilian, 15/08/2026) : les
-         boutons mènent à /reserver/, une page qui ne porte que le calendrier, comme le
-         fait Clément Desplats avec iClosed. Le widget et son suivi de source ont donc
-         déménagé dans reserver/index.html. -->
+    <!-- Calendly : suivi de la source (séquence mail site / meta) -->
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+    <script>
+        (function () {
+            // Lit ?source=site ou ?source=meta dans l'URL (défaut : site).
+            function initCalendly() {
+                var params  = new URLSearchParams(window.location.search);
+                var isMeta  = params.get('source') === 'meta';
+                var origine = isMeta ? 'Réseaux sociaux' : 'Site internet';
+
+                Calendly.initInlineWidget({
+                    url: 'https://calendly.com/teckamenagement/30min?hide_gdpr_banner=1',
+                    parentElement: document.getElementById('calendrier'),
+                    prefill: {
+                        // a2 = 2e question de l'event : "Comment avez-vous connu Teck Aménagement ?"
+                        // Pré-remplie selon la source -> apparaît dans la notif + le Google Agenda de Franck.
+                        // (Si tu changes l'ordre des questions dans Calendly, préviens-moi : a1=1re, a2=2e, etc.)
+                        customAnswers: { a2: origine }
+                    },
+                    utm: {
+                        // Filet de sécurité invisible, consultable dans le tableau de bord Calendly.
+                        utmSource: isMeta ? 'meta' : 'site',
+                        utmMedium: 'email',
+                        utmCampaign: 'sequence-bienvenue'
+                    }
+                });
+            }
+            if (window.Calendly) { initCalendly(); }
+            else { window.addEventListener('load', initCalendly); }
+        })();
+    </script>
 
     <!-- Bandeau presse : duplique les logos pour une boucle infinie fluide
          (cloneNode = sûr, pas d'innerHTML). Repris de pergola/page-accueil. -->
@@ -983,14 +933,12 @@
     <script>
     /* Personnalisation PROFIL (quiz maison, 07/08/2026). L'URL de redirection du quiz
        porte ?profil=receveurs|cocon|quotidien (+ &aussi=… pour les profils
-       secondaires). Sans paramètre (trafic Fillout actuel), rien ne change.
-       Depuis le 15/08/2026 le profil ne fait plus phrase à part : il complète celle du
-       hero, après les deux points. D'où des libellés sans préposition. */
+       secondaires). Sans paramètre (trafic Fillout actuel), rien ne change. */
     (function () {
         var DIT = {
-            receveurs: "recevoir votre famille et vos amis",
-            cocon: "avoir un coin à vous, au calme",
-            quotidien: "profiter de votre extérieur au quotidien"
+            receveurs: "aimer recevoir votre famille et vos amis",
+            cocon: "vouloir un coin à vous, au calme",
+            quotidien: "vouloir profiter de votre extérieur au quotidien"
         };
         var q = new URLSearchParams(window.location.search);
         var ids = [q.get("profil")].concat((q.get("aussi") || "").split(","))
@@ -1003,60 +951,8 @@
             : parts[0] + ", " + parts[1] + " et " + parts[2];
         var el = document.getElementById("profil-note");
         if (!el) return;
-        el.textContent = " : " + texte;
-    })();
-    </script>
-
-    <script>
-    /* Le titre et le texte du hero prennent la LARGEUR DE LA VIDÉO (Lilian, 15/08/2026).
-       Pourquoi en JS et pas en CSS : la vidéo est bornée en HAUTEUR, sa largeur dépend
-       donc de sa proportion ET de la hauteur de la fenêtre. On pourrait la calculer en
-       CSS en codant la proportion en dur, mais la vidéo actuelle est PROVISOIRE : le jour
-       où Franck livre la vraie VSL, une proportion en dur désalignerait tout sans prévenir.
-       On mesure donc la vidéo réelle, et on reporte sa largeur dans --largeur-video.
-       Le ResizeObserver suit les redimensionnements de fenêtre et la rotation du téléphone ;
-       loadedmetadata couvre le cas où le fichier arrive après le premier calcul. */
-    (function () {
-        var video = document.querySelector(".hero-video");
-        var bulle = document.querySelector(".hero-bulle");
-        if (!video || !bulle) return;
-
-        function caler() {
-            var largeur = video.getBoundingClientRect().width;
-            if (largeur > 0) bulle.style.setProperty("--largeur-video", largeur + "px");
-        }
-
-        caler();
-        video.addEventListener("loadedmetadata", caler);
-        if (window.ResizeObserver) new ResizeObserver(caler).observe(video);
-        else window.addEventListener("resize", caler);
-    })();
-    </script>
-
-    <script>
-    /* Deux retouches d'URL, toutes deux SANS effet quand les paramètres sont absents
-       (c'est le cas du trafic Fillout actuel, la page reste strictement inchangée).
-
-       1. Le prénom dans le badge. Le quiz maison le passera en ?prenom=… ; sans lui,
-          le badge garde « Félicitations ! » tel qu'il est écrit dans le HTML.
-       2. Les boutons « Réserver mon appel offert » emportent les paramètres de la page
-          vers /reserver/, pour que le suivi de source (?source=meta) survive au saut. */
-    (function () {
-        var q = new URLSearchParams(window.location.search);
-
-        var prenom = (q.get("prenom") || "").trim().slice(0, 40);
-        if (prenom) {
-            var badge = document.getElementById("badge-felicitations");
-            if (badge) badge.textContent = "Félicitations " + prenom;
-        }
-
-        var suite = q.toString();
-        if (suite) {
-            var liens = document.querySelectorAll("a.js-reserver");
-            for (var i = 0; i < liens.length; i++) {
-                liens[i].setAttribute("href", "../reserver/?" + suite);
-            }
-        }
+        el.textContent = "Vous nous avez dit " + texte + " : il en tiendra compte dans l'étude de votre projet.";
+        el.style.display = "";
     })();
     </script>
 
