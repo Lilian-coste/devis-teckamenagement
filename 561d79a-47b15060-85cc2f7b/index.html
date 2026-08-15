@@ -219,6 +219,37 @@
         /* Le bloc « Vivez » prend le dégradé blanc -> bleu de .proof-section. */
         .bloc-vivez { background: linear-gradient(180deg, #ffffff 0%, #eff4fa 100%); }
 
+        /* ====== BANDEAU DEFILANT (réalisations) ====== */
+        @keyframes scrollHorizontalStory {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-3648px); } /* 12 images x (280 + 24 gap) */
+        }
+        .animate-infinite-scroll-story {
+            display: flex;
+            width: max-content;
+            animation: scrollHorizontalStory 45s linear infinite;
+            will-change: transform;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .is-paused { animation-play-state: paused !important; }
+        .story-card {
+            width: 280px; height: 498px;
+            border-radius: 20px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: #eee;
+            border: none;
+        }
+        .story-card img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+            border-radius: 20px;
+            pointer-events: none;
+        }
+        .scroll-container-story { position: relative; width: 100%; overflow: hidden; padding: 20px 0 20px 0; }
+
         /* ====== VSL (bloc 2) ====== */
         .vsl-section { background-color: #f8f8f8; padding: 72px 20px; }
         .vsl-section video {
@@ -473,8 +504,126 @@
         </div>
     </div>
 
+    <!-- =========================================================
+         5 bis. BANDEAU DEFILANT — réalisations
+         ========================================================= -->
+    <div style="background-color: #ffffff;" class="w-full">
+        <div class="scroll-container-story">
+            <div id="scroll-wrapper" class="animate-infinite-scroll-story gap-6">
+                <div class="story-card"><img src='https://i.postimg.cc/0jPjNN0N/1.jpg' alt='1'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Xq4qvvk9/2.jpg' alt='2'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/0jnQKqVw/3.jpg' alt='3'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/qqwR6d1s/4.jpg' alt='4'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/vThBxd0n/5.jpg' alt='5'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/2yG6Lf0T/6.jpg' alt='6'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/NFDM2wdS/7.jpg' alt='7'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/sf41Np3j/8.jpg' alt='8'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/VsW5Vjzs/9.jpg' alt='9'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/c1B6bQdL/10.jpg' alt='10'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Y2zjs1t0/11.jpg' alt='11'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/6Q6JhyTZ/0-Maison-R-Aix-10-Filter.jpg' alt='0-Maison-R-Aix-10-Filter'></div>
+
+                <div class="story-card"><img src='https://i.postimg.cc/0jPjNN0N/1.jpg' alt='1'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Xq4qvvk9/2.jpg' alt='2'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/0jnQKqVw/3.jpg' alt='3'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/qqwR6d1s/4.jpg' alt='4'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/vThBxd0n/5.jpg' alt='5'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/2yG6Lf0T/6.jpg' alt='6'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/NFDM2wdS/7.jpg' alt='7'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/sf41Np3j/8.jpg' alt='8'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/VsW5Vjzs/9.jpg' alt='9'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/c1B6bQdL/10.jpg' alt='10'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Y2zjs1t0/11.jpg' alt='11'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/6Q6JhyTZ/0-Maison-R-Aix-10-Filter.jpg' alt='0-Maison-R-Aix-10-Filter'></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         5 ter. AVIS CLIENTS (seconde serie)
+         ========================================================= -->
+    <div class="avis-2 apple-font bg-white pt-12 pb-24 px-6 md:px-4">
+        <div class="max-w-6xl mx-auto">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
+
+                <div class="md:col-span-3 bento-card rounded-[3rem] overflow-hidden">
+                    <div class="img-container h-64 md:h-[450px]">
+                        <img src="https://i.postimg.cc/NfY6B3cZ/karine-gvt-61.jpg" alt="Réalisation Teck Aménagement - Karine Parra">
+                    </div>
+                    <div class="p-8 md:p-16">
+                        <div class="stars-container text-[#0653A8] text-sm">★★★★★</div>
+                        <h3 class="text-[#1D1D1F] text-3xl md:text-4xl font-medium mb-6">"Super produit, confort incroyable, design moderne et intemporel"</h3>
+                        <p class="text-[#424245] text-lg font-light leading-relaxed mb-10 italic max-w-4xl mx-auto">
+                            "Foncez les yeux fermés, en plus d'un professionnalisme et d'un savoir faire au rendez-vous ce qui est très rare!"
+                        </p>
+                        <div class="flex items-center justify-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-xs font-bold">KP</div>
+                            <div class="text-left">
+                                <p class="text-[#1D1D1F] font-medium text-base">Karine Parra</p>
+                                <p class="text-[#86868B] text-sm">Marseille</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-[2rem] p-8 justify-center">
+                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                    <p class="text-[#424245] text-sm font-light italic leading-relaxed mb-8">
+                        "Des professionnels, des vrais ! Je recommande les yeux fermés, cette entreprise. <span class="text-[#1D1D1F] font-medium">Si tous les artisans étaient aussi sérieux, la France se porterait tellement mieux !</span> Encore merci, le résultat est superbe."
+                    </p>
+                    <div class="flex items-center justify-center gap-3 mt-auto">
+                        <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">SE</div>
+                        <div class="text-left">
+                            <p class="text-[#1D1D1F] font-medium text-xs">Sébastien & Ellena</p>
+                            <p class="text-[#86868B] text-[10px]">Salon-de-Provence</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-[2rem] p-8 justify-center">
+                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                    <p class="text-[#424245] text-sm font-light italic leading-relaxed mb-8">
+                        "Nous recommandons vivement l'entreprise Teck Amenagement son directeur Mr Joncheray Franck et toute son équipe. Les conseils, l'expérience, l'écoute, tout est au rdv. <span class="text-[#1D1D1F] font-medium">Il est rare de rencontrer des artisans autant impliqués dans la recherche de la perfection.</span>"
+                    </p>
+                    <div class="flex items-center justify-center gap-3 mt-auto">
+                        <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">V</div>
+                        <div class="text-left">
+                            <p class="text-[#1D1D1F] font-medium text-xs">Véro</p>
+                            <p class="text-[#86868B] text-[10px]">Velaux</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-[2rem] p-8 justify-center">
+                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                    <p class="text-[#424245] text-sm font-light italic leading-relaxed mb-8">
+                        "Teck Amenagement propose un conseil et un produit fini de grande qualité, adapté au besoin, au contraintes. Le design est magnifique et <span class="text-[#1D1D1F] font-medium">la sensation sous la pergola vraiment très agréable. Je recommande vivement.</span>"
+                    </p>
+                    <div class="flex items-center justify-center gap-3 mt-auto">
+                        <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">DB</div>
+                        <div class="text-left">
+                            <p class="text-[#1D1D1F] font-medium text-xs">Didier Brother</p>
+                            <p class="text-[#86868B] text-[10px]">Sainte-Maxime</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Deuxième CTA : même bouton noir, sous la seconde série d'avis
+                 (demande Lilian, enregistrement du 15/08/2026 14h02). -->
+            <div class="adv-cta" style="margin-top:40px;">
+                <a href="#calendrier" class="btn-black">Je réserve mon appel
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </a>
+                <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
+            </div>
+        </div>
+    </div>
+
         <!-- =========================================================
-         5 bis. VU DANS LA PRESSE (marquee gauche -> droite)
+         5 quater. VU DANS LA PRESSE (marquee gauche -> droite)
          Bloc repris de pergola/page-accueil/index.html.
          ========================================================= -->
     <section class="press-section">
@@ -619,6 +768,22 @@
         })();
     </script>
 
+    <!-- Pause au tap sur le bandeau défilant -->
+    <script>
+        (function () {
+            const scrollWrapper = document.getElementById('scroll-wrapper');
+            if (!scrollWrapper) return;
+            let timer;
+            const handlePause = () => {
+                clearTimeout(timer);
+                scrollWrapper.classList.add('is-paused');
+                timer = setTimeout(() => scrollWrapper.classList.remove('is-paused'), 1500);
+            };
+            scrollWrapper.addEventListener('click', handlePause);
+            scrollWrapper.addEventListener('touchend', handlePause);
+        })();
+    </script>
+
     <!-- =========================================================
          Animations d'apparition au scroll
          - bloc "Créez/Révolutionnez/Vivez" glisse depuis la gauche
@@ -631,6 +796,17 @@
             will-change: opacity, transform;
             transition: opacity .9s ease, transform .9s cubic-bezier(.16,1,.3,1);
         }
+        /* Apparition des avis un par un au scroll (demande Lilian, 15/08/2026).
+           Chaque carte monte légèrement en se révélant, et le décalage entre les
+           cartes d'une même rangée est posé en JS via --retard. */
+        .reveal-avis {
+            opacity: 0;
+            transform: translateY(28px);
+            will-change: opacity, transform;
+            transition: opacity .7s ease var(--retard, 0ms),
+                        transform .7s cubic-bezier(.16,1,.3,1) var(--retard, 0ms);
+        }
+        .reveal-avis.reveal-in { opacity: 1; transform: none; }
         .reveal-left  { transform: translateX(-44px); }
         .reveal-right { transform: translateX(44px); }
         .reveal-left.reveal-in, .reveal-right.reveal-in { opacity: 1; transform: none; }
@@ -642,13 +818,39 @@
         }
         @keyframes tw-blink { 50% { opacity: 0; } }
         @media (prefers-reduced-motion: reduce) {
-            .reveal-left, .reveal-right { opacity: 1 !important; transform: none !important; transition: none !important; }
+            .reveal-left, .reveal-right, .reveal-avis { opacity: 1 !important; transform: none !important; transition: none !important; }
         }
     </style>
     <script>
         (function () {
             var reduce  = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             var reveals = document.querySelectorAll('.reveal-left, .reveal-right');
+
+            // Les avis et les deux boutons noirs apparaissent l'un après l'autre.
+            // On les marque en JS plutôt que dans le HTML : les cartes viennent de
+            // deux sections différentes et on ne veut pas les toucher une par une.
+            var sequences = document.querySelectorAll('.avis-1, .avis-2');
+            for (var s = 0; s < sequences.length; s++) {
+                var elements = sequences[s].querySelectorAll('.bento-card, .adv-cta');
+                for (var e = 0; e < elements.length; e++) {
+                    elements[e].classList.add('reveal-avis');
+                    elements[e].style.setProperty('--retard', (e % 3) * 130 + 'ms');
+                }
+            }
+            var avis = document.querySelectorAll('.reveal-avis');
+            if (!('IntersectionObserver' in window) || reduce) {
+                for (var a = 0; a < avis.length; a++) avis[a].classList.add('reveal-in');
+            } else {
+                var oeil = new IntersectionObserver(function (entrees) {
+                    for (var k = 0; k < entrees.length; k++) {
+                        if (entrees[k].isIntersecting) {
+                            entrees[k].target.classList.add('reveal-in');
+                            oeil.unobserve(entrees[k].target);
+                        }
+                    }
+                }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+                for (var b = 0; b < avis.length; b++) oeil.observe(avis[b]);
+            }
             var typers  = document.querySelectorAll('.tw-typewriter');
 
             if (!('IntersectionObserver' in window) || reduce) {
