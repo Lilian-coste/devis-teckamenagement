@@ -208,6 +208,17 @@
             100% { left: -150%; opacity: 0; }
         }
 
+        /* ====== RYTHME DE COULEURS (demande Lilian, 08/08/2026) ======
+           Calqué sur la page d'avant-quiz : une longue plage grise (#f8f8f8) du VSL
+           jusqu'aux avis, un dégradé vers le blanc pour poser le bouton, le bandeau
+           presse en blanc, puis blanc -> bleu (#eff4fa) et bleu -> blanc, exactement
+           comme .proof-section et .adv-section de pergola/page-accueil. */
+        .avis-1 { background: linear-gradient(180deg, #f8f8f8 0%, #f8f8f8 52%, #ffffff 88%, #ffffff 100%); }
+        /* 52% = le haut de la derniere rangee d'avis (mesure au navigateur), 88% = juste
+           avant le bouton, qui tombe a 93% : il se pose donc sur du blanc franc. */
+        /* Le bloc « Vivez » prend le dégradé blanc -> bleu de .proof-section. */
+        .bloc-vivez { background: linear-gradient(180deg, #ffffff 0%, #eff4fa 100%); }
+
         /* ====== VSL (bloc 2) ====== */
         .vsl-section { background-color: #f8f8f8; padding: 72px 20px; }
         .vsl-section video {
@@ -349,7 +360,7 @@
     <!-- =========================================================
          5. AVIS CLIENTS — « Nos clients / Parlent de nous »
          ========================================================= -->
-    <div class="avis-1 apple-font bg-[#F5F5F7] pt-2 pb-24 px-6 md:px-4">
+    <div class="avis-1 apple-font pt-2 pb-24 px-6 md:px-4">
         <div class="max-w-6xl mx-auto">
 
             <div class="mb-10 text-center -mt-2">
@@ -453,7 +464,7 @@
             <!-- CTA sous les avis (demande Lilian 08/08/2026) : le même bouton noir que
                  dans « Pourquoi choisir », il remonte au Calendly. La mention d'avis le
                  suit, comme sur la page d'accueil pergola. -->
-            <div class="adv-cta" style="margin-top:0;">
+            <div class="adv-cta" style="margin-top:56px;">
                 <a href="#calendrier" class="btn-black">Je réserve mon appel
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                 </a>
@@ -485,7 +496,7 @@
 <!-- =========================================================
          6. BLOC "Créez / Révolutionnez / Vivez"
          ========================================================= -->
-    <section class="apple-font" style="background-color:#f8f8f8;">
+    <section class="apple-font bloc-vivez">
         <div class="max-w-6xl mx-auto px-6 md:px-4 py-16 md:py-24">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
