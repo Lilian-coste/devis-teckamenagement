@@ -340,26 +340,6 @@
     </section>
 
     <!-- =========================================================
-         3. VU DANS LA PRESSE (marquee gauche -> droite)
-         Bloc repris de pergola/page-accueil/index.html.
-         ========================================================= -->
-    <section class="press-section">
-        <div class="press-ttl">Vu dans la presse</div>
-        <div class="marquee">
-            <div class="mq-track mq-right press-track" id="pressTrack">
-                <img class="artdeco" src="images/presse/art-decoration.png" alt="Art&Décoration">
-                <img class="elle" src="images/presse/elle-decoration.png" alt="Elle Décoration">
-                <img class="cotesud" src="images/presse/cote-sud.png" alt="Maisons Côté Sud">
-                <img class="ideat" src="images/presse/ideat.png" alt="IDEAT">
-                <img class="cotemag" src="images/presse/cote-magazine.png" alt="Côté Magazine">
-                <img class="ab" src="images/presse/architecture-bois.png" alt="Architecture Bois">
-                <img class="anous" src="images/presse/anous.png" alt="ANous Aix Marseille">
-                <span class="press-logotext" style="font-weight:600;">Décoration</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- =========================================================
          4. CALENDLY
          ========================================================= -->
     <div class="bg-[#f8f8f8] px-4 py-8">
@@ -469,26 +449,50 @@
                 </div>
 
             </div>
+
+            <!-- CTA sous les avis (demande Lilian 08/08/2026) : le même bouton noir que
+                 dans « Pourquoi choisir », il remonte au Calendly. La mention d'avis le
+                 suit, comme sur la page d'accueil pergola. -->
+            <div class="adv-cta" style="margin-top:0;">
+                <a href="#calendrier" class="btn-black">Je réserve mon appel
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </a>
+                <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
+            </div>
         </div>
     </div>
 
-    <!-- =========================================================
+        <!-- =========================================================
+         5 bis. VU DANS LA PRESSE (marquee gauche -> droite)
+         Bloc repris de pergola/page-accueil/index.html.
+         ========================================================= -->
+    <section class="press-section">
+        <div class="press-ttl">Vu dans la presse</div>
+        <div class="marquee">
+            <div class="mq-track mq-right press-track" id="pressTrack">
+                <img class="artdeco" src="images/presse/art-decoration.png" alt="Art&Décoration">
+                <img class="elle" src="images/presse/elle-decoration.png" alt="Elle Décoration">
+                <img class="cotesud" src="images/presse/cote-sud.png" alt="Maisons Côté Sud">
+                <img class="ideat" src="images/presse/ideat.png" alt="IDEAT">
+                <img class="cotemag" src="images/presse/cote-magazine.png" alt="Côté Magazine">
+                <img class="ab" src="images/presse/architecture-bois.png" alt="Architecture Bois">
+                <img class="anous" src="images/presse/anous.png" alt="ANous Aix Marseille">
+                <span class="press-logotext" style="font-weight:600;">Décoration</span>
+            </div>
+        </div>
+    </section>
+
+<!-- =========================================================
          6. BLOC "Créez / Révolutionnez / Vivez"
          ========================================================= -->
     <section class="apple-font" style="background-color:#f8f8f8;">
         <div class="max-w-6xl mx-auto px-6 md:px-4 py-16 md:py-24">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
-                <!-- Colonne gauche : 3 cartes + accroche (couleurs / tailles fidèles Systeme.io) -->
+                <!-- Colonne gauche : la carte « Vivez » + l'accroche.
+                     Les cartes « Créez » et « Révolutionnez » ont été SUPPRIMÉES par
+                     Lilian le 08/08/2026. Le texte restant n'a pas été retouché. -->
                 <div class="flex flex-col gap-5">
-                    <div class="bg-white rounded-[20px] p-6 shadow-[0_4px_15px_rgba(0,0,0,0.03)] reveal-left">
-                        <h3 class="text-[#0A1F44] text-[28px] md:text-[36px] leading-[40px] tracking-[-1px] font-semibold mb-2">Créez</h3>
-                        <p class="text-[#0A1F44] text-[17px] md:text-[18px] leading-[28px] font-normal">Une protection solaire sans perte de luminosité grâce à ses carrelets en bois exotique sans entretien.</p>
-                    </div>
-                    <div class="bg-white rounded-[20px] p-6 shadow-[0_4px_15px_rgba(0,0,0,0.03)] reveal-left">
-                        <h3 class="text-[#0A1F44] text-[28px] md:text-[36px] leading-[40px] tracking-[-1px] font-semibold mb-2">Révolutionnez</h3>
-                        <p class="text-[#0A1F44] text-[17px] md:text-[19px] leading-[28px] font-normal">Votre extérieur avec un projet unique, fin et élégant qui se fond dans le décor.</p>
-                    </div>
                     <div class="bg-white rounded-[20px] p-6 shadow-[0_4px_15px_rgba(0,0,0,0.03)] reveal-left">
                         <h3 class="text-[#0A1F44] text-[28px] md:text-[36px] leading-[40px] tracking-[-1px] font-semibold mb-2">Vivez</h3>
                         <p class="text-[#0A1F44] text-[17px] md:text-[19px] leading-[28px] font-normal">Sous le confort d'une pergola qui vous procure une sensation de fraîcheur en plein été.</p>
