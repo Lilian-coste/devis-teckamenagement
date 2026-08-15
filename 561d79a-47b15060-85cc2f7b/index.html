@@ -393,13 +393,14 @@
             </h1>
 
             <div class="hero-texte">
+                <!-- Le profil n'a plus sa phrase à lui : il termine CETTE phrase, après les
+                     deux points (Lilian, 15/08/2026 — deux phrases séparées répétaient
+                     « ce qui compte le plus »). Sans ?profil= dans l'URL (trafic Fillout
+                     actuel), le span reste vide et la phrase se ferme sur le point. -->
                 <p>
                     Grâce à vos réponses, nous avons identifié <b>ce qui compte le plus dans
-                    votre projet de pergola</b>.
+                    votre projet de pergola</b><span id="profil-note"></span>.
                 </p>
-                <!-- Phrase de PROFIL (quiz maison, 07/08/2026) : remplie par le script en bas
-                     de page quand l'URL porte ?profil=… ; sans paramètre, invisible. -->
-                <p id="profil-note" style="display:none"></p>
                 <p>
                     Nous avons justement préparé une courte vidéo qui montre ce que nous
                     regarderions en premier dans un projet comme le vôtre, et pourquoi ces
@@ -939,13 +940,13 @@
     /* Personnalisation PROFIL (quiz maison, 07/08/2026). L'URL de redirection du quiz
        porte ?profil=receveurs|cocon|quotidien (+ &aussi=… pour les profils
        secondaires). Sans paramètre (trafic Fillout actuel), rien ne change.
-       Phrase refondue le 15/08/2026 sur le modèle du quiz de Clément Desplats :
-       « Selon vos réponses, … », pour rester dans le registre du diagnostic. */
+       Depuis le 15/08/2026 le profil ne fait plus phrase à part : il complète celle du
+       hero, après les deux points. D'où des libellés sans préposition. */
     (function () {
         var DIT = {
-            receveurs: "de recevoir votre famille et vos amis",
-            cocon: "d'avoir un coin à vous, au calme",
-            quotidien: "de profiter de votre extérieur au quotidien"
+            receveurs: "recevoir votre famille et vos amis",
+            cocon: "avoir un coin à vous, au calme",
+            quotidien: "profiter de votre extérieur au quotidien"
         };
         var q = new URLSearchParams(window.location.search);
         var ids = [q.get("profil")].concat((q.get("aussi") || "").split(","))
@@ -958,8 +959,7 @@
             : parts[0] + ", " + parts[1] + " et " + parts[2];
         var el = document.getElementById("profil-note");
         if (!el) return;
-        el.textContent = "Selon vos réponses, ce qui compte le plus pour vous, c'est " + texte + ".";
-        el.style.display = "";
+        el.textContent = " : " + texte;
     })();
     </script>
 
