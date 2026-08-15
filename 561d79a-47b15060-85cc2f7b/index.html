@@ -376,6 +376,16 @@
             background: #000;
             box-shadow: 0 12px 40px rgba(10,61,92,.12);
         }
+        /* Le titre et le texte sont calés sur la LARGEUR RÉELLE de la vidéo (Lilian,
+           15/08/2026). Cette largeur n'est pas fixe : la vidéo est bornée en hauteur, donc
+           elle change avec la hauteur de la fenêtre. Un script la mesure et la reporte ici,
+           dans --largeur-video. La valeur par défaut sert avant que le script tourne et si
+           jamais il ne tournait pas : la page reste correcte, simplement pas alignée. */
+        .hero-ttl, .hero-texte {
+            max-width: var(--largeur-video, 100%);
+            margin-left: auto;
+            margin-right: auto;
+        }
         .hero-texte { font-size: 16px; line-height: 1.6; color: #4b5563; font-weight: 400; margin-bottom: 22px; }
         .hero-texte p { margin-bottom: 16px; }
         .hero-texte p:last-child { margin-bottom: 0; }
@@ -983,6 +993,32 @@
         var el = document.getElementById("profil-note");
         if (!el) return;
         el.textContent = " : " + texte;
+    })();
+    </script>
+
+    <script>
+    /* Le titre et le texte du hero prennent la LARGEUR DE LA VIDÉO (Lilian, 15/08/2026).
+       Pourquoi en JS et pas en CSS : la vidéo est bornée en HAUTEUR, sa largeur dépend
+       donc de sa proportion ET de la hauteur de la fenêtre. On pourrait la calculer en
+       CSS en codant la proportion en dur, mais la vidéo actuelle est PROVISOIRE : le jour
+       où Franck livre la vraie VSL, une proportion en dur désalignerait tout sans prévenir.
+       On mesure donc la vidéo réelle, et on reporte sa largeur dans --largeur-video.
+       Le ResizeObserver suit les redimensionnements de fenêtre et la rotation du téléphone ;
+       loadedmetadata couvre le cas où le fichier arrive après le premier calcul. */
+    (function () {
+        var video = document.querySelector(".hero-video");
+        var bulle = document.querySelector(".hero-bulle");
+        if (!video || !bulle) return;
+
+        function caler() {
+            var largeur = video.getBoundingClientRect().width;
+            if (largeur > 0) bulle.style.setProperty("--largeur-video", largeur + "px");
+        }
+
+        caler();
+        video.addEventListener("loadedmetadata", caler);
+        if (window.ResizeObserver) new ResizeObserver(caler).observe(video);
+        else window.addEventListener("resize", caler);
     })();
     </script>
 
