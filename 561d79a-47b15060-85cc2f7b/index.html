@@ -295,6 +295,8 @@
         .adv-ttl { text-align: center; font-size: 28px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 8px; color: #1D1D1F; }
         @media (min-width: 768px) { .adv-ttl { font-size: 38px; } }
         .adv-sub { text-align: center; color: #86868B; font-size: 14px; margin-bottom: 40px; }
+        /* Sur mobile, le titre était trop bas : on récupère 32px au-dessus (Lilian, 15/08). */
+        @media (max-width: 767px) { .adv-section { padding-top: 32px; } .adv-sub { margin-bottom: 28px; } }
         .bubbles { position: relative; max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
         .bubble { background: #fff; border: 1px solid #E4E8EC; border-radius: 26px; padding: 26px 24px; text-align: center; box-shadow: 0 12px 40px rgba(10,61,92,.08); }
         .bubble .ico { width: 54px; height: 54px; border-radius: 16px; background: #E6F1FA; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
@@ -547,7 +549,9 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
 
-                <div class="md:col-span-3 bento-card rounded-[3rem] overflow-hidden">
+                <!-- Toujours visible, jamais animée (demande Lilian 15/08/2026) : c'est
+                     la carte qui ouvre la seconde série, elle ne doit pas se faire attendre. -->
+                <div class="md:col-span-3 bento-card sans-animation rounded-[3rem] overflow-hidden">
                     <div class="img-container h-64 md:h-[450px]">
                         <img src="https://i.postimg.cc/NfY6B3cZ/karine-gvt-61.jpg" alt="Réalisation Teck Aménagement - Karine Parra">
                     </div>
@@ -831,10 +835,22 @@
             // deux sections différentes et on ne veut pas les toucher une par une.
             var sequences = document.querySelectorAll('.avis-1, .avis-2');
             for (var s = 0; s < sequences.length; s++) {
-                var elements = sequences[s].querySelectorAll('.bento-card, .adv-cta');
+                var elements = sequences[s].querySelectorAll('.bento-card:not(.sans-animation), .adv-cta');
+                // Le décalage se calcule par RANGÉE RÉELLE, pas tous les trois éléments :
+                // la grille des avis n'a pas toujours trois colonnes. Deux cartes dont le
+                // haut coïncide sont sur la même ligne, la seconde attend son tour.
+                var hautDeLaRangee = null;
+                var rang = 0;
                 for (var e = 0; e < elements.length; e++) {
+                    var haut = Math.round(elements[e].getBoundingClientRect().top);
+                    if (hautDeLaRangee === null || Math.abs(haut - hautDeLaRangee) > 40) {
+                        hautDeLaRangee = haut;
+                        rang = 0;
+                    } else {
+                        rang++;
+                    }
                     elements[e].classList.add('reveal-avis');
-                    elements[e].style.setProperty('--retard', (e % 3) * 130 + 'ms');
+                    elements[e].style.setProperty('--retard', rang * 260 + 'ms');
                 }
             }
             var avis = document.querySelectorAll('.reveal-avis');
