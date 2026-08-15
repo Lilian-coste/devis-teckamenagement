@@ -15,9 +15,19 @@
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '1276467600212409');
-      fbq('track', 'PageView');
-      fbq('track', 'Lead');
+      // ⚠️ GARDE-FOU (08/08/2026). Cette page tire un événement Lead à CHAQUE
+      // chargement, et c'est le signal qui pilote les campagnes payantes de Franck.
+      // Sans cette condition, ouvrir la page en local pour la développer envoie un
+      // faux Lead dans le pixel de production (c'est arrivé le 08/08). Le pixel ne
+      // se charge donc plus sur localhost / 127.0.0.1 / 0.0.0.0.
+      var HOTES_LOCAUX = ['localhost', '127.0.0.1', '0.0.0.0', ''];
+      if (HOTES_LOCAUX.indexOf(location.hostname) === -1) {
+        fbq('init', '1276467600212409');
+        fbq('track', 'PageView');
+        fbq('track', 'Lead');
+      } else {
+        console.warn('[Teck] Pixel Meta désactivé : hôte local (' + location.hostname + ').');
+      }
     </script>
     <noscript><img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"
