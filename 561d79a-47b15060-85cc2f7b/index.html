@@ -61,7 +61,12 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 48px 22px 64px;
+            /* Le hero tient dans UN écran : badge, titre, texte, vidéo entière et bouton
+               (Lilian, 15/08/2026). D'où le min-height, les paddings resserrés en haut
+               pour remonter le badge, et surtout la vidéo bornée en HAUTEUR plus bas.
+               Sur téléphone le contenu dépasse forcément, le hero grandit alors tout seul. */
+            min-height: 100svh;
+            padding: 28px 22px 40px;
         }
         /* 880px et plus 640 (Lilian, 15/08/2026) : le texte du hero tenait sur une
            colonne étroite et se lisait mal, la vidéo était d'autant plus petite.
@@ -72,7 +77,7 @@
             text-align: center;
         }
         @media (min-width: 768px) {
-            .hero-section { padding: 64px 22px 70px; }
+            .hero-section { padding: 36px 22px 48px; }
         }
         /* Titre du hero : exactement la typo de .adv-ttl (demande de Lilian, 15/08/2026). */
         .hero-ttl {
@@ -82,7 +87,7 @@
             letter-spacing: -.02em;
             line-height: 1.15;
             color: #1D1D1F;
-            margin: 0 0 20px;
+            margin: 0 0 16px;
         }
         @media (min-width: 768px) { .hero-ttl { font-size: 38px; } }
 
@@ -339,15 +344,22 @@
 
         /* La VSL vit DANS le hero (demande de Lilian, 15/08/2026), plus dans sa propre
            section. Le bouton la suit immédiatement. */
+        /* La vidéo est bornée en HAUTEUR, pas en largeur : c'est ce qui la fait tenir
+           entière dans le hero sans rétrécir le texte, qui garde ses 880px. Sur un grand
+           écran elle occupe toute la largeur du bloc, sur un écran bas elle se réduit
+           d'elle-même en gardant ses proportions. Sur téléphone la borne ne mord jamais
+           (une vidéo 16:9 large de 350px ne fait que 197px de haut). */
         .hero-video {
-            width: 100%;
+            width: auto;
+            max-width: 100%;
+            max-height: 44svh;
             border-radius: 12px;
             display: block;
-            margin: 0 0 28px;
+            margin: 0 auto 22px;
             background: #000;
             box-shadow: 0 12px 40px rgba(10,61,92,.12);
         }
-        .hero-texte { font-size: 16px; line-height: 1.6; color: #4b5563; font-weight: 400; margin-bottom: 28px; }
+        .hero-texte { font-size: 16px; line-height: 1.6; color: #4b5563; font-weight: 400; margin-bottom: 22px; }
         .hero-texte p { margin-bottom: 16px; }
         .hero-texte p:last-child { margin-bottom: 0; }
         .hero-texte b { font-weight: 600; color: #1D1D1F; }
