@@ -66,23 +66,27 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
   .hero .desc b{ font-weight:600; color:#fff; }
   .hero .btn-black{ top:76%; white-space:nowrap; width:max-content; }
   /* Mention calée sur le BOUTON, plus en % (Lilian 07/08) : même respiration que le
-     bloc CTA du bas (gap 16px) = demi-bouton 26px + 16px + demi-mention 9px. */
-  .hero .rating-wrap{ top:calc(76% + 51px); white-space:nowrap; }
-  /* « 100% gratuit » sous le bouton (Lilian 15/08) : en italique, discret. */
-  .gratuit{ position:relative; z-index:2; font-style:italic; font-size:13.5px; color:#E5E7EB; opacity:.9; }
+     bloc CTA du bas (gap 16px) = demi-bouton 33px (il porte désormais sa 2e ligne
+     « 100% gratuit ») + 16px + demi-mention 9px. */
+  .hero .rating-wrap{ top:calc(76% + 58px); white-space:nowrap; }
   /* positions + tailles DESKTOP */
   @media (min-width:768px){
     .eyebrow{ top:20%; font-size:23px; }
     .hero h1{ top:38%; font-size:58px; }
     .hero .desc{ top:55%; font-size:20px; }
     .hero .btn-black{ top:70%; }
-    .hero .rating-wrap{ top:calc(70% + 51px); }
+    .hero .rating-wrap{ top:calc(70% + 58px); }
   }
 
-  /* Bouton noir (repris de ta DA devis) */
-  .btn-black{ display:inline-flex; align-items:center; gap:10px; background:#000; color:#fff;
-    border:none; border-radius:14px; padding:16px 34px; font-size:16px; font-weight:600; cursor:pointer;
+  /* Bouton noir (repris de ta DA devis).
+     Depuis le 15/08/2026 il porte DEUX lignes : le libellé avec sa flèche, puis
+     « 100% gratuit » — la mention vit dans le bouton, plus à côté (demande de Lilian).
+     D'où la colonne. Le même bouton sert en haut du hero et en bas de page. */
+  .btn-black{ display:inline-flex; flex-direction:column; align-items:center; gap:3px; background:#000; color:#fff;
+    border:none; border-radius:14px; padding:14px 34px; font-size:16px; font-weight:600; cursor:pointer;
     text-decoration:none; transition:transform .35s cubic-bezier(.175,.885,.32,1.275), box-shadow .35s; }
+  .btn-ligne{ display:inline-flex; align-items:center; gap:10px; }
+  .btn-gratuit{ font-style:italic; font-weight:400; font-size:12.5px; opacity:.78; }
   .btn-black:hover{ transform:scale(1.03); box-shadow:0 14px 34px rgba(0,0,0,.35); }
   /* le bouton du hero est centré en absolu → le hover doit garder le translate */
   .hero .btn-black:hover{ transform:translate(-50%,-50%) scale(1.03); }
@@ -215,7 +219,9 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
        (sous-titre) → ACTION (bouton). Le sous-titre, retiré le 05/08, revient ici. -->
   <p class="eyebrow">Et si votre terrasse devenait enfin l'endroit <span class="accent">le plus agréable</span> de votre maison en plein été ?</p>
 
-  <h1>Même sous <span class="accent">+35°C</span>, restez dehors quand tout le monde rentre</h1>
+  <!-- L'accent bleu est revenu sur la seconde moitié (Lilian, 15/08 au soir) :
+       « +35°C » reprend le blanc, c'est la promesse qui se surligne. -->
+  <h1>Même sous +35°C, <span class="accent">restez dehors quand tout le monde rentre</span></h1>
 
   <!-- Preuve du « 10°C » : test thermomètre filmé (rush IMG_4477, 29/07/2026), 32/32 au
        départ, 42°C au soleil contre 32°C sous la pergola à l'arrivée. Le « jusqu'à » est
@@ -224,14 +230,15 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
   <p class="desc">Découvrez comment une pergola Teck Aménagement permet de profiter d'un extérieur jusqu'à <b>10°C plus frais</b>, même en plein été.</p>
 
   <a class="btn-black" href="https://teckamenagement.fillout.com/t/uDkMH84NFbus?source=cover">
-    Découvrir ma pergola idéale
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    <span class="btn-ligne">Je découvre ma pergola idéale
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </span>
+    <span class="btn-gratuit">100% gratuit</span>
   </a>
 
   <div class="rating-wrap">
     <span class="glow a"></span><span class="glow b"></span>
     <!-- La mention 4,9★ a quitté le hero (Lilian 06/08/2026) : elle vit en bas de chaque carte avis. -->
-    <div class="gratuit">100% gratuit</div>
     <div class="quiz-count"><span class="compteur">+635</span> personnes ont déjà fait ce quiz</div>
   </div>
 </section>
@@ -330,8 +337,12 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
 
 <!-- ======================= BLOC CTA BAS ======================= -->
 <section class="bottom-cta">
-  <a class="btn-black" href="https://teckamenagement.fillout.com/t/uDkMH84NFbus?source=cover">Je fais ma demande
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+  <!-- MÊME bouton qu'en haut du hero, à la lettre près (retour Lilian 15/08/2026). -->
+  <a class="btn-black" href="https://teckamenagement.fillout.com/t/uDkMH84NFbus?source=cover">
+    <span class="btn-ligne">Je découvre ma pergola idéale
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </span>
+    <span class="btn-gratuit">100% gratuit</span>
   </a>
   <!-- Pas de mention 4,9★ ici non plus (Lilian 06/08/2026) : elle ne vit que sur les cartes avis. -->
   <div class="quiz-count"><span class="compteur">+635</span> personnes ont déjà fait ce quiz</div>
