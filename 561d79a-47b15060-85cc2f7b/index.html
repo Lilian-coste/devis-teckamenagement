@@ -63,22 +63,16 @@
             justify-content: center;
             padding: 48px 22px 64px;
         }
+        /* 880px et plus 640 (Lilian, 15/08/2026) : le texte du hero tenait sur une
+           colonne étroite et se lisait mal, la vidéo était d'autant plus petite.
+           Le logo a été retiré du hero à la même occasion. */
         .hero-bulle {
             width: 100%;
-            max-width: 640px;
+            max-width: 880px;
             text-align: center;
-        }
-        /* Le logo revient dans le FLUX (il était en absolu par-dessus la photo) et c'est
-           la version sombre : la version « overlay » est blanche, invisible sur clair. */
-        .hero-section .logo-overlay {
-            width: 260px;
-            max-width: 70%;
-            height: auto;
-            margin-bottom: 28px;
         }
         @media (min-width: 768px) {
             .hero-section { padding: 64px 22px 70px; }
-            .hero-section .logo-overlay { width: 340px; }
         }
         /* Titre du hero : exactement la typo de .adv-ttl (demande de Lilian, 15/08/2026). */
         .hero-ttl {
@@ -211,8 +205,11 @@
            jusqu'aux avis, un dégradé vers le blanc pour poser le bouton, le bandeau
            presse en blanc, puis blanc -> bleu (#eff4fa) et bleu -> blanc, exactement
            comme .proof-section et .adv-section de pergola/page-accueil. */
-        .avis-1 { background: linear-gradient(180deg, #f8f8f8 0%, #f8f8f8 52%, #ffffff 88%, #ffffff 100%); }
-        /* 52% = le haut de la derniere rangee d'avis (mesure au navigateur), 88% = juste
+        .avis-1 { background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 35%, #f8f8f8 52%, #ffffff 88%, #ffffff 100%); }
+        /* Le haut part du BLANC depuis le 15/08/2026 (demande de Lilian) : le hero finit
+           en blanc, la section enchaînait sur du gris franc et la couture se voyait. Le
+           gris ne s'installe donc qu'au fil du titre et de la première rangée d'avis (35%).
+           52% = le haut de la derniere rangee d'avis (mesure au navigateur), 88% = juste
            avant le bouton, qui tombe a 93% : il se pose donc sur du blanc franc. */
         /* Le bloc « Vivez » prend le dégradé blanc -> bleu de .proof-section. */
         .bloc-vivez { background: linear-gradient(180deg, #ffffff 0%, #eff4fa 100%); }
@@ -373,7 +370,6 @@
     </div>
 
     <section class="hero-section">
-        <img src="images/logo-teck.png" alt="Teck Aménagement" class="logo-overlay">
         <div class="hero-bulle">
             <!-- Le badge portait « Demande confirmée », registre collecte. Il porte
                  maintenant la félicitation nominative (angle « J'ai fait analyser mon
