@@ -59,7 +59,9 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
      de lignes sur téléphone, donc mangent l'écart depuis leur centre. Le rythme divergeait
      par construction (mesuré : 79/55 px sur mobile contre 33/26 px sur ordinateur).
      En colonne flex centrée les écarts sont écrits en PIXELS, donc identiques partout. */
-  .hero{ display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 18px; }
+  /* PAS de padding latéral : les `max-width` en % des blocs se calculent sur la largeur
+     du hero, un padding les rétrécirait (repéré par Lilian le 15/08/2026). */
+  .hero{ display:flex; flex-direction:column; align-items:center; justify-content:center; }
   .hero > .eyebrow, .hero > h1, .hero > .desc, .hero > .btn-black, .hero > .rating-wrap{ margin:0; }
   /* tailles + écarts MOBILE (base). Un seul écart pour préheader→titre et titre→sous-titre. */
   .eyebrow{ font-size:18px; line-height:1.4; color:#E5E7EB; width:640px; max-width:88%; font-weight:300; }
