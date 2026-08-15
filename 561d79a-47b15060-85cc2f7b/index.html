@@ -46,6 +46,19 @@
         html { scroll-behavior: smooth; }
         body { background-color: #f8f8f8; }
 
+        /* Les deux barres de défilement que Lilian voyait sur son téléphone le
+           15/08/2026 : une horizontale tout en bas, une verticale à droite.
+           - L'horizontale venait des bandeaux défilants. Leurs pistes font plusieurs
+             milliers de pixels de large ; elles sont bien coupées par un overflow:hidden
+             local, mais iOS laisse malgré tout le DOCUMENT défiler latéralement. Le
+             overflow-x:hidden posé ici, sur html ET body, ferme la porte pour de bon.
+           - La verticale est l'indicateur natif du navigateur. On le masque à sa
+             demande. ⚠️ Contrepartie assumée : le lecteur perd le repère visuel de sa
+             position dans la page. La page reste évidemment défilable. */
+        html, body { overflow-x: hidden; max-width: 100%; }
+        html { scrollbar-width: none; -ms-overflow-style: none; }
+        html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
         /* ====== HERO HEADER ======
            La photo de fond et la bulle noire translucide ont sauté le 15/08/2026
            (Lilian : « ça ne rend pas beau du tout »). Le hero prend le MÊME dégradé
@@ -90,6 +103,10 @@
             margin: 0 0 16px;
         }
         @media (min-width: 768px) { .hero-ttl { font-size: 38px; } }
+        /* « étudié » dans le bleu du bandeau de préqualification (Lilian, 15/08/2026) :
+           le mot qui porte tout l'angle « analyse » se surligne, et la page n'a qu'un
+           seul bleu du haut en bas. */
+        .hero-ttl .mot-bleu { color: #0653A8; }
 
         /* ====== BADGE "Félicitations [Prénom]" (border beam) ====== */
         .border-beam-container {
@@ -396,7 +413,7 @@
             </div>
 
             <h1 class="hero-ttl">
-                Votre projet mérite maintenant d'être étudié plus précisément.
+                Votre projet mérite maintenant d'être <span class="mot-bleu">étudié</span> plus précisément.
             </h1>
 
             <div class="hero-texte">
