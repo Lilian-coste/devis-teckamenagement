@@ -7,3 +7,11 @@
 
 # Vercel
 .vercel
+
+# Travail en cours sur la page de résultat +15K (08/08/2026).
+# Ces deux-là ne doivent JAMAIS partir en production :
+#  - la vidéo n'est qu'un bouche-trou (Villa Impian) en attendant la vraie VSL,
+#    et elle pèse 49 Mo ;
+#  - variante-texte.html est une page de travail pour comparer « VSL » et « texte ».
+561d79a-47b15060-85cc2f7b/videos/
+561d79a-47b15060-85cc2f7b/variante-texte.html

@@ -15,10 +15,10 @@
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-      // Même garde-fou que sur la page +15K (08/08/2026) : pas de pixel en local,
-      // pour qu'un aller-retour de développement ne pollue pas les données de Franck.
-      var HOTES_LOCAUX = ['localhost', '127.0.0.1', '0.0.0.0', ''];
-      if (HOTES_LOCAUX.indexOf(location.hostname) === -1) {
+      // Même garde-fou que sur la page +15K (08/08/2026), en LISTE BLANCHE : le pixel
+      // ne part que depuis le vrai domaine, jamais depuis un aperçu local ou une IP
+      // du réseau, pour ne pas polluer les données de Franck.
+      if (location.hostname === 'devis.teckamenagement.fr') {
         fbq('init', '1276467600212409');
         fbq('track', 'PageView');
       }

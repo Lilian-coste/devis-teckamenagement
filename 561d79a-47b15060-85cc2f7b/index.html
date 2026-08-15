@@ -17,16 +17,17 @@
       'https://connect.facebook.net/en_US/fbevents.js');
       // ⚠️ GARDE-FOU (08/08/2026). Cette page tire un événement Lead à CHAQUE
       // chargement, et c'est le signal qui pilote les campagnes payantes de Franck.
-      // Sans cette condition, ouvrir la page en local pour la développer envoie un
-      // faux Lead dans le pixel de production (c'est arrivé le 08/08). Le pixel ne
-      // se charge donc plus sur localhost / 127.0.0.1 / 0.0.0.0.
-      var HOTES_LOCAUX = ['localhost', '127.0.0.1', '0.0.0.0', ''];
-      if (HOTES_LOCAUX.indexOf(location.hostname) === -1) {
+      // Sans condition, ouvrir la page en développement envoie un faux Lead dans le
+      // pixel de production (c'est arrivé le 08/08 depuis un serveur local).
+      // LISTE BLANCHE et pas liste noire : le pixel ne part QUE depuis le vrai
+      // domaine. Un aperçu local, une IP du réseau (téléphone de Lilian sur le wifi),
+      // un domaine *.vercel.app : aucun n'envoie quoi que ce soit.
+      if (location.hostname === 'devis.teckamenagement.fr') {
         fbq('init', '1276467600212409');
         fbq('track', 'PageView');
         fbq('track', 'Lead');
       } else {
-        console.warn('[Teck] Pixel Meta désactivé : hôte local (' + location.hostname + ').');
+        console.warn('[Teck] Pixel Meta désactivé : hôte non production (' + location.hostname + ').');
       }
     </script>
     <noscript><img height="1" width="1" style="display:none"
@@ -36,7 +37,8 @@
 
     <!-- Tailwind + Inter : une seule fois pour toute la page -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Playfair Display ajouté pour le logo texte « Décoration » du bandeau presse (repris de la page d'accueil pergola). -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
     <style>
         /* ====== BASE ====== */
@@ -206,56 +208,81 @@
             100% { left: -150%; opacity: 0; }
         }
 
-        /* ====== BANDEAU DEFILANT (réalisations) ====== */
-        @keyframes scrollHorizontalStory {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-3648px); } /* 12 images x (280 + 24 gap) */
-        }
-        .animate-infinite-scroll-story {
-            display: flex;
-            width: max-content;
-            animation: scrollHorizontalStory 45s linear infinite;
-            will-change: transform;
-            user-select: none;
-            -webkit-user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .is-paused { animation-play-state: paused !important; }
-        .story-card {
-            width: 280px; height: 498px;
-            border-radius: 20px;
-            overflow: hidden;
-            flex-shrink: 0;
-            background: #eee;
-            border: none;
-        }
-        .story-card img {
-            width: 100%; height: 100%;
-            object-fit: cover; display: block;
-            border-radius: 20px;
-            pointer-events: none;
-        }
-        .scroll-container-story { position: relative; width: 100%; overflow: hidden; padding: 20px 0 20px 0; }
-
-        /* ====== BLOC FELICITATIONS (parallax bas de page) ====== */
-        .parallax-section {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 196px 40px 196px 129px;
-            background-image: linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.08)), url('images/eguilles-5.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+        /* ====== VSL (bloc 2) ====== */
+        .vsl-section { background-color: #f8f8f8; padding: 72px 20px; }
+        .vsl-section video {
+            display: block;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 12px;
+            background: #000;
         }
         @media (max-width: 768px) {
-            .parallax-section {
-                background-image: linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.08)), url('images/eguilles-mobile.jpg');
-                background-attachment: scroll;
-                padding: 5rem 1.25rem;
-            }
+            .vsl-section { padding: 48px 16px; }
         }
+
+        /* ====== BANDEAU PRESSE (bloc 3) ======
+           Repris tel quel de pergola/page-accueil/index.html (marquee gauche -> droite). */
+        .marquee { overflow: hidden; width: 100%; }
+        .mq-track { display: flex; width: max-content; gap: 16px; align-items: center; }
+        .mq-right { animation: scrollRight 40s linear infinite; }
+        .marquee:hover .mq-track { animation-play-state: paused; }
+        @keyframes scrollRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+        .press-section { background: #fff; padding: 32px 0 56px; }
+        .press-ttl { text-align: center; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #0653A8; font-weight: 600; margin-bottom: 34px; }
+        /* Bandeau resserré (≈ largeur du titre) + fondu sur les bords → 4-5 logos visibles */
+        .press-section .marquee { max-width: 780px; margin: 0 auto;
+            -webkit-mask-image: linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%);
+            mask-image: linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%); }
+        .press-track { gap: 52px; align-items: center; padding: 0 25px; }
+        .press-track img { width: auto; object-fit: contain; display: block; mix-blend-mode: multiply; flex-shrink: 0; }
+        .press-track .elle { height: 52px; }
+        .press-track .cotesud { height: 54px; }
+        .press-track .ideat { height: 50px; }
+        .press-track .cotemag { height: 40px; }
+        .press-track .ab { height: 60px; }
+        .press-track .anous { height: 42px; }
+        .press-track .artdeco { height: 42px; }
+        .press-logotext { font-family: 'Playfair Display', Georgia, serif; font-size: 36px; font-weight: 700; color: #1D1D1F; line-height: 1; white-space: nowrap; }
+
+        /* ====== 3 AVANTAGES — « Pourquoi choisir Teck Aménagement » (bloc 7) ======
+           Repris tel quel de pergola/page-accueil/index.html. */
+        .adv-section { position: relative; background: linear-gradient(180deg,#EFF4FA 0%,#FFFFFF 88%); padding: 64px 22px 70px; overflow: hidden; }
+        .adv-ttl { text-align: center; font-size: 28px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 8px; color: #1D1D1F; }
+        @media (min-width: 768px) { .adv-ttl { font-size: 38px; } }
+        .adv-sub { text-align: center; color: #86868B; font-size: 14px; margin-bottom: 40px; }
+        .bubbles { position: relative; max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+        .bubble { background: #fff; border: 1px solid #E4E8EC; border-radius: 26px; padding: 26px 24px; text-align: center; box-shadow: 0 12px 40px rgba(10,61,92,.08); }
+        .bubble .ico { width: 54px; height: 54px; border-radius: 16px; background: #E6F1FA; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
+        .bubble h4 { font-size: 17px; font-weight: 600; margin: 0 0 6px; }
+        .bubble p { font-size: 13.5px; color: #6b7780; line-height: 1.5; margin: 0; }
+        /* Animation flottante des bulles sur MOBILE (équivalent du desktop) */
+        .bubble.b1 { animation: floatM 6s ease-in-out infinite; }
+        .bubble.b2 { animation: floatM 7s ease-in-out infinite .5s; }
+        .bubble.b3 { animation: floatM 8s ease-in-out infinite 1s; }
+        @keyframes floatM { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @media (min-width: 768px) {
+            .bubbles { display: block; min-height: 360px; }
+            .bubble { position: absolute; width: 300px; }
+            .bubble.b1 { left: 0; top: 30px; animation: float1 7s ease-in-out infinite; }
+            .bubble.b2 { right: 0; top: 0; animation: float2 8s ease-in-out infinite; }
+            .bubble.b3 { left: 50%; top: 170px; animation: float3 9s ease-in-out infinite; }
+        }
+        @keyframes float1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(14px,-18px); } }
+        @keyframes float2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-16px,16px); } }
+        @keyframes float3 { 0%,100% { transform: translate(-50%,0); } 50% { transform: translate(-50%,-16px); } }
+
+        /* CTA + mention d'avis sous les 3 cartes */
+        .adv-cta { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 40px; }
+        /* Sur desktop les bulles sont en absolu : la b3 déborde de ~45px sous .bubbles
+           (min-height 360px), il faut donc dégager le CTA pour éviter le chevauchement. */
+        @media (min-width: 768px) { .adv-cta { margin-top: 100px; } }
+        /* Mention 4,9★ — markup et style repris des cartes avis de pergola/page-accueil. */
+        .rating { display: flex; align-items: center; gap: 0; font-size: 13px; font-weight: 600; justify-content: center; color: #86868B; }
+        .rating .ystar { color: #FBBF24; font-size: 1em; line-height: 1; margin: 0; }
+        .rating .muted { font-weight: 400; opacity: .85; }
     </style>
 </head>
 
@@ -302,15 +329,40 @@
         </div>
     </section>
 
+    <!-- 2. VSL — vidéo PROVISOIRE (Villa Impian) en attendant le tournage de la vraie VSL par Franck. À remplacer. -->
+    <section class="vsl-section">
+        <video controls playsinline preload="metadata" src="videos/vsl-provisoire-villa-impian.mp4"></video>
+    </section>
+
     <!-- =========================================================
-         2. CALENDLY
+         3. VU DANS LA PRESSE (marquee gauche -> droite)
+         Bloc repris de pergola/page-accueil/index.html.
+         ========================================================= -->
+    <section class="press-section">
+        <div class="press-ttl">Vu dans la presse</div>
+        <div class="marquee">
+            <div class="mq-track mq-right press-track" id="pressTrack">
+                <img class="artdeco" src="images/presse/art-decoration.png" alt="Art&Décoration">
+                <img class="elle" src="images/presse/elle-decoration.png" alt="Elle Décoration">
+                <img class="cotesud" src="images/presse/cote-sud.png" alt="Maisons Côté Sud">
+                <img class="ideat" src="images/presse/ideat.png" alt="IDEAT">
+                <img class="cotemag" src="images/presse/cote-magazine.png" alt="Côté Magazine">
+                <img class="ab" src="images/presse/architecture-bois.png" alt="Architecture Bois">
+                <img class="anous" src="images/presse/anous.png" alt="ANous Aix Marseille">
+                <span class="press-logotext" style="font-weight:600;">Décoration</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         4. CALENDLY
          ========================================================= -->
     <div class="bg-[#f8f8f8] px-4 py-8">
         <div id="calendrier" class="mx-auto max-w-[1024px]" style="min-width:320px;height:720px;"></div>
     </div>
 
     <!-- =========================================================
-         3. AVIS CLIENTS (section 1)
+         5. AVIS CLIENTS — « Nos clients / Parlent de nous »
          ========================================================= -->
     <div class="avis-1 apple-font bg-[#F5F5F7] pt-2 pb-24 px-6 md:px-4">
         <div class="max-w-6xl mx-auto">
@@ -416,115 +468,6 @@
     </div>
 
     <!-- =========================================================
-         4. BANDEAU DEFILANT — réalisations
-         ========================================================= -->
-    <div style="background-color: #f8f8f8;" class="w-full">
-        <div class="scroll-container-story">
-            <div id="scroll-wrapper" class="animate-infinite-scroll-story gap-6">
-                <div class="story-card"><img src='https://i.postimg.cc/0jPjNN0N/1.jpg' alt='1'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/Xq4qvvk9/2.jpg' alt='2'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/0jnQKqVw/3.jpg' alt='3'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/qqwR6d1s/4.jpg' alt='4'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/vThBxd0n/5.jpg' alt='5'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/2yG6Lf0T/6.jpg' alt='6'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/NFDM2wdS/7.jpg' alt='7'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/sf41Np3j/8.jpg' alt='8'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/VsW5Vjzs/9.jpg' alt='9'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/c1B6bQdL/10.jpg' alt='10'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/Y2zjs1t0/11.jpg' alt='11'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/6Q6JhyTZ/0-Maison-R-Aix-10-Filter.jpg' alt='0-Maison-R-Aix-10-Filter'></div>
-
-                <div class="story-card"><img src='https://i.postimg.cc/0jPjNN0N/1.jpg' alt='1'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/Xq4qvvk9/2.jpg' alt='2'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/0jnQKqVw/3.jpg' alt='3'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/qqwR6d1s/4.jpg' alt='4'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/vThBxd0n/5.jpg' alt='5'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/2yG6Lf0T/6.jpg' alt='6'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/NFDM2wdS/7.jpg' alt='7'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/sf41Np3j/8.jpg' alt='8'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/VsW5Vjzs/9.jpg' alt='9'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/c1B6bQdL/10.jpg' alt='10'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/Y2zjs1t0/11.jpg' alt='11'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/6Q6JhyTZ/0-Maison-R-Aix-10-Filter.jpg' alt='0-Maison-R-Aix-10-Filter'></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- =========================================================
-         5. AVIS CLIENTS (section 2)
-         ========================================================= -->
-    <div class="avis-2 apple-font bg-[#F5F5F7] pt-12 pb-24 px-6 md:px-4">
-        <div class="max-w-6xl mx-auto">
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
-
-                <div class="md:col-span-3 bento-card rounded-[3rem] overflow-hidden">
-                    <div class="img-container h-64 md:h-[450px]">
-                        <img src="https://i.postimg.cc/NfY6B3cZ/karine-gvt-61.jpg" alt="Réalisation Teck Aménagement - Karine Parra">
-                    </div>
-                    <div class="p-8 md:p-16">
-                        <div class="stars-container text-[#0653A8] text-sm">★★★★★</div>
-                        <h3 class="text-[#1D1D1F] text-3xl md:text-4xl font-medium mb-6">"Super produit, confort incroyable, design moderne et intemporel"</h3>
-                        <p class="text-[#424245] text-lg font-light leading-relaxed mb-10 italic max-w-4xl mx-auto">
-                            "Foncez les yeux fermés, en plus d'un professionnalisme et d'un savoir faire au rendez-vous ce qui est très rare!"
-                        </p>
-                        <div class="flex items-center justify-center gap-4">
-                            <div class="w-12 h-12 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-xs font-bold">KP</div>
-                            <div class="text-left">
-                                <p class="text-[#1D1D1F] font-medium text-base">Karine Parra</p>
-                                <p class="text-[#86868B] text-sm">Marseille</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bento-card rounded-[2rem] p-8 justify-center">
-                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
-                    <p class="text-[#424245] text-sm font-light italic leading-relaxed mb-8">
-                        "Des professionnels, des vrais ! Je recommande les yeux fermés, cette entreprise. <span class="text-[#1D1D1F] font-medium">Si tous les artisans étaient aussi sérieux, la France se porterait tellement mieux !</span> Encore merci, le résultat est superbe."
-                    </p>
-                    <div class="flex items-center justify-center gap-3 mt-auto">
-                        <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">SE</div>
-                        <div class="text-left">
-                            <p class="text-[#1D1D1F] font-medium text-xs">Sébastien & Ellena</p>
-                            <p class="text-[#86868B] text-[10px]">Salon-de-Provence</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bento-card rounded-[2rem] p-8 justify-center">
-                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
-                    <p class="text-[#424245] text-sm font-light italic leading-relaxed mb-8">
-                        "Nous recommandons vivement l'entreprise Teck Amenagement son directeur Mr Joncheray Franck et toute son équipe. Les conseils, l'expérience, l'écoute, tout est au rdv. <span class="text-[#1D1D1F] font-medium">Il est rare de rencontrer des artisans autant impliqués dans la recherche de la perfection.</span>"
-                    </p>
-                    <div class="flex items-center justify-center gap-3 mt-auto">
-                        <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">V</div>
-                        <div class="text-left">
-                            <p class="text-[#1D1D1F] font-medium text-xs">Véro</p>
-                            <p class="text-[#86868B] text-[10px]">Velaux</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bento-card rounded-[2rem] p-8 justify-center">
-                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
-                    <p class="text-[#424245] text-sm font-light italic leading-relaxed mb-8">
-                        "Teck Amenagement propose un conseil et un produit fini de grande qualité, adapté au besoin, au contraintes. Le design est magnifique et <span class="text-[#1D1D1F] font-medium">la sensation sous la pergola vraiment très agréable. Je recommande vivement.</span>"
-                    </p>
-                    <div class="flex items-center justify-center gap-3 mt-auto">
-                        <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">DB</div>
-                        <div class="text-left">
-                            <p class="text-[#1D1D1F] font-medium text-xs">Didier Brother</p>
-                            <p class="text-[#86868B] text-[10px]">Sainte-Maxime</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- =========================================================
          6. BLOC "Créez / Révolutionnez / Vivez"
          ========================================================= -->
     <section class="apple-font" style="background-color:#f8f8f8;">
@@ -564,39 +507,41 @@
     </section>
 
     <!-- =========================================================
-         7. BLOC FELICITATIONS (parallax)
+         7. POURQUOI CHOISIR TECK AMÉNAGEMENT (3 bulles)
+         Bloc repris de pergola/page-accueil/index.html (remplace l'ancien
+         bloc parallax « Félicitations ! », dont on garde le bouton chevron).
          ========================================================= -->
-    <section class="parallax-section apple-font">
-        <div class="hero-bulle">
-            <div class="border-beam-container mb-6">
-                <div class="border-beam-inner">
-                    <span style="letter-spacing: 0.2em;" class="text-[10px] font-medium uppercase text-white leading-none">
-                        Demande confirmée
-                    </span>
+    <section class="adv-section apple-font">
+        <h2 class="adv-ttl">Pourquoi choisir Teck Aménagement</h2>
+        <p class="adv-sub">3 raisons qui font toute la différence</p>
+        <div class="bubbles">
+            <div class="bubble b1">
+                <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 5l14 14M19 5 5 19M2 12h20"/></svg></div>
+                <h4>Plus de fraîcheur</h4>
+                <p>Un bois si dense qu'il bloque la transmission de la chaleur : nous avons mesuré 42°C en plein soleil contre 32°C sous la pergola.</p>
+            </div>
+            <div class="bubble b2">
+                <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h11a4 4 0 1 0-4-4M3 13h15a4 4 0 1 1-4 4M3 18h9"/></svg></div>
+                <h4>Plus d'esthétisme</h4>
+                <p>La couleur naturelle et la chaleur du bois se fondent dans votre décor, portées par une structure légère, épurée et aérée.</p>
+            </div>
+            <div class="bubble b3">
+                <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+                <h4>Plus de confort</h4>
+                <p>Vivez dehors sans rien entretenir : notre bois traverse les années et les intempéries sans se déformer, sans lasure et sans ponçage.</p>
+            </div>
+        </div>
+
+        <!-- Bouton conservé de l'ancien bloc parallax : remonte au Calendly. -->
+        <div class="adv-cta">
+            <a href="#calendrier" class="btn-combo-final">
+                <div class="btn-inner-final">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m18 15-6-6-6 6"/>
+                    </svg>
                 </div>
-            </div>
-
-            <h1 class="text-4xl md:text-[48px] font-medium tracking-tight leading-tight mb-6 text-white">
-                Félicitations !
-            </h1>
-
-            <div class="text-base text-white font-light leading-relaxed mb-8 px-2">
-                <p class="mb-6">Réservez maintenant votre appel avec un expert pour analyser votre projet et voir concrètement comment avancer.</p>
-                <p>
-                    Choisissez le créneau qui vous convient le mieux ci-dessous<br>
-                    <span class="text-base text-white/80 italic">(ça prend moins d'une minute).</span>
-                </p>
-            </div>
-
-            <div class="flex flex-col items-center">
-                <a href="#calendrier" class="btn-combo-final">
-                    <div class="btn-inner-final">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m18 15-6-6-6 6"/>
-                        </svg>
-                    </div>
-                </a>
-            </div>
+            </a>
+            <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
         </div>
     </section>
 
@@ -645,19 +590,13 @@
         })();
     </script>
 
-    <!-- Pause au tap sur le bandeau défilant -->
+    <!-- Bandeau presse : duplique les logos pour une boucle infinie fluide
+         (cloneNode = sûr, pas d'innerHTML). Repris de pergola/page-accueil. -->
     <script>
         (function () {
-            const scrollWrapper = document.getElementById('scroll-wrapper');
-            if (!scrollWrapper) return;
-            let timer;
-            const handlePause = () => {
-                clearTimeout(timer);
-                scrollWrapper.classList.add('is-paused');
-                timer = setTimeout(() => scrollWrapper.classList.remove('is-paused'), 1500);
-            };
-            scrollWrapper.addEventListener('click', handlePause);
-            scrollWrapper.addEventListener('touchend', handlePause);
+            var t = document.getElementById('pressTrack');
+            if (!t) return;
+            [].slice.call(t.children).forEach(function (node) { t.appendChild(node.cloneNode(true)); });
         })();
     </script>
 
