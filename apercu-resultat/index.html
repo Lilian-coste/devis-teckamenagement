@@ -399,34 +399,27 @@
 
     <section class="hero-section">
         <div class="hero-bulle">
-            <!-- Le badge portait « Demande confirmée », registre collecte. Il porte
-                 maintenant la félicitation nominative (angle « J'ai fait analyser mon
-                 projet »). Sans prénom dans l'URL, il affiche « Félicitations ! » seul :
-                 le trafic Fillout actuel n'envoie pas de prénom. -->
-            <div class="border-beam-container mb-6">
-                <div class="border-beam-inner">
-                    <span style="letter-spacing: 0.2em;" class="text-[10px] font-medium uppercase text-white leading-none" id="badge-felicitations">
-                        Félicitations !
-                    </span>
-                </div>
-            </div>
-
-            <h1 class="hero-ttl">
-                Votre projet mérite maintenant d'être <span class="mot-bleu">étudié</span> plus précisément
-            </h1>
+            <!-- ESSAI DU 16/08/2026 (copy de Lilian). « Félicitations [Prénom] » est
+                 passé du badge au TITRE, et l'ancien titre « Votre projet mérite
+                 maintenant d'être étudié plus précisément » a laissé la place. Le badge
+                 a donc été retiré : le garder au-dessus ferait dire deux fois la même
+                 chose sur le même écran. Sans ?prenom= dans l'URL, le titre se réduit à
+                 « Félicitations ! », ce qui reste une phrase correcte. -->
+            <h1 class="hero-ttl" id="hero-titre">Félicitations !</h1>
 
             <div class="hero-texte">
-                <!-- Le profil n'a plus sa phrase à lui : il termine CETTE phrase, après les
-                     deux points (Lilian, 15/08/2026 — deux phrases séparées répétaient
-                     « ce qui compte le plus »). Sans ?profil= dans l'URL (trafic Fillout
-                     actuel), le span reste vide et la phrase se ferme sur le point. -->
                 <p>
-                    Grâce à vos réponses, nous avons identifié <b>ce qui compte le plus dans
-                    votre projet de pergola</b><span id="profil-note"></span>.
+                    Grâce à vos réponses, nous avons identifié comment vous souhaitez
+                    réellement profiter de votre extérieur.
                 </p>
+                <!-- Phrase de PROFIL : remplie par le script en bas de page selon ?profil=.
+                     Sans paramètre elle ne s'affiche pas, et les deux autres paragraphes
+                     s'enchaînent sans manque. -->
+                <p id="profil-note" style="display:none"></p>
                 <p>
-                    Nous avons justement préparé une courte vidéo qui montre ce que nous
-                    regarderions en premier dans un projet comme le vôtre.
+                    Franck vous explique maintenant les 3 points qu'il regarderait en
+                    priorité pour concevoir un espace agréable à vivre au quotidien, pour
+                    vous comme pour vos proches, même en plein été.
                 </p>
             </div>
 
@@ -959,29 +952,30 @@
     </script>
 
     <script>
-    /* Personnalisation PROFIL (quiz maison, 07/08/2026). L'URL de redirection du quiz
-       porte ?profil=receveurs|cocon|quotidien (+ &aussi=… pour les profils
-       secondaires). Sans paramètre (trafic Fillout actuel), rien ne change.
-       Depuis le 15/08/2026 le profil ne fait plus phrase à part : il complète celle du
-       hero, après les deux points. D'où des libellés sans préposition. */
+    /* Personnalisation PROFIL. L'URL de redirection du quiz porte
+       ?profil=receveurs|cocon|quotidien (+ &aussi=… pour les secondaires). Sans
+       paramètre (trafic Fillout actuel), le paragraphe reste caché et les deux autres
+       s'enchaînent sans manque.
+
+       ⚠️ Seule la phrase RECEVEURS est de Lilian (16/08/2026). Les deux autres sont mon
+       adaptation au même registre, à valider par lui. */
     (function () {
         var DIT = {
-            receveurs: "recevoir votre famille et vos amis",
-            cocon: "avoir un coin à vous, au calme",
-            quotidien: "profiter de votre extérieur au quotidien"
+            receveurs: "aiment profiter de leur terrasse tout en partageant régulièrement ces moments avec leur famille et leurs amis",
+            cocon: "aiment profiter de leur terrasse au calme, dans un coin qui n'appartient qu'à elles",
+            quotidien: "profitent de leur terrasse au quotidien, du déjeuner du midi aux après-midis en famille"
         };
         var q = new URLSearchParams(window.location.search);
         var ids = [q.get("profil")].concat((q.get("aussi") || "").split(","))
             .filter(function (p, i, tous) { return DIT[p] && tous.indexOf(p) === i; });
         if (!ids.length) return;
-        var parts = ids.map(function (p) { return DIT[p]; });
-        /* Règle de copy (08/08/2026) : virgule avant « et » autorisée, jamais après. */
-        var texte = parts.length === 1 ? parts[0]
-            : parts.length === 2 ? parts[0] + ", et en même temps " + parts[1]
-            : parts[0] + ", " + parts[1] + " et " + parts[2];
         var el = document.getElementById("profil-note");
         if (!el) return;
-        el.textContent = " : " + texte;
+        /* Un seul profil affiché : c'est le principal. Composer deux phrases longues
+           donnerait un paragraphe illisible, les profils secondaires vivent dans la
+           fiche PDF (décision du 08/08/2026). */
+        el.textContent = "Vous faites partie des personnes qui " + DIT[ids[0]] + ".";
+        el.style.display = "";
     })();
     </script>
 
@@ -1030,8 +1024,8 @@
 
         var prenom = (q.get("prenom") || "").trim().slice(0, 40);
         if (prenom) {
-            var badge = document.getElementById("badge-felicitations");
-            if (badge) badge.textContent = "Félicitations " + prenom;
+            var titre = document.getElementById("hero-titre");
+            if (titre) titre.textContent = "Félicitations " + prenom + " !";
         }
 
         var suite = q.toString();
