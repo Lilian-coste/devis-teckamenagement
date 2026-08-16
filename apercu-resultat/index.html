@@ -416,22 +416,20 @@
                 </div>
             </div>
 
-            <!-- Titre réécrit par Lilian le 16/08/2026. Pas de point final : c'est un
-                 titre, et sa règle du 15/08 l'interdit. -->
-            <h1 class="hero-ttl">
-                Grâce à vos réponses, nous avons identifié comment vous souhaitez
-                réellement profiter de votre extérieur
+            <!-- Le TITRE est la phrase de PROFIL depuis le 16/08/2026 (Lilian) : c'est
+                 la page qui reconnaît le lecteur, donc c'est la première chose qu'il lit.
+                 Il est rempli par le script en bas de page selon ?profil=. Sans paramètre
+                 il garde le texte écrit ici, qui est la moitié commune aux trois profils.
+                 Pas de point final : c'est un titre, sa règle du 15/08 l'interdit. -->
+            <h1 class="hero-ttl" id="hero-titre">
+                Vous faites partie des personnes qui aiment <span class="mot-bleu">profiter de leur terrasse</span>
             </h1>
 
             <div class="hero-texte">
-                <!-- Phrase de PROFIL : remplie par le script en bas de page selon ?profil=.
-                     Sans paramètre elle ne s'affiche pas, et les deux autres paragraphes
-                     s'enchaînent sans manque. -->
-                <p id="profil-note" style="display:none"></p>
                 <p>
-                    Franck vous explique maintenant les 3 points qu'il regarderait en
-                    priorité pour concevoir un espace agréable à vivre au quotidien, pour
-                    vous comme pour vos proches, même en plein été.
+                    Franck vous explique maintenant les <b>3 points qu'il regarderait en
+                    priorité</b> pour concevoir un espace agréable à vivre au quotidien,
+                    pour vous comme pour vos proches, même en plein été.
                 </p>
             </div>
 
@@ -964,30 +962,49 @@
     </script>
 
     <script>
-    /* Personnalisation PROFIL. L'URL de redirection du quiz porte
-       ?profil=receveurs|cocon|quotidien (+ &aussi=… pour les secondaires). Sans
-       paramètre (trafic Fillout actuel), le paragraphe reste caché et les deux autres
-       s'enchaînent sans manque.
+    /* Personnalisation PROFIL — c'est le TITRE de la page depuis le 16/08/2026.
+       L'URL de redirection du quiz porte ?profil=receveurs|cocon|quotidien. Sans
+       paramètre (trafic Fillout actuel), le titre écrit dans le HTML reste en place :
+       c'est la moitié commune aux trois profils, donc rien ne sonne faux.
 
-       ⚠️ Seule la phrase RECEVEURS est de Lilian (16/08/2026). Les deux autres sont mon
-       adaptation au même registre, à valider par lui. */
+       Le bleu tombe sur ce qui DISTINGUE le profil, jamais sur la partie commune : c'est
+       le passage où le lecteur doit se reconnaître. Il reste court exprès, un surlignage
+       long cesse d'être un surlignage.
+
+       ⚠️ Seule la phrase RECEVEURS est de Lilian. COCON et QUOTIDIEN sont mon adaptation
+       au même registre, à valider par lui.
+
+       Les segments sont écrits en dur ici, aucune donnée du visiteur n'entre dans le
+       HTML : le prénom, lui, passe par textContent dans le badge. */
     (function () {
         var DIT = {
-            receveurs: "aiment profiter de leur terrasse tout en partageant régulièrement ces moments avec leur famille et leurs amis",
-            cocon: "aiment profiter de leur terrasse au calme, dans un coin qui n'appartient qu'à elles",
-            quotidien: "profitent de leur terrasse au quotidien, du déjeuner du midi aux après-midis en famille"
+            receveurs: {
+                commun: "aiment profiter de leur terrasse tout en partageant régulièrement ces moments ",
+                accent: "avec leur famille et leurs amis"
+            },
+            cocon: {
+                commun: "aiment profiter de leur terrasse au calme, dans ",
+                accent: "un coin qui n'appartient qu'à elles"
+            },
+            quotidien: {
+                commun: "profitent de leur terrasse au quotidien, ",
+                accent: "du déjeuner du midi aux après-midis en famille"
+            }
         };
         var q = new URLSearchParams(window.location.search);
-        var ids = [q.get("profil")].concat((q.get("aussi") || "").split(","))
-            .filter(function (p, i, tous) { return DIT[p] && tous.indexOf(p) === i; });
-        if (!ids.length) return;
-        var el = document.getElementById("profil-note");
-        if (!el) return;
-        /* Un seul profil affiché : c'est le principal. Composer deux phrases longues
-           donnerait un paragraphe illisible, les profils secondaires vivent dans la
-           fiche PDF (décision du 08/08/2026). */
-        el.textContent = "Vous faites partie des personnes qui " + DIT[ids[0]] + ".";
-        el.style.display = "";
+        var profil = DIT[q.get("profil")];
+        if (!profil) return;
+
+        var titre = document.getElementById("hero-titre");
+        if (!titre) return;
+
+        /* Reconstruit à la main plutôt qu'en innerHTML d'une chaîne assemblée : la
+           structure reste explicite et rien d'extérieur ne peut s'y glisser. */
+        titre.textContent = "Vous faites partie des personnes qui " + profil.commun;
+        var accent = document.createElement("span");
+        accent.className = "mot-bleu";
+        accent.textContent = profil.accent;
+        titre.appendChild(accent);
     })();
     </script>
 
