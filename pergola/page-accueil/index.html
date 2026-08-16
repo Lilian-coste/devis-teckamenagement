@@ -81,10 +81,15 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
      deux premiers restent ÉGAUX entre eux, comme sur mobile. */
   @media (min-width:768px){
     .eyebrow{ font-size:23px; }
-    /* « le plus agréable » passe en gras, sur ORDINATEUR SEULEMENT (Lilian, 16/08/2026).
-       Pas sur téléphone : le préheader y est déjà en 18px sur un fond photo, et une graisse
-       de plus sur trois mots durcirait une ligne qui doit rester une question posée. */
-    .eyebrow .accent{ font-weight:600; }
+    /* « le plus agréable » passe en gras ET EN BLANC, sur ORDINATEUR SEULEMENT
+       (Lilian, 16/08/2026).
+       Le gras, pas sur téléphone : le préheader y est déjà en 18px sur un fond photo, et
+       une graisse de plus sur trois mots durcirait une ligne qui doit rester une question.
+       Le blanc parce que le bleu ne ressort pas sur la photo de fond ORDINATEUR, qui est
+       plus claire que celle du mobile. Sur téléphone le bleu tient, on le garde.
+       ⚠️ Ne concerne QUE le préheader : l'accent du TITRE (« restez dehors quand tout
+       le monde rentre ») garde son bleu. */
+    .eyebrow .accent{ font-weight:600; color:#fff; }
     .hero h1{ margin-top:30px; font-size:58px; }
     .hero .desc{ margin-top:30px; font-size:20px; }
     .hero .btn-black{ margin-top:46px; }
