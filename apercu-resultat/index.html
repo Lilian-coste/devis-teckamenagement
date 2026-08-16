@@ -82,16 +82,21 @@
            place du mb-6 de Tailwind qui était figé à 24px. */
         .hero-bulle .border-beam-container { margin-bottom: var(--gap-m); }
         /* Titre du hero : exactement la typo de .adv-ttl (demande de Lilian, 15/08/2026). */
+        /* 24px / 32px depuis le 16/08/2026, au lieu des 28/38 de .adv-ttl. Le titre
+           n'est plus une enseigne de quatre mots, c'est une PHRASE de quinze mots : à
+           38px elle prenait trois lignes et poussait le bouton hors de l'écran. Le poids
+           et l'interlettrage ne changent pas, la parenté avec la section « Pourquoi
+           choisir Teck Aménagement » reste lisible. */
         .hero-ttl {
             text-align: center;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 500;
             letter-spacing: -.02em;
             line-height: 1.15;
             color: #1D1D1F;
             margin: 0 auto var(--gap-m);
         }
-        @media (min-width: 768px) { .hero-ttl { font-size: 38px; } }
+        @media (min-width: 768px) { .hero-ttl { font-size: 32px; } }
         /* « étudié » dans le bleu du bandeau de préqualification (Lilian, 15/08/2026) :
            le mot qui porte tout l'angle « analyse » se surligne, et la page n'a qu'un
            seul bleu du haut en bas. */
@@ -358,7 +363,7 @@
         .hero-video {
             width: auto;
             max-width: 100%;
-            max-height: 38svh;
+            max-height: 36svh;
             border-radius: 12px;
             display: block;
             margin: 0 auto var(--gap-m);
@@ -399,19 +404,26 @@
 
     <section class="hero-section">
         <div class="hero-bulle">
-            <!-- ESSAI DU 16/08/2026 (copy de Lilian). « Félicitations [Prénom] » est
-                 passé du badge au TITRE, et l'ancien titre « Votre projet mérite
-                 maintenant d'être étudié plus précisément » a laissé la place. Le badge
-                 a donc été retiré : le garder au-dessus ferait dire deux fois la même
-                 chose sur le même écran. Sans ?prenom= dans l'URL, le titre se réduit à
-                 « Félicitations ! », ce qui reste une phrase correcte. -->
-            <h1 class="hero-ttl" id="hero-titre">Félicitations !</h1>
+            <!-- Le badge portait « Demande confirmée », registre collecte. Il porte
+                 maintenant la félicitation nominative, avec son point d'exclamation
+                 (Lilian, 16/08/2026). Sans ?prenom= dans l'URL, il affiche
+                 « Félicitations ! » seul : le trafic Fillout actuel n'envoie pas de prénom. -->
+            <div class="border-beam-container">
+                <div class="border-beam-inner">
+                    <span style="letter-spacing: 0.2em;" class="text-[10px] font-medium uppercase text-white leading-none" id="badge-felicitations">
+                        Félicitations !
+                    </span>
+                </div>
+            </div>
+
+            <!-- Titre réécrit par Lilian le 16/08/2026. Pas de point final : c'est un
+                 titre, et sa règle du 15/08 l'interdit. -->
+            <h1 class="hero-ttl">
+                Grâce à vos réponses, nous avons identifié comment vous souhaitez
+                réellement profiter de votre extérieur
+            </h1>
 
             <div class="hero-texte">
-                <p>
-                    Grâce à vos réponses, nous avons identifié comment vous souhaitez
-                    réellement profiter de votre extérieur.
-                </p>
                 <!-- Phrase de PROFIL : remplie par le script en bas de page selon ?profil=.
                      Sans paramètre elle ne s'affiche pas, et les deux autres paragraphes
                      s'enchaînent sans manque. -->
@@ -1024,8 +1036,8 @@
 
         var prenom = (q.get("prenom") || "").trim().slice(0, 40);
         if (prenom) {
-            var titre = document.getElementById("hero-titre");
-            if (titre) titre.textContent = "Félicitations " + prenom + " !";
+            var badge = document.getElementById("badge-felicitations");
+            if (badge) badge.textContent = "Félicitations " + prenom + " !";
         }
 
         var suite = q.toString();
