@@ -361,19 +361,10 @@
            Franck sur votre projet » fait onze caractères de plus que « Réserver mon appel
            offert ». Le bouton est en white-space: nowrap, il déborderait sur téléphone à
            16px. D'où un cran plus petit, et un cran de plus encore sous 420px. */
-        .btn-appel.btn-libelle-long .btn-ligne { font-size: 15px; }
-        /* Le libellé long tient sur ordinateur mais pas sur téléphone (Lilian, 16/08/2026 :
-           « c'est top en soi, mais sur le téléphone ça fait trop long »). Deux libellés
-           cohabitent donc dans le bouton, un seul s'affiche à la fois. Le court garde ce
-           qui fait la force du long — le verbe « échanger » plutôt que « réserver », et le
-           prénom de Franck — et laisse tomber « sur votre projet », que la page vient de
-           dire trois fois. */
-        .btn-court { display: none; }
-        @media (max-width: 640px) {
-            .btn-appel.btn-libelle-long .btn-long { display: none; }
-            .btn-appel.btn-libelle-long .btn-court { display: inline; }
-            .btn-appel.btn-libelle-long .btn-ligne { font-size: 16px; }
-        }
+        /* « sur votre projet » a sauté (Lilian, 16/08/2026) : la phrase entière débordait
+           sur téléphone, et la page venait de dire « votre projet » trois fois en dix
+           lignes. Le libellé raccourci tient partout à 16px, il n'y a donc plus besoin
+           ni de deux versions ni d'une taille réduite. */
 
         /* Bandeau de préqualification, pleine largeur, AVANT le hero. Il dit à qui
            s'adresse la suite. « réservé » et pas « destiné » : décision de Lilian du
@@ -1068,16 +1059,7 @@
             for (var i = 0; i < boutons.length; i++) {
                 var ligne = boutons[i].querySelector(".btn-ligne");
                 if (!ligne) continue;
-                ligne.childNodes[0].nodeValue = "";
-                var lg = document.createElement("span");
-                lg.className = "btn-long";
-                lg.textContent = "Échangez avec Franck sur votre projet";
-                var ct = document.createElement("span");
-                ct.className = "btn-court";
-                ct.textContent = "Échanger avec Franck";
-                ligne.insertBefore(ct, ligne.firstChild);
-                ligne.insertBefore(lg, ligne.firstChild);
-                boutons[i].classList.add("btn-libelle-long");
+                ligne.childNodes[0].nodeValue = "Échangez avec Franck";
             }
         }
     })();
