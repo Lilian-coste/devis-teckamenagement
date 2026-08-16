@@ -1165,6 +1165,15 @@
            sur un glyphe de 18px. À 8×, la mesure tombe au seizième de pixel. */
         var ZOOM = 8;
 
+        /* CORRECTION OPTIQUE, en fraction de la taille du texte, vers le BAS.
+           Le centre géométrique d'un glyphe n'est pas son centre perçu : la flèche est large et
+           fine, sa masse d'encre tient sur une bande étroite, alors que le « k » répartit la
+           sienne sur toute sa hauteur. Mathématiquement alignée, la flèche paraît haute. Lilian
+           l'a vue ainsi le 16/08/2026.
+           C'est le SEUL nombre venu de l'œil et non de la mesure, isolé exprès : pour la remonter
+           ou la descendre, on ne touche qu'à cette ligne. 0.06 vaut environ 1px sur du 16px. */
+        var CORRECTION_OPTIQUE = 0.06;
+
         function centreEncre(texte, police, taille) {
             var grand = taille * ZOOM;
             var marge = Math.ceil(grand * 2);
@@ -1234,7 +1243,8 @@
                des centres d'encre EST le décalage à appliquer. Posé sur <html> : les
                quatre boutons de la page sont identiques, la variable descend à tous par
                héritage plutôt que d'être recopiée sur chacun. */
-            document.documentElement.style.setProperty("--fleche-y", (k - f).toFixed(3) + "px");
+            var decalage = k - f + tailleTexte * CORRECTION_OPTIQUE;
+            document.documentElement.style.setProperty("--fleche-y", decalage.toFixed(3) + "px");
         }
 
         /* Deux passages : tout de suite pour éviter un saut visible, puis une fois les
