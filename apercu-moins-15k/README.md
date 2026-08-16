@@ -9,10 +9,6 @@ validé la page et que Franck n'a pas confirmé les chiffres.
 
     http://192.168.0.111:3600/apercu-moins-15k/?prenom=Jean&m2=24&cp=83000
 
-Et la comparaison des trois hero, page de travail à supprimer une fois le choix fait :
-
-    http://192.168.0.111:3600/apercu-moins-15k/heros/
-
 (serveur statique local : `python3 -m http.server 3600 --bind 0.0.0.0` depuis la racine du
 dépôt ; l'IP change avec le réseau, la retrouver avec `ipconfig getifaddr en0`)
 
@@ -58,8 +54,8 @@ joli ».
 dans le HTML, il décale l'apparition des cartes écrites pour cette page. `--retard` est en
 millisecondes, posé par le script des blocs d'avis recopiés. Ne pas les fusionner.
 
-Le hero est en **version A** (compacte). Deux autres versions attendent l'arbitrage de
-Lilian dans `heros/`.
+Le hero est en **version A** (compacte), choisie par Lilian le 16/08/2026 parmi trois
+qu'il a comparées. Le dossier `heros/` qui les portait a été supprimé une fois le choix fait.
 
 Sections, dans l'ordre :
 
