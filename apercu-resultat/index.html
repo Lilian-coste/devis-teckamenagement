@@ -402,6 +402,23 @@
             margin-left: auto;
             margin-right: auto;
         }
+        /* SUR ORDINATEUR SEULEMENT, le texte déborde un peu la vidéo (Lilian, 16/08/2026) :
+           calé pile sur elle, il laissait « famille » et « projet » seuls sur leur ligne.
+           110px de plus suffisent à récupérer le mot orphelin, sans que le décalage se
+           voie. Le plafond à 880px est celui du bloc, il ne sera jamais dépassé.
+           Sur téléphone rien ne change : la vidéo y occupe déjà toute la largeur.
+
+           `text-wrap` fait le reste, et c'est lui la vraie garantie : la largeur seule ne
+           protège de rien, puisque les trois profils n'ont pas la même longueur de titre.
+           `balance` égalise les lignes du titre, `pretty` interdit le mot seul en fin de
+           paragraphe. Les navigateurs qui ne connaissent pas ces valeurs les ignorent. */
+        @media (min-width: 768px) {
+            .hero-ttl, .hero-texte {
+                max-width: min(880px, calc(var(--largeur-video, 100%) + 110px));
+            }
+        }
+        .hero-ttl { text-wrap: balance; }
+        .hero-texte p { text-wrap: pretty; }
         .hero-texte { font-size: 16px; line-height: 1.65; color: #4b5563; font-weight: 400; margin-bottom: var(--gap-l); }
         .hero-texte p { margin-bottom: var(--gap-s); }
         .hero-texte p:last-child { margin-bottom: 0; }
