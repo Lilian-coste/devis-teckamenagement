@@ -339,32 +339,42 @@
            gratuit - sans engagement »), « bilan » remplacé par « appel ».
            ⚠️ Libellé PROVISOIRE : Lilian le tranchera quand la VSL sera écrite. */
         .btn-black.btn-appel { flex-direction: column; gap: 3px; padding: 14px 34px; }
-        .btn-appel .btn-ligne { display: inline-flex; align-items: center; gap: 10px; }
+        /* align-items: BASELINE et pas center (16/08/2026). Avec center, le navigateur
+           centre les BOÎTES des deux éléments : celle du texte et celle de la flèche, qui
+           n'ont ni la même police ni la même taille. Le résultat dépend donc des métriques
+           de la police que le navigateur a choisie pour le dingbat, et il changeait d'un
+           navigateur à l'autre — trop bas de 2,8px sur Chromium, trop haut sur le Firefox
+           de Lilian. La ligne de base, elle, est un repère commun et stable. On repart de
+           là, et le décalage fin est calculé plus bas, à l'encre. */
+        .btn-appel .btn-ligne { display: inline-flex; align-items: baseline; gap: 10px; }
         .btn-appel .btn-gratuit { font-style: italic; font-weight: 400; font-size: 12.5px; opacity: .78; }
-        /* La flèche du bouton est un CARACTÈRE depuis le 16/08/2026 (Lilian), plus un
-           chevron SVG : deux dingbats sont à l'essai, ➣ par défaut et ➱ avec ?fleche=2.
-           Inter ne contient ni l'un ni l'autre, d'où la pile de polices : macOS les sert
-           par Apple Symbols. Le décalage vertical remet le glyphe sur la ligne de base du
-           texte, ces dingbats étant dessinés plus bas que les lettres. */
+        /* Le libellé est plus long sur ORDINATEUR que sur TÉLÉPHONE (Lilian, 16/08/2026) :
+           « J'échange avec Franck sur mon projet » déborderait sur un écran de téléphone à
+           16px, et Lilian ne veut pas réduire la police. Deux libellés dans le HTML, un
+           seul affiché : c'est du CSS pur, donc rien ne bouge au redimensionnement et le
+           bon libellé est là dès le premier rendu, sans attendre le JavaScript. */
+        .btn-appel .btn-long { display: none; }
+        @media (min-width: 768px) {
+            .btn-appel .btn-court { display: none; }
+            .btn-appel .btn-long { display: inline; }
+        }
+        /* La flèche du bouton est un CARACTÈRE depuis le 16/08/2026 (Lilian) : ➱, plus un
+           chevron SVG. Inter ne le contient pas, d'où la pile de polices : macOS le sert
+           par Apple Symbols, ailleurs c'est une autre police, avec d'autres métriques.
+           C'est tout le problème du calage vertical, réglé par le script « Flèche du
+           bouton » en bas de page : la valeur ci-dessous n'est qu'un filet de sécurité si
+           le JavaScript ne tourne pas. */
         .btn-fleche {
             font-family: "Apple Symbols", "Zapf Dingbats", "Segoe UI Symbol", sans-serif;
             font-size: 1.15em;
             line-height: 1;
             display: inline-block;
-            /* 0.031em et pas une valeur à l'œil : mesuré au canvas, le centre d'encre de
-               ➱ tombe 0,54px au-dessus de celui du texte à 15px. C'est exactement ce
-               qu'il faut lui rendre. L'ancienne valeur (0.06em) le descendait deux fois
-               trop bas. */
-            transform: translateY(0.031em);
+            transform: translateY(var(--fleche-y, 0.036em));
         }
-        /* ESSAI DU 16/08/2026, profil Quotidien famille UNIQUEMENT : « Échangez avec
-           Franck sur votre projet » fait onze caractères de plus que « Réserver mon appel
-           offert ». Le bouton est en white-space: nowrap, il déborderait sur téléphone à
-           16px. D'où un cran plus petit, et un cran de plus encore sous 420px. */
-        /* « sur votre projet » a sauté (Lilian, 16/08/2026) : la phrase entière débordait
-           sur téléphone, et la page venait de dire « votre projet » trois fois en dix
-           lignes. Le libellé raccourci tient partout à 16px, il n'y a donc plus besoin
-           ni de deux versions ni d'une taille réduite. */
+        /* Historique du libellé, 16/08/2026 : « Réserver mon appel offert » → essai
+           « Échangez avec Franck » sur le seul profil Quotidien famille → tranché par
+           Lilian à « J'échange avec Franck », à la première personne, sur LES TROIS
+           profils. Le « sur mon projet » n'apparaît que sur ordinateur (cf. plus haut). */
 
         /* Bandeau de préqualification, pleine largeur, AVANT le hero. Il dit à qui
            s'adresse la suite. « réservé » et pas « destiné » : décision de Lilian du
@@ -483,7 +493,7 @@
 
             <div class="flex flex-col items-center">
                 <a href="reserver/" class="btn-black btn-appel js-reserver">
-                    <span class="btn-ligne">Réserver mon appel offert
+                    <span class="btn-ligne"><span class="btn-libelle"><span class="btn-court">J'échange avec Franck</span><span class="btn-long">J'échange avec Franck sur mon projet</span></span>
                         <span class="btn-fleche">➱</span>
                     </span>
                     <span class="btn-gratuit">100% gratuit · sans engagement</span>
@@ -600,7 +610,7 @@
                  dans « Pourquoi choisir », il remonte au Calendly. La mention d'avis le
                  suit, comme sur la page d'accueil pergola. -->
             <div class="adv-cta" style="margin-top:56px;">
-                <a href="reserver/" class="btn-black btn-appel js-reserver"><span class="btn-ligne">Réserver mon appel offert
+                <a href="reserver/" class="btn-black btn-appel js-reserver"><span class="btn-ligne"><span class="btn-libelle"><span class="btn-court">J'échange avec Franck</span><span class="btn-long">J'échange avec Franck sur mon projet</span></span>
                     <span class="btn-fleche">➱</span>
                 </span><span class="btn-gratuit">100% gratuit · sans engagement</span></a>
                 <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
@@ -720,7 +730,7 @@
             <!-- Deuxième CTA : même bouton noir, sous la seconde série d'avis
                  (demande Lilian, enregistrement du 15/08/2026 14h02). -->
             <div class="adv-cta" style="margin-top:40px;">
-                <a href="reserver/" class="btn-black btn-appel js-reserver"><span class="btn-ligne">Réserver mon appel offert
+                <a href="reserver/" class="btn-black btn-appel js-reserver"><span class="btn-ligne"><span class="btn-libelle"><span class="btn-court">J'échange avec Franck</span><span class="btn-long">J'échange avec Franck sur mon projet</span></span>
                     <span class="btn-fleche">➱</span>
                 </span><span class="btn-gratuit">100% gratuit · sans engagement</span></a>
                 <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
@@ -812,7 +822,7 @@
             <!-- Le bouton NOIR de la page d'accueil pergola (.btn-black), pas le chevron
                  blanc de l'ancien bloc parallax : demande de Lilian du 08/08/2026. Il
                  remonte au Calendly au lieu d'ouvrir le quiz. -->
-            <a href="reserver/" class="btn-black btn-appel js-reserver"><span class="btn-ligne">Réserver mon appel offert
+            <a href="reserver/" class="btn-black btn-appel js-reserver"><span class="btn-ligne"><span class="btn-libelle"><span class="btn-court">J'échange avec Franck</span><span class="btn-long">J'échange avec Franck sur mon projet</span></span>
                 <span class="btn-fleche">➱</span>
             </span><span class="btn-gratuit">100% gratuit · sans engagement</span></a>
             <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
@@ -1050,18 +1060,9 @@
         accent.textContent = profil.accent;
         titre.appendChild(accent);
 
-        /* ESSAI en cours (Lilian, 16/08/2026) : sur le SEUL profil Quotidien famille, le
-           bouton nomme Franck et l'échange au lieu de la réservation. Les deux autres
-           profils gardent « Réserver mon appel offert », c'est ce qui permet de comparer.
-           À trancher, puis à généraliser ou à retirer. */
-        if (q.get("profil") === "quotidien") {
-            var boutons = document.querySelectorAll("a.js-reserver");
-            for (var i = 0; i < boutons.length; i++) {
-                var ligne = boutons[i].querySelector(".btn-ligne");
-                if (!ligne) continue;
-                ligne.childNodes[0].nodeValue = "Échangez avec Franck";
-            }
-        }
+        /* L'essai de libellé sur le seul profil Quotidien famille a été tranché le
+           16/08/2026 : « J'échange avec Franck » va sur LES TROIS profils. Le libellé est
+           donc écrit en dur dans le HTML, il n'y a plus rien à faire ici. */
     })();
     </script>
 
@@ -1103,7 +1104,7 @@
 
        1. Le prénom dans le badge. Le quiz maison le passera en ?prenom=… ; sans lui,
           le badge garde « Félicitations ! » tel qu'il est écrit dans le HTML.
-       2. Les boutons « Réserver mon appel offert » emportent les paramètres de la page
+       2. Les boutons « J'échange avec Franck » emportent les paramètres de la page
           vers /reserver/, pour que le suivi de source (?source=meta) survive au saut. */
     (function () {
         var q = new URLSearchParams(window.location.search);
@@ -1121,6 +1122,126 @@
                 liens[i].setAttribute("href", "reserver/?" + suite);
             }
         }
+    })();
+    </script>
+
+    <script>
+    /* FLÈCHE DU BOUTON : centrée sur le « k » de « Franck » (Lilian, 16/08/2026).
+
+       Pourquoi un calcul et pas une valeur en dur : ➱ n'existe pas dans Inter. Chaque
+       navigateur va donc chercher le glyphe dans une AUTRE police (Apple Symbols sur
+       Safari et Chrome, autre chose sur Firefox), et chacune le dessine à une hauteur
+       différente. Une valeur figée cale la flèche sur un navigateur et la décale sur les
+       autres : c'est exactement ce qui s'est produit, 2,8px trop bas sur Chromium pendant
+       qu'elle paraissait trop haute sur le Firefox de Lilian.
+
+       Alors on mesure, dans le navigateur du visiteur, avec la police qu'il a réellement
+       choisie. actualBoundingBoxAscent/Descent donnent l'ENCRE du glyphe, c'est-à-dire ses
+       pixels noirs, pas sa boîte typographique. On compare le centre d'encre du « k » à
+       celui de la flèche, et on rend la différence en translateY.
+
+       Le « k » et pas le « F » ni la ligne entière : demande de Lilian. Une lettre à
+       hampe montante, sans jambage, dont le centre visuel est nettement plus haut que
+       celui du texte pris dans son ensemble. */
+    (function () {
+        var fleche = document.querySelector(".btn-fleche");
+        if (!fleche) return;
+
+        /* Centre d'encre par rapport à la ligne de base, en pixels, positif vers le bas.
+           Renvoie null si rien n'a pu être mesuré : on garde alors la valeur de repli du
+           CSS plutôt que de caler la flèche n'importe où.
+
+           ⚠️ ON DESSINE ET ON COMPTE LES PIXELS, on ne demande plus ses métriques au
+           navigateur. La première version utilisait `measureText().actualBoundingBox*`,
+           qui donnait le bon résultat sur Chrome et un résultat faux sur le Safari de
+           l'iPhone de Lilian (16/08/2026) : la flèche y remontait visiblement au-dessus
+           du « k ». Ces métriques sont notoirement inégales d'un moteur à l'autre quand
+           le glyphe vient d'une police de repli, ce qui est exactement notre cas.
+
+           Dessiner le glyphe puis chercher la première et la dernière ligne de pixels
+           encrés ne dépend d'aucune métrique déclarée : c'est ce que l'écran affiche. */
+        /* On dessine 8 FOIS PLUS GRAND, puis on divise. Un balayage à la taille réelle ne
+           tranche qu'au demi-pixel, ce qui laisse jusqu'à un demi-pixel d'erreur — visible
+           sur un glyphe de 18px. À 8×, la mesure tombe au seizième de pixel. */
+        var ZOOM = 8;
+
+        function centreEncre(texte, police, taille) {
+            var grand = taille * ZOOM;
+            var marge = Math.ceil(grand * 2);
+            var toile = document.createElement("canvas");
+            toile.width = Math.ceil(grand * 4);
+            toile.height = marge * 2;
+
+            var g = toile.getContext("2d", { willReadFrequently: true });
+            if (!g) return null;
+
+            // La police est redéclarée à la taille agrandie, en gardant la même famille.
+            var policeGrande = police.replace(/(^|\s)[\d.]+px(\s|$)/, "$1" + grand + "px$2");
+            g.font = policeGrande;
+            /* Si le navigateur refuse la déclaration, `font` garde sa valeur précédente
+               (10px sans-serif au départ) et on mesurerait la mauvaise police sans le
+               savoir. On relit donc ce que le navigateur a retenu, et on COMPARE DES
+               NOMBRES. Une comparaison de chaînes ne marche pas : à 20,7px de flèche,
+               `grand` vaut 165,6, dont l'arrondi 166 ne se trouve pas dans « 165.6px ».
+               Le garde-fou refusait alors une mesure valable. Vu le 16/08/2026 sur le
+               bouton du quiz, où la flèche est restée sans décalage. */
+            var retenue = parseFloat((g.font.match(/([\d.]+)px/) || [])[1]);
+            if (!retenue || Math.abs(retenue - grand) > 0.5) return null;
+
+            g.textBaseline = "alphabetic";
+            g.fillStyle = "#000";
+            g.fillText(texte, Math.round(grand * 0.3), marge); // ligne de base à y = marge
+
+            var pixels;
+            try {
+                pixels = g.getImageData(0, 0, toile.width, toile.height).data;
+            } catch (e) {
+                return null; // canvas neutralisé (rare, mais on ne devine pas)
+            }
+
+            var haut = -1;
+            var bas = -1;
+            for (var y = 0; y < toile.height; y++) {
+                for (var x = 0; x < toile.width; x++) {
+                    if (pixels[(y * toile.width + x) * 4 + 3] > 8) {
+                        if (haut < 0) haut = y;
+                        bas = y;
+                        break;
+                    }
+                }
+            }
+            if (haut < 0) return null; // glyphe absent : rien n'a été dessiné
+
+            return ((haut + bas) / 2 - marge) / ZOOM;
+        }
+
+        function caler() {
+            var styleFleche = getComputedStyle(fleche);
+            var styleTexte = getComputedStyle(fleche.parentNode);
+
+            var tailleTexte = parseFloat(styleTexte.fontSize);
+            var tailleFleche = parseFloat(styleFleche.fontSize);
+            if (!tailleTexte || !tailleFleche) return;
+
+            var policeTexte = styleTexte.fontWeight + " " + styleTexte.fontSize + " " + styleTexte.fontFamily;
+            var policeFleche = styleFleche.fontSize + " " + styleFleche.fontFamily;
+
+            var k = centreEncre("k", policeTexte, tailleTexte);
+            var f = centreEncre(fleche.textContent.trim(), policeFleche, tailleFleche);
+            if (k === null || f === null) return;
+
+            /* La ligne de base est commune aux deux (align-items: baseline), donc l'écart
+               des centres d'encre EST le décalage à appliquer. Posé sur <html> : les
+               quatre boutons de la page sont identiques, la variable descend à tous par
+               héritage plutôt que d'être recopiée sur chacun. */
+            document.documentElement.style.setProperty("--fleche-y", (k - f).toFixed(3) + "px");
+        }
+
+        /* Deux passages : tout de suite pour éviter un saut visible, puis une fois les
+           polices web réellement chargées — avant, la mesure porte sur la police de
+           substitution et le résultat serait faux. */
+        caler();
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(caler);
     })();
     </script>
 

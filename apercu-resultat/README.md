@@ -35,8 +35,16 @@ C'est une page de travail, elle n'a pas vocation à rester.
 - profils possibles : `receveurs`, `cocon`, `quotidien`, plus `&aussi=` pour les secondaires
 - sans paramètre, le badge dit « Félicitations ! » et la phrase de profil ne s'affiche pas
 
-## Le chantier d'origine
+## Pour mettre cette page en production
 
-Onze commits, de `4c95d41` à `599e81d`. Pour les reprendre dans la vraie page :
+⚠️ **La procédure par `git checkout 599e81d` est PÉRIMÉE.** Elle valait le 15/08, quand le
+chantier vivait encore dans les commits `4c95d41` → `599e81d`. Depuis, **tout le travail est
+allé dans ce dossier-ci**, pas dans ces commits : le titre par profil, la phrase sous le
+titre, la flèche ➱, les libellés de bouton, le calage de largeur sur la vidéo. Reprendre
+`599e81d` ferait perdre tout ça.
 
-    git checkout 599e81d -- 561d79a-47b15060-85cc2f7b/index.html reserver/
+La procédure à jour est décrite pas à pas dans
+`~/mes-clients/teck-amenagement/_handover-quiz-resultat-pdf.md`, section 2.3. En résumé :
+copier `index.html` d'ici vers la vraie page, **y remettre le bloc pixel Meta**, retirer le
+`noindex`, copier `reserver/`, et régler la question de la vidéo (le dossier `videos/` de la
+vraie page est dans le `.gitignore`, il n'a jamais été déployé).
