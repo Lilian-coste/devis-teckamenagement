@@ -46,15 +46,21 @@ Le chemin « oui » redirige vers la page de profil en emportant les paramètres
 | Confirmation des 870 / 970 € HT | **Franck** | script en bas de page |
 | Le bouton du guide ne mène nulle part | Lilian | `#btn-guide`, le guide n'existe pas encore |
 
-## Deux pièges rencontrés au montage
+## Le piège Tailwind, et pourquoi tout est préfixé `.page`
 
-**Le CDN Tailwind n'est pas chargé, volontairement.** Cette page n'utilise aucune classe
-Tailwind, et le charger quand même avait un effet visible : son « preflight » remet h1 à h6
-à la taille et à la graisse du texte courant, et il s'injecte APRÈS la feuille de style de
-la page, donc il gagnait à spécificité égale. Tous les intertitres tombaient au corps du
-texte. Ne pas le remettre.
+Tailwind EST chargé, pour une seule raison : la section « Nos clients parlent de nous » est
+reprise telle quelle des pages de profil, et elle est écrite en classes Tailwind.
 
-**Aucun pixel Meta, et c'est délibéré.** La vraie page de résultat tire un `Lead` à chaque
+Or son « preflight » remet h1 à h6 à la taille et à la graisse du texte courant, et il
+s'injecte APRÈS la feuille de style de la page, donc il gagne à spécificité égale. Sans
+garde-fou, tous les intertitres tombaient au corps du texte, collés au paragraphe suivant.
+
+D'où le préfixe `.page` devant toute la typographie : il donne un cran de spécificité en
+plus et met la page hors d'atteinte. **Ne pas « nettoyer » ce préfixe.**
+
+## Aucun pixel Meta, et c'est délibéré
+
+ La vraie page de résultat tire un `Lead` à chaque
 chargement. Publier une copie sous le domaine Teck enverrait de fausses conversions dans le
 pixel qui pilote les campagnes payantes de Franck.
 
