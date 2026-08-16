@@ -68,7 +68,11 @@
             --gap-s: clamp(14px, 2svh, 20px);
             --gap-m: clamp(20px, 3.2svh, 32px);
             --gap-l: clamp(24px, 3.8svh, 38px);
-            padding: clamp(24px, 3svh, 40px) 22px clamp(28px, 3.5svh, 48px);
+            /* Le bloc est centré verticalement : sa position ne dépend pas du padding
+               du haut mais de l'ÉCART entre les deux. Creuser le bas et réduire le haut
+               fait monter le centre de gravité d'environ 25px (Lilian, 16/08/2026 :
+               « remonte chaque élément un tout petit peu plus haut »). */
+            padding: clamp(16px, 2svh, 28px) 22px clamp(60px, 7.5svh, 100px);
         }
         /* 880px et plus 640 (Lilian, 15/08/2026) : le texte du hero tenait sur une
            colonne étroite et se lisait mal, la vidéo était d'autant plus petite.
@@ -987,7 +991,7 @@
             },
             quotidien: {
                 commun: "profitent de leur terrasse au quotidien, ",
-                accent: "du petit déjeuner le matin aux après-midis en famille"
+                accent: "du petit déjeuner le matin aux soirées en famille"
             }
         };
         var q = new URLSearchParams(window.location.search);
