@@ -9,6 +9,10 @@ validé la page et que Franck n'a pas confirmé les chiffres.
 
     http://192.168.0.111:3600/apercu-moins-15k/?prenom=Jean&m2=24&cp=83000
 
+Et la comparaison des trois hero, page de travail à supprimer une fois le choix fait :
+
+    http://192.168.0.111:3600/apercu-moins-15k/heros/
+
 (serveur statique local : `python3 -m http.server 3600 --bind 0.0.0.0` depuis la racine du
 dépôt ; l'IP change avec le réseau, la retrouver avec `ipconfig getifaddr en0`)
 
@@ -30,6 +34,32 @@ Sans `m2`, le bloc d'estimation garde son texte d'attente au lieu d'afficher un 
 Elle ne dit pas non, elle **ré-ancre**. Le prospect qui déclare un budget bas ne dit pas ce
 qu'il peut investir, il dit ce qu'il croyait que ça coûtait. La page transforme donc un
 budget déclaré en compréhension du budget nécessaire, puis pose une question de **capacité**.
+
+## La grammaire visuelle du haut de page (refonte du 16/08/2026)
+
+Refonte demandée sur enregistrement, avec le site **BlueStar** montré à l'écran comme
+référence. Trois éléments lui ont été empruntés, et trois seulement :
+
+| | Ce que c'est | Où |
+|---|---|---|
+| La pastille | un rond bleu plein + un libellé, dans une capsule blanche bordée | tous les surtitres de ses 5 sections, et le hero |
+| Le bento asymétrique | 01 haute à gauche, 02 large, 03 et 04 dessous, 05 pleine largeur | le sommaire du guide |
+| Le schéma qui boucle | une petite animation par carte, toujours du même genre | les 5 cartes du bento |
+
+⚠️ **Le logo a quitté le hero**, demande explicite (« supprime-moi le logo, j'ai pas envie
+qu'il y ait le logo Teck Aménagement »). Il reste dans le footer. Ne pas le remettre.
+
+⚠️ **Les schémas du bento sont abstraits, sans un seul chiffre.** Chez BlueStar les maquettes
+affichent « +1678 visites » et « Lead capturé ». Ici, le moindre montant serait une
+affirmation que Franck n'a pas confirmée. Les 870 / 970 € n'y entrent pas, même « pour faire
+joli ».
+
+⚠️ **`--pause` et `--retard` sont deux choses différentes.** `--pause` est en secondes, posé
+dans le HTML, il décale l'apparition des cartes écrites pour cette page. `--retard` est en
+millisecondes, posé par le script des blocs d'avis recopiés. Ne pas les fusionner.
+
+Le hero est en **version A** (compacte). Deux autres versions attendent l'arbitrage de
+Lilian dans `heros/`.
 
 Sections, dans l'ordre :
 

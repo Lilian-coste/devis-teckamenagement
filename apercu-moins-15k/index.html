@@ -50,21 +50,81 @@
 
   /* Le SURTITRE bleu, repris des pages de profil : « Nos clients » au-dessus de « Parlent
      de nous ». Il donne à chaque section un point d'entrée, et c'est ce qui manquait le
-     plus à la première version, qui enchaînait des titres noirs sur fond blanc. */
-  .page .surtitre{ display:block; font-size:13px; font-weight:300; letter-spacing:.16em;
-                   text-transform:uppercase; color:var(--teck); margin:0 0 10px; }
+     plus à la première version, qui enchaînait des titres noirs sur fond blanc.
 
-  /* ---------------------------------------------------------------- HERO */
-  .page .hero{ background:linear-gradient(180deg,#EFF4FA 0%,#FFFFFF 92%);
-         padding: clamp(28px,5svh,56px) 0 clamp(40px,6svh,72px); text-align:center; }
+     ⚠️ DEVENU UNE PASTILLE le 16/08/2026, sur enregistrement de Lilian : « au lieu d'avoir
+     un "pour aller plus loin" comme ça, tu le mets dans un rond, tu laisses le texte en
+     bleu, et tu peux le faire d'ailleurs pour tout ». La forme vient de la capsule
+     `(+50) Entreprises accompagnées` du hero de BlueStar, qu'il montrait à l'écran.
+     Le libellé et sa couleur ne changent pas, seul le contenant est nouveau.
+
+     ⚠️ Ne s'applique QU'À SES CINQ SECTIONS. Les blocs recopiés des pages de profil
+     n'utilisent pas cette classe, et il a demandé deux fois de ne pas y toucher. */
+  .page .surtitre{ display:inline-flex; align-items:center; gap:9px; vertical-align:top;
+                   font-size:12px; font-weight:500; letter-spacing:.14em;
+                   text-transform:uppercase; color:var(--teck);
+                   margin:0 0 18px; padding:7px 16px 7px 13px;
+                   background:#fff; border:1px solid #D8DEE7; border-radius:999px;
+                   box-shadow:0 2px 10px rgba(6,83,168,.06); }
+  /* Le rond plein, avec son anneau clair : c'est lui que Lilian appelle « le petit rond ». */
+  .page .surtitre::before{ content:""; flex:0 0 auto; width:7px; height:7px; border-radius:50%;
+                   background:var(--teck); box-shadow:0 0 0 4px rgba(6,83,168,.12); }
+
+  /* ------------------------------------------------------- APPARITION AU DÉFILEMENT
+     Même geste que les blocs du bas de page, pour que la page entière ait le même
+     vocabulaire. Le décalage entre les cartes d'une même grille est porté par
+     `--retard`, posé dans le HTML. Coupé plus bas sous `prefers-reduced-motion`. */
+  .page .reveal{ opacity:0; transform:translateY(22px);
+                 transition:opacity .75s cubic-bezier(.2,.8,.2,1) var(--pause,0s),
+                            transform .75s cubic-bezier(.2,.8,.2,1) var(--pause,0s); }
+  .page .reveal.vu{ opacity:1; transform:none; }
+
+  /* ---------------------------------------------------------------- HERO
+     ⚠️ LE LOGO A ÉTÉ RETIRÉ le 16/08/2026, demande explicite de Lilian sur enregistrement :
+     « supprime-moi le logo, j'ai pas envie qu'il y ait le logo Teck Aménagement ». Il reste
+     dans le footer, la page n'est donc pas anonyme. La règle `.logo` est conservée au cas
+     où il changerait d'avis, elle ne sert plus.
+
+     Le reproche à corriger ici était : « c'est trop brouillon, un texte, un espace, un
+     texte ». Il ne portait pas sur la copy mais sur le fait que rien n'accroche l'œil entre
+     le haut de l'écran et les premières cartes. D'où trois ajouts : la pastille, le halo
+     bleu qui respire (qu'il avait déjà dit aimer, on le pousse au lieu de le remplacer) et
+     l'indicateur de défilement qui occupe le vide au lieu de le laisser béant. */
+  .page .hero{ position:relative; overflow:hidden;
+         background:linear-gradient(180deg,#EFF4FA 0%,#FFFFFF 92%);
+         padding: clamp(30px,5svh,58px) 0 clamp(30px,4svh,52px); text-align:center; }
   .page .logo{ width:170px; height:auto; display:block; margin:0 auto clamp(24px,4svh,40px); }
+  .page .hero .bloc{ position:relative; z-index:1; }
+
+  /* Le halo. Deux masses floues qui dérivent lentement, jamais au même rythme, pour que le
+     fond ne soit pas un aplat mort sans devenir une animation qu'on remarque. */
+  .page .hero .halo{ position:absolute; inset:0; z-index:0; pointer-events:none; }
+  .page .hero .halo i{ position:absolute; display:block; border-radius:50%; filter:blur(72px); }
+  .page .hero .halo i:nth-child(1){ width:440px; height:440px; background:rgba(62,142,180,.30);
+         top:-190px; left:50%; margin-left:-340px; animation:haloA 15s ease-in-out infinite; }
+  .page .hero .halo i:nth-child(2){ width:360px; height:360px; background:rgba(126,196,255,.34);
+         top:-130px; left:50%; margin-left:40px; animation:haloB 19s ease-in-out infinite; }
+  @keyframes haloA{ 0%,100%{ transform:translate(0,0) scale(1); }
+                    50%    { transform:translate(38px,26px) scale(1.1); } }
+  @keyframes haloB{ 0%,100%{ transform:translate(0,0) scale(1); }
+                    50%    { transform:translate(-34px,32px) scale(1.12); } }
+
   .page .hero h1{ font-size:28px; font-weight:500; letter-spacing:-.025em; line-height:1.15;
             margin:0 auto; text-wrap:balance; max-width:640px; color:var(--ink); }
   @media (min-width:768px){ .page .hero h1{ font-size:42px; } }
-  .page .hero .chapo{ font-size:16px; line-height:1.65; color:var(--gris); margin:22px auto 0;
+  .page .hero .chapo{ font-size:16px; line-height:1.65; color:var(--gris); margin:20px auto 0;
                 max-width:600px; text-wrap:pretty; }
   @media (min-width:768px){ .page .hero .chapo{ font-size:18px; } }
   .page .hero .chapo b{ font-weight:600; color:var(--ink); }
+
+  /* L'indicateur de défilement : il dit qu'il y a une suite, et il occupe l'espace mort
+     entre le chapô et la première section. */
+  .page .suite{ display:block; margin:clamp(26px,4svh,40px) auto 0; width:26px; height:26px;
+                color:var(--teck); opacity:.55; animation:suiteBas 2.4s ease-in-out infinite; }
+  @keyframes suiteBas{ 0%,100%{ transform:translateY(0); opacity:.5; }
+                       50%    { transform:translateY(7px); opacity:.9; } }
+  /* La première section colle au hero : le vide de 158px cumulé était le cœur du reproche. */
+  .page .hero + section.sect{ padding-top: clamp(26px,4svh,46px); }
 
   /* ------------------------------------------------------------ SECTIONS */
   /* RYTHME DE COULEURS calqué sur les pages de profil : jamais deux fonds identiques à la
@@ -98,6 +158,10 @@
   .page .bloc h2{ font-size:26px; font-weight:500; letter-spacing:-.025em; line-height:1.2;
       margin:0 0 18px; text-wrap:balance; color:var(--ink); }
   @media (min-width:768px){ .page .bloc h2{ font-size:38px; } }
+  /* Dans le gabarit large (1152px), un titre qui court d'un bord à l'autre devient
+     inconfortable à lire et se pose sur une seule ligne étirée. On le ramène à une mesure
+     de lecture, le bloc reste large pour les grilles qu'il contient. */
+  .page .bloc.large h2{ max-width:860px; margin-left:auto; margin-right:auto; }
   .page .bloc h3{ font-size:17px; font-weight:600; margin:0 0 8px; color:var(--ink); }
   .page .bloc p{ font-size:16px; line-height:1.65; color:var(--gris); margin:0 0 16px; text-wrap:pretty; }
   .page .bloc p:last-child{ margin-bottom:0; }
@@ -107,11 +171,17 @@
   .page .centre p{ margin-left:auto; margin-right:auto; max-width:620px; }
 
   /* ------------------------------------------------- LES FACTEURS DE PRIX
-     Cartes plutôt qu'une liste à tirets. Le chiffre est posé en GRAND et en creux
-     derrière le texte : il donne du relief sans ajouter d'élément à lire, et il reprend
-     le bleu de la marque. Le survol emprunte celui des cartes d'avis des pages de profil
-     (translation vers le haut, bordure qui passe au bleu), pour que les deux pages aient
-     le même vocabulaire de gestes. */
+     Lilian garde le PRINCIPE de ces quatre cartes (« j'aime beaucoup ce que tu fais là »)
+     et rejette l'EXÉCUTION (« c'est pas très élégant, pas esthétique »), enregistrement du
+     16/08/2026. Trois choses clochaient :
+       — quatre rectangles strictement identiques, rien ne distinguait une carte d'une autre ;
+       — le chiffre en filigrane était coupé par le bord de la carte, ça se lisait comme un
+         défaut de mise en page plutôt que comme un motif ;
+       — les cartes apparaissaient d'un bloc, sans le geste qu'ont tous les blocs du bas.
+     Le chiffre devient donc une PASTILLE numérotée en tête de carte, dans la même grammaire
+     que les surtitres, un liseré bleu se révèle au survol, et l'apparition se fait en
+     cascade. Le survol garde celui des cartes d'avis des pages de profil.
+     ⚠️ Le TEXTE de ces cartes ne change pas : il reste en attente de Franck. */
   .page .facteurs{ list-style:none; margin:38px 0 0; padding:0;
                    display:grid; gap:16px; grid-template-columns:1fr; }
   @media (min-width:768px){ .page .facteurs{ grid-template-columns:1fr 1fr; gap:20px; } }
@@ -121,17 +191,156 @@
     transition:transform .5s cubic-bezier(.2,.8,.2,1), border-color .5s, box-shadow .5s; }
   .page .facteurs li:hover{ transform:translateY(-8px); border-color:var(--teck);
     box-shadow:0 20px 40px rgba(0,0,0,.08); }
-  .page .facteurs .num{ position:absolute; right:14px; bottom:-14px; font-size:82px;
-    font-weight:700; line-height:1; color:rgba(6,83,168,.07); letter-spacing:-.05em;
-    font-variant-numeric:tabular-nums; pointer-events:none; user-select:none; }
+  /* Le liseré : il ne barre la carte que lorsqu'on la survole, il ne s'ajoute pas à lire. */
+  .page .facteurs li::before{ content:""; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg,var(--teck),#7EC4FF); transform:scaleX(0);
+    transform-origin:left; transition:transform .55s cubic-bezier(.2,.8,.2,1); }
+  .page .facteurs li:hover::before{ transform:scaleX(1); }
+  .page .facteurs .tete{ display:flex; align-items:center; gap:11px; margin-bottom:13px; }
+  .page .facteurs .num{ flex:0 0 auto; width:30px; height:30px; border-radius:50%;
+    display:inline-flex; align-items:center; justify-content:center;
+    background:rgba(6,83,168,.09); color:var(--teck); font-size:12px; font-weight:600;
+    line-height:1; font-variant-numeric:tabular-nums; letter-spacing:.02em; }
   .page .facteurs .chapeau{ display:block; font-size:11.5px; font-weight:600;
-    letter-spacing:.16em; text-transform:uppercase; color:var(--teck); margin-bottom:10px; }
+    letter-spacing:.16em; text-transform:uppercase; color:var(--teck); }
   .page .facteurs .txt{ position:relative; display:block; font-size:16.5px; line-height:1.45;
     font-weight:500; color:var(--ink); }
   .page .facteurs .prec{ position:relative; display:block; font-size:14px; line-height:1.55;
     color:var(--gris); margin-top:8px; }
 
-  /* Le sommaire du guide reste une liste, mais avec le filet et la pastille bleue. */
+  /* ------------------------------------------------------------------ LA BULLE
+     Pour la section « Ce que cela veut dire », la plus nue de la page : un titre et une
+     phrase posés sur un fond uni. Lilian, sur l'enregistrement, la surligne et dit « je
+     voudrais que tu mettes ça dans une sorte de bulle ». Le texte cesse de flotter, il a
+     un contenant. Même grammaire que les cartes `.chemin`, pour ne pas inventer une
+     troisième forme de carte sur la même page. */
+  .page .bulle{ background:#fff; border:1px solid #D2D2D7; border-radius:28px;
+    padding: clamp(30px,4svh,46px) clamp(24px,4vw,46px);
+    box-shadow:0 10px 40px rgba(0,0,0,.05); text-align:center; }
+
+  /* ======================================================== LE BENTO DU GUIDE
+     La liste 01→05 à filets devient une grille asymétrique, demande centrale de
+     l'enregistrement du 16/08/2026. Lilian a tracé la forme au curseur sur le bento de
+     BlueStar : « eux il y a 4 points ; toi 1-2-3, et au lieu qu'il y ait un grand qui prend
+     tout, il est divisé en deux ». D'où cinq cellules au lieu de quatre.
+
+         ┌──────────┬──────────────────┐
+         │          │  02   large      │
+         │  01      ├────────┬─────────┤
+         │  haute   │  03    │  04     │
+         ├──────────┴────────┴─────────┤
+         │  05   toute la largeur      │
+         └─────────────────────────────┘
+
+     ⚠️ Les visuels sont des SCHÉMAS ABSTRAITS, sans un seul chiffre ni libellé factuel.
+        Chez BlueStar les maquettes affichent « +1678 visites » et « Lead capturé » ; ici,
+        le moindre montant serait une affirmation que Franck n'a pas confirmée. Les
+        870 / 970 € n'apparaissent nulle part dans ces animations, et ne doivent pas y
+        entrer plus tard « pour faire joli ». */
+  .page .bento{ display:grid; gap:14px; grid-template-columns:1fr; margin:34px 0 0;
+                text-align:left; }
+  @media (min-width:768px){
+    .page .bento{ grid-template-columns:repeat(3,1fr); gap:18px;
+      grid-template-areas: "un deux deux" "un trois quatre" "cinq cinq cinq"; }
+    .page .bento .c1{ grid-area:un; }   .page .bento .c2{ grid-area:deux; }
+    .page .bento .c3{ grid-area:trois; }.page .bento .c4{ grid-area:quatre; }
+    .page .bento .c5{ grid-area:cinq; }
+  }
+  .page .bcarte{ display:flex; flex-direction:column; overflow:hidden; background:#fff;
+    border:1px solid #D2D2D7; border-radius:22px; box-shadow:0 4px 20px rgba(0,0,0,.04);
+    transition:transform .5s cubic-bezier(.2,.8,.2,1), border-color .5s, box-shadow .5s; }
+  .page .bcarte:hover{ transform:translateY(-8px); border-color:var(--teck);
+    box-shadow:0 20px 40px rgba(0,0,0,.08); }
+  /* La zone de visuel, teintée, où tourne le schéma. Elle occupe toute la hauteur restante
+     dans la carte haute, et une bande fixe dans les autres. */
+  .page .bcarte .visuel{ position:relative; overflow:hidden; background:#F3F7FC;
+    border-bottom:1px solid #E4EBF3; height:132px; flex:0 0 auto;
+    display:flex; align-items:center; justify-content:center; }
+  @media (min-width:768px){ .page .bento .c1 .visuel{ height:auto; flex:1 1 auto; min-height:190px; } }
+  .page .bcarte .pied{ padding:18px 20px 20px; }
+  .page .bcarte .idx{ display:block; font-size:11.5px; font-weight:600; letter-spacing:.16em;
+    color:var(--teck); font-variant-numeric:tabular-nums; margin-bottom:7px; }
+  .page .bcarte h3{ font-size:15.5px; font-weight:600; line-height:1.4; margin:0;
+    color:var(--ink); }
+  @media (min-width:768px){ .page .bento .c1 h3, .page .bento .c5 h3{ font-size:17px; } }
+
+  /* ------------------------------------------------- LES CINQ SCHÉMAS ANIMÉS
+     Tout est en CSS, aucune image, aucune police à charger. Chaque animation tourne en
+     continu, comme celles des cartes de BlueStar. Toutes sont coupées plus bas sous
+     `prefers-reduced-motion`. */
+  .page .sch{ display:flex; align-items:flex-end; justify-content:center; gap:9px;
+    width:78%; max-width:230px; height:64%; }
+
+  /* 01 — quatre barres qui se règlent, jamais au même rythme. */
+  .page .sch-barres b{ flex:1 1 0; border-radius:5px 5px 2px 2px; background:var(--teck);
+    opacity:.85; animation:schBarre 3s ease-in-out infinite alternate; }
+  .page .sch-barres b:nth-child(1){ animation-duration:2.9s; }
+  .page .sch-barres b:nth-child(2){ animation-duration:3.6s; animation-delay:-.7s; opacity:.55; }
+  .page .sch-barres b:nth-child(3){ animation-duration:3.2s; animation-delay:-1.4s; }
+  .page .sch-barres b:nth-child(4){ animation-duration:4s;   animation-delay:-.35s; opacity:.55; }
+  @keyframes schBarre{ from{ height:22%; } to{ height:92%; } }
+
+  /* 02 — trois paliers qui se remplissent l'un après l'autre. */
+  .page .sch-paliers{ flex-direction:column; align-items:stretch; justify-content:center; gap:11px; }
+  .page .sch-paliers i{ display:block; height:11px; border-radius:99px; background:#DCE8F5;
+    position:relative; overflow:hidden; }
+  .page .sch-paliers i::after{ content:""; position:absolute; inset:0 auto 0 0; width:0;
+    border-radius:99px; background:var(--teck);
+    animation:schRemplir 6s cubic-bezier(.4,0,.2,1) infinite; }
+  .page .sch-paliers i:nth-child(1)::after{ --w:44%; }
+  .page .sch-paliers i:nth-child(2)::after{ --w:70%; animation-delay:.45s; }
+  .page .sch-paliers i:nth-child(3)::after{ --w:94%; animation-delay:.9s; }
+  @keyframes schRemplir{ 0%{ width:0; } 22%,68%{ width:var(--w); } 88%,100%{ width:0; } }
+
+  /* 03 — quatre formes identiques, dont une seule se dessine à part. */
+  .page .sch-mesure{ align-items:center; gap:12px; }
+  .page .sch-mesure s{ flex:0 0 auto; width:30px; height:30px; border-radius:6px;
+    background:#DCE8F5; text-decoration:none; }
+  .page .sch-mesure s:last-child{ animation:schSurMesure 5s cubic-bezier(.4,0,.2,1) infinite; }
+  @keyframes schSurMesure{
+    0%,14%   { transform:scale(1);    border-radius:6px;  background:#DCE8F5; }
+    42%,68%  { transform:scale(1.34); border-radius:13px; background:var(--teck); }
+    92%,100% { transform:scale(1);    border-radius:6px;  background:#DCE8F5; } }
+
+  /* 04 — trois lignes dont les croix passent en coches. */
+  .page .sch-liste{ flex-direction:column; align-items:stretch; justify-content:center; gap:12px; }
+  .page .sch-liste u{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .page .sch-liste em{ position:relative; flex:0 0 auto; width:17px; height:17px;
+    border-radius:50%; background:#DCE8F5; animation:schPastille 5s ease-in-out infinite; }
+  .page .sch-liste em::before, .page .sch-liste em::after{ content:""; position:absolute;
+    inset:0; background:no-repeat center/9px 9px; }
+  .page .sch-liste em::before{ animation:schCroix 5s ease-in-out infinite;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 2l8 8M10 2l-8 8' stroke='%236B7B8C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E"); }
+  .page .sch-liste em::after{ animation:schCoche 5s ease-in-out infinite;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.4l2.8 2.8L10 3.2' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E"); }
+  .page .sch-liste u:nth-child(2) em, .page .sch-liste u:nth-child(2) em::before,
+  .page .sch-liste u:nth-child(2) em::after{ animation-delay:.4s; }
+  .page .sch-liste u:nth-child(3) em, .page .sch-liste u:nth-child(3) em::before,
+  .page .sch-liste u:nth-child(3) em::after{ animation-delay:.8s; }
+  .page .sch-liste var{ display:block; height:7px; border-radius:99px; background:#DCE8F5; }
+  .page .sch-liste u:nth-child(1) var{ width:74%; }
+  .page .sch-liste u:nth-child(2) var{ width:58%; }
+  .page .sch-liste u:nth-child(3) var{ width:66%; }
+  @keyframes schPastille{ 0%,16%{ background:#DCE8F5; } 34%,80%{ background:var(--teck); }
+                          96%,100%{ background:#DCE8F5; } }
+  @keyframes schCroix { 0%,16%{ opacity:1; } 30%,84%{ opacity:0; } 96%,100%{ opacity:1; } }
+  @keyframes schCoche { 0%,20%{ opacity:0; } 34%,80%{ opacity:1; } 94%,100%{ opacity:0; } }
+
+  /* 05 — un cadre dont la largeur et la profondeur s'ajustent, entre ses repères de cote.
+     Cette carte occupe toute la largeur du bento : un petit rectangle seul s'y perdait,
+     d'où les deux repères latéraux qui donnent l'échelle et le cadre agrandi. */
+  .page .sch-cadre{ align-items:center; justify-content:center; gap:14px; height:78%;
+    max-width:330px; }
+  .page .sch-cadre q{ display:block; flex:0 0 auto; border:2px solid var(--teck);
+    border-radius:9px; background:rgba(6,83,168,.08);
+    animation:schCadre 6.5s ease-in-out infinite; }
+  .page .sch-cadre q::before, .page .sch-cadre q::after{ content:none; }
+  .page .sch-cadre em{ flex:0 0 auto; width:2px; height:56%; border-radius:2px;
+    background:repeating-linear-gradient(180deg,rgba(6,83,168,.42) 0 4px,transparent 4px 9px); }
+  @keyframes schCadre{ 0%,100%{ width:104px; height:54px; } 50%{ width:196px; height:96px; } }
+
+  /* Le sommaire à filets N'EST PLUS UTILISÉ dans le guide depuis le passage au bento.
+     Les règles restent : c'est la forme de repli si Lilian voulait revenir en arrière. */
   .page .sommaire{ list-style:none; margin:30px 0 0; padding:0; display:grid; gap:0; }
   .page .sommaire li{ display:flex; gap:16px; align-items:baseline; padding:15px 0;
                       border-top:1px solid var(--trait); }
@@ -440,6 +649,26 @@
 @keyframes floatM { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 @keyframes scrollRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 
+  /* ------------------------------------------------- MOUVEMENT RÉDUIT
+     Tout ce que la refonte du 16/08/2026 a ajouté de mouvement s'arrête ici : le halo du
+     hero, l'indicateur de défilement, les cinq schémas du bento et l'apparition en cascade.
+     Les blocs recopiés des pages de profil portaient déjà leurs propres animations et ne
+     sont pas concernés, on ne touche pas à leur comportement. */
+  @media (prefers-reduced-motion: reduce){
+    .page .hero .halo i, .page .suite,
+    .page .sch-barres b, .page .sch-paliers i::after, .page .sch-mesure s:last-child,
+    .page .sch-liste em, .page .sch-liste em::before, .page .sch-liste em::after,
+    .page .sch-cadre q{ animation:none !important; }
+    /* Les schémas doivent rester lisibles une fois figés, pas s'effondrer à zéro. */
+    .page .sch-barres b{ height:62%; }
+    .page .sch-paliers i::after{ width:var(--w); }
+    .page .sch-liste em{ background:var(--teck); }
+    .page .sch-liste em::before{ opacity:0; }
+    .page .sch-liste em::after{ opacity:1; }
+    .page .sch-cadre q{ width:120px; height:66px; }
+    .page .reveal{ opacity:1 !important; transform:none !important; transition:none !important; }
+  }
+
   /* ---------------------------------------------- RÉGLAGES D'ESPACE (Lilian, 16/08/2026)
      Ces trois valeurs écrasent volontairement celles reprises des pages de profil : sur
      cette page-ci, « Pourquoi choisir » n'a plus la même chose au-dessus ni en dessous. */
@@ -460,8 +689,14 @@
 
 <!-- ============================ HERO ============================ -->
 <header class="hero">
+  <!-- Le halo. Décoratif, donc invisible aux lecteurs d'écran. -->
+  <div class="halo" aria-hidden="true"><i></i><i></i></div>
+
   <div class="bloc">
-    <img class="logo" src="../561d79a-47b15060-3631b3c8/images/logo-teck.png" alt="Teck Aménagement">
+    <!-- ⚠️ LE LOGO A ÉTÉ RETIRÉ ICI (Lilian, 16/08/2026, enregistrement de 16h30) :
+         « supprime-moi le logo, j'ai pas envie qu'il y ait le logo Teck Aménagement ».
+         Il reste dans le footer. Ne pas le remettre sans le lui redemander. -->
+    <span class="surtitre">Votre diagnostic</span>
 
     <h1 id="titre">Votre projet a bien été pris en compte</h1>
 
@@ -469,6 +704,11 @@
       Au vu de l'enveloppe que vous nous avez indiquée, votre projet demande probablement un
       investissement plus important que celui que vous aviez en tête.
     </p>
+
+    <!-- Il occupe le vide entre le chapô et la première section, qui était le cœur du
+         reproche « un texte, un espace, un texte ». -->
+    <svg class="suite" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
   </div>
 </header>
 
@@ -488,27 +728,23 @@
          affirmation qu'on ne peut pas prouver. Trois à cinq points maximum (Lilian).
          La seconde ligne de chaque carte est une PRÉCISION, elle aussi à valider. -->
     <ul class="facteurs" style="text-align:left">
-      <li>
-        <span class="num">01</span>
-        <span class="chapeau">La surface</span>
+      <li class="reveal">
+        <span class="tete"><span class="num">01</span><span class="chapeau">La surface</span></span>
         <span class="txt">Le nombre de personnes que vous voulez voir à l'ombre en même temps</span>
         <span class="prec">C'est ce chiffre qui commande la portée de la structure, et pas la taille de la terrasse.</span>
       </li>
-      <li>
-        <span class="num">02</span>
-        <span class="chapeau">Le type</span>
+      <li class="reveal" style="--pause:.09s">
+        <span class="tete"><span class="num">02</span><span class="chapeau">Le type</span></span>
         <span class="txt">Adossée à la maison, ou posée librement dans le jardin</span>
         <span class="prec">Une adossée prolonge la pièce de vie, une autoportante crée un lieu à part.</span>
       </li>
-      <li>
-        <span class="num">03</span>
-        <span class="chapeau">La finition</span>
+      <li class="reveal" style="--pause:.18s">
+        <span class="tete"><span class="num">03</span><span class="chapeau">La finition</span></span>
         <span class="txt">Le niveau de personnalisation que demande votre extérieur</span>
         <span class="prec">Chaque ajustement se dessine, se fabrique et se pose, il ne se choisit pas dans un catalogue.</span>
       </li>
-      <li>
-        <span class="num">04</span>
-        <span class="chapeau">Les matériaux</span>
+      <li class="reveal" style="--pause:.27s">
+        <span class="tete"><span class="num">04</span><span class="chapeau">Les matériaux</span></span>
         <span class="txt">Un bois exotique qui ne demande ni lasure ni ponçage</span>
         <span class="prec">Ce que vous ne dépensez pas en entretien chaque année fait partie du calcul.</span>
       </li>
@@ -518,13 +754,18 @@
 
 <!-- ===================== REPOSITIONNEMENT ===================== -->
 <section class="sect">
+  <!-- Cette section passe DANS UNE BULLE (Lilian, 16/08/2026) : il la surligne à l'écran et
+       dit « je voudrais que tu mettes ça dans une sorte de bulle ». C'était la seule de la
+       page où un titre et une phrase flottaient sans contenant. -->
   <div class="bloc centre">
-    <span class="surtitre">Ce que cela veut dire</span>
-    <h2>Cela ne veut pas dire que votre projet est <span class="mot-bleu">irréalisable</span></h2>
-    <p>
-      Votre budget peut évoluer, votre projet peut être repensé, ou certaines priorités
-      peuvent changer.
-    </p>
+    <div class="bulle reveal">
+      <span class="surtitre">Ce que cela veut dire</span>
+      <h2>Cela ne veut pas dire que votre projet est <span class="mot-bleu">irréalisable</span></h2>
+      <p>
+        Votre budget peut évoluer, votre projet peut être repensé, ou certaines priorités
+        peuvent changer.
+      </p>
+    </div>
   </div>
 </section>
 
@@ -586,7 +827,9 @@
 
 <!-- ========================== LE GUIDE ========================== -->
 <section id="le-guide" class="sect vers-bleu">
-  <div class="bloc centre">
+  <!-- `large` depuis le passage au bento : la colonne de lecture à 760px étranglait la
+       grille à trois colonnes. Même gabarit que la section « Ce qui fait le prix ». -->
+  <div class="bloc large centre">
     <span class="surtitre">Pour aller plus loin</span>
     <h2>Votre projet reste possible, même s'il n'est pas encore dans votre budget</h2>
     <p>
@@ -608,13 +851,54 @@
        demande, le temps de terminer d'autres travaux ou de constituer l'enveloppe prévue.</p>
     -->
 
-    <ul class="sommaire" style="text-align:left; max-width:560px; margin-left:auto; margin-right:auto">
-      <li><span class="num">01</span><span class="txt">Les principaux facteurs qui font varier le prix</span></li>
-      <li><span class="num">02</span><span class="txt">Des exemples de projets par niveau de budget</span></li>
-      <li><span class="num">03</span><span class="txt">Ce qui différencie une pergola de série d'un projet sur mesure</span></li>
-      <li><span class="num">04</span><span class="txt">Les erreurs à éviter avant de demander des devis</span></li>
-      <li><span class="num">05</span><span class="txt">Comment déterminer une enveloppe réaliste pour votre extérieur</span></li>
-    </ul>
+    <!-- LE BENTO. La liste à filets a été remplacée le 16/08/2026, c'est la demande
+         centrale de l'enregistrement. La forme (01 haute à gauche, 02 large, 03 et 04 en
+         dessous, 05 sur toute la largeur) est celle que Lilian a tracée au curseur sur le
+         bento de BlueStar. Les intitulés n'ont pas bougé d'un mot.
+         ⚠️ Les schémas sont décoratifs et abstraits : aucun chiffre, aucun montant. -->
+    <div class="bento">
+      <article class="bcarte c1 reveal">
+        <div class="visuel" aria-hidden="true">
+          <span class="sch sch-barres"><b></b><b></b><b></b><b></b></span>
+        </div>
+        <div class="pied"><span class="idx">01</span>
+          <h3>Les principaux facteurs qui font varier le prix</h3></div>
+      </article>
+
+      <article class="bcarte c2 reveal" style="--pause:.08s">
+        <div class="visuel" aria-hidden="true">
+          <span class="sch sch-paliers"><i></i><i></i><i></i></span>
+        </div>
+        <div class="pied"><span class="idx">02</span>
+          <h3>Des exemples de projets par niveau de budget</h3></div>
+      </article>
+
+      <article class="bcarte c3 reveal" style="--pause:.16s">
+        <div class="visuel" aria-hidden="true">
+          <span class="sch sch-mesure"><s></s><s></s><s></s><s></s></span>
+        </div>
+        <div class="pied"><span class="idx">03</span>
+          <h3>Ce qui différencie une pergola de série d'un projet sur mesure</h3></div>
+      </article>
+
+      <article class="bcarte c4 reveal" style="--pause:.24s">
+        <div class="visuel" aria-hidden="true">
+          <span class="sch sch-liste">
+            <u><em></em><var></var></u><u><em></em><var></var></u><u><em></em><var></var></u>
+          </span>
+        </div>
+        <div class="pied"><span class="idx">04</span>
+          <h3>Les erreurs à éviter avant de demander des devis</h3></div>
+      </article>
+
+      <article class="bcarte c5 reveal" style="--pause:.32s">
+        <div class="visuel" aria-hidden="true">
+          <span class="sch sch-cadre"><em></em><q></q><em></em></span>
+        </div>
+        <div class="pied"><span class="idx">05</span>
+          <h3>Comment déterminer une enveloppe réaliste pour votre extérieur</h3></div>
+      </article>
+    </div>
 
     <!-- La mention d'avis passe SOUS ce bouton (Lilian, 16/08/2026). Elle a quitté la fin
          de la première série d'avis, où elle coupait l'enchaînement vers la seconde. -->
@@ -816,7 +1100,12 @@
     <!-- =========================================================
          5 ter. AVIS CLIENTS (seconde serie)
          ========================================================= -->
-    <div class="avis-2 apple-font bg-white pt-12 pb-24 px-6 md:px-4">
+    <!-- `pb-10` et non `pb-24` (Lilian, 16/08/2026 : « remonte un peu le footer pour qu'il soit
+     plus proche du bouton »). Les 96px de marge basse, ajoutés aux 40px du bloc bouton et
+     aux 32px du `pt-8` du footer, laissaient ~168px de vide. On descend à ~72px.
+     ⚠️ C'est le SEUL écart assumé avec la même section des pages de profil : là-bas, le
+     bloc « Vivez » suit et a besoin de cet air. Ici, le footer suit directement. -->
+<div class="avis-2 apple-font bg-white pt-12 pb-10 px-6 md:px-4">
         <div class="max-w-6xl mx-auto">
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
@@ -1206,6 +1495,40 @@
             }
         })();
     </script>
+
+<script>
+/* ------------------------------------------------- APPARITION AU DÉFILEMENT
+   Pour les blocs écrits POUR cette page : les quatre cartes de facteurs, la bulle
+   « Ce que cela veut dire » et les cinq cartes du bento. Les blocs recopiés des pages de
+   profil ont déjà leur propre observateur (`.reveal-avis`, `.reveal-left/right`) plus haut
+   dans le fichier, et on n'y touche pas.
+
+   ⚠️ Le décalage entre cartes est porté par `--pause`, en SECONDES, posé dans le HTML.
+   Ne pas le confondre avec le `--retard` des blocs d'avis, qui est en millisecondes et
+   posé par le script : deux systèmes voisins, deux noms différents, volontairement. */
+(function () {
+    var blocs = document.querySelectorAll('.page .reveal');
+    var sobre = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* Sans IntersectionObserver ou en mouvement réduit, tout est montré tout de suite :
+       une page dont le contenu reste invisible est bien pire qu'une page sans animation. */
+    if (sobre || !('IntersectionObserver' in window)) {
+        for (var i = 0; i < blocs.length; i++) blocs[i].classList.add('vu');
+        return;
+    }
+
+    var oeil = new IntersectionObserver(function (entrees) {
+        for (var k = 0; k < entrees.length; k++) {
+            if (entrees[k].isIntersecting) {
+                entrees[k].target.classList.add('vu');
+                oeil.unobserve(entrees[k].target);
+            }
+        }
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    for (var b = 0; b < blocs.length; b++) oeil.observe(blocs[b]);
+})();
+</script>
 
 </body>
 </html>
