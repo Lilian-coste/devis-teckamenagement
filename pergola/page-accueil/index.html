@@ -70,6 +70,13 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
      dans le titre il ne surligne plus que « +35°C », dans le préheader « le plus agréable ».
      Pas de graisse ajoutée : le mot reste dans le poids de sa ligne (300 pour le préheader). */
   .hero .accent{ color:#3B82F6; }
+  /* ESSAI DU 16/08/2026 (Lilian) : « le plus agréable » en BLANC ET EN GRAS.
+     D'abord posé sur ordinateur seul, parce que le bleu ne ressortait pas sur la photo de
+     fond, plus claire que celle du mobile. Étendu au TÉLÉPHONE dans la foulée, pour voir.
+     ⚠️ Ne concerne QUE le préheader : l'accent du TITRE (« restez dehors quand tout le
+     monde rentre ») garde son bleu sur les deux écrans.
+     ⚙️ Pour revenir à l'ordinateur seul, déplacer cette règle dans le @media 768px. */
+  .eyebrow .accent{ font-weight:600; color:#fff; }
   .hero .desc{ margin-top:26px; font-size:16px; line-height:1.5; font-weight:400; color:#E5E7EB; width:620px; max-width:88%; }
   .hero .desc i{ font-style:italic; }
   .hero .desc b{ font-weight:600; color:#fff; }
@@ -81,15 +88,6 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
      deux premiers restent ÉGAUX entre eux, comme sur mobile. */
   @media (min-width:768px){
     .eyebrow{ font-size:23px; }
-    /* « le plus agréable » passe en gras ET EN BLANC, sur ORDINATEUR SEULEMENT
-       (Lilian, 16/08/2026).
-       Le gras, pas sur téléphone : le préheader y est déjà en 18px sur un fond photo, et
-       une graisse de plus sur trois mots durcirait une ligne qui doit rester une question.
-       Le blanc parce que le bleu ne ressort pas sur la photo de fond ORDINATEUR, qui est
-       plus claire que celle du mobile. Sur téléphone le bleu tient, on le garde.
-       ⚠️ Ne concerne QUE le préheader : l'accent du TITRE (« restez dehors quand tout
-       le monde rentre ») garde son bleu. */
-    .eyebrow .accent{ font-weight:600; color:#fff; }
     .hero h1{ margin-top:30px; font-size:58px; }
     .hero .desc{ margin-top:30px; font-size:20px; }
     .hero .btn-black{ margin-top:46px; }
