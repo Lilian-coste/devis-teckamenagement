@@ -44,7 +44,9 @@
   body{ font-family:'Inter',sans-serif; margin:0; color:var(--ink); background:#fff; }
 
   .page .bloc{ width:100%; max-width:760px; margin:0 auto; padding:0 22px; }
-  .page .bloc.large{ max-width:1080px; }
+  /* 1152px = la largeur des blocs recopiés (`max-w-6xl`). La page n'a plus que DEUX
+   gabarits, la colonne de lecture et la grille large, au lieu de trois. */
+  .page .bloc.large{ max-width:1152px; }
 
   /* Le SURTITRE bleu, repris des pages de profil : « Nos clients » au-dessus de « Parlent
      de nous ». Il donne à chaque section un point d'entrée, et c'est ce qui manquait le
@@ -72,10 +74,27 @@
      profil n'ont pas cette classe, et c'est volontaire : sans ce cloisonnement, mes
      règles de padding et de typographie écrasaient les leurs en gagnant d'un cran de
      spécificité, et le bloc « Vivez » perdait par exemple son titre à 36px. */
-  .page section.sect{ padding: clamp(48px,7svh,86px) 0; }
-  .page section.sect.douce{ background:linear-gradient(180deg,#ffffff 0%,#f8f8f8 30%,#f8f8f8 70%,#ffffff 100%); }
-  .page section.sect.bleutee{ background:linear-gradient(180deg,#ffffff 0%,#EFF4FA 100%); }
-  .page section.sect.bleutee-inv{ background:linear-gradient(180deg,#EFF4FA 0%,#ffffff 100%); }
+  .page section.sect{ padding: clamp(48px,7svh,86px) 0; background:#fff; }
+
+  /* ⚠️ LE RYTHME DE COULEURS A ÉTÉ CALMÉ le 16/08/2026 (Lilian : « ça fait un peu trop
+     brouillon »). La première version donnait un fond différent à CHACUNE de mes six
+     sections, et elles alternaient gris clair, bleuté, gris clair, bleuté. Les jointures
+     étaient pourtant propres, vérifiées au pixel : le défaut n'était pas une coupure, mais
+     le fait de rayer la page. Une page d'atterrissage se lit mieux avec de longues plages
+     stables et deux ou trois accents, comme les pages de profil.
+     Le reste de la page est blanc, et ce sont les surtitres bleus qui séparent, pas le
+     fond.
+
+     L'estimation et la question de capacité forment UN SEUL souffle bleu à cheval sur les
+     deux sections, au lieu d'un bleu puis d'un gris : ce sont les deux temps d'un même
+     moment, le chiffre puis la décision qu'il provoque. La première entre dans le bleu,
+     la seconde en ressort.
+  */
+  .page section.sect.entre-bleu{ background:linear-gradient(180deg,#ffffff 0%,#EFF4FA 100%); }
+  .page section.sect.sort-bleu{  background:linear-gradient(180deg,#EFF4FA 0%,#ffffff 100%); }
+  /* Le guide amène « Pourquoi choisir », qui démarre en #EFF4FA : on part donc du blanc
+     pour arriver exactement sur sa couleur de départ, sans marche. */
+  .page section.sect.vers-bleu{ background:linear-gradient(180deg,#ffffff 0%,#EFF4FA 100%); }
   .page .bloc h2{ font-size:26px; font-weight:500; letter-spacing:-.025em; line-height:1.2;
       margin:0 0 18px; text-wrap:balance; color:var(--ink); }
   @media (min-width:768px){ .page .bloc h2{ font-size:38px; } }
@@ -407,6 +426,19 @@
         .btn-black { display: inline-flex; align-items: center; gap: 10px; background: #000; color: #fff;
             border: none; border-radius: 14px; padding: 16px 34px; font-size: 16px; font-weight: 600; cursor: pointer;
             text-decoration: none; transition: transform .35s cubic-bezier(.175,.885,.32,1.275), box-shadow .35s; }
+
+  /* 🐛 LES ANIMATIONS QUI MANQUAIENT (corrigé le 16/08/2026).
+     Les bulles de « Pourquoi choisir » portaient bien `animation: float1 7s`, mais les
+     @keyframes correspondantes n'avaient pas été recopiées. Conséquence visible et
+     trompeuse : sans animation, la troisième bulle restait à sa position brute au lieu
+     d'être tirée de 150px vers la gauche par sa première étape, et elle recouvrait le
+     texte de la deuxième. Ça ressemblait à un bug de mise en page, c'était une animation
+     absente. Repéré par Lilian sur l'enregistrement du 16/08 à 16h30. */
+@keyframes float1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(14px,-18px); } }
+@keyframes float2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-16px,16px); } }
+@keyframes float3 { 0%,100% { transform: translate(-50%,0); } 50% { transform: translate(-50%,-16px); } }
+@keyframes floatM { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes scrollRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 </style>
 </head>
 <body class="page">
@@ -426,7 +458,7 @@
 </header>
 
 <!-- ================== POURQUOI CET INVESTISSEMENT ================== -->
-<section class="sect douce">
+<section class="sect">
   <div class="bloc large centre">
     <span class="surtitre">Ce qui fait le prix</span>
     <h2>Une pergola sur mesure est un investissement pensé pour durer</h2>
@@ -470,7 +502,7 @@
 </section>
 
 <!-- ===================== REPOSITIONNEMENT ===================== -->
-<section class="sect bleutee">
+<section class="sect">
   <div class="bloc centre">
     <span class="surtitre">Ce que cela veut dire</span>
     <h2>Cela ne veut pas dire que votre projet est <span class="mot-bleu">irréalisable</span></h2>
@@ -482,7 +514,7 @@
 </section>
 
 <!-- ======================== L'ESTIMATION ======================== -->
-<section class="sect bleutee-inv">
+<section class="sect entre-bleu">
   <div class="bloc centre">
     <span class="surtitre">Votre estimation</span>
     <h2>Estimons ensemble l'enveloppe que votre projet demande</h2>
@@ -502,7 +534,7 @@
 </section>
 
 <!-- ==================== LA QUESTION DE CAPACITÉ ==================== -->
-<section class="sect douce">
+<section class="sect sort-bleu">
   <div class="bloc centre">
     <span class="surtitre">Une seule question</span>
     <h2>Est-ce une enveloppe que vous seriez en mesure d'envisager si le projet correspond
@@ -538,7 +570,7 @@
 </section>
 
 <!-- ========================== LE GUIDE ========================== -->
-<section id="le-guide" class="sect bleutee">
+<section id="le-guide" class="sect vers-bleu">
   <div class="bloc centre">
     <span class="surtitre">Pour aller plus loin</span>
     <h2>Votre projet reste possible, même s'il n'est pas encore dans votre budget</h2>
@@ -569,16 +601,53 @@
       <li><span class="num">05</span><span class="txt">Comment déterminer une enveloppe réaliste pour votre extérieur</span></li>
     </ul>
 
-    <div style="text-align:center; margin-top:34px">
+    <!-- La mention d'avis passe SOUS ce bouton (Lilian, 16/08/2026). Elle a quitté la fin
+         de la première série d'avis, où elle coupait l'enchaînement vers la seconde. -->
+    <div class="adv-cta" style="margin-top:34px">
       <a class="btn-black" href="#" id="btn-guide">
         <span class="btn-ligne">Comprendre le budget d'une pergola sur mesure
           <span class="btn-fleche">➱</span>
         </span>
         <span class="btn-gratuit">Envoyé par email, vous n'avez rien à ressaisir</span>
       </a>
+      <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
     </div>
   </div>
 </section>
+
+<!-- =========================================================
+         7. POURQUOI CHOISIR TECK AMÉNAGEMENT (3 bulles)
+         Bloc repris de pergola/page-accueil/index.html (remplace l'ancien
+         bloc parallax « Félicitations ! », dont on garde le bouton chevron).
+         ========================================================= -->
+    <section class="adv-section apple-font">
+        <h2 class="adv-ttl">Pourquoi choisir Teck Aménagement</h2>
+        <p class="adv-sub">3 raisons qui font toute la différence</p>
+        <div class="bubbles">
+            <div class="bubble b1">
+                <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 5l14 14M19 5 5 19M2 12h20"/></svg></div>
+                <h4>Plus de fraîcheur</h4>
+                <p>Un bois si dense qu'il bloque la transmission de la chaleur : nous avons mesuré 42°C en plein soleil contre 32°C sous la pergola.</p>
+            </div>
+            <div class="bubble b2">
+                <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h11a4 4 0 1 0-4-4M3 13h15a4 4 0 1 1-4 4M3 18h9"/></svg></div>
+                <h4>Plus d'esthétisme</h4>
+                <p>La couleur naturelle et la chaleur du bois se fondent dans votre décor, portées par une structure légère, épurée et aérée.</p>
+            </div>
+            <div class="bubble b3">
+                <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+                <h4>Plus de confort</h4>
+                <p>Vivez dehors sans rien entretenir : notre bois traverse les années et les intempéries sans se déformer, sans lasure et sans ponçage.</p>
+            </div>
+        </div>
+
+        <!-- Bouton conservé de l'ancien bloc parallax : remonte au Calendly. -->
+        <!-- Le CTA vers le Calendly a été RETIRÉ ici (Lilian, 16/08/2026), pour la même
+             raison que dans la section d'avis : sur cette page, la personne n'a pas
+             encore dit qu'elle pouvait investir. Lui proposer un rendez-vous avant sa
+             réponse court-circuiterait la question de capacité, qui est tout l'objet
+             de la page. -->
+        </section>
 
 <!-- ============================ AVIS ============================
      Section reprise TELLE QUELLE des pages de profil (Lilian, 16/08/2026), pour que
@@ -689,12 +758,8 @@
 
             </div>
 
-            <!-- Le bouton vers le Calendly a été RETIRÉ ici (Lilian, 16/08/2026) : sur cette
-                 page, la personne n'a pas encore dit qu'elle pouvait investir. La mention
-                 d'avis, elle, reste. -->
-            <div class="adv-cta" style="margin-top:44px;">
-                <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
-            </div>
+            <!-- Ni bouton ni mention d'avis ici : on enchaîne sur la suite des avis. -->
+
         </div>
     </div>
 
@@ -709,41 +774,9 @@
         pas encore répondu à la question de capacité.
      ========================================================= -->
 
-    <!-- =========================================================
-         5 bis. BANDEAU DEFILANT — réalisations
-         ========================================================= -->
-    <div style="background-color: #ffffff;" class="w-full">
-        <div class="scroll-container-story">
-            <div id="scroll-wrapper" class="animate-infinite-scroll-story gap-6">
-                <div class="story-card"><img src='https://i.postimg.cc/0jPjNN0N/1.jpg' alt='1'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/Xq4qvvk9/2.jpg' alt='2'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/0jnQKqVw/3.jpg' alt='3'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/qqwR6d1s/4.jpg' alt='4'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/vThBxd0n/5.jpg' alt='5'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/2yG6Lf0T/6.jpg' alt='6'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/NFDM2wdS/7.jpg' alt='7'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/sf41Np3j/8.jpg' alt='8'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/VsW5Vjzs/9.jpg' alt='9'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/c1B6bQdL/10.jpg' alt='10'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/Y2zjs1t0/11.jpg' alt='11'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/6Q6JhyTZ/0-Maison-R-Aix-10-Filter.jpg' alt='0-Maison-R-Aix-10-Filter'></div>
-
-                <div class="story-card"><img src='https://i.postimg.cc/0jPjNN0N/1.jpg' alt='1'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/Xq4qvvk9/2.jpg' alt='2'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/0jnQKqVw/3.jpg' alt='3'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/qqwR6d1s/4.jpg' alt='4'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/vThBxd0n/5.jpg' alt='5'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/2yG6Lf0T/6.jpg' alt='6'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/NFDM2wdS/7.jpg' alt='7'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/sf41Np3j/8.jpg' alt='8'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/VsW5Vjzs/9.jpg' alt='9'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/c1B6bQdL/10.jpg' alt='10'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/Y2zjs1t0/11.jpg' alt='11'></div>
-                <div class="story-card"><img src='https://i.postimg.cc/6Q6JhyTZ/0-Maison-R-Aix-10-Filter.jpg' alt='0-Maison-R-Aix-10-Filter'></div>
-            </div>
-        </div>
-    </div>
-
+    <!-- Le bandeau défilant de réalisations a été RETIRÉ (Lilian, 16/08/2026) : on
+         enchaîne directement de l'avis d'Adrienne Riera à celui de Karine Parra, sans
+         rupture entre les deux séries. -->
 
     <!-- =========================================================
          5 ter. AVIS CLIENTS (seconde serie)
@@ -831,39 +864,7 @@
         <!-- =========================================================
 
 
-    <!-- =========================================================
-         7. POURQUOI CHOISIR TECK AMÉNAGEMENT (3 bulles)
-         Bloc repris de pergola/page-accueil/index.html (remplace l'ancien
-         bloc parallax « Félicitations ! », dont on garde le bouton chevron).
-         ========================================================= -->
-    <section class="adv-section apple-font">
-        <h2 class="adv-ttl">Pourquoi choisir Teck Aménagement</h2>
-        <p class="adv-sub">3 raisons qui font toute la différence</p>
-        <div class="bubbles">
-            <div class="bubble b1">
-                <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 5l14 14M19 5 5 19M2 12h20"/></svg></div>
-                <h4>Plus de fraîcheur</h4>
-                <p>Un bois si dense qu'il bloque la transmission de la chaleur : nous avons mesuré 42°C en plein soleil contre 32°C sous la pergola.</p>
-            </div>
-            <div class="bubble b2">
-                <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h11a4 4 0 1 0-4-4M3 13h15a4 4 0 1 1-4 4M3 18h9"/></svg></div>
-                <h4>Plus d'esthétisme</h4>
-                <p>La couleur naturelle et la chaleur du bois se fondent dans votre décor, portées par une structure légère, épurée et aérée.</p>
-            </div>
-            <div class="bubble b3">
-                <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
-                <h4>Plus de confort</h4>
-                <p>Vivez dehors sans rien entretenir : notre bois traverse les années et les intempéries sans se déformer, sans lasure et sans ponçage.</p>
-            </div>
-        </div>
-
-        <!-- Bouton conservé de l'ancien bloc parallax : remonte au Calendly. -->
-        <!-- Le CTA vers le Calendly a été RETIRÉ ici (Lilian, 16/08/2026), pour la même
-             raison que dans la section d'avis : sur cette page, la personne n'a pas
-             encore dit qu'elle pouvait investir. Lui proposer un rendez-vous avant sa
-             réponse court-circuiterait la question de capacité, qui est tout l'objet
-             de la page. -->
-        </section>
+    
 
 
         <!-- =========================================================
@@ -888,38 +889,9 @@
 
 
 
-<!-- =========================================================
-         6. BLOC "Créez / Révolutionnez / Vivez"
-         ========================================================= -->
-    <section class="apple-font bloc-vivez">
-        <div class="max-w-6xl mx-auto px-6 md:px-4 py-16 md:py-24">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+<!-- Le bloc « Vivez » et son image ont été RETIRÉS (Lilian, 16/08/2026). -->
 
-                <!-- Colonne gauche : la carte « Vivez » + l'accroche.
-                     Les cartes « Créez » et « Révolutionnez » ont été SUPPRIMÉES par
-                     Lilian le 08/08/2026. Le texte restant n'a pas été retouché. -->
-                <div class="flex flex-col gap-5">
-                    <div class="bg-white rounded-[20px] p-6 shadow-[0_4px_15px_rgba(0,0,0,0.03)] reveal-left">
-                        <h3 class="text-[#0A1F44] text-[28px] md:text-[36px] leading-[40px] tracking-[-1px] font-semibold mb-2">Vivez</h3>
-                        <p class="text-[#0A1F44] text-[17px] md:text-[19px] leading-[28px] font-normal">Sous le confort d'une pergola qui vous procure une sensation de fraîcheur en plein été.</p>
-                    </div>
-
-                    <div class="text-center mt-3">
-                        <p class="text-black text-[20px] md:text-[24px] leading-[32px] md:leading-[40px] tracking-[-1px] font-semibold tw-typewriter">
-                            Nous ne concevons pas des pergolas.<br>
-                            Nous créons des <strong class="font-bold">expériences de vie extérieure</strong>.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Colonne droite : image (Maison Cabriès) — 410px / coins légèrement arrondis -->
-                <div class="w-full flex justify-center reveal-right">
-                    <img src="../561d79a-47b15060-85cc2f7b/images/ansart-ecd8001.jpg" alt="Réalisation Teck Aménagement - Villa Ansart" class="w-full max-w-[360px] md:max-w-[410px] h-auto rounded-[5px] object-cover">
-                </div>
-
-            </div>
-        </div>
-    </section>
+    
 
 
 
