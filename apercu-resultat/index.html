@@ -351,14 +351,29 @@
             font-size: 1.15em;
             line-height: 1;
             display: inline-block;
-            transform: translateY(0.06em);
+            /* 0.031em et pas une valeur à l'œil : mesuré au canvas, le centre d'encre de
+               ➱ tombe 0,54px au-dessus de celui du texte à 15px. C'est exactement ce
+               qu'il faut lui rendre. L'ancienne valeur (0.06em) le descendait deux fois
+               trop bas. */
+            transform: translateY(0.031em);
         }
         /* ESSAI DU 16/08/2026, profil Quotidien famille UNIQUEMENT : « Échangez avec
            Franck sur votre projet » fait onze caractères de plus que « Réserver mon appel
            offert ». Le bouton est en white-space: nowrap, il déborderait sur téléphone à
            16px. D'où un cran plus petit, et un cran de plus encore sous 420px. */
         .btn-appel.btn-libelle-long .btn-ligne { font-size: 15px; }
-        @media (max-width: 420px) { .btn-appel.btn-libelle-long .btn-ligne { font-size: 13.5px; } }
+        /* Le libellé long tient sur ordinateur mais pas sur téléphone (Lilian, 16/08/2026 :
+           « c'est top en soi, mais sur le téléphone ça fait trop long »). Deux libellés
+           cohabitent donc dans le bouton, un seul s'affiche à la fois. Le court garde ce
+           qui fait la force du long — le verbe « échanger » plutôt que « réserver », et le
+           prénom de Franck — et laisse tomber « sur votre projet », que la page vient de
+           dire trois fois. */
+        .btn-court { display: none; }
+        @media (max-width: 640px) {
+            .btn-appel.btn-libelle-long .btn-long { display: none; }
+            .btn-appel.btn-libelle-long .btn-court { display: inline; }
+            .btn-appel.btn-libelle-long .btn-ligne { font-size: 16px; }
+        }
 
         /* Bandeau de préqualification, pleine largeur, AVANT le hero. Il dit à qui
            s'adresse la suite. « réservé » et pas « destiné » : décision de Lilian du
@@ -478,7 +493,7 @@
             <div class="flex flex-col items-center">
                 <a href="reserver/" class="btn-black btn-appel js-reserver">
                     <span class="btn-ligne">Réserver mon appel offert
-                        <span class="btn-fleche">➣</span>
+                        <span class="btn-fleche">➱</span>
                     </span>
                     <span class="btn-gratuit">100% gratuit · sans engagement</span>
                 </a>
@@ -595,7 +610,7 @@
                  suit, comme sur la page d'accueil pergola. -->
             <div class="adv-cta" style="margin-top:56px;">
                 <a href="reserver/" class="btn-black btn-appel js-reserver"><span class="btn-ligne">Réserver mon appel offert
-                    <span class="btn-fleche">➣</span>
+                    <span class="btn-fleche">➱</span>
                 </span><span class="btn-gratuit">100% gratuit · sans engagement</span></a>
                 <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
             </div>
@@ -715,7 +730,7 @@
                  (demande Lilian, enregistrement du 15/08/2026 14h02). -->
             <div class="adv-cta" style="margin-top:40px;">
                 <a href="reserver/" class="btn-black btn-appel js-reserver"><span class="btn-ligne">Réserver mon appel offert
-                    <span class="btn-fleche">➣</span>
+                    <span class="btn-fleche">➱</span>
                 </span><span class="btn-gratuit">100% gratuit · sans engagement</span></a>
                 <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
             </div>
@@ -807,7 +822,7 @@
                  blanc de l'ancien bloc parallax : demande de Lilian du 08/08/2026. Il
                  remonte au Calendly au lieu d'ouvrir le quiz. -->
             <a href="reserver/" class="btn-black btn-appel js-reserver"><span class="btn-ligne">Réserver mon appel offert
-                <span class="btn-fleche">➣</span>
+                <span class="btn-fleche">➱</span>
             </span><span class="btn-gratuit">100% gratuit · sans engagement</span></a>
             <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
         </div>
@@ -1053,7 +1068,15 @@
             for (var i = 0; i < boutons.length; i++) {
                 var ligne = boutons[i].querySelector(".btn-ligne");
                 if (!ligne) continue;
-                ligne.childNodes[0].nodeValue = "Échangez avec Franck sur votre projet";
+                ligne.childNodes[0].nodeValue = "";
+                var lg = document.createElement("span");
+                lg.className = "btn-long";
+                lg.textContent = "Échangez avec Franck sur votre projet";
+                var ct = document.createElement("span");
+                ct.className = "btn-court";
+                ct.textContent = "Échanger avec Franck";
+                ligne.insertBefore(ct, ligne.firstChild);
+                ligne.insertBefore(lg, ligne.firstChild);
                 boutons[i].classList.add("btn-libelle-long");
             }
         }
@@ -1107,15 +1130,6 @@
         if (prenom) {
             var badge = document.getElementById("badge-felicitations");
             if (badge) badge.textContent = "Félicitations " + prenom + " !";
-        }
-
-        /* Deuxième flèche à l'essai (Lilian, 16/08/2026) : ?fleche=2 remplace ➣ par ➱
-           sur tous les boutons. Sans le paramètre, c'est ➣ qui est écrit dans le HTML.
-           Un simple paramètre plutôt que deux pages : la comparaison se fait en changeant
-           un caractère dans l'URL, sur exactement le même contenu. */
-        if (q.get("fleche") === "2") {
-            var fleches = document.querySelectorAll(".btn-fleche");
-            for (var f = 0; f < fleches.length; f++) fleches[f].textContent = "➱";
         }
 
         var suite = q.toString();
