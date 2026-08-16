@@ -68,17 +68,21 @@
   /* RYTHME DE COULEURS calqué sur les pages de profil : jamais deux fonds identiques à la
      suite, et des dégradés plutôt que des ruptures franches, sans quoi la couture se voit
      (retour de Lilian du 15/08/2026 sur la page de résultat). */
-  .page section{ padding: clamp(48px,7svh,86px) 0; }
-  .page section.douce{ background:linear-gradient(180deg,#ffffff 0%,#f8f8f8 30%,#f8f8f8 70%,#ffffff 100%); }
-  .page section.bleutee{ background:linear-gradient(180deg,#ffffff 0%,#EFF4FA 100%); }
-  .page section.bleutee-inv{ background:linear-gradient(180deg,#EFF4FA 0%,#ffffff 100%); }
-  .page h2{ font-size:26px; font-weight:500; letter-spacing:-.025em; line-height:1.2;
+  /* ⚠️ `.sect` = les sections écrites POUR cette page. Les blocs recopiés des pages de
+     profil n'ont pas cette classe, et c'est volontaire : sans ce cloisonnement, mes
+     règles de padding et de typographie écrasaient les leurs en gagnant d'un cran de
+     spécificité, et le bloc « Vivez » perdait par exemple son titre à 36px. */
+  .page section.sect{ padding: clamp(48px,7svh,86px) 0; }
+  .page section.sect.douce{ background:linear-gradient(180deg,#ffffff 0%,#f8f8f8 30%,#f8f8f8 70%,#ffffff 100%); }
+  .page section.sect.bleutee{ background:linear-gradient(180deg,#ffffff 0%,#EFF4FA 100%); }
+  .page section.sect.bleutee-inv{ background:linear-gradient(180deg,#EFF4FA 0%,#ffffff 100%); }
+  .page .bloc h2{ font-size:26px; font-weight:500; letter-spacing:-.025em; line-height:1.2;
       margin:0 0 18px; text-wrap:balance; color:var(--ink); }
-  @media (min-width:768px){ .page h2{ font-size:38px; } }
-  .page h3{ font-size:17px; font-weight:600; margin:0 0 8px; color:var(--ink); }
-  .page p{ font-size:16px; line-height:1.65; color:var(--gris); margin:0 0 16px; text-wrap:pretty; }
-  .page p:last-child{ margin-bottom:0; }
-  .page p b{ font-weight:600; color:var(--ink); }
+  @media (min-width:768px){ .page .bloc h2{ font-size:38px; } }
+  .page .bloc h3{ font-size:17px; font-weight:600; margin:0 0 8px; color:var(--ink); }
+  .page .bloc p{ font-size:16px; line-height:1.65; color:var(--gris); margin:0 0 16px; text-wrap:pretty; }
+  .page .bloc p:last-child{ margin-bottom:0; }
+  .page .bloc p b{ font-weight:600; color:var(--ink); }
   .page .mot-bleu{ color:var(--teck); }
   .page .centre{ text-align:center; }
   .page .centre p{ margin-left:auto; margin-right:auto; max-width:620px; }
@@ -230,8 +234,179 @@
   .rating .ystar { color:#FBBF24; font-size:1em; line-height:1; margin:0; }
   .rating .muted { font-weight:400; opacity:.85; }
 
-  .page footer{ padding:34px 0 44px; text-align:center; }
-  .page footer .mention{ font-size:12.5px; color:#9ca3af; }
+  /* Le footer est désormais celui des pages de profil, avec son propre style. */
+
+  /* ================================================== BAS DE PAGE
+     CSS repris TEL QUEL des pages de profil, pour les blocs recopiés le 16/08/2026 :
+     bandeau de réalisations, seconde série d'avis, « Pourquoi choisir », bandeau presse,
+     bloc « Vivez » et son texte à la machine à écrire.
+     ⚠️ Ne pas retoucher ces règles ici : elles doivent rester identiques à celles de
+        `apercu-resultat/index.html`, sinon les deux pages divergeront visuellement sans
+        que personne ne s'en aperçoive. */
+
+        /* Titre du hero : exactement la typo de .adv-ttl (demande de Lilian, 15/08/2026). */
+        /* 24px / 32px depuis le 16/08/2026, au lieu des 28/38 de .adv-ttl. Le titre
+           n'est plus une enseigne de quatre mots, c'est une PHRASE de quinze mots : à
+           38px elle prenait trois lignes et poussait le bouton hors de l'écran. Le poids
+           et l'interlettrage ne changent pas, la parenté avec la section « Pourquoi
+           choisir Teck Aménagement » reste lisible. */
+        .hero-ttl {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: -.02em;
+            line-height: 1.15;
+            color: #1D1D1F;
+            margin: 0 auto var(--gap-m);
+        }
+
+
+        /* ====== CARTES AVIS (bento) ====== */
+        .avis-1 .bento-card, .avis-2 .bento-card {
+            background: #FFFFFF !important;
+            border: 1px solid #D2D2D7;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .avis-2 .bento-card { border-color: #E5E7EB; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+
+        .avis-2 .bento-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+
+
+        /* ====== RYTHME DE COULEURS (demande Lilian, 08/08/2026) ======
+           Calqué sur la page d'avant-quiz : une longue plage grise (#f8f8f8) du VSL
+           jusqu'aux avis, un dégradé vers le blanc pour poser le bouton, le bandeau
+           presse en blanc, puis blanc -> bleu (#eff4fa) et bleu -> blanc, exactement
+           comme .proof-section et .adv-section de pergola/page-accueil. */
+        .avis-1 { background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 35%, #f8f8f8 52%, #ffffff 88%, #ffffff 100%); }
+
+        /* Le haut part du BLANC depuis le 15/08/2026 (demande de Lilian) : le hero finit
+           en blanc, la section enchaînait sur du gris franc et la couture se voyait. Le
+           gris ne s'installe donc qu'au fil du titre et de la première rangée d'avis (35%).
+           52% = le haut de la derniere rangee d'avis (mesure au navigateur), 88% = juste
+           avant le bouton, qui tombe a 93% : il se pose donc sur du blanc franc. */
+        /* Le bloc « Vivez » prend le dégradé blanc -> bleu de .proof-section. */
+        .bloc-vivez { background: linear-gradient(180deg, #ffffff 0%, #eff4fa 100%); }
+/* ====== BANDEAU DEFILANT (réalisations) ====== */
+        @keyframes scrollHorizontalStory {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-3648px); } /* 12 images x (280 + 24 gap) */
+        }
+        .animate-infinite-scroll-story {
+            display: flex;
+            width: max-content;
+            animation: scrollHorizontalStory 45s linear infinite;
+            will-change: transform;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .is-paused { animation-play-state: paused !important; }
+        .story-card {
+            width: 280px; height: 498px;
+            border-radius: 20px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: #eee;
+            border: none;
+        }
+        .story-card img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+            border-radius: 20px;
+            pointer-events: none;
+        }
+        .scroll-container-story { position: relative; width: 100%; overflow: hidden; padding: 20px 0 20px 0; }
+
+        /* La VSL avait sa propre section entre le hero et le Calendly. Depuis le
+           15/08/2026 elle vit DANS le hero (règles .hero-video plus bas), le CSS de
+           l'ancienne section est donc supprimé. */
+
+        /* ====== BANDEAU PRESSE (bloc 3) ======
+           Repris tel quel de pergola/page-accueil/index.html (marquee gauche -> droite). */
+        .marquee { overflow: hidden; width: 100%; }
+
+        .mq-track { display: flex; width: max-content; gap: 16px; align-items: center; }
+
+        .mq-right { animation: scrollRight 40s linear infinite; }
+
+        .marquee:hover .mq-track { animation-play-state: paused; }
+
+
+        .press-section { background: #fff; padding: 32px 0 56px; }
+
+        .press-ttl { text-align: center; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #0653A8; font-weight: 600; margin-bottom: 34px; }
+
+        /* Bandeau resserré (≈ largeur du titre) + fondu sur les bords → 4-5 logos visibles */
+        .press-section .marquee { max-width: 780px; margin: 0 auto;
+            -webkit-mask-image: linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%);
+            mask-image: linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%); }
+
+        .press-track { gap: 52px; align-items: center; padding: 0 25px; }
+
+        .press-track img { width: auto; object-fit: contain; display: block; mix-blend-mode: multiply; flex-shrink: 0; }
+
+        .press-track .elle { height: 52px; }
+
+        .press-track .cotesud { height: 54px; }
+
+        .press-track .ideat { height: 50px; }
+
+        .press-track .cotemag { height: 40px; }
+
+        .press-track .ab { height: 60px; }
+
+        .press-track .anous { height: 42px; }
+
+        .press-track .artdeco { height: 42px; }
+
+        .press-logotext { font-family: 'Playfair Display', Georgia, serif; font-size: 36px; font-weight: 700; color: #1D1D1F; line-height: 1; white-space: nowrap; }
+
+
+        /* ====== 3 AVANTAGES — « Pourquoi choisir Teck Aménagement » (bloc 7) ======
+           Repris tel quel de pergola/page-accueil/index.html. */
+        .adv-section { position: relative; background: linear-gradient(180deg,#EFF4FA 0%,#FFFFFF 88%); padding: 64px 22px 70px; overflow: hidden; }
+
+        .adv-ttl { text-align: center; font-size: 28px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 8px; color: #1D1D1F; }
+@media (min-width: 768px) { .adv-ttl { font-size: 38px; } }
+
+        .adv-sub { text-align: center; color: #86868B; font-size: 14px; margin-bottom: 40px; }
+/* Sur mobile, le titre était trop bas : on récupère 32px au-dessus (Lilian, 15/08). */
+        @media (max-width: 767px) { .adv-section { padding-top: 32px; } .adv-sub { margin-bottom: 28px; } }
+        .bubbles { position: relative; max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+        .bubble { background: #fff; border: 1px solid #E4E8EC; border-radius: 26px; padding: 26px 24px; text-align: center; box-shadow: 0 12px 40px rgba(10,61,92,.08); }
+        .bubble .ico { width: 54px; height: 54px; border-radius: 16px; background: #E6F1FA; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
+        .bubble h4 { font-size: 17px; font-weight: 600; margin: 0 0 6px; }
+        .bubble p { font-size: 13.5px; color: #6b7780; line-height: 1.5; margin: 0; }
+        /* Animation flottante des bulles sur MOBILE (équivalent du desktop) */
+        .bubble.b1 { animation: floatM 6s ease-in-out infinite; }
+
+        .bubble.b2 { animation: floatM 7s ease-in-out infinite .5s; }
+
+        .bubble.b3 { animation: floatM 8s ease-in-out infinite 1s; }
+@media (min-width: 768px) {
+            .bubbles { display: block; min-height: 360px; }
+            .bubble { position: absolute; width: 300px; }
+            .bubble.b1 { left: 0; top: 30px; animation: float1 7s ease-in-out infinite; }
+            .bubble.b2 { right: 0; top: 0; animation: float2 8s ease-in-out infinite; }
+            .bubble.b3 { left: 50%; top: 170px; animation: float3 9s ease-in-out infinite; }
+        }
+
+
+        /* CTA + mention d'avis sous les 3 cartes */
+        .adv-cta { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 40px; }
+/* Sur desktop les bulles sont en absolu : la b3 déborde de ~45px sous .bubbles
+           (min-height 360px), il faut donc dégager le CTA pour éviter le chevauchement. */
+        @media (min-width: 768px) { .adv-cta { margin-top: 100px; } }
+        /* Bouton NOIR repris tel quel de pergola/page-accueil (.btn-black du bloc CTA bas). */
+        .btn-black { display: inline-flex; align-items: center; gap: 10px; background: #000; color: #fff;
+            border: none; border-radius: 14px; padding: 16px 34px; font-size: 16px; font-weight: 600; cursor: pointer;
+            text-decoration: none; transition: transform .35s cubic-bezier(.175,.885,.32,1.275), box-shadow .35s; }
 </style>
 </head>
 <body class="page">
@@ -251,7 +426,7 @@
 </header>
 
 <!-- ================== POURQUOI CET INVESTISSEMENT ================== -->
-<section class="douce">
+<section class="sect douce">
   <div class="bloc large centre">
     <span class="surtitre">Ce qui fait le prix</span>
     <h2>Une pergola sur mesure est un investissement pensé pour durer</h2>
@@ -295,7 +470,7 @@
 </section>
 
 <!-- ===================== REPOSITIONNEMENT ===================== -->
-<section class="bleutee">
+<section class="sect bleutee">
   <div class="bloc centre">
     <span class="surtitre">Ce que cela veut dire</span>
     <h2>Cela ne veut pas dire que votre projet est <span class="mot-bleu">irréalisable</span></h2>
@@ -307,7 +482,7 @@
 </section>
 
 <!-- ======================== L'ESTIMATION ======================== -->
-<section class="bleutee-inv">
+<section class="sect bleutee-inv">
   <div class="bloc centre">
     <span class="surtitre">Votre estimation</span>
     <h2>Estimons ensemble l'enveloppe que votre projet demande</h2>
@@ -327,7 +502,7 @@
 </section>
 
 <!-- ==================== LA QUESTION DE CAPACITÉ ==================== -->
-<section class="douce">
+<section class="sect douce">
   <div class="bloc centre">
     <span class="surtitre">Une seule question</span>
     <h2>Est-ce une enveloppe que vous seriez en mesure d'envisager si le projet correspond
@@ -363,7 +538,7 @@
 </section>
 
 <!-- ========================== LE GUIDE ========================== -->
-<section id="le-guide" class="bleutee">
+<section id="le-guide" class="sect bleutee">
   <div class="bloc centre">
     <span class="surtitre">Pour aller plus loin</span>
     <h2>Votre projet reste possible, même s'il n'est pas encore dans votre budget</h2>
@@ -523,11 +698,240 @@
         </div>
     </div>
 
-<footer>
-  <div class="bloc">
-    <p class="mention">Teck Aménagement · Pergola, terrasse et mobilier en bois exotique</p>
-  </div>
-</footer>
+<!-- =========================================================
+     LE BAS DE PAGE, repris des pages de profil (Lilian, 16/08/2026), dans l'ordre
+     qu'il a donné : bandeau de réalisations, les quatre derniers avis, « Pourquoi
+     choisir Teck Aménagement », « Vu dans la presse », le bloc « Vivez » avec son
+     texte à la machine à écrire, puis le vrai footer.
+     ⚠️ Cet ordre n'est PAS celui de la page de résultat : « Pourquoi choisir » y passe
+        avant la presse, et « Vivez » y ferme la page. C'est voulu.
+     ⚠️ Tous les CTA vers le Calendly ont été retirés. Sur cette page, la personne n'a
+        pas encore répondu à la question de capacité.
+     ========================================================= -->
+
+    <!-- =========================================================
+         5 bis. BANDEAU DEFILANT — réalisations
+         ========================================================= -->
+    <div style="background-color: #ffffff;" class="w-full">
+        <div class="scroll-container-story">
+            <div id="scroll-wrapper" class="animate-infinite-scroll-story gap-6">
+                <div class="story-card"><img src='https://i.postimg.cc/0jPjNN0N/1.jpg' alt='1'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Xq4qvvk9/2.jpg' alt='2'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/0jnQKqVw/3.jpg' alt='3'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/qqwR6d1s/4.jpg' alt='4'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/vThBxd0n/5.jpg' alt='5'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/2yG6Lf0T/6.jpg' alt='6'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/NFDM2wdS/7.jpg' alt='7'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/sf41Np3j/8.jpg' alt='8'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/VsW5Vjzs/9.jpg' alt='9'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/c1B6bQdL/10.jpg' alt='10'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Y2zjs1t0/11.jpg' alt='11'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/6Q6JhyTZ/0-Maison-R-Aix-10-Filter.jpg' alt='0-Maison-R-Aix-10-Filter'></div>
+
+                <div class="story-card"><img src='https://i.postimg.cc/0jPjNN0N/1.jpg' alt='1'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Xq4qvvk9/2.jpg' alt='2'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/0jnQKqVw/3.jpg' alt='3'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/qqwR6d1s/4.jpg' alt='4'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/vThBxd0n/5.jpg' alt='5'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/2yG6Lf0T/6.jpg' alt='6'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/NFDM2wdS/7.jpg' alt='7'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/sf41Np3j/8.jpg' alt='8'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/VsW5Vjzs/9.jpg' alt='9'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/c1B6bQdL/10.jpg' alt='10'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/Y2zjs1t0/11.jpg' alt='11'></div>
+                <div class="story-card"><img src='https://i.postimg.cc/6Q6JhyTZ/0-Maison-R-Aix-10-Filter.jpg' alt='0-Maison-R-Aix-10-Filter'></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- =========================================================
+         5 ter. AVIS CLIENTS (seconde serie)
+         ========================================================= -->
+    <div class="avis-2 apple-font bg-white pt-12 pb-24 px-6 md:px-4">
+        <div class="max-w-6xl mx-auto">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
+
+                <!-- Toujours visible, jamais animée (demande Lilian 15/08/2026) : c'est
+                     la carte qui ouvre la seconde série, elle ne doit pas se faire attendre. -->
+                <div class="md:col-span-3 bento-card sans-animation rounded-[3rem] overflow-hidden">
+                    <div class="img-container h-64 md:h-[450px]">
+                        <img src="https://i.postimg.cc/NfY6B3cZ/karine-gvt-61.jpg" alt="Réalisation Teck Aménagement - Karine Parra">
+                    </div>
+                    <div class="p-8 md:p-16">
+                        <div class="stars-container text-[#0653A8] text-sm">★★★★★</div>
+                        <h3 class="text-[#1D1D1F] text-3xl md:text-4xl font-medium mb-6">"Super produit, confort incroyable, design moderne et intemporel"</h3>
+                        <p class="text-[#424245] text-lg font-light leading-relaxed mb-10 italic max-w-4xl mx-auto">
+                            "Foncez les yeux fermés, en plus d'un professionnalisme et d'un savoir faire au rendez-vous ce qui est très rare!"
+                        </p>
+                        <div class="flex items-center justify-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-xs font-bold">KP</div>
+                            <div class="text-left">
+                                <p class="text-[#1D1D1F] font-medium text-base">Karine Parra</p>
+                                <p class="text-[#86868B] text-sm">Marseille</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-[2rem] p-8 justify-center">
+                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                    <p class="text-[#424245] text-sm font-light italic leading-relaxed mb-8">
+                        "Des professionnels, des vrais ! Je recommande les yeux fermés, cette entreprise. <span class="text-[#1D1D1F] font-medium">Si tous les artisans étaient aussi sérieux, la France se porterait tellement mieux !</span> Encore merci, le résultat est superbe."
+                    </p>
+                    <div class="flex items-center justify-center gap-3 mt-auto">
+                        <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">SE</div>
+                        <div class="text-left">
+                            <p class="text-[#1D1D1F] font-medium text-xs">Sébastien & Ellena</p>
+                            <p class="text-[#86868B] text-[10px]">Salon-de-Provence</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-[2rem] p-8 justify-center">
+                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                    <p class="text-[#424245] text-sm font-light italic leading-relaxed mb-8">
+                        "Nous recommandons vivement l'entreprise Teck Amenagement son directeur Mr Joncheray Franck et toute son équipe. Les conseils, l'expérience, l'écoute, tout est au rdv. <span class="text-[#1D1D1F] font-medium">Il est rare de rencontrer des artisans autant impliqués dans la recherche de la perfection.</span>"
+                    </p>
+                    <div class="flex items-center justify-center gap-3 mt-auto">
+                        <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">V</div>
+                        <div class="text-left">
+                            <p class="text-[#1D1D1F] font-medium text-xs">Véro</p>
+                            <p class="text-[#86868B] text-[10px]">Velaux</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card rounded-[2rem] p-8 justify-center">
+                    <div class="stars-container text-[#0653A8] text-xs">★★★★★</div>
+                    <p class="text-[#424245] text-sm font-light italic leading-relaxed mb-8">
+                        "Teck Amenagement propose un conseil et un produit fini de grande qualité, adapté au besoin, au contraintes. Le design est magnifique et <span class="text-[#1D1D1F] font-medium">la sensation sous la pergola vraiment très agréable. Je recommande vivement.</span>"
+                    </p>
+                    <div class="flex items-center justify-center gap-3 mt-auto">
+                        <div class="w-8 h-8 rounded-full bg-[#F5F5F7] border border-[#E5E7EB] flex items-center justify-center text-[#0653A8] text-[9px] font-bold">DB</div>
+                        <div class="text-left">
+                            <p class="text-[#1D1D1F] font-medium text-xs">Didier Brother</p>
+                            <p class="text-[#86868B] text-[10px]">Sainte-Maxime</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Le second CTA vers le Calendly a été RETIRÉ ici aussi (Lilian, 16/08/2026).
+                 Sur cette page, aucun bouton ne doit proposer un rendez-vous avant que la
+                 personne ait répondu à la question de capacité. La mention d'avis reste. -->
+            <div class="adv-cta" style="margin-top:40px;">
+                <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
+            </div>
+        </div>
+    </div>
+
+        <!-- =========================================================
+
+
+    <!-- =========================================================
+         7. POURQUOI CHOISIR TECK AMÉNAGEMENT (3 bulles)
+         Bloc repris de pergola/page-accueil/index.html (remplace l'ancien
+         bloc parallax « Félicitations ! », dont on garde le bouton chevron).
+         ========================================================= -->
+    <section class="adv-section apple-font">
+        <h2 class="adv-ttl">Pourquoi choisir Teck Aménagement</h2>
+        <p class="adv-sub">3 raisons qui font toute la différence</p>
+        <div class="bubbles">
+            <div class="bubble b1">
+                <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 5l14 14M19 5 5 19M2 12h20"/></svg></div>
+                <h4>Plus de fraîcheur</h4>
+                <p>Un bois si dense qu'il bloque la transmission de la chaleur : nous avons mesuré 42°C en plein soleil contre 32°C sous la pergola.</p>
+            </div>
+            <div class="bubble b2">
+                <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h11a4 4 0 1 0-4-4M3 13h15a4 4 0 1 1-4 4M3 18h9"/></svg></div>
+                <h4>Plus d'esthétisme</h4>
+                <p>La couleur naturelle et la chaleur du bois se fondent dans votre décor, portées par une structure légère, épurée et aérée.</p>
+            </div>
+            <div class="bubble b3">
+                <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0653A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+                <h4>Plus de confort</h4>
+                <p>Vivez dehors sans rien entretenir : notre bois traverse les années et les intempéries sans se déformer, sans lasure et sans ponçage.</p>
+            </div>
+        </div>
+
+        <!-- Bouton conservé de l'ancien bloc parallax : remonte au Calendly. -->
+        <!-- Le CTA vers le Calendly a été RETIRÉ ici (Lilian, 16/08/2026), pour la même
+             raison que dans la section d'avis : sur cette page, la personne n'a pas
+             encore dit qu'elle pouvait investir. Lui proposer un rendez-vous avant sa
+             réponse court-circuiterait la question de capacité, qui est tout l'objet
+             de la page. -->
+        </section>
+
+
+        <!-- =========================================================
+         5 quater. VU DANS LA PRESSE (marquee gauche -> droite)
+         Bloc repris de pergola/page-accueil/index.html.
+         ========================================================= -->
+    <section class="press-section">
+        <div class="press-ttl">Vu dans la presse</div>
+        <div class="marquee">
+            <div class="mq-track mq-right press-track" id="pressTrack">
+                <img class="artdeco" src="../561d79a-47b15060-85cc2f7b/images/presse/art-decoration.png" alt="Art&Décoration">
+                <img class="elle" src="../561d79a-47b15060-85cc2f7b/images/presse/elle-decoration.png" alt="Elle Décoration">
+                <img class="cotesud" src="../561d79a-47b15060-85cc2f7b/images/presse/cote-sud.png" alt="Maisons Côté Sud">
+                <img class="ideat" src="../561d79a-47b15060-85cc2f7b/images/presse/ideat.png" alt="IDEAT">
+                <img class="cotemag" src="../561d79a-47b15060-85cc2f7b/images/presse/cote-magazine.png" alt="Côté Magazine">
+                <img class="ab" src="../561d79a-47b15060-85cc2f7b/images/presse/architecture-bois.png" alt="Architecture Bois">
+                <img class="anous" src="../561d79a-47b15060-85cc2f7b/images/presse/anous.png" alt="ANous Aix Marseille">
+                <span class="press-logotext" style="font-weight:600;">Décoration</span>
+            </div>
+        </div>
+    </section>
+
+
+
+<!-- =========================================================
+         6. BLOC "Créez / Révolutionnez / Vivez"
+         ========================================================= -->
+    <section class="apple-font bloc-vivez">
+        <div class="max-w-6xl mx-auto px-6 md:px-4 py-16 md:py-24">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+
+                <!-- Colonne gauche : la carte « Vivez » + l'accroche.
+                     Les cartes « Créez » et « Révolutionnez » ont été SUPPRIMÉES par
+                     Lilian le 08/08/2026. Le texte restant n'a pas été retouché. -->
+                <div class="flex flex-col gap-5">
+                    <div class="bg-white rounded-[20px] p-6 shadow-[0_4px_15px_rgba(0,0,0,0.03)] reveal-left">
+                        <h3 class="text-[#0A1F44] text-[28px] md:text-[36px] leading-[40px] tracking-[-1px] font-semibold mb-2">Vivez</h3>
+                        <p class="text-[#0A1F44] text-[17px] md:text-[19px] leading-[28px] font-normal">Sous le confort d'une pergola qui vous procure une sensation de fraîcheur en plein été.</p>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <p class="text-black text-[20px] md:text-[24px] leading-[32px] md:leading-[40px] tracking-[-1px] font-semibold tw-typewriter">
+                            Nous ne concevons pas des pergolas.<br>
+                            Nous créons des <strong class="font-bold">expériences de vie extérieure</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Colonne droite : image (Maison Cabriès) — 410px / coins légèrement arrondis -->
+                <div class="w-full flex justify-center reveal-right">
+                    <img src="../561d79a-47b15060-85cc2f7b/images/ansart-ecd8001.jpg" alt="Réalisation Teck Aménagement - Villa Ansart" class="w-full max-w-[360px] md:max-w-[410px] h-auto rounded-[5px] object-cover">
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- =========================================================
+         8. FOOTER
+         ========================================================= -->
+    <footer class="apple-font" style="background-color:#ffffff;">
+        <div class="max-w-4xl mx-auto px-4 pt-8 pb-4 text-center">
+            <img src="../561d79a-47b15060-85cc2f7b/images/logo-teck.png" alt="Teck Aménagement — Pergola, terrasse, mobilier en bois exotique" class="mx-auto w-full max-w-[334px] md:max-w-[540px] h-auto mb-2">
+            <p class="text-[13px] text-black"><a href="https://teckamenagement.fr/mentions-legales/" class="text-black italic">Politique de confidentialité</a> <span class="text-[#C7C7CC]">·</span> © Teck Aménagement. Tous droits réservés.</p>
+        </div>
+    </footer>
 
 <script>
 /* ------------------------------------------------------------------ CALCUL
@@ -670,6 +1074,141 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(caler);
 })();
 </script>
+
+
+<!-- =========================================================
+     Les scripts des blocs recopiés, repris tels quels des pages de profil :
+       · le bandeau presse se duplique pour boucler sans couture ;
+       · le bandeau de réalisations se met en pause au survol ;
+       · les apparitions au défilement et le texte à la machine à écrire.
+     ⚠️ Ils sont écrits pour ne rien faire quand leur bloc est absent (garde `if (!t)
+        return`), donc sans danger si un bloc est retiré plus tard.
+     ========================================================= -->
+<script>
+        (function () {
+            var t = document.getElementById('pressTrack');
+            if (!t) return;
+            [].slice.call(t.children).forEach(function (node) { t.appendChild(node.cloneNode(true)); });
+        })();
+    </script>
+<script>
+        (function () {
+            const scrollWrapper = document.getElementById('scroll-wrapper');
+            if (!scrollWrapper) return;
+            let timer;
+            const handlePause = () => {
+                clearTimeout(timer);
+                scrollWrapper.classList.add('is-paused');
+                timer = setTimeout(() => scrollWrapper.classList.remove('is-paused'), 1500);
+            };
+            scrollWrapper.addEventListener('click', handlePause);
+            scrollWrapper.addEventListener('touchend', handlePause);
+        })();
+    </script>
+<script>
+        (function () {
+            var reduce  = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var reveals = document.querySelectorAll('.reveal-left, .reveal-right');
+
+            // Les avis et les deux boutons noirs apparaissent l'un après l'autre.
+            // On les marque en JS plutôt que dans le HTML : les cartes viennent de
+            // deux sections différentes et on ne veut pas les toucher une par une.
+            var sequences = document.querySelectorAll('.avis-1, .avis-2');
+            for (var s = 0; s < sequences.length; s++) {
+                var elements = sequences[s].querySelectorAll('.bento-card:not(.sans-animation), .adv-cta');
+                // Le décalage se calcule par RANGÉE RÉELLE, pas tous les trois éléments :
+                // la grille des avis n'a pas toujours trois colonnes. Deux cartes dont le
+                // haut coïncide sont sur la même ligne, la seconde attend son tour.
+                var hautDeLaRangee = null;
+                var rang = 0;
+                for (var e = 0; e < elements.length; e++) {
+                    var haut = Math.round(elements[e].getBoundingClientRect().top);
+                    if (hautDeLaRangee === null || Math.abs(haut - hautDeLaRangee) > 40) {
+                        hautDeLaRangee = haut;
+                        rang = 0;
+                    } else {
+                        rang++;
+                    }
+                    elements[e].classList.add('reveal-avis');
+                    elements[e].style.setProperty('--retard', rang * 260 + 'ms');
+                }
+            }
+            var avis = document.querySelectorAll('.reveal-avis');
+            if (!('IntersectionObserver' in window) || reduce) {
+                for (var a = 0; a < avis.length; a++) avis[a].classList.add('reveal-in');
+            } else {
+                var oeil = new IntersectionObserver(function (entrees) {
+                    for (var k = 0; k < entrees.length; k++) {
+                        if (entrees[k].isIntersecting) {
+                            entrees[k].target.classList.add('reveal-in');
+                            oeil.unobserve(entrees[k].target);
+                        }
+                    }
+                }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+                for (var b = 0; b < avis.length; b++) oeil.observe(avis[b]);
+            }
+            var typers  = document.querySelectorAll('.tw-typewriter');
+
+            if (!('IntersectionObserver' in window) || reduce) {
+                for (var i = 0; i < reveals.length; i++) reveals[i].classList.add('reveal-in');
+                return; // texte machine à écrire laissé tel quel, déjà lisible
+            }
+
+            // 1) Glissement gauche / droite au scroll
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) { e.target.classList.add('reveal-in'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.2 });
+            for (var j = 0; j < reveals.length; j++) io.observe(reveals[j]);
+
+            // 2) Effet machine à écrire (préserve <br> et <strong>)
+            var SPEED = 34; // ms par caractère
+            function clearEl(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+            function typeNodes(list, parent, done) {
+                var i = 0;
+                (function step() {
+                    if (i >= list.length) { done(); return; }
+                    var node = list[i++];
+                    if (node.nodeType === 3) {
+                        var full = node.nodeValue, c = 0, tn = document.createTextNode('');
+                        parent.appendChild(tn);
+                        (function typeChar() {
+                            if (c < full.length) { tn.nodeValue += full.charAt(c++); setTimeout(typeChar, SPEED); }
+                            else step();
+                        })();
+                    } else if (node.nodeName === 'BR') {
+                        parent.appendChild(document.createElement('br')); step();
+                    } else {
+                        var clone = node.cloneNode(false);
+                        parent.appendChild(clone);
+                        typeNodes(Array.prototype.slice.call(node.childNodes), clone, step);
+                    }
+                })();
+            }
+            for (var k = 0; k < typers.length; k++) {
+                (function (el) {
+                    var saved = Array.prototype.slice.call(el.childNodes).map(function (n) { return n.cloneNode(true); });
+                    el.style.minHeight = el.offsetHeight + 'px'; // réserve la place, évite le saut de mise en page
+                    clearEl(el);
+                    var started = false;
+                    var twIO = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (e) {
+                            if (e.isIntersecting && !started) {
+                                started = true;
+                                twIO.unobserve(e.target);
+                                setTimeout(function () {
+                                    el.classList.add('tw-typing');
+                                    typeNodes(saved, el, function () { el.classList.remove('tw-typing'); });
+                                }, 150); // court délai avant de taper
+                            }
+                        });
+                    }, { threshold: 0.6 });
+                    twIO.observe(el);
+                })(typers[k]);
+            }
+        })();
+    </script>
 
 </body>
 </html>

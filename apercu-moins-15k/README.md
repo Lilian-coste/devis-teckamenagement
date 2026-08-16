@@ -31,8 +31,36 @@ Elle ne dit pas non, elle **ré-ancre**. Le prospect qui déclare un budget bas 
 qu'il peut investir, il dit ce qu'il croyait que ça coûtait. La page transforme donc un
 budget déclaré en compréhension du budget nécessaire, puis pose une question de **capacité**.
 
-Sept sections : hero, pourquoi cet investissement, repositionnement, estimation, la question
-de capacité avec ses deux chemins, le guide, les avis.
+Sections, dans l'ordre :
+
+1. Hero
+2. Ce qui fait le prix
+3. Repositionnement
+4. L'estimation
+5. La question de capacité, avec ses deux chemins
+6. Le guide
+7. « Nos clients parlent de nous », première série
+8. Le bandeau de réalisations
+9. Les quatre derniers avis
+10. « Pourquoi choisir Teck Aménagement »
+11. « Vu dans la presse »
+12. Le bloc « Vivez » et son texte à la machine à écrire
+13. Le footer
+
+Les sections 7 à 13 sont reprises TELLES QUELLES des pages de profil, CSS et scripts
+compris. ⚠️ Leur ORDRE n'est pas celui de la page de résultat : « Pourquoi choisir » y passe
+avant la presse, et « Vivez » ferme la page. C'est la demande de Lilian du 16/08/2026.
+
+⚠️ **Tous les CTA vers le Calendly ont été retirés** (il y en avait trois). Sur cette page,
+aucun bouton ne doit proposer un rendez-vous avant que la personne ait répondu à la question
+de capacité : ce serait court-circuiter tout l'objet de la page. Les mentions 4,9 ★/5 sur
++140 avis, elles, restent.
+
+⚠️ **Les sections écrites pour cette page portent la classe `sect`**, et leur typographie est
+cloisonnée sous `.bloc`. Sans ce cloisonnement, mes règles écrasaient celles des blocs
+recopiés en gagnant d'un cran de spécificité : le titre du bloc « Vivez » tombait de 36 à
+17px. Vérifié : les neuf mesures typographiques des blocs recopiés sont identiques au pixel
+sur les deux pages.
 
 Le chemin « oui » redirige vers la page de profil en emportant les paramètres. Le chemin
 « non » ne quitte pas la page, il descend au guide.
