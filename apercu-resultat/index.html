@@ -432,7 +432,7 @@
 
             <!-- VSL — vidéo PROVISOIRE (Villa Impian) en attendant le tournage de la vraie
                  VSL par Franck. À remplacer, même chemin, même nom. -->
-            <video class="hero-video" controls playsinline preload="metadata" src="../561d79a-47b15060-85cc2f7b/videos/vsl-provisoire-villa-impian.mp4"></video>
+            <video class="hero-video" controls playsinline preload="metadata" src="video/vsl-provisoire.mp4"></video>
 
             <div class="flex flex-col items-center">
                 <a href="reserver/" class="btn-black btn-appel js-reserver">
@@ -1001,7 +1001,13 @@
 
         function caler() {
             var largeur = video.getBoundingClientRect().width;
-            if (largeur > 0) bulle.style.setProperty("--largeur-video", largeur + "px");
+            /* Garde-fou : une vidéo qui ne charge pas (404, format refusé) laisse un
+               lecteur effondré de quelques pixels. Sans ce seuil, le titre et le texte se
+               calaient dessus et la page devenait illisible — c'est arrivé en ligne le
+               16/08/2026. En dessous de 200px on ne touche à rien : le texte garde sa
+               pleine largeur et la page reste lisible même sans vidéo. */
+            if (largeur >= 200) bulle.style.setProperty("--largeur-video", largeur + "px");
+            else bulle.style.removeProperty("--largeur-video");
         }
 
         caler();
