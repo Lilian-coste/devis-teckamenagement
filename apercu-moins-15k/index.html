@@ -439,6 +439,21 @@
 @keyframes float3 { 0%,100% { transform: translate(-50%,0); } 50% { transform: translate(-50%,-16px); } }
 @keyframes floatM { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 @keyframes scrollRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+  /* ---------------------------------------------- RÉGLAGES D'ESPACE (Lilian, 16/08/2026)
+     Ces trois valeurs écrasent volontairement celles reprises des pages de profil : sur
+     cette page-ci, « Pourquoi choisir » n'a plus la même chose au-dessus ni en dessous. */
+
+  /* Le titre « Pourquoi choisir » remonte : 64 → 40px de marge haute sur ordinateur,
+     32 → 18 sur téléphone. */
+  .page .adv-section{ padding-top:40px; }
+  @media (max-width:767px){ .page .adv-section{ padding-top:18px; } }
+
+  /* Et « Nos clients / Parlent de nous » respire davantage : la bulle la plus basse de
+     « Pourquoi choisir » descend jusqu'à ras du titre, les deux se touchaient presque.
+     `pt-2` de Tailwind (8px) laisse la place à 56px, 36 sur téléphone. */
+  .page .avis-1{ padding-top:56px; }
+  @media (max-width:767px){ .page .avis-1{ padding-top:36px; } }
 </style>
 </head>
 <body class="page">
@@ -779,6 +794,26 @@
          rupture entre les deux séries. -->
 
     <!-- =========================================================
+         5 quater. VU DANS LA PRESSE (marquee gauche -> droite)
+         Bloc repris de pergola/page-accueil/index.html.
+         ========================================================= -->
+    <section class="press-section">
+        <div class="press-ttl">Vu dans la presse</div>
+        <div class="marquee">
+            <div class="mq-track mq-right press-track" id="pressTrack">
+                <img class="artdeco" src="../561d79a-47b15060-85cc2f7b/images/presse/art-decoration.png" alt="Art&Décoration">
+                <img class="elle" src="../561d79a-47b15060-85cc2f7b/images/presse/elle-decoration.png" alt="Elle Décoration">
+                <img class="cotesud" src="../561d79a-47b15060-85cc2f7b/images/presse/cote-sud.png" alt="Maisons Côté Sud">
+                <img class="ideat" src="../561d79a-47b15060-85cc2f7b/images/presse/ideat.png" alt="IDEAT">
+                <img class="cotemag" src="../561d79a-47b15060-85cc2f7b/images/presse/cote-magazine.png" alt="Côté Magazine">
+                <img class="ab" src="../561d79a-47b15060-85cc2f7b/images/presse/architecture-bois.png" alt="Architecture Bois">
+                <img class="anous" src="../561d79a-47b15060-85cc2f7b/images/presse/anous.png" alt="ANous Aix Marseille">
+                <span class="press-logotext" style="font-weight:600;">Décoration</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
          5 ter. AVIS CLIENTS (seconde serie)
          ========================================================= -->
     <div class="avis-2 apple-font bg-white pt-12 pb-24 px-6 md:px-4">
@@ -852,10 +887,18 @@
 
             </div>
 
-            <!-- Le second CTA vers le Calendly a été RETIRÉ ici aussi (Lilian, 16/08/2026).
-                 Sur cette page, aucun bouton ne doit proposer un rendez-vous avant que la
-                 personne ait répondu à la question de capacité. La mention d'avis reste. -->
+            <!-- Le CTA vers le Calendly a été retiré : sur cette page, aucun bouton ne doit
+                 proposer un rendez-vous avant que la personne ait répondu à la question de
+                 capacité. À sa place, le bouton du GUIDE (Lilian, 16/08/2026), qui ferme la
+                 page sur la seule action qu'on peut lui proposer ici. Il pointe vers la
+                 section du guide, plus haut, où le bouton d'origine attend. -->
             <div class="adv-cta" style="margin-top:40px;">
+                <a class="btn-black" href="#le-guide">
+                    <span class="btn-ligne">Comprendre le budget d'une pergola sur mesure
+                        <span class="btn-fleche">➱</span>
+                    </span>
+                    <span class="btn-gratuit">Envoyé par email, vous n'avez rien à ressaisir</span>
+                </a>
                 <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
             </div>
         </div>
@@ -867,25 +910,7 @@
     
 
 
-        <!-- =========================================================
-         5 quater. VU DANS LA PRESSE (marquee gauche -> droite)
-         Bloc repris de pergola/page-accueil/index.html.
-         ========================================================= -->
-    <section class="press-section">
-        <div class="press-ttl">Vu dans la presse</div>
-        <div class="marquee">
-            <div class="mq-track mq-right press-track" id="pressTrack">
-                <img class="artdeco" src="../561d79a-47b15060-85cc2f7b/images/presse/art-decoration.png" alt="Art&Décoration">
-                <img class="elle" src="../561d79a-47b15060-85cc2f7b/images/presse/elle-decoration.png" alt="Elle Décoration">
-                <img class="cotesud" src="../561d79a-47b15060-85cc2f7b/images/presse/cote-sud.png" alt="Maisons Côté Sud">
-                <img class="ideat" src="../561d79a-47b15060-85cc2f7b/images/presse/ideat.png" alt="IDEAT">
-                <img class="cotemag" src="../561d79a-47b15060-85cc2f7b/images/presse/cote-magazine.png" alt="Côté Magazine">
-                <img class="ab" src="../561d79a-47b15060-85cc2f7b/images/presse/architecture-bois.png" alt="Architecture Bois">
-                <img class="anous" src="../561d79a-47b15060-85cc2f7b/images/presse/anous.png" alt="ANous Aix Marseille">
-                <span class="press-logotext" style="font-weight:600;">Décoration</span>
-            </div>
-        </div>
-    </section>
+        
 
 
 
