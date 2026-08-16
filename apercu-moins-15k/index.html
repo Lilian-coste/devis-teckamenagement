@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow">
+<title>Teck Aménagement — Votre projet</title>
+
+<!--
+  PAGE D'ATTERRISSAGE « BUDGET DÉCLARÉ SOUS 15 000 € » — VERSION DE TRAVAIL
+
+  ⚠️ AUCUN PIXEL META ICI, et c'est délibéré. La vraie page de résultat tire un `Lead` à
+     chaque chargement. Publier une copie sous le domaine Teck enverrait de fausses
+     conversions dans le pixel qui pilote les campagnes payantes de Franck.
+
+  Structure et copy : `saas-interne/Fillout/COPY-PAGE-MOINS-15K.md`.
+  Règle de calcul   : `saas-interne/Fillout/REDIRECTION-CALCULEE.md`.
+
+  ⚖️ Ce que cette page fait, en une phrase : elle ne dit pas non, elle RÉ-ANCRE. Le
+     prospect qui déclare un budget bas ne dit pas ce qu'il PEUT investir, il dit ce qu'il
+     CROYAIT que ça coûtait. Toute la page sert à transformer un budget déclaré en
+     compréhension du budget nécessaire, puis à poser une question de CAPACITÉ.
+
+  Paramètres d'URL, tous facultatifs (la page reste lisible sans aucun) :
+     ?prenom=Jean&m2=24&cp=83000&budget=10000-15000&profil=cocon
+-->
+
+<!-- PAS de CDN Tailwind ici, contrairement aux autres pages du tunnel, et c'est délibéré :
+     cette page n'utilise aucune classe Tailwind. Le charger quand même avait un effet
+     visible, repéré au montage le 16/08/2026 : son « preflight » remet h1 à h6 à la taille
+     et à la graisse du texte courant, et il s'injecte APRÈS la feuille ci-dessous, donc il
+     gagnait à specificité égale. Tous les intertitres se retrouvaient au corps du texte,
+     collés au paragraphe suivant. -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{ --teck:#0653A8; --ink:#1D1D1F; --gris:#4b5563; --trait:#e5e7eb; }
+  *{ box-sizing:border-box; }
+  html,body{ overflow-x:hidden; max-width:100%; }
+  html{ scrollbar-width:none; -ms-overflow-style:none; scroll-behavior:smooth; }
+  html::-webkit-scrollbar, body::-webkit-scrollbar{ width:0; height:0; display:none; }
+  body{ font-family:'Inter',sans-serif; margin:0; color:var(--ink); background:#fff; }
+
+  .bloc{ width:100%; max-width:760px; margin:0 auto; padding:0 22px; }
+
+  /* ---------------------------------------------------------------- HERO */
+  /* Même dégradé que la section « Pourquoi choisir Teck » de la page de résultat :
+     les deux pages sont les deux sorties du même quiz, elles doivent se ressembler. */
+  .hero{ background:linear-gradient(180deg,#EFF4FA 0%,#FFFFFF 92%);
+         padding: clamp(28px,5svh,56px) 0 clamp(40px,6svh,72px); text-align:center; }
+  .logo{ width:170px; height:auto; display:block; margin:0 auto clamp(24px,4svh,40px); }
+  .hero h1{ font-size:26px; font-weight:500; letter-spacing:-.02em; line-height:1.18;
+            margin:0 auto; text-wrap:balance; max-width:620px; }
+  @media (min-width:768px){ .hero h1{ font-size:34px; } }
+  .hero .chapo{ font-size:16px; line-height:1.65; color:var(--gris); margin:22px auto 0;
+                max-width:600px; text-wrap:pretty; }
+  .hero .chapo b{ font-weight:600; color:var(--ink); }
+
+  /* ------------------------------------------------------------ SECTIONS */
+  section{ padding: clamp(44px,7svh,80px) 0; }
+  section.gris{ background:#F8F8F8; }
+  h2{ font-size:22px; font-weight:600; letter-spacing:-.02em; line-height:1.25;
+      margin:0 0 18px; text-wrap:balance; }
+  @media (min-width:768px){ h2{ font-size:28px; } }
+  h3{ font-size:17px; font-weight:600; margin:0 0 8px; }
+  p{ font-size:16px; line-height:1.65; color:var(--gris); margin:0 0 16px; text-wrap:pretty; }
+  p:last-child{ margin-bottom:0; }
+  p b{ font-weight:600; color:var(--ink); }
+  .mot-bleu{ color:var(--teck); }
+
+  /* Les facteurs de prix. Liste numérotée sobre, pas de puces rondes. */
+  .facteurs{ list-style:none; margin:26px 0 0; padding:0; display:grid; gap:14px; }
+  .facteurs li{ display:flex; gap:14px; align-items:baseline;
+                border-top:1px solid var(--trait); padding-top:14px; }
+  .facteurs li:first-child{ border-top:0; padding-top:0; }
+  .facteurs .num{ font-size:13px; font-weight:600; color:var(--teck);
+                  font-variant-numeric:tabular-nums; flex:0 0 auto; }
+  .facteurs .txt{ font-size:16px; line-height:1.55; color:var(--ink); }
+
+  /* ---------------------------------------------------------- ESTIMATION */
+  .estim{ background:#fff; border:1px solid var(--trait); border-radius:16px;
+          padding:28px 24px; text-align:center; box-shadow:0 10px 34px rgba(10,61,92,.07); }
+  .estim .intitule{ font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+                    color:var(--gris); margin:0 0 12px; }
+  .estim .montant{ font-size:30px; font-weight:600; letter-spacing:-.02em; color:var(--ink);
+                   font-variant-numeric:tabular-nums; line-height:1.15; }
+  @media (min-width:768px){ .estim .montant{ font-size:38px; } }
+  .estim .detail{ font-size:13.5px; color:var(--gris); margin:14px 0 0; }
+  .estim.absente .montant{ font-size:19px; font-weight:500; color:var(--gris); }
+
+  /* ------------------------------------------------------- LES 2 CHEMINS */
+  .chemins{ display:grid; gap:16px; margin-top:30px; }
+  @media (min-width:768px){ .chemins{ grid-template-columns:1fr 1fr; gap:20px; } }
+  .chemin{ display:flex; flex-direction:column; text-align:left; border-radius:16px;
+           padding:24px 22px; border:1px solid var(--trait); background:#fff;
+           text-decoration:none; color:inherit; cursor:pointer;
+           transition:transform .3s cubic-bezier(.175,.885,.32,1.275), box-shadow .3s; }
+  .chemin:hover{ transform:translateY(-3px); box-shadow:0 14px 34px rgba(10,61,92,.12); }
+  .chemin .marque{ font-size:12px; letter-spacing:.12em; text-transform:uppercase;
+                   font-weight:600; margin-bottom:10px; }
+  .chemin.oui{ border-color:rgba(6,83,168,.35); background:linear-gradient(180deg,#F4F8FD 0%,#fff 70%); }
+  .chemin.oui .marque{ color:var(--teck); }
+  .chemin.non .marque{ color:var(--gris); }
+  .chemin .titre{ font-size:17px; font-weight:600; line-height:1.35; margin-bottom:8px; }
+  .chemin .sous{ font-size:14.5px; line-height:1.55; color:var(--gris); }
+
+  /* ------------------------------------------------------------- BOUTON */
+  .btn-black{ display:inline-flex; flex-direction:column; align-items:center; gap:3px;
+    background:#000; color:#fff; border:none; border-radius:14px; padding:14px 34px;
+    font-size:16px; font-weight:600; cursor:pointer; text-decoration:none; font-family:inherit;
+    transition:transform .35s cubic-bezier(.175,.885,.32,1.275), box-shadow .35s; }
+  .btn-black:hover{ transform:scale(1.03); box-shadow:0 14px 34px rgba(0,0,0,.35); }
+  /* BASELINE et pas center : la flèche vient d'une autre police que le texte, et centrer
+     les boîtes de deux polices différentes donne un résultat qui change de navigateur en
+     navigateur. Le décalage fin est calculé en bas de page, à l'encre. */
+  .btn-ligne{ display:inline-flex; align-items:baseline; gap:10px; }
+  .btn-fleche{ font-family:"Apple Symbols","Zapf Dingbats","Segoe UI Symbol",sans-serif;
+    font-size:1.15em; line-height:1; display:inline-block;
+    transform:translateY(var(--fleche-y, 0.096em)); }
+  .btn-gratuit{ font-style:italic; font-weight:400; font-size:12.5px; opacity:.78; }
+
+  /* --------------------------------------------------------------- AVIS */
+  .avis{ display:grid; gap:16px; margin-top:26px; }
+  @media (min-width:768px){ .avis{ grid-template-columns:1fr 1fr; } }
+  .avis-card{ border:1px solid var(--trait); border-radius:14px; padding:20px 20px 18px;
+              background:#fff; }
+  .avis-card .etoiles{ color:#FBBF24; font-size:14px; letter-spacing:1px; margin-bottom:10px; }
+  .avis-card p{ font-size:14.5px; line-height:1.6; margin:0 0 12px; color:var(--ink); }
+  .avis-card .qui{ font-size:13px; color:var(--gris); }
+  .note{ display:flex; align-items:center; justify-content:center; gap:6px; margin-top:26px;
+         font-size:15px; }
+  .note b{ font-weight:600; }
+  .note .ystar{ color:#FBBF24; }
+  .note .muted{ color:var(--gris); }
+
+  footer{ padding:34px 0 44px; text-align:center; }
+  footer .mention{ font-size:12.5px; color:#9ca3af; }
+</style>
+</head>
+<body>
+
+<!-- ============================ HERO ============================ -->
+<header class="hero">
+  <div class="bloc">
+    <img class="logo" src="../561d79a-47b15060-3631b3c8/images/logo-teck.png" alt="Teck Aménagement">
+
+    <h1 id="titre">Votre projet a bien été pris en compte</h1>
+
+    <p class="chapo" id="chapo">
+      Au vu de l'enveloppe que vous nous avez indiquée, votre projet demande probablement un
+      investissement plus important que celui que vous aviez en tête.
+    </p>
+  </div>
+</header>
+
+<!-- ================== POURQUOI CET INVESTISSEMENT ================== -->
+<section>
+  <div class="bloc">
+    <h2>Une pergola sur mesure est un investissement pensé pour durer</h2>
+    <p>
+      Sa conception, ses matériaux et son niveau de personnalisation influencent directement
+      son prix. Comme elle n'est pas produite en série à des prix d'usine, chaque projet est
+      dessiné pour votre extérieur et pour la façon dont vous voulez en profiter.
+    </p>
+
+    <!-- ⏳ LISTE PROVISOIRE. Franck doit la valider à son retour fin août : elle est
+         plausible mais sourcée nulle part, et la règle du projet interdit de publier une
+         affirmation qu'on ne peut pas prouver. Trois à cinq points maximum (Lilian). -->
+    <ul class="facteurs">
+      <li><span class="num">01</span><span class="txt">La surface à couvrir, qui commande la portée de la structure</span></li>
+      <li><span class="num">02</span><span class="txt">Le type de pergola, adossée à la maison ou autoportante</span></li>
+      <li><span class="num">03</span><span class="txt">Le niveau de personnalisation et de finition</span></li>
+      <li><span class="num">04</span><span class="txt">Les matériaux, et le fait que tout soit conçu sur mesure</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== REPOSITIONNEMENT ===================== -->
+<section class="gris">
+  <div class="bloc">
+    <h2>Cela ne veut pas dire que votre projet est irréalisable</h2>
+    <p>
+      Votre budget peut évoluer, votre projet peut être repensé, ou certaines priorités
+      peuvent changer.
+    </p>
+  </div>
+</section>
+
+<!-- ======================== L'ESTIMATION ======================== -->
+<section>
+  <div class="bloc">
+    <h2>Estimons ensemble l'enveloppe que votre projet demande</h2>
+    <p style="margin-bottom:26px">
+      À partir de ce que vous venez de nous dire, nous pouvons vous donner un ordre de
+      grandeur plus précis que le vôtre. <b>Vous n'avez rien à ressaisir.</b>
+    </p>
+
+    <div class="estim absente" id="estimation">
+      <p class="intitule">Votre projet</p>
+      <div class="montant" id="montant">Nous l'estimerons avec vous lors de l'échange</div>
+      <p class="detail" id="detail">
+        Estimation indicative, elle ne remplace pas un devis.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== LA QUESTION DE CAPACITÉ ==================== -->
+<section class="gris">
+  <div class="bloc">
+    <h2>Est-ce une enveloppe que vous seriez en mesure d'envisager si le projet correspond
+      réellement à vos attentes ?</h2>
+    <p>
+      Il n'y a pas de mauvaise réponse. Nous préférons le savoir maintenant plutôt que de
+      vous faire perdre du temps.
+    </p>
+
+    <div class="chemins">
+      <!-- Le « oui » renvoie vers la page de profil, celle qui porte la vidéo de Franck.
+           Les paramètres de l'URL sont recopiés pour que la page reste personnalisée. -->
+      <a class="chemin oui" id="chemin-oui" href="../561d79a-47b15060-85cc2f7b/">
+        <span class="marque">Oui</span>
+        <span class="titre">Je pourrais envisager ce budget</span>
+        <span class="sous">
+          Franck vous explique les points qu'il regarderait en priorité pour votre projet, et
+          vous choisissez un créneau si vous le souhaitez.
+        </span>
+      </a>
+
+      <!-- Le « non » ne quitte pas la page : il descend à la section suivante. C'est la
+           mécanique voulue par Lilian, l'écran coupé en deux dont un seul côté redirige. -->
+      <a class="chemin non" href="#le-guide">
+        <span class="marque">Non</span>
+        <span class="titre">Cette enveloppe dépasse ce que je peux investir</span>
+        <span class="sous">
+          Nous avons préparé de quoi vous aider à préparer votre projet, juste en dessous.
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================== LE GUIDE ========================== -->
+<section id="le-guide">
+  <div class="bloc">
+    <h2>Votre projet reste possible, même s'il n'est pas encore dans votre budget</h2>
+    <p>
+      Nous avons réuni ce qu'il faut savoir pour comprendre ce qui fait le prix d'une pergola
+      sur mesure et préparer votre projet sereinement.
+    </p>
+    <p>
+      <b>Ce guide est fait pour vous être utile, que vous réalisiez ce projet avec nous ou
+      avec un autre professionnel.</b>
+    </p>
+
+    <!-- ⏳ PARAGRAPHE EN ATTENTE DE FRANCK. Lilian veut dire qu'il est fréquent que des
+         personnes recontactent un an ou plus après leur première demande, le temps de
+         finir d'autres travaux ou de constituer leur enveloppe. C'est exactement le type
+         d'affirmation qui sonne vraie, que personne ne vérifie, et qu'un client réel peut
+         démentir. À confirmer avant publication, sinon la reformuler en ce que NOUS
+         proposons plutôt qu'en ce que LES CLIENTS font.
+    <p>Il n'est pas rare qu'un projet se concrétise un an ou plus après une première
+       demande, le temps de terminer d'autres travaux ou de constituer l'enveloppe prévue.</p>
+    -->
+
+    <ul class="facteurs" style="margin-top:26px">
+      <li><span class="num">01</span><span class="txt">Les principaux facteurs qui font varier le prix</span></li>
+      <li><span class="num">02</span><span class="txt">Des exemples de projets par niveau de budget</span></li>
+      <li><span class="num">03</span><span class="txt">Ce qui différencie une pergola de série d'un projet sur mesure</span></li>
+      <li><span class="num">04</span><span class="txt">Les erreurs à éviter avant de demander des devis</span></li>
+      <li><span class="num">05</span><span class="txt">Comment déterminer une enveloppe réaliste pour votre extérieur</span></li>
+    </ul>
+
+    <div style="text-align:center; margin-top:34px">
+      <a class="btn-black" href="#" id="btn-guide">
+        <span class="btn-ligne">Comprendre le budget d'une pergola sur mesure
+          <span class="btn-fleche">➱</span>
+        </span>
+        <span class="btn-gratuit">Envoyé par email, vous n'avez rien à ressaisir</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ AVIS ============================ -->
+<section class="gris">
+  <div class="bloc">
+    <h2>Nos clients parlent de nous</h2>
+
+    <!-- Avis repris MOT POUR MOT de la page en ligne, fautes comprises. On ne réécrit pas
+         les mots d'un client (décision Lilian du 08/08/2026). -->
+    <div class="avis">
+      <div class="avis-card">
+        <div class="etoiles">★★★★★</div>
+        <p>« Nous avons été vite convaincus par les solutions créatives et techniques pour
+          réaliser le projet. Je recommande fortement cette société. Le matériel est de
+          qualité. Sans hésiter, contactez-les, vous ne serez pas déçus ! »</p>
+        <div class="qui">Anne Marie Spenser · Éguilles</div>
+      </div>
+      <div class="avis-card">
+        <div class="etoiles">★★★★★</div>
+        <p>« Nous déjeunons sous la pergola même sous le soleil marseillais, avec 4 à 5
+          degrés de moins que la solution que nous avions auparavant. »</p>
+        <div class="qui">Bliss · Marseille</div>
+      </div>
+      <div class="avis-card">
+        <div class="etoiles">★★★★★</div>
+        <p>« Très grande satisfaction ! La luminosité reste la même à l'intérieur de la
+          maison tout en protégeant ma terrasse du soleil. »</p>
+        <div class="qui">Mathieu · Cannes</div>
+      </div>
+      <div class="avis-card">
+        <div class="etoiles">★★★★★</div>
+        <p>« La pergola remplit parfaitement son rôle : elle apporte un cachet à la maison,
+          elle nous protège très bien des rayons du soleil même en étant exposés plein Sud,
+          elle laisse circuler l'air pour améliorer le confort et elle n'assombrit pas notre
+          salon ! »</p>
+        <div class="qui">Valerie Guagliardo</div>
+      </div>
+    </div>
+
+    <div class="note">
+      <b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="bloc">
+    <p class="mention">Teck Aménagement · Pergola, terrasse et mobilier en bois exotique</p>
+  </div>
+</footer>
+
+<script>
+/* ------------------------------------------------------------------ CALCUL
+
+   L'ESTIMATION, à zéro saisie.
+
+   Toutes les données du calcul ont déjà été données pendant le quiz : la superficie, le
+   code postal et la tranche de budget. Elles arrivent ici par l'URL. La personne ne
+   ressaisit donc rien, et c'est ce qui fait la différence entre un outil et un mur.
+
+   Le barème vient de Lilian (16/08/2026) : 870 € HT/m² dans les Bouches-du-Rhône, 970 €
+   ailleurs, TVA 10 % (rénovation d'un logement de plus de deux ans, le taux par défaut du
+   simulateur en ligne). La même règle est codée côté quiz dans `lib/redirection.ts`, et
+   c'est elle qui a décidé que cette personne atterrisse ici plutôt que sur la vidéo.
+
+   ⚠️ Le claustra n'entre PAS dans le calcul : le quiz ne demande qu'une superficie totale.
+      L'estimation est donc « pergola seule » et sous-estime un projet qui en comporte.
+------------------------------------------------------------------------- */
+(function () {
+    var PRIX_HT = { zone13: 870, hors13: 970 };
+    var TVA = 1.10;
+
+    var q = new URLSearchParams(location.search);
+
+    /* Le prénom personnalise le titre. En textContent, jamais en innerHTML : ce qui vient
+       de l'URL n'a rien à faire dans le HTML de la page. */
+    var prenom = (q.get("prenom") || "").trim().slice(0, 40);
+    if (prenom) {
+        document.getElementById("titre").textContent =
+            prenom + ", votre projet a bien été pris en compte";
+    }
+
+    var m2 = parseFloat(q.get("m2"));
+    var cp = (q.get("cp") || "").trim();
+
+    if (!isFinite(m2) || m2 <= 0) return; // pas de superficie : le bloc garde son texte d'attente
+
+    var prix = cp.indexOf("13") === 0 ? PRIX_HT.zone13 : PRIX_HT.hors13;
+    var estimation = m2 * prix * TVA;
+
+    /* Une FOURCHETTE, jamais un montant unique. Deux raisons, et la seconde est la plus
+       coûteuse : une estimation trop haute effraie quelqu'un de récupérable, une estimation
+       trop basse pose une ancre que Franck devra casser au rendez-vous, après s'être
+       déplacé. Le devis passerait alors pour une hausse. ±10 % encadre le chiffre sans
+       prétendre à une précision qu'on n'a pas. */
+    var bas = Math.round(estimation * 0.9 / 500) * 500;
+    var haut = Math.round(estimation * 1.1 / 500) * 500;
+
+    function euros(n) { return n.toLocaleString("fr-FR") + " €"; }
+
+    document.getElementById("estimation").classList.remove("absente");
+    document.getElementById("montant").textContent = euros(bas) + " à " + euros(haut);
+    document.getElementById("detail").textContent =
+        "Pour " + m2 + " m², TVA 10 % comprise. Estimation indicative, elle ne remplace pas "
+        + "un devis établi après visite.";
+})();
+
+/* Les paramètres de la page suivent la personne vers la page de profil : sans eux, elle
+   perdrait son prénom et son profil en cours de route. */
+(function () {
+    var suite = location.search.replace(/^\?/, "");
+    if (!suite) return;
+    var lien = document.getElementById("chemin-oui");
+    lien.setAttribute("href", lien.getAttribute("href") + "?" + suite);
+})();
+
+/* ------------------------------------------------------------------ FLÈCHE
+
+   Centrée sur le « k » du texte, par MESURE et non par une valeur en dur.
+
+   ➱ n'existe pas dans Inter : chaque navigateur va chercher le glyphe dans une autre
+   police, et chacune le dessine à une hauteur différente. On ne demande pas non plus ses
+   métriques au navigateur, `actualBoundingBox*` étant inégal d'un moteur à l'autre pour un
+   glyphe de repli. On DESSINE le glyphe et on compte ses pixels encrés, huit fois plus
+   grand pour ne pas trancher au demi-pixel.
+------------------------------------------------------------------------- */
+(function () {
+    var fleche = document.querySelector(".btn-fleche");
+    if (!fleche) return;
+
+    var ZOOM = 8;
+    /* Correction optique, vers le bas. Le centre géométrique d'un glyphe n'est pas son
+       centre perçu : la flèche est large et fine, le « k » répartit son encre sur toute sa
+       hauteur. Seul nombre de ce script qui vienne de l'œil (Lilian, 16/08/2026). */
+    var CORRECTION_OPTIQUE = 0.06;
+
+    function centreEncre(texte, police, taille) {
+        var grand = taille * ZOOM;
+        var marge = Math.ceil(grand * 2);
+        var toile = document.createElement("canvas");
+        toile.width = Math.ceil(grand * 4);
+        toile.height = marge * 2;
+
+        var g = toile.getContext("2d", { willReadFrequently: true });
+        if (!g) return null;
+
+        g.font = police.replace(/(^|\s)[\d.]+px(\s|$)/, "$1" + grand + "px$2");
+        /* On relit ce que le navigateur a retenu et on compare des NOMBRES : une
+           comparaison de chaînes échouerait, l'arrondi de 165,6 ne se trouvant pas dans
+           « 165.6px ». */
+        var retenue = parseFloat((g.font.match(/([\d.]+)px/) || [])[1]);
+        if (!retenue || Math.abs(retenue - grand) > 0.5) return null;
+
+        g.textBaseline = "alphabetic";
+        g.fillStyle = "#000";
+        g.fillText(texte, Math.round(grand * 0.3), marge);
+
+        var pixels;
+        try { pixels = g.getImageData(0, 0, toile.width, toile.height).data; }
+        catch (e) { return null; }
+
+        var haut = -1, bas = -1;
+        for (var y = 0; y < toile.height; y++) {
+            for (var x = 0; x < toile.width; x++) {
+                if (pixels[(y * toile.width + x) * 4 + 3] > 8) {
+                    if (haut < 0) haut = y;
+                    bas = y;
+                    break;
+                }
+            }
+        }
+        if (haut < 0) return null;
+        return ((haut + bas) / 2 - marge) / ZOOM;
+    }
+
+    function caler() {
+        var sF = getComputedStyle(fleche), sT = getComputedStyle(fleche.parentNode);
+        var tT = parseFloat(sT.fontSize), tF = parseFloat(sF.fontSize);
+        if (!tT || !tF) return;
+
+        var k = centreEncre("k", sT.fontWeight + " " + sT.fontSize + " " + sT.fontFamily, tT);
+        var f = centreEncre(fleche.textContent.trim(), sF.fontSize + " " + sF.fontFamily, tF);
+        if (k === null || f === null) return;
+
+        var decalage = k - f + tT * CORRECTION_OPTIQUE;
+        document.documentElement.style.setProperty("--fleche-y", decalage.toFixed(3) + "px");
+    }
+
+    caler();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(caler);
+})();
+</script>
+
+</body>
+</html>
