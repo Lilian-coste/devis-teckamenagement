@@ -96,7 +96,16 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
     border:none; border-radius:14px; padding:14px 34px; font-size:16px; font-weight:600; cursor:pointer;
     text-decoration:none; transition:transform .35s cubic-bezier(.175,.885,.32,1.275), box-shadow .35s; }
   .btn-ligne{ display:inline-flex; align-items:center; gap:10px; }
-  .btn-gratuit{ font-style:italic; font-weight:400; font-size:12.5px; opacity:.78; }
+  /* ESSAI DU 16/08/2026 (Lilian) : la mention n'est plus « 100% gratuit · sans engagement »
+     mais une phrase entière, bien plus longue que le libellé du bouton.
+     Sans garde-fou, c'est ELLE qui imposerait sa largeur : le bouton passerait de 306 à
+     plus de 460px et cesserait de ressembler à un bouton.
+     `width:0` la retire du calcul de largeur (celle-ci reste donnée par le libellé),
+     `min-width:100%` la ramène ensuite à la largeur intérieure du bouton, et elle s'y
+     replie sur deux lignes. C'est la demande de Lilian : garder la largeur, revenir à la
+     ligne. `white-space:normal` est nécessaire, le bouton étant en nowrap. */
+  .btn-gratuit{ font-style:italic; font-weight:400; font-size:12.5px; opacity:.78;
+    white-space:normal; width:0; min-width:100%; text-align:center; line-height:1.35; }
   .btn-black:hover{ transform:scale(1.03); box-shadow:0 14px 34px rgba(0,0,0,.35); }
 
   /* Bandeau note + taches de lueur */
@@ -246,7 +255,7 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
     <span class="btn-ligne">Je fais analyser mon projet
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
     </span>
-    <span class="btn-gratuit">100% gratuit · sans engagement</span>
+    <span class="btn-gratuit">🎁 À la fin du diagnostic : recevez votre fiche projet personnalisée.</span>
   </a>
 
   <div class="rating-wrap">
@@ -355,7 +364,7 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
     <span class="btn-ligne">Je fais analyser mon projet
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
     </span>
-    <span class="btn-gratuit">100% gratuit · sans engagement</span>
+    <span class="btn-gratuit">🎁 À la fin du diagnostic : recevez votre fiche projet personnalisée.</span>
   </a>
   <!-- Pas de mention 4,9★ ici non plus (Lilian 06/08/2026) : elle ne vit que sur les cartes avis. -->
   <div class="quiz-count"><span class="compteur">+635</span> personnes ont déjà fait leur diagnostic</div>
