@@ -105,7 +105,15 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
      replie sur deux lignes. C'est la demande de Lilian : garder la largeur, revenir à la
      ligne. `white-space:normal` est nécessaire, le bouton étant en nowrap. */
   .btn-gratuit{ font-style:italic; font-weight:400; font-size:12.5px; opacity:.78;
-    white-space:normal; width:0; min-width:100%; text-align:center; line-height:1.35; }
+    white-space:normal; text-align:center; line-height:1.35; }
+  /* Les espaces de la mention sont INSÉCABLES : la seule coupure possible est celle qui
+     sépare les deux segments, et c'est le CSS qui décide si elle a lieu.
+     TÉLÉPHONE : « sans engagement » passe seul à la ligne.
+     ORDINATEUR : tout tient sur une ligne, le bouton s'élargit pour l'accueillir.
+     La mention pilote donc la largeur du bouton, contrairement à l'essai précédent où
+     elle était bridée à la largeur du libellé. */
+  .btn-gratuit .g2{ display:block; }
+  @media (min-width:768px){ .btn-gratuit .g2{ display:inline; } }
   .btn-black:hover{ transform:scale(1.03); box-shadow:0 14px 34px rgba(0,0,0,.35); }
 
   /* Bandeau note + taches de lueur */
@@ -255,7 +263,7 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
     <span class="btn-ligne">Je fais analyser mon projet
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
     </span>
-    <span class="btn-gratuit">Fiche personnalisée offerte · 100% gratuit · sans engagement</span>
+    <span class="btn-gratuit"><span class="g1">Fiche personnalisée offerte · 100% gratuit ·</span> <span class="g2">sans engagement</span></span>
   </a>
 
   <div class="rating-wrap">
@@ -364,7 +372,7 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
     <span class="btn-ligne">Je fais analyser mon projet
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
     </span>
-    <span class="btn-gratuit">Fiche personnalisée offerte · 100% gratuit · sans engagement</span>
+    <span class="btn-gratuit"><span class="g1">Fiche personnalisée offerte · 100% gratuit ·</span> <span class="g2">sans engagement</span></span>
   </a>
   <!-- Pas de mention 4,9★ ici non plus (Lilian 06/08/2026) : elle ne vit que sur les cartes avis. -->
   <div class="quiz-count"><span class="compteur">+635</span> personnes ont déjà fait leur diagnostic</div>
