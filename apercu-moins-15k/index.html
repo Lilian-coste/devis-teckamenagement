@@ -196,13 +196,15 @@
     background:linear-gradient(90deg,var(--teck),#7EC4FF); transform:scaleX(0);
     transform-origin:left; transition:transform .55s cubic-bezier(.2,.8,.2,1); }
   .page .facteurs li:hover::before{ transform:scaleX(1); }
-  .page .facteurs .tete{ display:flex; align-items:center; gap:11px; margin-bottom:13px; }
-  .page .facteurs .num{ flex:0 0 auto; width:30px; height:30px; border-radius:50%;
-    display:inline-flex; align-items:center; justify-content:center;
-    background:rgba(6,83,168,.09); color:var(--teck); font-size:12px; font-weight:600;
-    line-height:1; font-variant-numeric:tabular-nums; letter-spacing:.02em; }
+  /* ⚠️ LE GROS CHIFFRE EN CREUX EST REVENU (Lilian, 16/08/2026, après essai de la pastille
+     numérotée) : « au lieu d'avoir les numéros en haut à gauche dans un rond, tu peux les
+     mettre en gros en bas comme tu avais fait avant ». Il donne du relief sans ajouter
+     d'élément à lire. Ne pas le repasser en pastille. */
+  .page .facteurs .num{ position:absolute; right:14px; bottom:-14px; font-size:82px;
+    font-weight:700; line-height:1; color:rgba(6,83,168,.07); letter-spacing:-.05em;
+    font-variant-numeric:tabular-nums; pointer-events:none; user-select:none; }
   .page .facteurs .chapeau{ display:block; font-size:11.5px; font-weight:600;
-    letter-spacing:.16em; text-transform:uppercase; color:var(--teck); }
+    letter-spacing:.16em; text-transform:uppercase; color:var(--teck); margin-bottom:10px; }
   .page .facteurs .txt{ position:relative; display:block; font-size:16.5px; line-height:1.45;
     font-weight:500; color:var(--ink); }
   .page .facteurs .prec{ position:relative; display:block; font-size:14px; line-height:1.55;
@@ -218,126 +220,52 @@
     padding: clamp(30px,4svh,46px) clamp(24px,4vw,46px);
     box-shadow:0 10px 40px rgba(0,0,0,.05); text-align:center; }
 
-  /* ======================================================== LE BENTO DU GUIDE
-     La liste 01→05 à filets devient une grille asymétrique, demande centrale de
-     l'enregistrement du 16/08/2026. Lilian a tracé la forme au curseur sur le bento de
-     BlueStar : « eux il y a 4 points ; toi 1-2-3, et au lieu qu'il y ait un grand qui prend
-     tout, il est divisé en deux ». D'où cinq cellules au lieu de quatre.
+  /* ======================================================== LES 5 CASES DU GUIDE
+     La liste 01→05 à filets est devenue une grille de cinq cases.
 
-         ┌──────────┬──────────────────┐
-         │          │  02   large      │
-         │  01      ├────────┬─────────┤
-         │  haute   │  03    │  04     │
-         ├──────────┴────────┴─────────┤
-         │  05   toute la largeur      │
-         └─────────────────────────────┘
+     ⚠️ DEUXIÈME VERSION (Lilian, 16/08/2026, même journée). La première reprenait le bento
+     de BlueStar : cinq cellules de tailles différentes, chacune avec un schéma animé qui
+     tournait en boucle. Il l'a écartée : « j'aime pas trop. Mets juste 5 cases côte à côte
+     […] sans aucun truc qui bouge comme actuellement ».
+     Les cinq schémas animés et leurs @keyframes ont donc été SUPPRIMÉS, pas commentés :
+     les garder en dormance aurait fini par ressembler à du code mort qu'on remet « au cas
+     où ». Ils sont dans l'historique git s'il change d'avis.
 
-     ⚠️ Les visuels sont des SCHÉMAS ABSTRAITS, sans un seul chiffre ni libellé factuel.
-        Chez BlueStar les maquettes affichent « +1678 visites » et « Lead capturé » ; ici,
-        le moindre montant serait une affirmation que Franck n'a pas confirmée. Les
-        870 / 970 € n'apparaissent nulle part dans ces animations, et ne doivent pas y
-        entrer plus tard « pour faire joli ». */
+     La disposition est celle qu'il a dessinée, à la case près :
+
+         ┌────────┬─────────────────┐
+         │  01    │  02    (large)  │
+         ├────────┼────────┬────────┤
+         │  05    │  03    │  04    │
+         └────────┴────────┴────────┘
+
+     ⚠️ Oui, 05 est en BAS À GAUCHE et pas à sa place dans l'ordre de lecture. C'est
+     littéralement son croquis. À lui de dire s'il voulait 03-04-05 dans l'ordre : c'est
+     alors une seule ligne à changer, la propriété `grid-area` de ces trois cases.
+
+     Le gros chiffre en creux est le même que celui des cartes de facteurs, revenu le même
+     jour. Il donne du relief aux cases sans rien y faire bouger. */
   .page .bento{ display:grid; gap:14px; grid-template-columns:1fr; margin:34px 0 0;
                 text-align:left; }
   @media (min-width:768px){
     .page .bento{ grid-template-columns:repeat(3,1fr); gap:18px;
-      grid-template-areas: "un deux deux" "un trois quatre" "cinq cinq cinq"; }
+      grid-template-areas: "un deux deux" "cinq trois quatre"; }
     .page .bento .c1{ grid-area:un; }   .page .bento .c2{ grid-area:deux; }
     .page .bento .c3{ grid-area:trois; }.page .bento .c4{ grid-area:quatre; }
     .page .bento .c5{ grid-area:cinq; }
   }
-  .page .bcarte{ display:flex; flex-direction:column; overflow:hidden; background:#fff;
-    border:1px solid #D2D2D7; border-radius:22px; box-shadow:0 4px 20px rgba(0,0,0,.04);
+  .page .bcarte{ position:relative; overflow:hidden; background:#fff;
+    border:1px solid #D2D2D7; border-radius:22px; padding:26px 24px 46px;
+    box-shadow:0 4px 20px rgba(0,0,0,.04);
     transition:transform .5s cubic-bezier(.2,.8,.2,1), border-color .5s, box-shadow .5s; }
   .page .bcarte:hover{ transform:translateY(-8px); border-color:var(--teck);
     box-shadow:0 20px 40px rgba(0,0,0,.08); }
-  /* La zone de visuel, teintée, où tourne le schéma. Elle occupe toute la hauteur restante
-     dans la carte haute, et une bande fixe dans les autres. */
-  .page .bcarte .visuel{ position:relative; overflow:hidden; background:#F3F7FC;
-    border-bottom:1px solid #E4EBF3; height:132px; flex:0 0 auto;
-    display:flex; align-items:center; justify-content:center; }
-  @media (min-width:768px){ .page .bento .c1 .visuel{ height:auto; flex:1 1 auto; min-height:190px; } }
-  .page .bcarte .pied{ padding:18px 20px 20px; }
-  .page .bcarte .idx{ display:block; font-size:11.5px; font-weight:600; letter-spacing:.16em;
-    color:var(--teck); font-variant-numeric:tabular-nums; margin-bottom:7px; }
-  .page .bcarte h3{ font-size:15.5px; font-weight:600; line-height:1.4; margin:0;
-    color:var(--ink); }
-  @media (min-width:768px){ .page .bento .c1 h3, .page .bento .c5 h3{ font-size:17px; } }
-
-  /* ------------------------------------------------- LES CINQ SCHÉMAS ANIMÉS
-     Tout est en CSS, aucune image, aucune police à charger. Chaque animation tourne en
-     continu, comme celles des cartes de BlueStar. Toutes sont coupées plus bas sous
-     `prefers-reduced-motion`. */
-  .page .sch{ display:flex; align-items:flex-end; justify-content:center; gap:9px;
-    width:78%; max-width:230px; height:64%; }
-
-  /* 01 — quatre barres qui se règlent, jamais au même rythme. */
-  .page .sch-barres b{ flex:1 1 0; border-radius:5px 5px 2px 2px; background:var(--teck);
-    opacity:.85; animation:schBarre 3s ease-in-out infinite alternate; }
-  .page .sch-barres b:nth-child(1){ animation-duration:2.9s; }
-  .page .sch-barres b:nth-child(2){ animation-duration:3.6s; animation-delay:-.7s; opacity:.55; }
-  .page .sch-barres b:nth-child(3){ animation-duration:3.2s; animation-delay:-1.4s; }
-  .page .sch-barres b:nth-child(4){ animation-duration:4s;   animation-delay:-.35s; opacity:.55; }
-  @keyframes schBarre{ from{ height:22%; } to{ height:92%; } }
-
-  /* 02 — trois paliers qui se remplissent l'un après l'autre. */
-  .page .sch-paliers{ flex-direction:column; align-items:stretch; justify-content:center; gap:11px; }
-  .page .sch-paliers i{ display:block; height:11px; border-radius:99px; background:#DCE8F5;
-    position:relative; overflow:hidden; }
-  .page .sch-paliers i::after{ content:""; position:absolute; inset:0 auto 0 0; width:0;
-    border-radius:99px; background:var(--teck);
-    animation:schRemplir 6s cubic-bezier(.4,0,.2,1) infinite; }
-  .page .sch-paliers i:nth-child(1)::after{ --w:44%; }
-  .page .sch-paliers i:nth-child(2)::after{ --w:70%; animation-delay:.45s; }
-  .page .sch-paliers i:nth-child(3)::after{ --w:94%; animation-delay:.9s; }
-  @keyframes schRemplir{ 0%{ width:0; } 22%,68%{ width:var(--w); } 88%,100%{ width:0; } }
-
-  /* 03 — quatre formes identiques, dont une seule se dessine à part. */
-  .page .sch-mesure{ align-items:center; gap:12px; }
-  .page .sch-mesure s{ flex:0 0 auto; width:30px; height:30px; border-radius:6px;
-    background:#DCE8F5; text-decoration:none; }
-  .page .sch-mesure s:last-child{ animation:schSurMesure 5s cubic-bezier(.4,0,.2,1) infinite; }
-  @keyframes schSurMesure{
-    0%,14%   { transform:scale(1);    border-radius:6px;  background:#DCE8F5; }
-    42%,68%  { transform:scale(1.34); border-radius:13px; background:var(--teck); }
-    92%,100% { transform:scale(1);    border-radius:6px;  background:#DCE8F5; } }
-
-  /* 04 — trois lignes dont les croix passent en coches. */
-  .page .sch-liste{ flex-direction:column; align-items:stretch; justify-content:center; gap:12px; }
-  .page .sch-liste u{ display:flex; align-items:center; gap:10px; text-decoration:none; }
-  .page .sch-liste em{ position:relative; flex:0 0 auto; width:17px; height:17px;
-    border-radius:50%; background:#DCE8F5; animation:schPastille 5s ease-in-out infinite; }
-  .page .sch-liste em::before, .page .sch-liste em::after{ content:""; position:absolute;
-    inset:0; background:no-repeat center/9px 9px; }
-  .page .sch-liste em::before{ animation:schCroix 5s ease-in-out infinite;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 2l8 8M10 2l-8 8' stroke='%236B7B8C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E"); }
-  .page .sch-liste em::after{ animation:schCoche 5s ease-in-out infinite;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.4l2.8 2.8L10 3.2' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E"); }
-  .page .sch-liste u:nth-child(2) em, .page .sch-liste u:nth-child(2) em::before,
-  .page .sch-liste u:nth-child(2) em::after{ animation-delay:.4s; }
-  .page .sch-liste u:nth-child(3) em, .page .sch-liste u:nth-child(3) em::before,
-  .page .sch-liste u:nth-child(3) em::after{ animation-delay:.8s; }
-  .page .sch-liste var{ display:block; height:7px; border-radius:99px; background:#DCE8F5; }
-  .page .sch-liste u:nth-child(1) var{ width:74%; }
-  .page .sch-liste u:nth-child(2) var{ width:58%; }
-  .page .sch-liste u:nth-child(3) var{ width:66%; }
-  @keyframes schPastille{ 0%,16%{ background:#DCE8F5; } 34%,80%{ background:var(--teck); }
-                          96%,100%{ background:#DCE8F5; } }
-  @keyframes schCroix { 0%,16%{ opacity:1; } 30%,84%{ opacity:0; } 96%,100%{ opacity:1; } }
-  @keyframes schCoche { 0%,20%{ opacity:0; } 34%,80%{ opacity:1; } 94%,100%{ opacity:0; } }
-
-  /* 05 — un cadre dont la largeur et la profondeur s'ajustent, entre ses repères de cote.
-     Cette carte occupe toute la largeur du bento : un petit rectangle seul s'y perdait,
-     d'où les deux repères latéraux qui donnent l'échelle et le cadre agrandi. */
-  .page .sch-cadre{ align-items:center; justify-content:center; gap:14px; height:78%;
-    max-width:330px; }
-  .page .sch-cadre q{ display:block; flex:0 0 auto; border:2px solid var(--teck);
-    border-radius:9px; background:rgba(6,83,168,.08);
-    animation:schCadre 6.5s ease-in-out infinite; }
-  .page .sch-cadre q::before, .page .sch-cadre q::after{ content:none; }
-  .page .sch-cadre em{ flex:0 0 auto; width:2px; height:56%; border-radius:2px;
-    background:repeating-linear-gradient(180deg,rgba(6,83,168,.42) 0 4px,transparent 4px 9px); }
-  @keyframes schCadre{ 0%,100%{ width:104px; height:54px; } 50%{ width:196px; height:96px; } }
+  .page .bcarte .idx{ position:absolute; right:14px; bottom:-14px; font-size:82px;
+    font-weight:700; line-height:1; color:rgba(6,83,168,.07); letter-spacing:-.05em;
+    font-variant-numeric:tabular-nums; pointer-events:none; user-select:none; }
+  .page .bcarte h3{ position:relative; font-size:16px; font-weight:500; line-height:1.45;
+    margin:0; color:var(--ink); }
+  @media (min-width:768px){ .page .bcarte h3{ font-size:17px; } }
 
   /* Le sommaire à filets N'EST PLUS UTILISÉ dans le guide depuis le passage au bento.
      Les règles restent : c'est la forme de repli si Lilian voulait revenir en arrière. */
@@ -651,21 +579,13 @@
 
   /* ------------------------------------------------- MOUVEMENT RÉDUIT
      Tout ce que la refonte du 16/08/2026 a ajouté de mouvement s'arrête ici : le halo du
-     hero, l'indicateur de défilement, les cinq schémas du bento et l'apparition en cascade.
+     hero, l'indicateur de défilement et l'apparition en cascade des cartes de facteurs.
+     Les cinq cases du guide n'y figurent plus, elles ne bougent plus du tout depuis que
+     Lilian a écarté les schémas animés.
      Les blocs recopiés des pages de profil portaient déjà leurs propres animations et ne
      sont pas concernés, on ne touche pas à leur comportement. */
   @media (prefers-reduced-motion: reduce){
-    .page .hero .halo i, .page .suite,
-    .page .sch-barres b, .page .sch-paliers i::after, .page .sch-mesure s:last-child,
-    .page .sch-liste em, .page .sch-liste em::before, .page .sch-liste em::after,
-    .page .sch-cadre q{ animation:none !important; }
-    /* Les schémas doivent rester lisibles une fois figés, pas s'effondrer à zéro. */
-    .page .sch-barres b{ height:62%; }
-    .page .sch-paliers i::after{ width:var(--w); }
-    .page .sch-liste em{ background:var(--teck); }
-    .page .sch-liste em::before{ opacity:0; }
-    .page .sch-liste em::after{ opacity:1; }
-    .page .sch-cadre q{ width:120px; height:66px; }
+    .page .hero .halo i, .page .suite{ animation:none !important; }
     .page .reveal{ opacity:1 !important; transform:none !important; transition:none !important; }
   }
 
@@ -729,22 +649,26 @@
          La seconde ligne de chaque carte est une PRÉCISION, elle aussi à valider. -->
     <ul class="facteurs" style="text-align:left">
       <li class="reveal">
-        <span class="tete"><span class="num">01</span><span class="chapeau">La surface</span></span>
+        <span class="num">01</span>
+        <span class="chapeau">La surface</span>
         <span class="txt">Le nombre de personnes que vous voulez voir à l'ombre en même temps</span>
         <span class="prec">C'est ce chiffre qui commande la portée de la structure, et pas la taille de la terrasse.</span>
       </li>
       <li class="reveal" style="--pause:.09s">
-        <span class="tete"><span class="num">02</span><span class="chapeau">Le type</span></span>
+        <span class="num">02</span>
+        <span class="chapeau">Le type</span>
         <span class="txt">Adossée à la maison, ou posée librement dans le jardin</span>
         <span class="prec">Une adossée prolonge la pièce de vie, une autoportante crée un lieu à part.</span>
       </li>
       <li class="reveal" style="--pause:.18s">
-        <span class="tete"><span class="num">03</span><span class="chapeau">La finition</span></span>
+        <span class="num">03</span>
+        <span class="chapeau">La finition</span>
         <span class="txt">Le niveau de personnalisation que demande votre extérieur</span>
         <span class="prec">Chaque ajustement se dessine, se fabrique et se pose, il ne se choisit pas dans un catalogue.</span>
       </li>
       <li class="reveal" style="--pause:.27s">
-        <span class="tete"><span class="num">04</span><span class="chapeau">Les matériaux</span></span>
+        <span class="num">04</span>
+        <span class="chapeau">Les matériaux</span>
         <span class="txt">Un bois exotique qui ne demande ni lasure ni ponçage</span>
         <span class="prec">Ce que vous ne dépensez pas en entretien chaque année fait partie du calcul.</span>
       </li>
@@ -851,52 +775,37 @@
        demande, le temps de terminer d'autres travaux ou de constituer l'enveloppe prévue.</p>
     -->
 
-    <!-- LE BENTO. La liste à filets a été remplacée le 16/08/2026, c'est la demande
-         centrale de l'enregistrement. La forme (01 haute à gauche, 02 large, 03 et 04 en
-         dessous, 05 sur toute la largeur) est celle que Lilian a tracée au curseur sur le
-         bento de BlueStar. Les intitulés n'ont pas bougé d'un mot.
-         ⚠️ Les schémas sont décoratifs et abstraits : aucun chiffre, aucun montant. -->
+    <!-- LES 5 CASES. La liste à filets a d'abord été remplacée par un bento animé calqué
+         sur BlueStar, écarté le jour même : « j'aime pas trop. Mets juste 5 cases côte à
+         côte […] sans aucun truc qui bouge ». Ni schéma, ni apparition au défilement : la
+         seule chose qui réagit est le survol, et c'est le geste qu'ont déjà toutes les
+         cartes de la page. Les intitulés n'ont pas bougé d'un mot.
+         ⚠️ L'ordre visuel voulu est 01, 02 en haut, puis 05, 03, 04 en bas : c'est son
+            croquis. Le DOM, lui, reste dans l'ordre de lecture 01→05. -->
     <div class="bento">
-      <article class="bcarte c1 reveal">
-        <div class="visuel" aria-hidden="true">
-          <span class="sch sch-barres"><b></b><b></b><b></b><b></b></span>
-        </div>
-        <div class="pied"><span class="idx">01</span>
-          <h3>Les principaux facteurs qui font varier le prix</h3></div>
+      <article class="bcarte c1">
+        <h3>Les principaux facteurs qui font varier le prix</h3>
+        <span class="idx" aria-hidden="true">01</span>
       </article>
 
-      <article class="bcarte c2 reveal" style="--pause:.08s">
-        <div class="visuel" aria-hidden="true">
-          <span class="sch sch-paliers"><i></i><i></i><i></i></span>
-        </div>
-        <div class="pied"><span class="idx">02</span>
-          <h3>Des exemples de projets par niveau de budget</h3></div>
+      <article class="bcarte c2">
+        <h3>Des exemples de projets par niveau de budget</h3>
+        <span class="idx" aria-hidden="true">02</span>
       </article>
 
-      <article class="bcarte c3 reveal" style="--pause:.16s">
-        <div class="visuel" aria-hidden="true">
-          <span class="sch sch-mesure"><s></s><s></s><s></s><s></s></span>
-        </div>
-        <div class="pied"><span class="idx">03</span>
-          <h3>Ce qui différencie une pergola de série d'un projet sur mesure</h3></div>
+      <article class="bcarte c3">
+        <h3>Ce qui différencie une pergola de série d'un projet sur mesure</h3>
+        <span class="idx" aria-hidden="true">03</span>
       </article>
 
-      <article class="bcarte c4 reveal" style="--pause:.24s">
-        <div class="visuel" aria-hidden="true">
-          <span class="sch sch-liste">
-            <u><em></em><var></var></u><u><em></em><var></var></u><u><em></em><var></var></u>
-          </span>
-        </div>
-        <div class="pied"><span class="idx">04</span>
-          <h3>Les erreurs à éviter avant de demander des devis</h3></div>
+      <article class="bcarte c4">
+        <h3>Les erreurs à éviter avant de demander des devis</h3>
+        <span class="idx" aria-hidden="true">04</span>
       </article>
 
-      <article class="bcarte c5 reveal" style="--pause:.32s">
-        <div class="visuel" aria-hidden="true">
-          <span class="sch sch-cadre"><em></em><q></q><em></em></span>
-        </div>
-        <div class="pied"><span class="idx">05</span>
-          <h3>Comment déterminer une enveloppe réaliste pour votre extérieur</h3></div>
+      <article class="bcarte c5">
+        <h3>Comment déterminer une enveloppe réaliste pour votre extérieur</h3>
+        <span class="idx" aria-hidden="true">05</span>
       </article>
     </div>
 
