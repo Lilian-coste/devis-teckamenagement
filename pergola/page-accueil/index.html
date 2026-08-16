@@ -81,6 +81,10 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
      deux premiers restent ÉGAUX entre eux, comme sur mobile. */
   @media (min-width:768px){
     .eyebrow{ font-size:23px; }
+    /* « le plus agréable » passe en gras, sur ORDINATEUR SEULEMENT (Lilian, 16/08/2026).
+       Pas sur téléphone : le préheader y est déjà en 18px sur un fond photo, et une graisse
+       de plus sur trois mots durcirait une ligne qui doit rester une question posée. */
+    .eyebrow .accent{ font-weight:600; }
     .hero h1{ margin-top:30px; font-size:58px; }
     .hero .desc{ margin-top:30px; font-size:20px; }
     .hero .btn-black{ margin-top:46px; }
@@ -95,7 +99,18 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
   .btn-black{ display:inline-flex; flex-direction:column; align-items:center; gap:3px; background:#000; color:#fff;
     border:none; border-radius:14px; padding:14px 34px; font-size:16px; font-weight:600; cursor:pointer;
     text-decoration:none; transition:transform .35s cubic-bezier(.175,.885,.32,1.275), box-shadow .35s; }
-  .btn-ligne{ display:inline-flex; align-items:center; gap:10px; }
+  /* align-items BASELINE et pas center (16/08/2026) : la flèche est un dingbat servi par
+     une AUTRE police que le texte, et centrer les boîtes de deux polices différentes donne
+     un résultat qui change d'un navigateur à l'autre. La ligne de base est le seul repère
+     commun stable. Le décalage fin est calculé par le script en bas de page. */
+  .btn-ligne{ display:inline-flex; align-items:baseline; gap:10px; }
+  /* Même flèche que sur le bouton du quiz et sur ceux des pages de résultat (Lilian,
+     16/08/2026), à la place du chevron dessiné en SVG. ➱ n'existe pas dans Inter, d'où la
+     pile de polices : macOS le sert par Apple Symbols. La valeur de repli ci-dessous ne
+     sert que si le JavaScript ne tourne pas. */
+  .btn-fleche{ font-family:"Apple Symbols","Zapf Dingbats","Segoe UI Symbol",sans-serif;
+    font-size:1.15em; line-height:1; display:inline-block;
+    transform:translateY(var(--fleche-y, 0.036em)); }
   /* ESSAI DU 16/08/2026 (Lilian) : la mention n'est plus « 100% gratuit · sans engagement »
      mais une phrase entière, bien plus longue que le libellé du bouton.
      Sans garde-fou, c'est ELLE qui imposerait sa largeur : le bouton passerait de 306 à
@@ -261,7 +276,7 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
 
   <a class="btn-black" href="https://teckamenagement.fillout.com/t/uDkMH84NFbus?source=cover">
     <span class="btn-ligne">Je fais analyser mon projet
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      <span class="btn-fleche">➱</span>
     </span>
     <span class="btn-gratuit"><span class="g1">Fiche personnalisée offerte · 100% gratuit ·</span> <span class="g2">sans engagement</span></span>
   </a>
@@ -370,7 +385,7 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
   <!-- MÊME bouton qu'en haut du hero, à la lettre près (retour Lilian 15/08/2026). -->
   <a class="btn-black" href="https://teckamenagement.fillout.com/t/uDkMH84NFbus?source=cover">
     <span class="btn-ligne">Je fais analyser mon projet
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      <span class="btn-fleche">➱</span>
     </span>
     <span class="btn-gratuit"><span class="g1">Fiche personnalisée offerte · 100% gratuit ·</span> <span class="g2">sans engagement</span></span>
   </a>
@@ -394,5 +409,100 @@ src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></
   [].slice.call(t.children).forEach(function(node){ t.appendChild(node.cloneNode(true)); });
 });
 </script>
+<script>
+/* FLÈCHE DU BOUTON : centrée sur le « k » du libellé.
+
+   Pourquoi un calcul et pas une valeur en dur : ➱ n'existe pas dans Inter. Chaque
+   navigateur va donc chercher le glyphe dans une AUTRE police, et chacune le dessine à une
+   hauteur différente. Une valeur figée cale la flèche sur un navigateur et la décale sur
+   les autres.
+
+   ⚠️ Et on ne demande PAS ses métriques au navigateur non plus. `measureText()` expose
+   `actualBoundingBoxAscent/Descent`, mais leurs valeurs sont inégales d'un moteur à l'autre
+   pour un glyphe venu d'une police de repli : c'est ce qui décalait la flèche sur le Safari
+   de l'iPhone de Lilian alors qu'elle était juste au millième sur Chrome.
+
+   On DESSINE donc le glyphe et on cherche sa première et sa dernière ligne de pixels
+   encrés. Aucune métrique déclarée n'intervient, c'est ce que l'écran affiche.
+
+   Le « k » sert d'étalon même quand le libellé n'en contient pas : c'est une minuscule à
+   hampe montante et sans jambage, comme « d », « b » ou « l ». */
+(function () {
+    var fleche = document.querySelector(".btn-fleche");
+    if (!fleche) return;
+
+    /* On dessine 8 FOIS PLUS GRAND puis on divise : un balayage à la taille réelle ne
+       tranche qu'au demi-pixel, soit une erreur visible sur un glyphe de 18px. */
+    var ZOOM = 8;
+
+    function centreEncre(texte, police, taille) {
+        var grand = taille * ZOOM;
+        var marge = Math.ceil(grand * 2);
+        var toile = document.createElement("canvas");
+        toile.width = Math.ceil(grand * 4);
+        toile.height = marge * 2;
+
+        var g = toile.getContext("2d", { willReadFrequently: true });
+        if (!g) return null;
+
+        g.font = police.replace(/(^|\s)[\d.]+px(\s|$)/, "$1" + grand + "px$2");
+        /* On relit ce que le navigateur a retenu, et on COMPARE DES NOMBRES : s'il refuse
+           la déclaration, `font` garde sa valeur précédente et on mesurerait la mauvaise
+           police sans le savoir. Une comparaison de chaînes échouerait, l'arrondi de 165,6
+           ne se trouvant pas dans « 165.6px ». */
+        var retenue = parseFloat((g.font.match(/([\d.]+)px/) || [])[1]);
+        if (!retenue || Math.abs(retenue - grand) > 0.5) return null;
+
+        g.textBaseline = "alphabetic";
+        g.fillStyle = "#000";
+        g.fillText(texte, Math.round(grand * 0.3), marge);
+
+        var pixels;
+        try {
+            pixels = g.getImageData(0, 0, toile.width, toile.height).data;
+        } catch (e) {
+            return null;
+        }
+
+        var haut = -1;
+        var bas = -1;
+        for (var y = 0; y < toile.height; y++) {
+            for (var x = 0; x < toile.width; x++) {
+                if (pixels[(y * toile.width + x) * 4 + 3] > 8) {
+                    if (haut < 0) haut = y;
+                    bas = y;
+                    break;
+                }
+            }
+        }
+        if (haut < 0) return null;
+
+        return ((haut + bas) / 2 - marge) / ZOOM;
+    }
+
+    function caler() {
+        var styleFleche = getComputedStyle(fleche);
+        var styleTexte = getComputedStyle(fleche.parentNode);
+        var tailleTexte = parseFloat(styleTexte.fontSize);
+        var tailleFleche = parseFloat(styleFleche.fontSize);
+        if (!tailleTexte || !tailleFleche) return;
+
+        var k = centreEncre("k", styleTexte.fontWeight + " " + styleTexte.fontSize + " " + styleTexte.fontFamily, tailleTexte);
+        var f = centreEncre(fleche.textContent.trim(), styleFleche.fontSize + " " + styleFleche.fontFamily, tailleFleche);
+        if (k === null || f === null) return;
+
+        /* La ligne de base est commune aux deux (align-items: baseline), donc l'écart des
+           centres d'encre EST le décalage à appliquer. Posé sur <html> : les deux boutons
+           de la page sont identiques, la variable leur descend par héritage. */
+        document.documentElement.style.setProperty("--fleche-y", (k - f).toFixed(3) + "px");
+    }
+
+    /* Deux passages : tout de suite pour éviter un saut visible, puis une fois les polices
+       web chargées, sans quoi la mesure porterait sur la police de substitution. */
+    caler();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(caler);
+})();
+</script>
+
 </body>
 </html>
