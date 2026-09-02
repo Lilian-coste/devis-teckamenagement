@@ -261,12 +261,13 @@
          ┌────────┬─────────────────┐
          │  01    │  02    (large)  │
          ├────────┼────────┬────────┤
-         │  05    │  03    │  04    │
+         │  03    │  04    │  05    │
          └────────┴────────┴────────┘
 
-     ⚠️ Oui, 05 est en BAS À GAUCHE et pas à sa place dans l'ordre de lecture. C'est
-     littéralement son croquis. À lui de dire s'il voulait 03-04-05 dans l'ordre : c'est
-     alors une seule ligne à changer, la propriété `grid-area` de ces trois cases.
+     ⚠️ La ligne du bas allait 05, 03, 04 jusqu'au 02/09/2026 : c'était le croquis de
+     Lilian repris à la case près. Franck l'a relevé pendant l'appel du 01/09 (« remettre
+     les bulles dans l'ordre ») et il a raison, l'œil lit le gros chiffre en creux avant
+     le titre, donc un 05 en tête de ligne casse la promesse d'un sommaire numéroté.
 
      Le gros chiffre en creux est le même que celui des cartes de facteurs, revenu le même
      jour. Il donne du relief aux cases sans rien y faire bouger. */
@@ -274,7 +275,7 @@
                 text-align:left; }
   @media (min-width:768px){
     .page .bento{ grid-template-columns:repeat(3,1fr); gap:18px;
-      grid-template-areas: "un deux deux" "cinq trois quatre"; }
+      grid-template-areas: "un deux deux" "trois quatre cinq"; }
     .page .bento .c1{ grid-area:un; }   .page .bento .c2{ grid-area:deux; }
     .page .bento .c3{ grid-area:trois; }.page .bento .c4{ grid-area:quatre; }
     .page .bento .c5{ grid-area:cinq; }
@@ -307,7 +308,20 @@
      entre « je pensais 12 000 » et « mon projet vaut plutôt 22 000 ». Elle est donc
      traitée comme un événement, fond navy, et pas comme un encadré de plus. Même rôle que
      la page des thermomètres dans la fiche PDF. */
-    /* ---------- L'EN-TÊTE EN DEUX COLONNES (option C, validée le 28/08/2026) ----------
+    /* Le bleu marine de la carte d'estimation, pour la phrase qui porte l'argument de
+     la section (Lilian, 01/09/2026 : « mets-le en bleu marine, même couleur que la carte
+     qui montre l'estimation »).
+
+     ⚠️ CETTE VALEUR EST CALCULÉE, PAS CHOISIE À L'ŒIL. La carte n'a pas une couleur mais
+     cinq : son fond est un dégradé de #1B4570, #0E3157, #17406A, #0A2444 et #123A61, qui
+     est ce qui lui donne son aspect de tôle brossée. #11355B est la moyenne de ces cinq
+     teintes, pondérée par la portion du dégradé que chacune gouverne. C'est donc la
+     couleur qu'on croit voir en regardant la carte de loin.
+     Contraste sur blanc : 12,5:1, très au-dessus du minimum exigé.
+     ⚠️ Si le dégradé de la carte change un jour, cette valeur change avec lui. */
+  .page .bloc p b.marine{ color:#11355B; }
+
+  /* ---------- L'EN-TÊTE EN DEUX COLONNES (option C, validée le 28/08/2026) ----------
      Le titre tient la colonne de gauche, le texte celle de droite.
 
      🐛 CE BLOC AVAIT DISPARU LE 01/09/2026, emporté par une suppression trop large au
@@ -889,7 +903,7 @@
       <div class="tete-texte">
         <p>
           Sa conception, ses matériaux et son niveau de personnalisation
-          <b>influencent directement son prix.</b>
+          <b class="marine">influencent directement son prix.</b>
         </p>
         <p>
           Comme elle n'est pas produite en série à des prix d'usine, chaque projet est
@@ -913,7 +927,7 @@
         <span class="num">02</span>
         <span class="chapeau">Le type</span>
         <span class="txt">Adossée à la maison, ou posée librement dans le jardin</span>
-        <span class="prec">Une adossée prolonge la pièce de vie, une autoportante crée un lieu à part.</span>
+        <span class="prec">Une adossée prolonge la pièce de vie, une autoportante crée un lieu supplémentaire.</span>
       </li>
       <li class="reveal" style="--pause:.18s">
         <span class="num">03</span>
@@ -1051,8 +1065,10 @@
          côte […] sans aucun truc qui bouge ». Ni schéma, ni apparition au défilement : la
          seule chose qui réagit est le survol, et c'est le geste qu'ont déjà toutes les
          cartes de la page. Les intitulés n'ont pas bougé d'un mot.
-         ⚠️ L'ordre visuel voulu est 01, 02 en haut, puis 05, 03, 04 en bas : c'est son
-            croquis. Le DOM, lui, reste dans l'ordre de lecture 01→05. -->
+         ⚠️ L'ordre visuel est 01, 02 en haut, puis 03, 04, 05 en bas depuis la correction
+            de Franck du 01/09/2026. Le DOM a toujours été dans l'ordre de lecture 01→05,
+            donc la version téléphone, qui empile les cases sans grille, n'a jamais eu le
+            problème : c'est bien l'ordinateur qu'il regardait. -->
     <div class="bento">
       <article class="bcarte c1">
         <h3>Les principaux facteurs qui font varier le prix</h3>
