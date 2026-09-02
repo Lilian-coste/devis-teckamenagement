@@ -750,10 +750,13 @@
                         customAnswers: { a2: origine }
                     },
                     utm: {
-                        // Filet de sécurité invisible, consultable dans le tableau de bord Calendly.
+                        // ⚠️ CORRIGÉ LE 02/09/2026 : ce bloc disait « sequence-bienvenue », recopié
+                        // depuis /rdv-mail/. Toute réservation prise depuis le tunnel était donc
+                        // comptée comme venant de la séquence mail. Les deux pages portent
+                        // désormais chacune sa campagne, et c'est ce qui les distingue.
                         utmSource: isMeta ? 'meta' : 'site',
-                        utmMedium: 'email',
-                        utmCampaign: 'sequence-bienvenue'
+                        utmMedium: 'page-resultat',
+                        utmCampaign: 'tunnel-quiz'
                     }
                 });
             }
