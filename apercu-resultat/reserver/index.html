@@ -21,7 +21,7 @@
             font-family: 'Inter', sans-serif;
             color: #1d1d1f;
         }
-        .bandeau-diagnostic {
+        .bandeau-prequalification {
             background: #0653A8;
             color: #fff;
             text-align: center;
@@ -53,26 +53,47 @@
             color: #4b5563;
             margin: 0;
         }
+        /* Mention 4,9★ — composant et valeurs repris À L'IDENTIQUE de la page de
+           résultat, où il vit déjà sous chacun des quatre boutons.
+           ⚠️ ELLE REVIENT ICI LE 27/08/2026 (Lilian). Elle avait été retirée des boutons
+              le 06/08/2026 pour ne plus vivre que sur les cartes d'avis ; cette règle est
+              PÉRIMÉE. Ne pas la supprimer en croyant l'appliquer.
+              Cette page n'a pas de bouton, c'est le widget Calendly qui porte l'action :
+              la mention se pose donc juste au-dessus de lui, à la place qu'elle occupe
+              ailleurs, c'est-à-dire au dernier moment avant que la personne réserve.
+           ⚠️ « +140 avis » est sourcé et vérifié : ne jamais l'arrondir. */
+        .rating { display: flex; align-items: center; gap: 0; font-size: 13px; font-weight: 600; justify-content: center; color: #86868B; margin-top: 18px; }
+        .rating .ystar { color: #FBBF24; font-size: 1em; line-height: 1; margin: 0; }
+        .rating .muted { font-weight: 400; opacity: .85; }
         .calendrier-zone { padding: 16px 16px 48px; }
-        #calendrier { margin: 0 auto; max-width: 1024px; min-width: 320px; height: 720px; }
+        /* ⚠️ `min-height` ET PAS `height` (27/08/2026). Calendly écrit lui-même une
+           hauteur en style en ligne sur ce bloc, à chaque changement de vue, et il faut
+           le laisser faire : c'est ce qui règle le blocage décrit plus bas, dans le
+           script. Une hauteur fixe ici l'empêcherait de grandir.
+           La valeur sert seulement d'avant : elle tient la place pendant le chargement,
+           et reste le filet de sécurité si le message de Calendly n'arrivait jamais. */
+        #calendrier { margin: 0 auto; max-width: 1024px; min-width: 320px; min-height: 720px; }
         @media (max-width: 768px) {
-            .bandeau-diagnostic { font-size: 14px; padding: 12px 16px; }
+            .bandeau-prequalification { font-size: 14px; padding: 12px 16px; }
             .tete { padding: 16px 16px 4px; }
             .tete h1 { font-size: 24px; }
-            #calendrier { height: 900px; }
+            #calendrier { min-height: 900px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bandeau-diagnostic">
-        Diagnostic réservé aux propriétaires ayant un projet de pergola sur mesure.
+    <!-- Même bandeau que la page de résultat, même texte, validé mot pour mot par
+         Lilian le 27/08/2026. Il remplace « Diagnostic réservé aux propriétaires… ». -->
+    <div class="bandeau-prequalification">
+        Conception et estimation réservées aux propriétaires ayant un projet de pergola sur mesure
     </div>
 
     <div class="tete">
         <img src="../../561d79a-47b15060-85cc2f7b/images/logo-teck.png" alt="Teck Aménagement">
         <h1>Réservez votre appel</h1>
         <p>Choisissez le créneau qui vous convient le mieux ci-dessous :</p>
+        <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
     </div>
 
     <div class="calendrier-zone">
@@ -95,6 +116,23 @@
                 Calendly.initInlineWidget({
                     url: 'https://calendly.com/teckamenagement/30min?hide_gdpr_banner=1',
                     parentElement: document.getElementById('calendrier'),
+                    /* ⚠️ `resize: true` RÈGLE LE BLOCAGE DU DÉFILEMENT SUR TÉLÉPHONE, et
+                       c'est sa seule raison d'être ici (Lilian, 27/08/2026, enregistrement :
+                       « j'arrive pas du tout à descendre, je suis bloqué »).
+                       Ce qui se passait : le cadre du calendrier faisait 900px de haut,
+                       pour un contenu plus grand que ça. Le contenu se retrouvait donc
+                       avec SON PROPRE défilement, à l'intérieur du cadre. Sur iOS, un
+                       doigt posé dans un cadre fait défiler le cadre et jamais la page :
+                       arrivé au bas du calendrier, le doigt tournait dans le vide et la
+                       page ne bougeait plus.
+                       Avec cette option, le widget écoute la hauteur réelle que sa page
+                       lui annonce (message `calendly.page_height`) et l'applique au bloc
+                       parent à chaque changement de vue. Le cadre fait alors exactement la
+                       taille de son contenu : plus aucun défilement intérieur, donc plus
+                       rien à voler à la page.
+                       ⚠️ Elle vaut `false` par défaut dans widget.js : sans cette ligne,
+                          le blocage revient. Ne pas la retirer. */
+                    resize: true,
                     prefill: {
                         // a2 = 2e question de l'event : "Comment avez-vous connu Teck Aménagement ?"
                         // Pré-remplie selon la source -> apparaît dans la notif + le Google Agenda de Franck.
@@ -102,10 +140,13 @@
                         customAnswers: { a2: origine }
                     },
                     utm: {
-                        // Filet de sécurité invisible, consultable dans le tableau de bord Calendly.
+                        // ⚠️ CORRIGÉ LE 02/09/2026 : ce bloc disait « sequence-bienvenue », recopié
+                        // depuis /rdv-mail/. Toute réservation prise depuis le tunnel était donc
+                        // comptée comme venant de la séquence mail. Les deux pages portent
+                        // désormais chacune sa campagne, et c'est ce qui les distingue.
                         utmSource: isMeta ? 'meta' : 'site',
-                        utmMedium: 'email',
-                        utmCampaign: 'sequence-bienvenue'
+                        utmMedium: 'page-resultat',
+                        utmCampaign: 'tunnel-quiz'
                     }
                 });
             }

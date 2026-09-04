@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>Teck Aménagement — Votre projet a été analysé</title>
+    <title>Teck Aménagement — Votre projet a été estimé</title>
 
     <!-- ⚠️ PAS DE PIXEL META SUR CETTE PAGE, ET C'EST VOLONTAIRE.
          La vraie page de résultat tire un événement Lead à chaque chargement.
@@ -52,11 +52,13 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            /* Le hero tient dans UN écran : badge, titre, texte, vidéo entière et bouton
-               (Lilian, 15/08/2026). D'où le min-height, les paddings resserrés en haut
-               pour remonter le badge, et surtout la vidéo bornée en HAUTEUR plus bas.
-               Sur téléphone le contenu dépasse forcément, le hero grandit alors tout seul. */
-            min-height: 100svh;
+            /* ⚠️ LE `min-height: 100svh` EST TOMBÉ le 27/08/2026. Il datait du 15/08,
+               quand le hero devait contenir badge, titre, texte, vidéo ENTIÈRE et bouton.
+               Sans la vidéo, il ne restait que la pastille, le titre et la carte : le
+               hero se centrait au milieu d'un écran vide et la flèche de défilement
+               montrait 200px de blanc. La page de référence n'a d'ailleurs aucun
+               min-height sur son hero, elle se cale sur son padding. On fait pareil.
+               La carte remonte du même coup, ce que Lilian demandait. */
             /* ÉCHELLE D'ESPACEMENTS DU HERO (Lilian, 15/08/2026 : « c'est trop collé »).
                Trois valeurs seulement, et elles respirent avec la hauteur de la fenêtre au
                lieu d'être figées : sur un grand écran le bloc s'aère, sur un écran bas il
@@ -72,8 +74,13 @@
                du haut mais de l'ÉCART entre les deux. Creuser le bas et réduire le haut
                fait monter le centre de gravité d'environ 25px (Lilian, 16/08/2026 :
                « remonte chaque élément un tout petit peu plus haut »). */
-            padding: clamp(16px, 2svh, 28px) 22px clamp(60px, 7.5svh, 100px);
+            /* Padding de la page -15K (`.page .hero`), à la valeur près. */
+            padding: clamp(30px, 5svh, 58px) 22px clamp(30px, 4svh, 52px);
         }
+        /* La première section colle au hero, comme sur la page de référence : le vide
+           cumulé entre les deux était précisément le reproche « un texte, un espace,
+           un texte ». */
+        .hero-section + section.sect { padding-top: clamp(26px, 4svh, 46px); }
         /* 880px et plus 640 (Lilian, 15/08/2026) : le texte du hero tenait sur une
            colonne étroite et se lisait mal, la vidéo était d'autant plus petite.
            Le logo a été retiré du hero à la même occasion. */
@@ -81,9 +88,15 @@
             width: 100%;
             max-width: 880px;
             text-align: center;
+            /* Le contenu passe AU-DESSUS du halo, qui est en `z-index: 0` juste derrière.
+               Source : `.page .hero .bloc { position: relative; z-index: 1; }` de la
+               page -15K. Sans ces deux lignes, un fond positionné recouvre du contenu
+               qui ne l'est pas, et c'est la pastille qui passait dessous. */
+            position: relative;
+            z-index: 1;
         }
-        /* La pastille « Félicitations [Prénom] » prend l'écart moyen de l'échelle, à la
-           place du mb-6 de Tailwind qui était figé à 24px. */
+        /* La pastille prend l'écart moyen de l'échelle, à la place du mb-6 de Tailwind
+           qui était figé à 24px. */
         .hero-bulle .border-beam-container { margin-bottom: var(--gap-m); }
         /* Titre du hero : exactement la typo de .adv-ttl (demande de Lilian, 15/08/2026). */
         /* 24px / 32px depuis le 16/08/2026, au lieu des 28/38 de .adv-ttl. Le titre
@@ -101,12 +114,12 @@
             margin: 0 auto var(--gap-m);
         }
         @media (min-width: 768px) { .hero-ttl { font-size: 32px; } }
-        /* « étudié » dans le bleu du bandeau de préqualification (Lilian, 15/08/2026) :
-           le mot qui porte tout l'angle « analyse » se surligne, et la page n'a qu'un
-           seul bleu du haut en bas. */
+        /* Le bleu du bandeau de préqualification tombe sur ce qui DISTINGUE le profil
+           dans le titre (Lilian, 15/08/2026) : c'est le passage où le lecteur doit se
+           reconnaître, et la page n'a qu'un seul bleu du haut en bas. */
         .hero-ttl .mot-bleu { color: #0653A8; }
 
-        /* ====== BADGE "Félicitations [Prénom]" (border beam) ====== */
+        /* ====== PASTILLE « [Prénom], votre projet a été estimé » (border beam) ====== */
         .border-beam-container {
             position: relative;
             padding: 1px;
@@ -378,8 +391,22 @@
 
         /* Bandeau de préqualification, pleine largeur, AVANT le hero. Il dit à qui
            s'adresse la suite. « réservé » et pas « destiné » : décision de Lilian du
-           15/08/2026, « destiné » sonnait plus agressif. */
-        .bandeau-diagnostic {
+           15/08/2026, « destiné » sonnait plus agressif.
+           ⚠️ 27/08/2026 : le mot « diagnostic » est tombé avec l'angle. Le tunnel ne
+           promet plus un diagnostic, il CONÇOIT ET ESTIME le projet. La classe s'appelle
+           donc `.bandeau-prequalification`, et le texte est celui validé mot pour mot
+           par Lilian ce jour-là. */
+        .bandeau-prequalification {
+            /* ⚠️ ALLER-RETOUR DU 27/08/2026, LES DEUX DÉCISIONS SONT DE LILIAN, DANS
+               CET ORDRE : le bandeau est passé du bleu Teck #0653A8 au bleu du halo
+               #3E8EB4 le matin, puis il est REVENU au bleu Teck le soir même.
+               C'est donc #0653A8 qui fait foi, et c'est aussi celui de la page
+               `reserver/` : les deux bandeaux se suivent dans le parcours, ils ne
+               peuvent pas être de deux bleus différents.
+               Bénéfice au passage : blanc sur #0653A8 donne 8,6:1, largement au-dessus
+               des 4,5:1 du WCAG AA, là où #3E8EB4 plafonnait à 3,66:1.
+               Le halo, lui, GARDE ses #3E8EB4 et #7EC4FF : c'est lui qui fait la
+               transition sous le bandeau, il n'a jamais été en cause. */
             background: #0653A8;
             color: #fff;
             text-align: center;
@@ -389,7 +416,7 @@
             line-height: 1.45;
             padding: 14px 20px;
         }
-        @media (max-width: 768px) { .bandeau-diagnostic { font-size: 14px; padding: 12px 16px; } }
+        @media (max-width: 768px) { .bandeau-prequalification { font-size: 14px; padding: 12px 16px; } }
 
         /* La VSL vit DANS le hero (demande de Lilian, 15/08/2026), plus dans sa propre
            section. Le bouton la suit immédiatement. */
@@ -413,7 +440,7 @@
            elle change avec la hauteur de la fenêtre. Un script la mesure et la reporte ici,
            dans --largeur-video. La valeur par défaut sert avant que le script tourne et si
            jamais il ne tournait pas : la page reste correcte, simplement pas alignée. */
-        .hero-ttl, .hero-texte {
+        .hero-ttl, .hero-texte, .estim-scene {
             max-width: var(--largeur-video, 100%);
             margin-left: auto;
             margin-right: auto;
@@ -429,11 +456,29 @@
            `balance` égalise les lignes du titre, `pretty` interdit le mot seul en fin de
            paragraphe. Les navigateurs qui ne connaissent pas ces valeurs les ignorent. */
         @media (min-width: 768px) {
-            .hero-ttl, .hero-texte {
+            .hero-ttl, .hero-texte, .estim-scene {
                 max-width: min(880px, calc(var(--largeur-video, 100%) + 110px));
             }
         }
         .hero-ttl { text-wrap: balance; }
+        /* LE CHAPÔ DE PROFIL (source : `.page .hero .chapo` de la page -15K, valeur par
+           valeur). Il porte la phrase « Vous faites partie des personnes qui… ». Sa
+           largeur est bornée plus court que le titre : une ligne de texte courant se lit
+           mal au-delà d'une soixantaine de signes. */
+        /* ⚠️ +2px le 27/08/2026 (16→18 et 18→20), et PAS PLUS : « augmente sa taille de
+           1 ou 2 pixels ». Elle est devenue le premier texte de la page en même temps que
+           le gros titre disparaissait, elle avait besoin d'un peu plus de présence.
+           ⚠️ Sa couleur a changé DEUX FOIS le 27/08/2026. D'abord laissée en gris
+              (« pas besoin de le mettre en noir, tu le laisses tel quel »), elle est
+              passée en NOIR le soir même, une fois le h1 supprimé : ce chapô est devenu
+              le premier texte de la page, un gris de corps de texte n'y tenait plus le
+              rôle. Le segment `.mot-bleu` reste bleu. */
+        .hero-chapo {
+            font-size: 18px; line-height: 1.65; color: #1D1D1F;
+            margin: 0 auto var(--gap-m); max-width: 600px; text-wrap: pretty;
+        }
+        @media (min-width: 768px) { .hero-chapo { font-size: 20px; } }
+        .hero-chapo .mot-bleu { color: #0653A8; font-weight: 500; }
         .hero-texte p { text-wrap: pretty; }
         .hero-texte { font-size: 16px; line-height: 1.65; color: #4b5563; font-weight: 400; margin-bottom: var(--gap-l); }
         .hero-texte p { margin-bottom: var(--gap-s); }
@@ -443,6 +488,553 @@
         .rating { display: flex; align-items: center; gap: 0; font-size: 13px; font-weight: 600; justify-content: center; color: #86868B; }
         .rating .ystar { color: #FBBF24; font-size: 1em; line-height: 1; margin: 0; }
         .rating .muted { font-weight: 400; opacity: .85; }
+
+        /* ====== 27/08/2026 — LE HAUT DE PAGE PASSE À « CONÇU ET ESTIMÉ » ======
+           L'ORDRE DE LA PAGE, tant qu'il n'y a PAS de vidéo (Lilian, 27/08/2026) :
+             1. le bandeau bleu
+             2. la pastille animée « Prénom, votre projet a été estimé »
+             3. la phrase de profil, en gros titre
+             4. la carte d'estimation
+             5. le bloc « l'échange avec Franck », avec le bouton
+             6. le bloc « votre fiche projet »
+
+           ⏳ L'ORDRE DU JOUR OÙ LA VSL EXISTE, à appliquer au tournage :
+             bandeau → pastille → profil → phrase de vidéo → vidéo → bouton →
+             carte d'estimation → bloc fiche projet.
+           La carte d'estimation passe alors JUSTE SOUS LE PLI, pour que Franck puisse
+           dire dans la vidéo « votre estimation est juste en dessous, mais regardez la
+           vidéo jusqu'au bout d'abord ».
+           ⚠️ Et le bloc « l'échange avec Franck » DISPARAÎT dans cette version : c'est
+              la vidéo qui fait son travail. Le bouton, lui, remonte dans le hero. */
+
+        /* La pastille peut porter une phrase entière depuis le 27/08/2026. Elle doit
+           donc pouvoir passer à deux lignes sur un petit téléphone au lieu de déborder. */
+        .hero-bulle .border-beam-container { max-width: 100%; }
+        .border-beam-inner .badge-txt { display: inline-block; line-height: 1.45; }
+
+        /* ====== LA CARTE D'ESTIMATION — UNE PLAQUE DE MÉTAL EN ÉQUILIBRE ======
+           Demande de Lilian (27/08/2026) : une plaque de métal froid dans les bleus, qui
+           bascule au survol comme une feuille posée en équilibre sur un point unique au
+           centre, à la façon d'une balance à l'ancienne.
+
+           Comment ça marche, en trois pièces :
+             - `.estim-scene` porte la `perspective`. Elle doit être sur le PARENT, sinon
+               la rotation reste plate et ne donne aucune profondeur ;
+             - `.estim` tourne, avec `transform-origin: center center` : c'est ce point
+               central qui fait la balance. Le côté vers lequel va la souris s'enfonce,
+               l'autre se relève ;
+             - `.estim .nappe` est la lumière. Elle se déplace à l'opposé du curseur,
+               c'est-à-dire du côté qui SE RELÈVE : sous une lumière fixe, c'est la face
+               qui se redresse qui accroche le plus. C'est ce déplacement qui fait lire
+               le métal plutôt qu'un simple aplat bleu.
+
+           Les angles et la position de la nappe arrivent du script en bas de page, par
+           quatre variables. Leurs valeurs par défaut laissent la carte à plat : sans
+           JavaScript, elle reste une belle plaque immobile. */
+        .estim-scene {
+            perspective: 900px;
+            margin: 0 auto var(--gap-l);
+        }
+        .estim {
+            --rx: 0deg; --ry: 0deg; --lx: 50%; --ly: 0%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 26px;
+            padding: 34px 24px 30px;
+            text-align: center;
+            color: #fff;
+            transform-origin: center center;
+            transform: rotateX(var(--rx)) rotateY(var(--ry));
+            transition: transform .55s cubic-bezier(.22,.61,.36,1);
+            /* LE MÉTAL : plusieurs bandes de bleu à des angles voisins, pas un dégradé
+               unique. Un aplat dégradé fait du plastique ; ce sont les ruptures de
+               valeur qui font la tôle brossée. */
+            background:
+                linear-gradient(118deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 38%),
+                linear-gradient(160deg, #1B4570 0%, #0E3157 24%, #17406A 46%, #0A2444 70%, #123A61 100%);
+            /* L'arête haute prend un liseré clair, les autres restent sombres : c'est ce
+               qui donne l'épaisseur de la plaque. Et l'ombre portée est NETTE, posée
+               court, pas un halo diffus. */
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,.38),
+                inset 0 -1px 0 rgba(0,0,0,.35),
+                inset 1px 0 0 rgba(255,255,255,.08),
+                inset -1px 0 0 rgba(0,0,0,.22),
+                0 18px 34px -12px rgba(6,26,48,.55),
+                0 2px 6px rgba(6,26,48,.30);
+        }
+        /* LES DEUX LUEURS DE FLANC (Lilian, 27/08/2026) : « un petit effet de lumière à
+           gauche et à droite, très légèrement, un peu le même que celui qu'il y a quand
+           on déplace la souris dessus, mais qui soit déjà présent, et que quand on
+           déplace la souris, ce petit effet reste ».
+           Donc DEUX choses distinctes, et c'est voulu :
+             - ici, deux nappes FIXES accrochées aux flancs. Elles sont là au repos, sur
+               téléphone comme sur ordinateur, et elles ne bougent jamais ;
+             - plus bas, `.nappe`, la nappe MOBILE qui suit le curseur. Elle s'AJOUTE à
+               celles-ci au survol, elle ne les remplace pas.
+           Même matière que la nappe mobile : du blanc en `soft-light`, qui éclaircit le
+           métal sans laver le bleu. Le blanc y est très dilué exprès, la carte doit
+           rester la même au premier coup d'œil.
+           ⚠️ Rien n'est animé ici, donc rien à couper en mouvement réduit : les lueurs
+              fixes restent, seule la bascule s'arrête. */
+        .estim::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            border-radius: inherit;
+            background:
+                radial-gradient(42% 70% at 0% 50%,   rgba(255,255,255,.42) 0%, rgba(255,255,255,.13) 46%, rgba(255,255,255,0) 100%),
+                radial-gradient(42% 70% at 100% 50%, rgba(255,255,255,.36) 0%, rgba(255,255,255,.11) 46%, rgba(255,255,255,0) 100%);
+            mix-blend-mode: soft-light;
+        }
+        /* La nappe de lumière. `mix-blend-mode: soft-light` la pose SUR le métal au lieu
+           de la coller par-dessus : elle éclaircit sans laver la couleur. */
+        .estim .nappe {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            pointer-events: none;
+            background: radial-gradient(closest-side circle at var(--lx) var(--ly),
+                        rgba(255,255,255,.55) 0%, rgba(255,255,255,.16) 42%, rgba(255,255,255,0) 72%);
+            mix-blend-mode: soft-light;
+            transition: background .35s ease;
+        }
+        .estim > *:not(.nappe) { position: relative; z-index: 1; }
+        .estim .intitule { font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase;
+            color: #9FC6E8; margin: 0 0 14px; font-weight: 500; }
+        .estim .montant { font-size: 30px; font-weight: 600; letter-spacing: -.03em;
+            color: #fff; font-variant-numeric: tabular-nums; line-height: 1.1;
+            text-shadow: 0 1px 0 rgba(0,0,0,.35); }
+        @media (min-width: 768px) { .estim .montant { font-size: 46px; } }
+        .estim .detail { font-size: 13.5px; line-height: 1.6; color: #B9D4EC;
+            margin: 16px auto 0; max-width: 460px; }
+        /* Tant qu'aucune superficie n'arrive par l'URL, la carte n'affiche AUCUN montant :
+           elle dit ce qui manque et pourquoi. Jamais de chiffre faux, même « pour l'exemple ». */
+        .estim.absente .montant { font-size: 19px; font-weight: 500; color: #D7E6F4; }
+
+        /* ⚠️ LA BASCULE MARCHE AUSSI AU DOIGT DEPUIS LE 27/08/2026 (Lilian : « la carte
+           pour l'estimation, je peux pas du tout la bouger avec mon doigt comme on peut
+           le faire avec la souris sur l'ordinateur »).
+           La coupure tactile qui vivait ici a donc été RETIRÉE, et avec elle le
+           `transform: none !important` : c'est lui qui interdisait tout mouvement sur
+           téléphone. Ne pas le remettre en croyant réparer quelque chose.
+           `touch-action: pan-y` est le seul garde-fou qui reste, et il est indispensable :
+           il laisse le glissement VERTICAL au défilement de la page (sinon le doigt reste
+           piégé dans la carte, exactement le blocage constaté sur le calendrier), et ne
+           nous garde que le glissement horizontal, celui qui fait basculer la plaque. */
+        .estim { touch-action: pan-y;
+            /* 🐛 MÊME CORRECTIF QUE SUR LA PAGE -15K (Lilian, 28/08/2026) : sur iOS, dès
+               qu'une carte arrondie porte une rotation 3D, Safari cesse d'appliquer le
+               rayon de bordure au découpage et ne coupe plus qu'un rectangle. Les nappes
+               de lumière débordent alors par les angles, en carré et en plus pâle. Le
+               masque radial force un vrai découpage arrondi et ne change rien ailleurs.
+               Ne pas le retirer tant que la carte tourne. */
+            -webkit-mask-image: -webkit-radial-gradient(#fff, #000);
+            mask-image: radial-gradient(#fff, #000); }
+        /* ⚠️ UNE SEULE COUPURE RESTE : le mouvement réduit demandé par le système.
+           Plus aucune bascule, plus aucune transition, ni à la souris ni au doigt. */
+        @media (prefers-reduced-motion: reduce) {
+            .estim { transform: none !important; transition: none !important; }
+            .estim .nappe { transition: none !important; }
+        }
+
+        /* ⚠️ `.suite-liste` A ÉTÉ SUPPRIMÉE le 27/08/2026. C'était la liste à grosses
+           pastilles bleues PLEINES, dans la bulle blanche. Lilian, le jour même : « les
+           checkbox, j'aime pas du tout ». Les quatre points vivent maintenant dans la
+           carte grise, avec des ronds cerclés au trait fin (`.liste-coches` plus bas).
+           Ne pas la réintroduire. */
+
+        /* Le bouton ferme la bulle « échange avec Franck » : le texte dit « le bouton
+           ci-dessous », il faut donc qu'il soit dessous, et centré comme le reste.
+           La mention d'avis se pose sous lui, sur sa propre ligne. Même géométrie que
+           `.adv-cta`, la pile bouton + mention des trois autres boutons de la page :
+           colonne centrée, 14px entre les deux. */
+        .suite-cta {
+            margin-top: 26px;
+            display: flex; flex-direction: column; align-items: center; gap: 14px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           27/08/2026 — LA PAGE PREND LA GRAMMAIRE DE `apercu-moins-15k`
+           Lilian, sur enregistrement : « je veux beaucoup m'inspirer de cette
+           page-là ». Tout ce qui suit est RECOPIÉ de `apercu-moins-15k/index.html`,
+           valeur par valeur, pas réécrit. Le préfixe change (`.page` là-bas), les
+           nombres non. Si l'un des deux fichiers bouge, l'autre doit suivre.
+           ═══════════════════════════════════════════════════════════════════════ */
+
+        /* ---------- LE HALO (source : `.page .hero .halo`) ----------
+           Deux masses floues qui dérivent lentement, jamais au même rythme, pour que le
+           fond ne soit pas un aplat mort sans devenir une animation qu'on remarque. */
+        .halo { position: absolute; inset: 0; z-index: 0; pointer-events: none;
+            /* ⚠️ LA COUPE EST OBLIGATOIRE (Lilian, 27/08/2026 : le halo passait par-dessus
+               le bandeau bleu et rendait son texte difficile à lire). Les deux masses sont
+               posées à `top: -190px` et `-130px` : sans elle, elles remontent hors du hero.
+               Source : `.page .hero { overflow: hidden; }` de la page -15K. */
+            overflow: hidden; }
+        .halo i { position: absolute; display: block; border-radius: 50%; filter: blur(72px); }
+        .halo i:nth-child(1) { width: 440px; height: 440px; background: rgba(62,142,180,.30);
+            top: -190px; left: 50%; margin-left: -340px; animation: haloA 15s ease-in-out infinite; }
+        .halo i:nth-child(2) { width: 360px; height: 360px; background: rgba(126,196,255,.34);
+            top: -130px; left: 50%; margin-left: 40px; animation: haloB 19s ease-in-out infinite; }
+        @keyframes haloA { 0%,100% { transform: translate(0,0) scale(1); }
+                           50%     { transform: translate(38px,26px) scale(1.1); } }
+        @keyframes haloB { 0%,100% { transform: translate(0,0) scale(1); }
+                           50%     { transform: translate(-34px,32px) scale(1.12); } }
+        /* ⚠️ SUR TÉLÉPHONE, LES DEUX MASSES SONT REDESSINÉES (Lilian, 27/08/2026 :
+           « on a l'impression que c'est un simple dégradé, ça fait pas vraiment le
+           même effet halo que sur la version ordinateur »).
+           La raison est géométrique, pas esthétique : sur un écran de 390px, un rond
+           de 440px posé à `margin-left: -340px` sort des deux côtés à la fois. On ne
+           voit alors QUE son milieu, c'est-à-dire un aplat bleu qui traverse l'écran,
+           et jamais sa courbe. Les ronds sont donc réduits pour tenir DANS l'écran,
+           et le flou baisse d'autant : c'est le bord courbe qui fait lire le halo.
+           Les positions restent calées sur le bloc du titre, pas sur la page.
+           Et les deux masses cessent d'être des ronds pour devenir des OVALES, plus hauts
+           que larges : sur un écran de téléphone, un rond assez étroit pour laisser du
+           blanc sur les côtés serait aussi trop court pour descendre derrière le texte.
+           L'ovale garde les deux, le bord courbe en bas et la descente derrière le titre.
+           ⚠️ LES DEUX OVALES SONT CALÉS SUR LA LARGEUR DU BLOC DE TEXTE (Lilian,
+              27/08/2026 : « rends le halo un peu plus grand pour qu'il fasse la largeur
+              de l'encadré du texte »). Le premier ouvre à gauche là où la phrase de
+              profil commence, le second ferme à droite là où elle finit, et il reste une
+              vingtaine de pixels de blanc de chaque côté : c'est ce blanc qui fait lire
+              une forme plutôt qu'un dégradé. Les élargir encore ferait ressortir les deux
+              masses par les bords de l'écran, et on retomberait sur la bande horizontale.
+           ⚠️ Ne pas « harmoniser » ces valeurs avec celles d'ordinateur : ce sont deux
+              largeurs d'écran différentes, elles ne peuvent pas partager un rayon. */
+        @media (max-width: 767px) {
+            .halo i { filter: blur(46px); }
+            .halo i:nth-child(1) { width: 250px; height: 270px;
+                top: -100px; margin-left: -175px;
+                background: rgba(62,142,180,.40); }
+            .halo i:nth-child(2) { width: 240px; height: 255px;
+                top: -80px; margin-left: -65px;
+                background: rgba(126,196,255,.46); }
+        }
+
+        /* ---------- LA PASTILLE (source : `.page .surtitre`) ----------
+           C'est la pastille « Votre diagnostic » de la page -15K, au caractère près.
+           Elle remplace le border-beam sombre qui portait « Félicitations » : sur un
+           hero clair, une capsule noire translucide se lisait grise et sale. */
+        .surtitre {
+            display: inline-flex; align-items: center; gap: 9px; vertical-align: top;
+            font-size: 12px; font-weight: 500; letter-spacing: .14em;
+            text-transform: uppercase; color: #0653A8;
+            margin: 0 0 18px; padding: 7px 16px 7px 13px;
+            background: #fff; border: 1px solid #D8DEE7; border-radius: 999px;
+            box-shadow: 0 2px 10px rgba(6,83,168,.06);
+            max-width: 100%;
+        }
+        /* Le rond plein avec son anneau clair : c'est lui que Lilian appelle « le petit rond ». */
+        .surtitre::before {
+            content: ""; flex: 0 0 auto; width: 7px; height: 7px; border-radius: 50%;
+            background: #0653A8; box-shadow: 0 0 0 4px rgba(6,83,168,.12);
+        }
+
+        /* ---------- ⚠️ LA FLÈCHE DE DÉFILEMENT N'EXISTE PLUS ----------
+           `.fleche-suite` (le chevron bleu animé recopié de `.page .suite`) a été
+           SUPPRIMÉE le 27/08/2026, dessin et style. Elle occupait 62px sous la carte
+           d'estimation et repoussait la première carte grise hors du premier écran.
+           Si elle devait revenir un jour, tout est encore en place sur
+           `apercu-moins-15k/index.html`, sous le nom `.suite`. */
+
+        /* ---------- LES SECTIONS NUES (source : `.page section.sect` + `.bloc`) ----------
+           Le rond, le titre et le sous-titre se posent SANS CADRE sur la page, exactement
+           comme la section « Ce qui fait le prix » de la page de référence. C'est la
+           demande du 27/08/2026 : la carte grise puis la bulle blanche disparaissent,
+           seul le contenu actionnable garde un contenant.
+           ⚠️ Les sélecteurs sont scopés en `.sect .bloc h2` et non en `h2` tout court :
+              cette page charge Tailwind, dont le preflight remet h1-h6 au corps du texte
+              et gagne à spécificité égale. Deux classes suffisent à passer devant. */
+        section.sect { padding: clamp(48px,7svh,86px) 0; background: #fff; }
+        section.sect + section.sect { padding-top: 0; }
+        .sect .bloc { width: 100%; max-width: 760px; margin: 0 auto; padding: 0 22px; }
+        .sect .bloc.large { max-width: 1152px; }
+        .sect .bloc.centre { text-align: center; }
+        .sect .bloc h2 {
+            font-size: 26px; font-weight: 500; letter-spacing: -.025em; line-height: 1.2;
+            margin: 0 0 18px; text-wrap: balance; color: #1D1D1F;
+        }
+        @media (min-width: 768px) { .sect .bloc h2 { font-size: 38px; } }
+        .sect .bloc.large h2 { max-width: 860px; margin-left: auto; margin-right: auto; }
+        .sect .bloc p { font-size: 16px; line-height: 1.65; color: #4b5563; margin: 0 0 22px;
+            text-wrap: pretty; }
+        .sect .bloc p:last-child { margin-bottom: 0; }
+        /* La phrase qui ANNONCE une liste ouvre un bloc, elle ne poursuit pas le
+           précédent : elle prend donc un écart plus large au-dessus (Lilian, 27/08/2026,
+           « là c'est trop collé »). */
+        /* ⚠️ EN PADDING, PAS EN MARGE : deux marges verticales voisines FUSIONNENT, la plus
+           grande l'emporte, et un `margin-top: 12px` sous un `margin-bottom: 22px` ne se
+           voyait pas du tout. Le remplissage, lui, s'ajoute. */
+        .sect .bloc p.ouvre-liste { padding-top: 12px; }
+        .sect .bloc p b { font-weight: 600; color: #1D1D1F; }
+        .sect .bloc.centre p { margin-left: auto; margin-right: auto; max-width: 620px; }
+        .sect .bloc h2 .mot-bleu { color: #0653A8; }
+
+        /* ---------- LES CARTES NUMÉROTÉES (source : `.page .facteurs`) ----------
+           Les quatre puces à coche de « Votre fiche projet » deviennent quatre cartes
+           numérotées 01 à 04 (Lilian, 27/08/2026). Grammaire reprise telle quelle :
+           grille de deux colonnes, gros chiffre en creux en bas à droite, liseré bleu
+           qui balaie le bord haut au survol, apparition en cascade par `--pause`. */
+        .facteurs { list-style: none; margin: 34px 0 0; padding: 0;
+            display: grid; gap: 16px; grid-template-columns: 1fr; text-align: left; }
+        @media (min-width: 768px) { .facteurs { grid-template-columns: 1fr 1fr; gap: 20px; } }
+        .facteurs li { position: relative; overflow: hidden; background: #fff;
+            border: 1px solid #D2D2D7; border-radius: 22px; padding: 26px 24px 34px;
+            box-shadow: 0 4px 20px rgba(0,0,0,.04);
+            transition: transform .5s cubic-bezier(.2,.8,.2,1), border-color .5s, box-shadow .5s; }
+        .facteurs li:hover { transform: translateY(-8px); border-color: #0653A8;
+            box-shadow: 0 20px 40px rgba(0,0,0,.08); }
+        .facteurs li::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg,#0653A8,#7EC4FF); transform: scaleX(0);
+            transform-origin: left; transition: transform .55s cubic-bezier(.2,.8,.2,1); }
+        .facteurs li:hover::before { transform: scaleX(1); }
+        .facteurs .num { position: absolute; right: 14px; bottom: -14px; font-size: 82px;
+            font-weight: 700; line-height: 1; color: rgba(6,83,168,.07); letter-spacing: -.05em;
+            font-variant-numeric: tabular-nums; pointer-events: none; user-select: none; }
+        .facteurs .txt { position: relative; display: block; font-size: 16.5px; line-height: 1.45;
+            font-weight: 500; color: #1D1D1F; }
+        /* L'apparition au défilement (source : `.page .reveal`). La classe `avant-vue`
+           n'est posée QUE par le script : sans JavaScript, les cartes sont visibles. */
+        .facteurs li.avant-vue { opacity: 0; transform: translateY(22px);
+            transition: opacity .75s cubic-bezier(.2,.8,.2,1) var(--pause,0s),
+                        transform .75s cubic-bezier(.2,.8,.2,1) var(--pause,0s); }
+        .facteurs li.avant-vue.vu { opacity: 1; transform: none; }
+
+        /* ---------- LA CARTE GRISE « RÉSERVEZ VOTRE APPEL » ----------
+           Elle porte ce qui SITUE l'appel : qui est Franck, et ce qu'il fait ensuite.
+           Fond gris très clair, grands coins arrondis, aucune bordure : elle se distingue
+           de la bulle blanche par sa valeur, pas par un trait. Deux colonnes sur
+           ordinateur, une seule en dessous de 768px. */
+        .carte-grise {
+            background: #F2F3F5;
+            border-radius: 28px;
+            padding: 26px 22px 28px;
+            margin: 34px auto 0;
+            text-align: left;
+        }
+        @media (min-width: 768px) { .carte-grise { padding: 34px 38px 38px; } }
+        /* La pastille blanche se pose en haut à gauche, alignée sur le texte de la
+           colonne de gauche. C'est le `.surtitre` de la page -15K, sans changement. */
+        .carte-grise > .surtitre { margin-bottom: 22px; }
+        .carte-grise-grille {
+            display: grid; grid-template-columns: 1fr; gap: 24px;
+            align-items: start;
+        }
+        @media (min-width: 768px) {
+            .carte-grise-grille { grid-template-columns: 1fr 1fr; gap: 48px; }
+        }
+        /* L'accroche est « en gros » : c'est elle qui porte le nom de Franck et sa
+           fonction, donc la légitimité de l'appel. */
+        /* ⚠️ TROIS CLASSES, ET C'EST NÉCESSAIRE. La carte grise vit dans `.sect .bloc.centre`,
+           dont les règles `p` pèsent deux classes plus un élément. Un sélecteur plus court
+           perdait contre elles, et l'accroche restait à 16px avec la marge des paragraphes
+           de section. */
+        .sect .carte-grise .carte-grise-accroche {
+            font-size: 19px; line-height: 1.45; font-weight: 400; color: #1D1D1F;
+            margin: 0; max-width: none; text-wrap: pretty;
+        }
+        @media (min-width: 768px) {
+            .sect .carte-grise .carte-grise-accroche { font-size: 24px; line-height: 1.35; }
+        }
+        .carte-grise-accroche b { font-weight: 600; }
+        /* LES QUATRE POINTS. Le rond est CERCLÉ, au trait fin, avec une coche au centre
+           (Lilian, 27/08/2026 : plus de pastilles bleues pleines). Le dessin tient dans
+           une URL de données : aucun fichier à déployer, rien à charger. */
+        .liste-coches { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+        .liste-coches li {
+            position: relative; padding-left: 38px;
+            font-size: 16px; line-height: 1.5; color: #4b5563;
+        }
+        .liste-coches li::before {
+            content: ""; position: absolute; left: 0; top: 0;
+            width: 24px; height: 24px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230653A8' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9.3'/%3E%3Cpath d='M8.2 12.4 10.9 15.1 15.9 9.5'/%3E%3C/svg%3E") center / 24px 24px no-repeat;
+        }
+
+        /* ---------- LA CARTE AU FILET BLEU ----------
+           ⚠️ CET EFFET N'EXISTE PAS SUR LA PAGE -15K, et il faut le savoir avant de le
+              « corriger ». Là-bas, `.facteurs li::before` est un liseré de 3px qui balaie
+              le bord HAUT seulement, il ne fait pas le tour. Lilian a décrit, lui, « un
+              long filet bleu qui parcourt le contour et finit par entourer complètement
+              la carte ».
+              Ce filet-là existe déjà, mais SUR CETTE PAGE-CI : c'est le mécanisme du
+              `.border-beam-container`, un conic-gradient qui tourne derrière une bordure
+              d'un pixel. Les deux ont donc été composés, et rien n'a été inventé :
+                - `::before` = le filet qui tourne, emprunté au border-beam ;
+                - `::after`  = le contour bleu plein, qui se révèle une seconde plus tard,
+                  ce qui donne le « finit par entourer complètement ».
+           Le fond, la bordure et l'ombre au repos sont ceux de `.facteurs li`. */
+        /* ⚠️ 27/08/2026 : CE BLOC EST DEVENU LA SECONDE CARTE GRISE. Ses coins (29 dehors,
+           28 dedans), sa largeur et sa marge haute sont désormais ceux de `.carte-grise`,
+           pour que les deux cartes se lisent comme une paire. Le mécanisme du filet, lui,
+           n'a pas changé d'une ligne. */
+        /* ⚠️⚠️ LE FILET ANIMÉ A ÉTÉ RETIRÉ DE CETTE CARTE LE 27/08/2026, à la demande
+           de Lilian, et le nom de la classe est désormais trompeur : IL N'Y A PLUS DE
+           FILET. « Cette carte grise ne doit pas avoir d'animation. Cette animation est
+           à destination des avis de la section NOS CLIENTS PARLENT DE NOUS. »
+           Ce qui a disparu : le soulèvement de 6px au survol, le conic-gradient qui
+           tournait derrière la bordure (`::before`), et le contour bleu qui se révélait
+           après un tour (`::after`). Le repos, lui, n'a pas bougé d'un pixel : c'est le
+           même gris, les mêmes coins, la même ombre douce. Le `padding: 1px` et les deux
+           rayons (29 dehors, 28 dedans) restent, sinon la carte se décale de 1px et cesse
+           d'être alignée sur celle du dessus.
+           ⚠️ NE PAS LA « RÉPARER » en croyant à une régression : l'effet vit toujours sur
+              les cartes numérotées 01-04 (`.facteurs`) et sur les cartes d'avis, où il a
+              sa place. Ici, non. */
+        .carte-filet {
+            position: relative; overflow: hidden;
+            border-radius: 29px; padding: 1px;
+            margin: 30px auto 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,.04);
+        }
+        /* Le fond : le gris et les coins de `.carte-grise`, plus aucune bordure au repos.
+           Le padding est celui de la carte du dessus lui aussi, aux mêmes deux paliers. */
+        .carte-filet-fond {
+            position: relative; z-index: 1;
+            background: #F2F3F5; border-radius: 28px;
+            padding: 26px 22px 28px; text-align: left;
+        }
+        @media (min-width: 768px) { .carte-filet-fond { padding: 34px 38px 38px; } }
+        /* 22px entre deux paragraphes, pas 16 : dans une carte, deux paragraphes trop
+           voisins se lisent comme un pavé unique, ce qui était le reproche du 27/08/2026. */
+        .carte-filet-fond p { font-size: 16px; line-height: 1.7; color: #4b5563; margin: 0 0 22px;
+            text-wrap: pretty; }
+        .carte-filet-fond p:last-child { margin-bottom: 0; }
+        /* ⚠️ `text-wrap: pretty` EST COUPÉ SOUS 768px DANS LES DEUX CARTES GRISES
+           (Lilian, 27/08/2026 : « fais en sorte que la largeur du texte soit un peu plus
+           importante, et qu'elle soit la même que pour "Vous donner son avis technique et
+           esthétique" »).
+           Ce n'était pas une largeur trop faible, c'était l'algorithme de retour à la
+           ligne : Safari applique `pretty` en équilibrant TOUTES les lignes du
+           paragraphe, pas seulement la dernière. Sur un écran étroit, chaque ligne
+           s'arrêtait donc bien avant le bord droit, et les phrases paraissaient rangées
+           dans une colonne plus mince que la liste à coches d'à côté, qui n'a jamais
+           porté `pretty`, elle. En le retirant, le texte remplit sa ligne jusqu'au bord :
+           les deux blocs retrouvent la même largeur, sans qu'aucune largeur soit écrite.
+           Sur ordinateur `pretty` reste en place, il y est utile et invisible. */
+        @media (max-width: 767px) {
+            .sect .carte-grise .carte-grise-accroche,
+            .sect .bloc .carte-filet-fond p { text-wrap: wrap; }
+        }
+        /* ⚠️ TROIS CLASSES SUR LA SECONDE CARTE, ET C'EST OBLIGATOIRE. Écrite
+           `.carte-filet-fond p`, la règle perdait contre `.sect .bloc p`, qui pose
+           `text-wrap: pretty` deux classes plus haut et l'emportait en silence : la
+           première carte s'élargissait, la seconde restait étroite (Lilian, 27/08/2026 :
+           « tu n'as pas agrandi la largeur du texte »). Ne pas raccourcir ce sélecteur. */
+        .carte-filet-fond b { font-weight: 600; color: #1D1D1F; }
+        /* L'AGENCEMENT EN DEUX COLONNES (Lilian, 27/08/2026, « à voir comment on
+           agencerait le texte dans l'autre carte grise »). Il reprend la grammaire de la
+           carte du dessus : même grille, même gouttière de 48px, texte à gauche.
+           À droite, le bouton et sa mention, centrés verticalement sur les deux phrases :
+           c'est ce vis-à-vis qui remplace l'empilement centré que Lilian trouvait « posé ».
+           Sous 768px, une seule colonne : le texte, puis le bouton. */
+        .carte-filet-grille {
+            display: grid; grid-template-columns: 1fr; gap: 26px; align-items: center;
+        }
+        @media (min-width: 768px) {
+            .carte-filet-grille { grid-template-columns: 1.3fr 1fr; gap: 48px; }
+        }
+        /* ⚠️ QUATRE CLASSES, ET C'EST NÉCESSAIRE, exactement comme pour l'accroche de la
+           carte du dessus. La carte vit dans `.sect .bloc.centre`, dont la règle
+           `p { margin-left: auto; margin-right: auto; max-width: 620px }` pèse trois
+           classes : un sélecteur plus court perdait, et les phrases se recentraient dans
+           leur colonne au lieu de rester calées à gauche. */
+        .sect .bloc.centre .carte-filet-texte p { margin-left: 0; margin-right: 0; max-width: none; }
+        /* Dans la grille, le bouton n'a plus rien au-dessus de lui à écarter : la
+           gouttière de la grille fait déjà le travail. */
+        .carte-filet-grille > .suite-cta { margin-top: 0; }
+        /* ---------- ⚠️ LES MÊMES ANIMATIONS, MAIS AU DÉFILEMENT SUR TÉLÉPHONE ----------
+           Lilian, 27/08/2026, enregistrement : « les cartes qui sont sur l'ordinateur
+           sont censées avoir une petite animation où le contour devient bleu, et pour
+           celles qui ont un numéro, un long filet qui s'affiche quand on passe la souris
+           dessus. Sur la version mobile, il n'y a rien qui se passe, ça bugue. »
+           Ce n'est pas un bug : un écran tactile n'a pas de survol, donc `:hover` ne se
+           déclenche jamais. Sur téléphone, c'est LE DÉFILEMENT qui joue le rôle de la
+           souris : la carte s'anime quand elle passe au milieu de l'écran, et se repose
+           quand elle en sort. Le script qui pose `.actif` est en bas de page.
+           Les valeurs sont recopiées de `:hover`, pas réinventées : si l'une des deux
+           bouge un jour, l'autre doit suivre.
+           ⚠️ `.actif.actif` EST VOLONTAIRE, CE N'EST PAS UNE COQUILLE. La classe est
+              écrite deux fois pour peser aussi lourd que `.facteurs li.avant-vue.vu`,
+              qui pose `transform: none` en fin d'apparition. Sans ce doublement, le
+              soulèvement de 8px était écrasé et la carte ne bougeait pas d'un pixel. */
+        /* ⚠️ DEUX CLASSES, ET ELLES NE FONT PAS LA MÊME CHOSE :
+             · `.actif` est posée AU DÉFILEMENT, quand la carte traverse le milieu de
+               l'écran. Elle ne concerne que les cartes numérotées ;
+             · `.touche` est posée AU DOIGT, sur la carte qu'on touche, et elle s'efface
+               900 ms après qu'on l'a relâchée. Elle concerne les cartes numérotées ET les
+               cartes d'avis (Lilian, 27/08/2026 : « les avis, quand je passe le doigt
+               dessus, ils devraient s'animer avec le petit contour qui devient bleu comme
+               ça le fait sur l'ordinateur »).
+           Elles sont séparées exprès : deux mécanismes qui posent la même classe se
+           l'arrachent, l'un l'enlevant sous le doigt de l'autre. Le rendu, lui, est le
+           même, d'où les sélecteurs groupés ci-dessous.
+           ⚠️ `.actif.actif` et `.touche.touche` sont doublées volontairement, ce ne sont
+              pas des coquilles : il faut peser trois classes pour passer devant
+              `.facteurs li.avant-vue.vu` et `.reveal-avis.reveal-in`, qui posent tous
+              deux `transform: none` en fin d'apparition. */
+        @media (hover: none) {
+            .facteurs li.actif.actif,
+            .facteurs li.touche.touche { transform: translateY(-8px); border-color: #0653A8;
+                box-shadow: 0 20px 40px rgba(0,0,0,.08); }
+            .facteurs li.actif::before,
+            .facteurs li.touche::before { transform: scaleX(1); }
+
+            /* LES CARTES D'AVIS. Valeurs recopiées de `:hover` (l. 194-203), pas
+               réinventées : le soulèvement, le contour bleu, l'ombre propre à chacune
+               des deux sections, et le léger zoom de la photo. */
+            .bento-card.touche.touche { transform: translateY(-8px); border-color: #0653A8; }
+            .avis-1 .bento-card.touche { box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+            .avis-2 .bento-card.touche { box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+            .bento-card.touche .img-container img { transform: scale(1.05); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .halo i { animation: none !important; }
+            .facteurs li:hover,
+            .facteurs li.actif.actif,
+            .facteurs li.touche.touche { transform: none; }
+            .bento-card:hover, .bento-card.touche.touche { transform: none; }
+        }
+
+        /* ---------- LE HERO SE RÉORDONNE POUR LA VARIANTE VIDÉO ----------
+           `.hero-bulle` devient une colonne flex : la variante `?video=1` n'a alors
+           qu'à montrer le bloc vidéo, l'ordre des enfants faisant le reste. Aucun
+           déplacement de nœud dans le DOM, donc aucun risque de casser un script. */
+        .hero-bulle { display: flex; flex-direction: column; }
+        .hero-bulle > .surtitre { order: 1; align-self: center; }
+        /* ⚠️ NE JAMAIS RETIRER CE `width: 100%`. Ces quatre enfants ont des marges
+           latérales `auto` : en flex, une marge transversale `auto` ANNULE l'étirement
+           et l'élément se réduit à son contenu. C'est ce qui a fait rétrécir la carte
+           d'estimation (880px → 508px) et le titre (880px → 630px) le 27/08/2026,
+           régression signalée par Lilian le jour même. La pastille, elle, doit rester
+           collée à son texte : elle garde son `align-self: center` et pas de largeur. */
+        .hero-bulle > .hero-ttl,
+        .hero-bulle > .hero-chapo,
+        .hero-bulle > .bloc-video,
+        .hero-bulle > .estim-scene { width: 100%; }
+        .hero-bulle > .hero-ttl { order: 2; }
+        .hero-bulle > #hero-chapo { order: 3; }
+        .hero-bulle > .bloc-video { order: 4; }
+        .hero-bulle > .estim-scene { order: 5; }
+        /* L'air demandé entre le titre et la carte (Lilian, 27/08/2026 : « un peu d'air
+           après le titre, puis la carte, plus haut qu'aujourd'hui »). */
+        .hero-bulle > .estim-scene { margin-top: var(--gap-s); }
+        .bloc-video[hidden] { display: none; }
+        /* ⚠️ SUR TÉLÉPHONE, LA PHRASE QUI ANNONCE LA VIDÉO NE S'AFFICHE PAS (Lilian,
+           27/08/2026, et pour la version vidéo uniquement). Sur un petit écran, elle
+           repoussait le lecteur sous le pli : on lisait l'annonce d'une vidéo sans voir
+           la vidéo. Sur ordinateur elle reste, la hauteur y suffit.
+           Elle est MASQUÉE, pas supprimée : le jour du tournage, la version ordinateur
+           en a toujours besoin. */
+        @media (max-width: 767px) { .bloc-video > .hero-texte { display: none; } }
+        .bloc-video { margin-bottom: var(--gap-m); }
+        /* Le cadre gris de démonstration, si le fichier de VSL provisoire venait à
+           manquer : il tient exactement la place du lecteur, en 16:9. */
+        .video-cadre { width: 100%; aspect-ratio: 16 / 9; max-height: 36svh; margin: 0 auto;
+            border-radius: 12px; background: #E3E7EC; display: flex; align-items: center;
+            justify-content: center; color: #8A94A0; font-size: 13px; }
     </style>
 </head>
 
@@ -452,60 +1044,245 @@
          1. HEADER — Réservez votre appel
          ========================================================= -->
     <!-- Bandeau de préqualification : il dit à qui s'adresse ce qui suit, avant même le
-         hero. Formulation validée par Lilian le 15/08/2026. -->
-    <div class="bandeau-diagnostic">
-        Diagnostic réservé aux propriétaires ayant un projet de pergola sur mesure.
+         hero. Formulation validée mot pour mot par Lilian le 27/08/2026 ; elle remplace
+         « Diagnostic réservé aux propriétaires… » du 15/08, tombée avec l'angle. -->
+    <div class="bandeau-prequalification">
+        Conception et estimation réservées aux propriétaires ayant un projet de pergola sur mesure
     </div>
 
     <section class="hero-section">
+        <!-- LE HALO, recopié de la page -15K. Décoratif, donc invisible aux lecteurs
+             d'écran. Il se pose juste sous le bandeau (Lilian, 27/08/2026). -->
+        <div class="halo" aria-hidden="true"><i></i><i></i></div>
+
         <div class="hero-bulle">
-            <!-- Le badge portait « Demande confirmée », registre collecte. Il porte
-                 maintenant la félicitation nominative, avec son point d'exclamation
-                 (Lilian, 16/08/2026). Sans ?prenom= dans l'URL, il affiche
-                 « Félicitations ! » seul : le trafic Fillout actuel n'envoie pas de prénom. -->
-            <div class="border-beam-container">
-                <div class="border-beam-inner">
-                    <span style="letter-spacing: 0.2em;" class="text-[10px] font-medium uppercase text-white leading-none" id="badge-felicitations">
-                        Félicitations !
-                    </span>
+            <!-- LA PASTILLE : c'est celle qui porte « Votre diagnostic » sur la page -15K,
+                 reprise au caractère près (`.surtitre`). Elle remplace le border-beam
+                 sombre qui portait « Félicitations », puis « votre projet a été estimé ».
+                 Le prénom vient de l'URL, injecté en textContent par le script en bas de
+                 page ; sans ?prenom= elle affiche « Votre projet a été estimé ». -->
+            <span class="surtitre" id="badge-estimation">Votre projet a été estimé</span>
+
+            <!-- ⚠️ LE GROS TITRE « [Prénom], votre projet a bien été pris en compte » A ÉTÉ
+                 SUPPRIMÉ le 27/08/2026, à la demande de Lilian : « on s'en fout, on dit
+                 déjà "Jean, votre projet a été estimé" dans la pastille ». Les deux
+                 disaient la même chose à trois centimètres d'écart.
+                 Ne pas le réintroduire sans décision de Lilian. Le CSS `.hero-ttl` reste
+                 en place, il ne coûte rien et sert encore à la variante vidéo. -->
+
+            <!-- LA PHRASE DE PROFIL. Elle était le gros titre du 16/08 au 26/08, puis le
+                 chapô sous le titre ; depuis la suppression du titre, elle est LE PREMIER
+                 TEXTE de la page, juste sous la pastille. C'est là que le lecteur doit se
+                 reconnaître.
+                 ⚠️ Elle GARDE SA COULEUR (#4b5563), elle ne passe pas en noir : demande
+                    explicite de Lilian le 27/08/2026. Seule sa taille a gagné 2px.
+                 Le texte écrit ici est la moitié commune aux trois profils : sans ?profil=
+                 dans l'URL, rien ne sonne faux. Le script en bas de page la complète. -->
+            <p class="hero-chapo" id="hero-chapo">Vous faites partie des personnes qui aiment <span class="mot-bleu">profiter de leur terrasse</span>.</p>
+
+            <!-- LE BLOC VIDÉO. Masqué par défaut, montré par `?video=1` (Lilian veut voir
+                 les deux versions, 27/08/2026). Le jour du tournage, il suffira de retirer
+                 l'attribut `hidden` et le paramètre d'URL n'aura plus de raison d'être.
+                 L'ordre demandé pour cette version est obtenu par `order` en CSS :
+                 pastille → titre → phrase de vidéo → vidéo → bouton → carte → flèche.
+                 Et la section « l'échange avec Franck » disparaît, la vidéo la remplace. -->
+            <div class="bloc-video" id="bloc-video" hidden>
+                <div class="hero-texte">
+                    <p>
+                        Franck vous explique en vidéo les <b>3 points qu'il regarderait en priorité</b>
+                        pour votre projet.
+                    </p>
+                </div>
+                <!-- Vidéo PROVISOIRE (Villa Impian) en attendant le tournage de la vraie
+                     VSL par Franck. À remplacer, même chemin, même nom. Si le fichier
+                     manque, le script pose à la place un cadre gris à la bonne taille. -->
+                <video class="hero-video" id="hero-video" controls playsinline preload="metadata" src="video/vsl-provisoire.mp4"></video>
+                <div class="suite-cta" style="margin-top:0">
+                    <a href="reserver/" class="btn-black btn-appel js-reserver">
+                        <span class="btn-ligne"><span class="btn-libelle"><span class="btn-court">J'échange avec Franck</span><span class="btn-long">J'échange avec Franck sur mon projet</span></span>
+                            <span class="btn-fleche">➱</span>
+                        </span>
+                        <span class="btn-gratuit">100% gratuit · sans engagement</span>
+                    </a>
+                    <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
                 </div>
             </div>
 
-            <!-- Le TITRE est la phrase de PROFIL depuis le 16/08/2026 (Lilian) : c'est
-                 la page qui reconnaît le lecteur, donc c'est la première chose qu'il lit.
-                 Il est rempli par le script en bas de page selon ?profil=. Sans paramètre
-                 il garde le texte écrit ici, qui est la moitié commune aux trois profils.
-                 Pas de point final : c'est un titre, sa règle du 15/08 l'interdit. -->
-            <h1 class="hero-ttl" id="hero-titre">
-                Vous faites partie des personnes qui aiment <span class="mot-bleu">profiter de leur terrasse</span>
-            </h1>
-
-            <div class="hero-texte">
-                <p>
-                    Franck vous explique les <b>3 points qu'il regarderait en priorité</b>
-                    pour votre projet.
-                </p>
+            <!-- L'ESTIMATION EN CLAIR (Lilian, 27/08/2026), REMONTÉE : un peu d'air après
+                 le titre, et la carte arrive. « La carte, j'adore » : elle ne change pas.
+                 ⚠️ AUCUN MONTANT N'EST ÉCRIT DANS LE HTML. La carte dit ce qui lui manque
+                 tant que le calcul ne peut pas se faire, et le calcul lui-même est en bas
+                 de page. Le barème (870 / 970 € HT) attend la confirmation de Franck.
+                 `.estim-scene` porte la perspective, `.estim` bascule dedans. -->
+            <div class="estim-scene" id="estim-scene">
+                <div class="estim absente" id="estimation">
+                    <span class="nappe" aria-hidden="true"></span>
+                    <!-- « BUDGET ESTIMÉ », et rien d'autre (Lilian, 27/08/2026). -->
+                    <p class="intitule" id="estim-intitule">Budget estimé</p>
+                    <div class="montant" id="estim-montant">Il nous manque la superficie de votre projet</div>
+                    <p class="detail" id="estim-detail">Sans elle, nous ne pouvons pas chiffrer votre projet à distance : nous l'estimerons donc avec vous pendant l'échange, puis Franck la précisera en venant voir votre terrasse.</p>
+                </div>
             </div>
 
-            <!-- VSL — vidéo PROVISOIRE (Villa Impian) en attendant le tournage de la vraie
-                 VSL par Franck. À remplacer, même chemin, même nom. -->
-            <video class="hero-video" controls playsinline preload="metadata" src="video/vsl-provisoire.mp4"></video>
+            <!-- ⚠️ LA FLÈCHE DE DÉFILEMENT A ÉTÉ SUPPRIMÉE le 27/08/2026 (Lilian : « ça tu
+                 le supprimes, ça fait tout remonter un petit peu, au moins cette carte
+                 grise elle remonte et on la voit »). Elle valait 62px de hauteur sous la
+                 carte d'estimation : 36px de marge haute (clamp 26/4svh/40) et 26px de
+                 dessin. C'est cette hauteur-là qui empêchait la première carte grise de
+                 se deviner en bas du premier écran.
+                 Ne pas la réintroduire sans décision de Lilian. -->
+        </div>
+    </section>
 
-            <div class="flex flex-col items-center">
-                <a href="reserver/" class="btn-black btn-appel js-reserver">
-                    <span class="btn-ligne"><span class="btn-libelle"><span class="btn-court">J'échange avec Franck</span><span class="btn-long">J'échange avec Franck sur mon projet</span></span>
-                        <span class="btn-fleche">➱</span>
-                    </span>
-                    <span class="btn-gratuit">100% gratuit · sans engagement</span>
-                </a>
+    <!-- =========================================================
+         2. LA SUITE — l'échange avec Franck, puis la fiche projet
+         Écrite le 27/08/2026. Tant que la VSL n'est pas tournée, ce sont ces deux
+         sections qui portent la valeur de la page : la première explique pourquoi
+         l'appel vaut la peine, la seconde donne envie de lire la fiche.
+         Leur habillage vient de la page -15K : sections NUES (rond + titre + sous-titre
+         sans cadre, comme « Ce qui fait le prix »), carte au filet bleu pour le seul
+         bloc actionnable, cartes numérotées pour la fiche.
+         ⚠️ ORDRE : Franck D'ABORD, la fiche ENSUITE (Lilian, 27/08/2026).
+         ⚠️ Rien ici n'est inventé. Le contenu de la fiche est celui de
+         `saas-interne/Fillout/COPY-FICHE-PROJET.md` (I · votre projet,
+         II · nos conseils, III · la suite) et du mail réellement envoyé
+         (`app-quiz/lib/notify/template-fiche.ts`). Ce que fait Franck sur place
+         vient de l'avis Google de Mike Blay, cité dans cette même fiche.
+         🔴 ON NE PARLE PLUS DE WHATSAPP SUR CETTE PAGE (Lilian, 27/08/2026).
+         ========================================================= -->
+    <!-- ---------- L'ÉCHANGE AVEC FRANCK ----------
+         27/08/2026 : le rond, le titre et le sous-titre SORTENT de la carte et se posent
+         nus sur la page, exactement comme la section « Ce qui fait le prix » de la page
+         -15K. Seul ce qui est actionnable garde un contenant : le texte, ses puces, le
+         bouton et la mention d'avis. Cette carte-là porte le filet bleu, et PAS de numéro
+         (demande explicite). -->
+    <section class="sect sect-franck apple-font" id="sect-franck">
+        <div class="bloc large centre">
+            <span class="surtitre">L'échange avec Franck</span>
+            <h2>L'appel va plus loin qu'une <span class="mot-bleu">estimation</span></h2>
+            <p>
+                Une estimation se calcule à distance, un projet se dessine et se conçoit
+                sur place.
+            </p>
+
+            <!-- LA CARTE GRISE. Elle sort de la bulle blanche l'accroche et les quatre
+                 points (Lilian, 27/08/2026 : « il y a trop de texte dans la carte, ça fait
+                 vraiment trop compact »). Deux colonnes : qui est Franck à gauche, ce
+                 qu'il fait ensuite à droite. Aucun mot n'a été réécrit.
+                 ⚠️ Les ronds sont CERCLÉS au trait fin, plus jamais des pastilles bleues
+                 pleines : « les checkbox, j'aime pas du tout ». -->
+            <div class="carte-grise">
+                <span class="surtitre">Réservez votre appel</span>
+                <div class="carte-grise-grille">
+                    <p class="carte-grise-accroche">
+                        Avec <b>Franck Joncheray</b>, le concepteur et directeur de
+                        Teck Aménagement, en cliquant sur le bouton ci-dessous.<br>
+                        Il pourra alors :
+                    </p>
+                    <ul class="liste-coches">
+                        <li>Venir voir votre terrasse,</li>
+                        <li>Vous donner son avis technique et esthétique,</li>
+                        <li>Vous proposer des idées,</li>
+                        <li>Et vous établir un vrai devis.</li>
+                    </ul>
+                </div>
             </div>
+
+            <!-- ⚠️ LA BULLE BLANCHE EST DEVENUE UNE SECONDE CARTE GRISE le 27/08/2026.
+                 Reproche de Lilian : « ça va pas du tout, texte là, texte là, bouton,
+                 c'est vraiment comme du texte posé, pas très beau ». Sa demande : « on
+                 remet un autre rond gris, on met le texte et juste en dessous le bouton
+                 avec cette mention ».
+                 Ce qui a changé, et RIEN D'AUTRE :
+                   - le fond blanc bordé devient le gris #F2F3F5 sans bordure, aux mêmes
+                     coins de 28px et à la même largeur que la carte du dessus ;
+                   - les deux phrases passent À GAUCHE ET ALIGNÉES À GAUCHE. C'est le
+                     centrage qui produisait l'effet « texte posé », pas les phrases ;
+                   - le bouton et sa mention passent À DROITE, centrés verticalement.
+                 Le copy n'a pas bougé d'un mot, l'ordre de lecture non plus.
+                 ⚠️ PAS DE TROISIÈME PASTILLE. La section en porte déjà deux à la suite
+                    (« L'échange avec Franck », puis « Réservez votre appel »).
+                 ⚠️ Le filet bleu qui fait le tour au survol EST CONSERVÉ : c'est un effet
+                    validé, il ne se voit qu'au survol et ne pose donc aucune bordure au
+                    repos. C'est toujours le seul bloc actionnable de la page. -->
+            <div class="carte-filet">
+                <div class="carte-filet-fond">
+                    <div class="carte-filet-grille">
+                        <div class="carte-filet-texte">
+                            <p>
+                                Nous vous demandons de choisir un créneau pour une raison simple :
+                                vous savez mieux que nous à quel moment vous serez vraiment
+                                disponible pour en parler.
+                            </p>
+                            <p>
+                                Franck vous appelle dans tous les cas, soit au créneau que vous
+                                réservez ici, soit à un moment que vous convenez ensemble.
+                            </p>
+                        </div>
+                        <!-- LE BOUTON.
+                             ⚠️ C'est le PREMIER `.btn-fleche` du document quand la variante
+                             vidéo est éteinte, et c'est le seul que le script de centrage de
+                             la flèche mesure (il travaille en querySelector). Les autres
+                             boutons héritent de sa valeur. Le déplacer plus bas dans le
+                             document changerait donc le calage de TOUS les boutons.
+                             ⚠️ LA MENTION 4,9★ REVIENT SOUS LES BOUTONS (Lilian, 27/08/2026).
+                             Elle avait été RETIRÉE des boutons le 06/08/2026 pour ne vivre que
+                             sur les cartes d'avis : cette règle est PÉRIMÉE, ne pas la
+                             réappliquer. « +140 avis » est sourcé, ne jamais l'arrondir. -->
+                        <div class="suite-cta">
+                            <a href="reserver/" class="btn-black btn-appel js-reserver">
+                                <span class="btn-ligne"><span class="btn-libelle"><span class="btn-court">J'échange avec Franck</span><span class="btn-long">J'échange avec Franck sur mon projet</span></span>
+                                    <span class="btn-fleche">➱</span>
+                                </span>
+                                <span class="btn-gratuit">100% gratuit · sans engagement</span>
+                            </a>
+                            <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ---------- VOTRE FICHE PROJET ----------
+         Même traitement : rond, titre et sous-titre nus, sans carte. Et les quatre puces
+         à coche deviennent quatre CARTES NUMÉROTÉES 01 à 04 (Lilian, 27/08/2026), dans la
+         grammaire de `.facteurs` de la page -15K. Le texte des quatre ne change pas. -->
+    <section class="sect apple-font">
+        <div class="bloc large centre">
+            <span class="surtitre">Votre fiche projet</span>
+            <h2>Le détail de votre projet part dans votre <span class="mot-bleu">boîte mail</span></h2>
+            <p>
+                Votre fiche projet reprend ce que vos réponses nous apprennent, et ce que
+                nous en ferions si votre projet était le nôtre.
+            </p>
+            <p class="ouvre-liste"><b>Dans votre fiche projet, vous retrouverez :</b></p>
+
+            <ul class="facteurs">
+                <li class="reveal-suite">
+                    <span class="num">01</span>
+                    <span class="txt">Votre projet tel que vous nous l'avez décrit, récapitulé noir sur blanc,</span>
+                </li>
+                <li class="reveal-suite" style="--pause:.09s">
+                    <span class="num">02</span>
+                    <span class="txt">Ce que vos réponses nous apprennent de votre façon de vivre votre extérieur,</span>
+                </li>
+                <li class="reveal-suite" style="--pause:.18s">
+                    <span class="num">03</span>
+                    <span class="txt">Les conseils que nous donnerions à quelqu'un qui a exactement votre projet,</span>
+                </li>
+                <li class="reveal-suite" style="--pause:.27s">
+                    <span class="num">04</span>
+                    <span class="txt">Et des exemples de nos réalisations, en images.</span>
+                </li>
+            </ul>
         </div>
     </section>
 
     <!-- =========================================================
          5. AVIS CLIENTS — « Nos clients / Parlent de nous »
          ========================================================= -->
-    <div class="avis-1 apple-font pt-2 pb-24 px-6 md:px-4">
+    <div class="avis-1 apple-font pt-16 md:pt-24 pb-24 px-6 md:px-4">
         <div class="max-w-6xl mx-auto">
 
             <div class="mb-10 text-center -mt-2">
@@ -1016,10 +1793,12 @@
     </script>
 
     <script>
-    /* Personnalisation PROFIL — c'est le TITRE de la page depuis le 16/08/2026.
+    /* Personnalisation PROFIL — la phrase remplit le CHAPÔ sous le titre depuis le
+       27/08/2026. Elle a été le gros titre du 16/08 au 26/08 ; le titre porte maintenant
+       « Jean, votre projet a bien été pris en compte », et elle se pose juste dessous.
        L'URL de redirection du quiz porte ?profil=receveurs|cocon|quotidien. Sans
-       paramètre (trafic Fillout actuel), le titre écrit dans le HTML reste en place :
-       c'est la moitié commune aux trois profils, donc rien ne sonne faux.
+       paramètre, le chapô garde le texte écrit dans le HTML, qui est la moitié commune
+       aux trois profils, et rien ne sonne faux.
 
        Le bleu tombe sur ce qui DISTINGUE le profil, jamais sur la partie commune : c'est
        le passage où le lecteur doit se reconnaître. Il reste court exprès, un surlignage
@@ -1049,20 +1828,366 @@
         var profil = DIT[q.get("profil")];
         if (!profil) return;
 
-        var titre = document.getElementById("hero-titre");
-        if (!titre) return;
+        /* La cible est le CHAPÔ, plus le titre depuis le 27/08/2026. */
+        var chapo = document.getElementById("hero-chapo");
+        if (!chapo) return;
 
         /* Reconstruit à la main plutôt qu'en innerHTML d'une chaîne assemblée : la
-           structure reste explicite et rien d'extérieur ne peut s'y glisser. */
-        titre.textContent = "Vous faites partie des personnes qui " + profil.commun;
+           structure reste explicite et rien d'extérieur ne peut s'y glisser.
+           Le point final est un nœud de texte : ce n'est plus un titre, c'est une
+           phrase de corps de texte, elle prend donc son point. */
+        chapo.textContent = "Vous faites partie des personnes qui " + profil.commun;
         var accent = document.createElement("span");
         accent.className = "mot-bleu";
         accent.textContent = profil.accent;
-        titre.appendChild(accent);
+        chapo.appendChild(accent);
+        chapo.appendChild(document.createTextNode("."));
 
         /* L'essai de libellé sur le seul profil Quotidien famille a été tranché le
            16/08/2026 : « J'échange avec Franck » va sur LES TROIS profils. Le libellé est
            donc écrit en dur dans le HTML, il n'y a plus rien à faire ici. */
+    })();
+    </script>
+
+    <script>
+    /* ------------------------------------------------------- LA VARIANTE VIDÉO
+       `?video=1` montre la page TELLE QU'ELLE SERA quand la VSL sera tournée (demande de
+       Lilian, 27/08/2026 : il veut voir les deux versions).
+
+       Ce que le paramètre change, et rien d'autre :
+         - le bloc vidéo s'affiche : phrase, lecteur, bouton, mention d'avis ;
+         - la section « l'échange avec Franck » disparaît, la vidéo fait son travail ;
+         - l'ordre devient pastille → titre → phrase → vidéo → bouton → carte → flèche,
+           obtenu par les `order` du CSS, sans déplacer un seul nœud du DOM.
+
+       ⚠️ CE N'EST QU'UN APERÇU. Le jour du tournage, on retire l'attribut `hidden` du
+          bloc vidéo, on supprime la section Franck, et ce script n'a plus lieu d'être.
+
+       La vidéo est celle de Villa Impian, PROVISOIRE. Si le fichier venait à manquer,
+       un cadre gris de la bonne taille prend sa place : mieux vaut une boîte honnête
+       qu'un lecteur effondré de trois pixels qui casserait la mise en page. */
+    (function () {
+        var q = new URLSearchParams(location.search);
+        if (q.get("video") !== "1") return;
+
+        var bloc = document.getElementById("bloc-video");
+        if (bloc) bloc.removeAttribute("hidden");
+
+        var franck = document.getElementById("sect-franck");
+        if (franck) franck.style.display = "none";
+
+        var video = document.getElementById("hero-video");
+        if (!video) return;
+        video.addEventListener("error", function () {
+            var cadre = document.createElement("div");
+            cadre.className = "video-cadre";
+            cadre.textContent = "Emplacement de la vidéo";
+            video.replaceWith(cadre);
+        });
+    })();
+    </script>
+
+    <script>
+    /* ------------------------------------------- APPARITION EN CASCADE DES CARTES
+       Même geste que les blocs du bas de page et que la page -15K, d'où les quatre
+       cartes numérotées sont reprises : elles montent de 22px en apparaissant, décalées
+       les unes des autres par `--pause`, posé dans le HTML.
+       Coupé net si la personne demande un mouvement réduit. */
+    (function () {
+        if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        var cartes = document.querySelectorAll(".reveal-suite");
+        if (!cartes.length || !("IntersectionObserver" in window)) return;
+
+        for (var i = 0; i < cartes.length; i++) cartes[i].classList.add("avant-vue");
+
+        var oeil = new IntersectionObserver(function (entrees) {
+            for (var k = 0; k < entrees.length; k++) {
+                if (!entrees[k].isIntersecting) continue;
+                entrees[k].target.classList.add("vu");
+                oeil.unobserve(entrees[k].target);
+            }
+        }, { threshold: .18 });
+
+        for (var j = 0; j < cartes.length; j++) oeil.observe(cartes[j]);
+    })();
+    </script>
+
+    <script>
+    /* ------------------------------------- LE SURVOL, REJOUÉ AU DOIGT SUR TÉLÉPHONE
+       Sur ordinateur, le liseré bleu balaie le haut des quatre cartes numérotées au
+       survol. Un écran tactile n'a pas de survol : sur téléphone, il ne se passait donc
+       rien du tout (Lilian, 27/08/2026).
+       ⚠️ LA SECONDE CARTE GRISE N'EST PAS DANS LA LISTE, ET C'EST VOULU : Lilian a
+          demandé le jour même qu'elle n'ait aucune animation. Ne pas l'ajouter ici.
+
+       Ce script rend le geste au défilement. Une carte devient `.actif` quand elle
+       traverse LA BANDE CENTRALE de l'écran, et le redevient inactive en sortant : on
+       lit la page, et chaque carte s'anime à son tour en arrivant devant les yeux.
+       C'est le même vocabulaire que le survol, déclenché autrement.
+
+       `rootMargin: -42%` en haut ET en bas ne garde qu'un bandeau de 16% de la hauteur
+       au milieu de l'écran : c'est lui qui remplace le curseur. Élargir ces marges
+       revient à rendre TOUTES les cartes actives en même temps, ce qui supprime
+       justement l'effet de passage.
+
+       ⚠️ NE S'ATTACHE PAS sur un écran à vrai survol : là-bas, `:hover` fait déjà le
+          travail, et les deux mécanismes se marcheraient dessus.
+    --------------------------------------------------------------------------- */
+    (function () {
+        if (!window.matchMedia || !("IntersectionObserver" in window)) return;
+        if (matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        var cibles = document.querySelectorAll(".facteurs li");
+        if (!cibles.length) return;
+
+        var oeil = new IntersectionObserver(function (entrees) {
+            for (var i = 0; i < entrees.length; i++) {
+                entrees[i].target.classList.toggle("actif", entrees[i].isIntersecting);
+            }
+        }, { rootMargin: "-42% 0px -42% 0px", threshold: 0 });
+
+        for (var j = 0; j < cibles.length; j++) oeil.observe(cibles[j]);
+    })();
+    </script>
+
+    <script>
+    /* ------------------------------------------------- LE SURVOL AU DOIGT, LITTÉRAL
+       Lilian, 27/08/2026 : « les avis, quand je passe le doigt dessus, ils devraient
+       s'animer avec le petit contour qui devient bleu comme ça le fait sur l'ordinateur.
+       Sur mobile, je n'ai absolument pas les mêmes animations que sur l'ordinateur. »
+
+       Un écran tactile ne déclenche pas `:hover` de façon fiable : selon le navigateur,
+       l'état reste collé après le doigt, ou ne vient jamais. On ne s'appuie donc pas
+       dessus, on pose nous-mêmes une classe sur la carte touchée.
+
+       Elle s'efface 900 ms APRÈS que le doigt s'est levé, et ce délai compte : sans lui,
+       l'animation est annulée avant d'avoir eu le temps de se jouer, et on croit qu'il
+       ne s'est rien passé. Sur ordinateur le survol dure aussi longtemps qu'on reste,
+       c'est cette durée-là qu'on imite.
+
+       ⚠️ `passive: true` partout, aucun `preventDefault` : le doigt doit continuer à
+          faire défiler la page et le carrousel d'avis. Ce script ne prend jamais la main
+          sur un geste, il ne fait qu'observer où il commence.
+       ⚠️ NE S'ATTACHE PAS sur un écran à vrai survol : `:hover` y fait déjà le travail.
+    --------------------------------------------------------------------------- */
+    (function () {
+        if (!window.matchMedia) return;
+        if (matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        var SELECTEUR = ".bento-card, .facteurs li";
+        var ATTENTE = 900;
+
+        var courante = null;
+        var minuteur = null;
+
+        function eteindre() {
+            if (!courante) return;
+            courante.classList.remove("touche");
+            courante = null;
+        }
+
+        document.addEventListener("touchstart", function (ev) {
+            var cible = ev.target && ev.target.closest ? ev.target.closest(SELECTEUR) : null;
+            if (!cible) return;
+            clearTimeout(minuteur);
+            if (cible === courante) return;
+            eteindre();
+            courante = cible;
+            cible.classList.add("touche");
+        }, { passive: true });
+
+        document.addEventListener("touchend", function () {
+            clearTimeout(minuteur);
+            minuteur = setTimeout(eteindre, ATTENTE);
+        }, { passive: true });
+
+        document.addEventListener("touchcancel", function () {
+            clearTimeout(minuteur);
+            eteindre();
+        }, { passive: true });
+    })();
+    </script>
+
+    <script>
+    /* --------------------------------------------------------------- LA BASCULE
+       LA CARTE D'ESTIMATION BASCULE COMME UNE BALANCE (Lilian, 27/08/2026).
+
+       L'image demandée : une feuille de métal posée en équilibre sur un point unique
+       au centre. On appuie d'un côté, ce côté descend et l'autre se relève.
+
+       Trois choses seulement sortent d'ici, et elles sortent en variables CSS :
+         --rx / --ry : les deux angles de rotation, en degrés ;
+         --lx / --ly : où se pose la nappe de lumière, en pourcentage.
+       Tout le reste (le dégradé, le liseré, l'ombre, la transition) vit dans la
+       feuille de style. Pour changer l'allure du métal, on ne touche pas à ce script.
+
+       ⚠️ AU DOIGT AUSSI, DEPUIS LE 27/08/2026 (Lilian). Le script écoutait uniquement
+          la souris et refusait de s'attacher sur un écran tactile ; la carte y restait
+          donc morte. Il écoute maintenant les deux, avec le MÊME calcul : seule la
+          source du point change, `e.clientX/Y` d'un côté, `e.touches[0]` de l'autre.
+          Le doigt qui quitte la carte (`touchend`) fait le même retour à plat que la
+          souris qui sort.
+          ⚠️ `passive: true` sur `touchmove`, et AUCUN `preventDefault` : sans ça, le
+             doigt posé sur la carte ne ferait plus défiler la page. C'est exactement le
+             blocage que Lilian a filmé sur le calendrier, on ne le recrée pas ici.
+             Le glissement horizontal, lui, est déjà réservé par `touch-action: pan-y`.
+
+       ⚠️ LE SCRIPT NE S'ATTACHE PAS DU TOUT dans un cas : mouvement réduit demandé par
+          le système. Le CSS coupe déjà l'effet de son côté ; ce garde évite en plus de
+          poser des écouteurs qui ne serviraient à rien.
+    --------------------------------------------------------------------------- */
+    (function () {
+        var scene = document.getElementById("estim-scene");
+        var carte = document.getElementById("estimation");
+        if (!scene || !carte || !window.matchMedia) return;
+
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        /* L'amplitude. 7 degrés, c'est le point où la bascule se voit franchement sans
+           que le texte parte en fuite : au-delà, les chiffres se déforment et la carte
+           cesse d'être lisible, ce qui est tout de même son premier travail. */
+        var ANGLE = 7;
+
+        var enCours = false;
+        var dernier = null;
+
+        function poser() {
+            enCours = false;
+            if (!dernier) return;
+
+            var r = carte.getBoundingClientRect();
+            if (!r.width || !r.height) return;
+
+            /* Position du curseur DANS la carte, ramenée entre 0 et 1, puis recentrée
+               entre -1 et +1. Le centre vaut donc 0 : c'est le point d'équilibre. */
+            var x = ((dernier.clientX - r.left) / r.width - 0.5) * 2;
+            var y = ((dernier.clientY - r.top) / r.height - 0.5) * 2;
+            x = Math.max(-1, Math.min(1, x));
+            y = Math.max(-1, Math.min(1, y));
+
+            /* LES SIGNES, et c'est tout le sujet : le côté vers lequel va la souris doit
+               S'ENFONCER. En CSS, rotateY positif éloigne le bord DROIT du regard, et
+               rotateX positif rapproche le bord BAS. D'où le moins sur l'axe vertical. */
+            carte.style.setProperty("--ry", (x * ANGLE).toFixed(2) + "deg");
+            carte.style.setProperty("--rx", (-y * ANGLE).toFixed(2) + "deg");
+
+            /* La lumière se pose à l'OPPOSÉ du curseur, donc du côté qui se relève :
+               sous une lumière fixe, c'est la face qui se redresse qui accroche le plus.
+               C'est ce déplacement-là qui fait lire le métal. Pour la faire suivre le
+               curseur à la place, il suffit de retirer les deux signes moins. */
+            carte.style.setProperty("--lx", (50 - x * 38).toFixed(1) + "%");
+            carte.style.setProperty("--ly", (50 - y * 38).toFixed(1) + "%");
+        }
+
+        /* On ne calcule qu'une fois par image affichée. Sans ça, un mouvement rapide
+           déclenche des dizaines de recalculs de position pour un seul rendu. */
+        function suivre(point) {
+            dernier = { clientX: point.clientX, clientY: point.clientY };
+            if (enCours) return;
+            enCours = true;
+            requestAnimationFrame(poser);
+        }
+
+        /* Retour à plat quand la souris sort, ou quand le doigt se lève. La transition
+           du CSS fait le reste : la carte se remet d'aplomb doucement, elle ne claque
+           pas. */
+        function aplat() {
+            dernier = null;
+            carte.style.setProperty("--rx", "0deg");
+            carte.style.setProperty("--ry", "0deg");
+            carte.style.setProperty("--lx", "50%");
+            carte.style.setProperty("--ly", "0%");
+        }
+
+        /* ⚠️ ÉVÈNEMENTS « POINTER », ET NON « TOUCH » (Lilian, 28/08/2026, sur la page
+           -15K qui portait le même code : « ça fonctionne sur l'ordinateur mais sur mobile
+           pas du tout »). Les `touchstart` / `touchmove` ne parvenaient pas à la carte sur
+           son iPhone. On passe donc à `pointerdown` / `pointermove`, qui sont exactement
+           ceux dont se sert le curseur de superficie du quiz — et lui répond au doigt
+           depuis sa réparation du 24/08. C'est la seule mécanique dont on ait la preuve
+           qu'elle marche sur son appareil, plutôt qu'une deuxième supposition.
+           Un seul jeu d'écouteurs couvre désormais la souris ET le doigt.
+           `setPointerCapture` garde le geste même si le doigt sort de la carte : sans lui,
+           la carte se fige de travers dès qu'on dépasse son bord. */
+        scene.addEventListener("pointerdown", function (e) {
+            try { scene.setPointerCapture(e.pointerId); } catch (err) {}
+            suivre(e);
+        });
+        scene.addEventListener("pointermove", function (e) {
+            /* À la souris on suit le survol ; au doigt il faut un contact. `e.buttons` vaut
+               0 quand la souris survole sans appuyer, et 1 pendant un contact tactile. */
+            if (e.pointerType === "mouse" || e.buttons !== 0) suivre(e);
+        });
+        scene.addEventListener("pointerup", aplat);
+        scene.addEventListener("pointercancel", aplat);
+        scene.addEventListener("pointerleave", aplat);
+    })();
+    </script>
+
+    <script>
+    /* ------------------------------------------------------------------ CALCUL
+       L'ESTIMATION, À ZÉRO SAISIE (Lilian, 27/08/2026).
+
+       La fourchette s'affiche en clair sur la page, et pas dans la vidéo : chaque projet
+       donne un chiffre différent et on ne tournera pas une VSL par combinaison.
+
+       C'EST LE MÊME CALCUL QUE LA PAGE -15K et que le quiz. Les trois doivent rester
+       identiques, sinon un prospect lit un montant ici et un autre ailleurs :
+         - le quiz          : `saas-interne/Fillout/app-quiz/lib/redirection.ts`
+         - la page -15K     : `apercu-moins-15k/index.html`, même bloc
+       Superficie × prix au m² selon le département, TVA 10 % (rénovation d'un logement
+       de plus de deux ans, le taux par défaut du simulateur en ligne).
+
+       ⚠️ LE BARÈME 870 / 970 € HT VIENT DE LILIAN (16/08/2026) et ATTEND ENCORE LA
+          CONFIRMATION DE FRANCK. Rien d'autre n'est écrit en dur, et surtout aucun
+          montant : tout se calcule ici ou ne s'affiche pas.
+
+       ⚠️ IL MANQUE `m2` ET `cp` DANS L'URL. Aujourd'hui le quiz ne pose que ?profil=,
+          &aussi= et &prenom= (`app-quiz/lib/profil.ts`, fonction `urlAvecProfil`). Tant
+          que la superficie et le code postal n'y sont pas ajoutés, la carte gardera sa
+          phrase d'attente en production. C'est volontaire : mieux vaut une phrase
+          d'attente qu'un montant faux.
+
+       ⚠️ Le claustra n'entre PAS dans le calcul : le quiz ne demande qu'une superficie
+          totale. L'estimation est donc « pergola seule » et sous-estime un projet qui en
+          comporte un.
+    ------------------------------------------------------------------------- */
+    (function () {
+        var PRIX_HT = { zone13: 870, hors13: 970 };
+        var TVA = 1.10;
+
+        var q = new URLSearchParams(location.search);
+        var m2 = parseFloat(q.get("m2"));
+        var cp = (q.get("cp") || "").trim();
+
+        /* Pas de superficie exploitable : la carte garde le texte écrit dans le HTML,
+           qui dit ce qui manque ET pourquoi (Lilian, 27/08/2026). On ne remplace jamais
+           un chiffre absent par un chiffre plausible. */
+        if (!isFinite(m2) || m2 <= 0) return;
+
+        var prix = cp.indexOf("13") === 0 ? PRIX_HT.zone13 : PRIX_HT.hors13;
+        var estimation = m2 * prix * TVA;
+
+        /* Une FOURCHETTE, jamais un montant unique. Deux raisons, et la seconde est la
+           plus coûteuse : une estimation trop haute effraie quelqu'un de récupérable,
+           une estimation trop basse pose une ancre que Franck devra casser au
+           rendez-vous, après s'être déplacé. Le devis passerait alors pour une hausse.
+           ±10 % encadre le chiffre sans prétendre à une précision qu'on n'a pas. */
+        var bas = Math.round(estimation * 0.9 / 500) * 500;
+        var haut = Math.round(estimation * 1.1 / 500) * 500;
+
+        function euros(n) { return n.toLocaleString("fr-FR") + " €"; }
+
+        var carte = document.getElementById("estimation");
+        if (!carte) return;
+        carte.classList.remove("absente");
+        document.getElementById("estim-montant").textContent = euros(bas) + " à " + euros(haut);
+        document.getElementById("estim-detail").textContent =
+            "Pour " + m2 + " m², TVA 10 % comprise. Estimation indicative, elle ne remplace "
+            + "pas un devis établi après visite.";
     })();
     </script>
 
@@ -1102,8 +2227,11 @@
     /* Deux retouches d'URL, toutes deux SANS effet quand les paramètres sont absents
        (c'est le cas du trafic Fillout actuel, la page reste strictement inchangée).
 
-       1. Le prénom dans le badge. Le quiz maison le passera en ?prenom=… ; sans lui,
-          le badge garde « Félicitations ! » tel qu'il est écrit dans le HTML.
+       1. Le prénom en tête de la PASTILLE. Le quiz maison le passe en ?prenom=… ; sans
+          lui, la pastille garde le texte écrit dans le HTML et rien ne sonne faux.
+          ⚠️ Le prénom allait AUSSI dans le gros titre jusqu'au 27/08/2026. Ce titre a
+             été supprimé le jour même (il répétait la pastille) : il n'y a donc plus
+             qu'un seul endroit à remplir.
        2. Les boutons « J'échange avec Franck » emportent les paramètres de la page
           vers /reserver/, pour que le suivi de source (?source=meta) survive au saut. */
     (function () {
@@ -1111,8 +2239,11 @@
 
         var prenom = (q.get("prenom") || "").trim().slice(0, 40);
         if (prenom) {
-            var badge = document.getElementById("badge-felicitations");
-            if (badge) badge.textContent = "Félicitations " + prenom + " !";
+            /* 27/08/2026 : la pastille dit ce que la personne a OBTENU, elle ne la
+               félicite plus. En textContent, jamais en innerHTML : ce qui vient de
+               l'URL n'a rien à faire dans le HTML de la page. */
+            var badge = document.getElementById("badge-estimation");
+            if (badge) badge.textContent = prenom + ", votre projet a été estimé";
         }
 
         var suite = q.toString();

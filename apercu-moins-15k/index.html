@@ -108,6 +108,25 @@
                     50%    { transform:translate(38px,26px) scale(1.1); } }
   @keyframes haloB{ 0%,100%{ transform:translate(0,0) scale(1); }
                     50%    { transform:translate(-34px,32px) scale(1.12); } }
+  /* ⚠️ SUR TÉLÉPHONE, LES DEUX MASSES SONT REDESSINÉES (Lilian, 28/08/2026 : « la manière
+     dont on a mis le halo pour la page où le budget passe, je veux le même pour cette
+     page »). Valeurs reprises AU CARACTÈRE PRÈS de `apercu-resultat/index.html`, où elles
+     ont été validées le 27/08.
+     La raison est géométrique : sur un écran de 390px, un rond de 440px posé à
+     `margin-left:-340px` sort des deux côtés à la fois. On n'en voit que le milieu, donc
+     un aplat bleu qui traverse l'écran, jamais sa courbe. Les masses sont donc réduites
+     pour tenir DANS l'écran, le flou baisse d'autant, et elles deviennent des OVALES :
+     un rond assez étroit pour laisser du blanc sur les côtés serait trop court pour
+     descendre derrière le titre. Les deux sont calées sur la largeur du bloc de texte.
+     ⚠️ Ne pas « harmoniser » avec les valeurs d'ordinateur : deux largeurs d'écran
+        différentes ne partagent pas un rayon. */
+  @media (max-width:767px){
+    .page .hero .halo i{ filter:blur(46px); }
+    .page .hero .halo i:nth-child(1){ width:250px; height:270px;
+           top:-100px; margin-left:-175px; background:rgba(62,142,180,.40); }
+    .page .hero .halo i:nth-child(2){ width:240px; height:255px;
+           top:-80px; margin-left:-65px; background:rgba(126,196,255,.46); }
+  }
 
   .page .hero h1{ font-size:28px; font-weight:500; letter-spacing:-.025em; line-height:1.15;
             margin:0 auto; text-wrap:balance; max-width:640px; color:var(--ink); }
@@ -119,12 +138,18 @@
 
   /* L'indicateur de défilement : il dit qu'il y a une suite, et il occupe l'espace mort
      entre le chapô et la première section. */
-  .page .suite{ display:block; margin:clamp(26px,4svh,40px) auto 0; width:26px; height:26px;
+  /* ⚠️ L'ESPACE AUTOUR DE LA FLÈCHE A ÉTÉ AUGMENTÉ (Lilian, 28/08/2026 : « ajoute de
+     l'espace au-dessus et en-dessous de la petite flèche bleue »). Elle était collée au
+     chapô au-dessus et à la première section en dessous, donc elle se lisait comme une
+     ponctuation du texte au lieu d'un repère. La marge du bas ne se met PAS ici : le
+     `padding-top` de la section suivante la porte déjà, c'est lui qui bouge, sinon les
+     deux s'additionnent et le vide de 158px que Lilian avait reproché revient. */
+  .page .suite{ display:block; margin:clamp(44px,7svh,68px) auto 0; width:26px; height:26px;
                 color:var(--teck); opacity:.55; animation:suiteBas 2.4s ease-in-out infinite; }
   @keyframes suiteBas{ 0%,100%{ transform:translateY(0); opacity:.5; }
                        50%    { transform:translateY(7px); opacity:.9; } }
   /* La première section colle au hero : le vide de 158px cumulé était le cœur du reproche. */
-  .page .hero + section.sect{ padding-top: clamp(26px,4svh,46px); }
+  .page .hero + section.sect{ padding-top: clamp(44px,7svh,72px); }
 
   /* ------------------------------------------------------------ SECTIONS */
   /* RYTHME DE COULEURS calqué sur les pages de profil : jamais deux fonds identiques à la
@@ -236,12 +261,13 @@
          ┌────────┬─────────────────┐
          │  01    │  02    (large)  │
          ├────────┼────────┬────────┤
-         │  05    │  03    │  04    │
+         │  03    │  04    │  05    │
          └────────┴────────┴────────┘
 
-     ⚠️ Oui, 05 est en BAS À GAUCHE et pas à sa place dans l'ordre de lecture. C'est
-     littéralement son croquis. À lui de dire s'il voulait 03-04-05 dans l'ordre : c'est
-     alors une seule ligne à changer, la propriété `grid-area` de ces trois cases.
+     ⚠️ La ligne du bas allait 05, 03, 04 jusqu'au 02/09/2026 : c'était le croquis de
+     Lilian repris à la case près. Franck l'a relevé pendant l'appel du 01/09 (« remettre
+     les bulles dans l'ordre ») et il a raison, l'œil lit le gros chiffre en creux avant
+     le titre, donc un 05 en tête de ligne casse la promesse d'un sommaire numéroté.
 
      Le gros chiffre en creux est le même que celui des cartes de facteurs, revenu le même
      jour. Il donne du relief aux cases sans rien y faire bouger. */
@@ -249,7 +275,7 @@
                 text-align:left; }
   @media (min-width:768px){
     .page .bento{ grid-template-columns:repeat(3,1fr); gap:18px;
-      grid-template-areas: "un deux deux" "cinq trois quatre"; }
+      grid-template-areas: "un deux deux" "trois quatre cinq"; }
     .page .bento .c1{ grid-area:un; }   .page .bento .c2{ grid-area:deux; }
     .page .bento .c3{ grid-area:trois; }.page .bento .c4{ grid-area:quatre; }
     .page .bento .c5{ grid-area:cinq; }
@@ -282,24 +308,251 @@
      entre « je pensais 12 000 » et « mon projet vaut plutôt 22 000 ». Elle est donc
      traitée comme un événement, fond navy, et pas comme un encadré de plus. Même rôle que
      la page des thermomètres dans la fiche PDF. */
-  .page .estim{ position:relative; overflow:hidden; background:#0B2B4E; color:#fff;
-          border-radius:28px; padding:44px 26px 38px; text-align:center;
-          box-shadow:0 22px 60px rgba(11,43,78,.28); }
-  .page .estim::before{ content:""; position:absolute; width:280px; height:280px;
-          border-radius:50%; background:#3E8EB4; filter:blur(80px); opacity:.35;
-          top:-120px; left:-60px; pointer-events:none; }
-  .page .estim::after{ content:""; position:absolute; width:220px; height:220px;
-          border-radius:50%; background:#7EC4FF; filter:blur(80px); opacity:.22;
-          bottom:-110px; right:-40px; pointer-events:none; }
-  .page .estim > *{ position:relative; }
-  .page .estim .intitule{ font-size:11.5px; letter-spacing:.2em; text-transform:uppercase;
-                    color:#9FC6E8; margin:0 0 16px; }
-  .page .estim .montant{ font-size:32px; font-weight:600; letter-spacing:-.03em; color:#fff;
-                   font-variant-numeric:tabular-nums; line-height:1.1; }
-  @media (min-width:768px){ .page .estim .montant{ font-size:52px; } }
-  .page .estim .detail{ font-size:13.5px; line-height:1.6; color:#B9D4EC; margin:18px auto 0;
-                        max-width:460px; }
-  .page .estim.absente .montant{ font-size:20px; font-weight:500; color:#D7E6F4; }
+    /* Le bleu marine de la carte d'estimation, pour la phrase qui porte l'argument de
+     la section (Lilian, 01/09/2026 : « mets-le en bleu marine, même couleur que la carte
+     qui montre l'estimation »).
+
+     ⚠️ CETTE VALEUR EST CALCULÉE, PAS CHOISIE À L'ŒIL. La carte n'a pas une couleur mais
+     cinq : son fond est un dégradé de #1B4570, #0E3157, #17406A, #0A2444 et #123A61, qui
+     est ce qui lui donne son aspect de tôle brossée. #11355B est la moyenne de ces cinq
+     teintes, pondérée par la portion du dégradé que chacune gouverne. C'est donc la
+     couleur qu'on croit voir en regardant la carte de loin.
+     Contraste sur blanc : 12,5:1, très au-dessus du minimum exigé.
+     ⚠️ Si le dégradé de la carte change un jour, cette valeur change avec lui. */
+  .page .bloc p b.marine{ color:#11355B; }
+
+  /* ---------- L'EN-TÊTE EN DEUX COLONNES (option C, validée le 28/08/2026) ----------
+     Le titre tient la colonne de gauche, le texte celle de droite.
+
+     🐛 CE BLOC AVAIT DISPARU LE 01/09/2026, emporté par une suppression trop large au
+     moment de transplanter la carte d'estimation. Le balisage était resté, le style non :
+     la section retombait donc centrée, comme avant l'option C. Lilian l'a vu tout de
+     suite (« t'es sûr que tu m'as mis la bonne page ? »). Réécrit à l'identique.
+
+     ⚠️ LA GRILLE A DEUX RANGÉES, ET C'EST CE QUI ALIGNE LE TEXTE SUR LE TITRE
+     (Lilian : « le texte est trop haut, fais en sorte qu'il débute au même endroit que le
+     titre »). Une première version mettait la pastille et le titre dans un même bloc à
+     gauche : le texte de droite démarrait alors à la hauteur de la PASTILLE, une
+     quarantaine de pixels trop haut. En donnant sa propre rangée à la pastille, le titre
+     et le texte partagent la seconde et commencent sur la même ligne, quelle que soit la
+     hauteur de la pastille. Rien n'est codé en dur.
+
+     Les colonnes ne sont pas égales, 1,05 contre 1 : le titre est plus gros et se
+     couperait en cinq lignes là où le texte en fait quatre.
+
+     ⚠️ SOUS 768px LA GRILLE RETOMBE À UNE COLONNE, et tout passe à gauche. Ne pas
+        remettre `text-align:center` ici : c'est le centrage qui faisait lire le texte
+        comme un pavé posé. Le reste de la page, lui, reste centré. */
+  .page .tete-deux-col{ display:grid; gap:16px; text-align:left;
+        /* Sans quoi la pastille, enfant direct de la grille, s'étire sur toute la largeur
+           de sa cellule et cesse d'être une capsule. */
+        justify-items:start; }
+  .page .tete-deux-col .tete-titre{ margin:0; text-align:left; }
+  .page .tete-deux-col .tete-texte p{ text-align:left; margin:0 0 14px; }
+  .page .tete-deux-col .tete-texte p:last-child{ margin-bottom:0; }
+  @media (min-width:768px){
+    .page .tete-deux-col{ grid-template-columns:1.05fr 1fr;
+          column-gap:52px; row-gap:18px; align-items:start;
+          grid-template-areas:"pastille ." "titre texte"; }
+    .page .tete-deux-col .tete-pastille{ grid-area:pastille; }
+    .page .tete-deux-col .tete-titre{ grid-area:titre; }
+    /* Les deux boîtes commencent à la même ordonnée, mais le titre fait 42px et le texte
+       16,5 : la capitale du titre tombe plus bas dans sa ligne que la minuscule du texte.
+       Ces 7px rendent l'alignement OPTIQUE, qui est celui qu'on voit. */
+    .page .tete-deux-col .tete-texte{ grid-area:texte; padding-top:7px; }
+  }
+  @media (max-width:767px){ .page .tete-deux-col{ gap:20px; } }
+
+  /* ---------- LA BASCULE 3D DES CARTES « OUI » ET « NON » ----------
+     🐛 PERDU ET RÉÉCRIT EN MÊME TEMPS QUE LE BLOC CI-DESSUS (01/09/2026).
+
+     Lilian, 28/08/2026 : « pour les cartes oui / non, ajoute l'effet où ça bouge de haut
+     en bas et de gauche à droite ». Même mécanique que la carte d'estimation : la
+     perspective sur le PARENT (`.chemins`), la rotation sur la carte.
+     Le `translateY(-8px)` du survol reste, et il se COMPOSE avec la rotation : les deux
+     vivent dans la même propriété `transform`, donc l'ordre compte. La translation vient
+     en premier pour que la carte se soulève PUIS s'incline, et non l'inverse, sinon le
+     soulèvement partirait de travers.
+     L'amplitude est plus faible que sur la carte d'estimation, 5° contre 7 : ces deux
+     cartes portent un lien qu'on va cliquer, une bascule trop marquée fait rater la
+     cible. */
+  .page .chemins{ perspective:1000px; }
+  .page .chemin{ --rx:0deg; --ry:0deg; --leve:0px;
+        transform-origin:center center;
+        transform:translateY(var(--leve)) rotateX(var(--rx)) rotateY(var(--ry));
+        touch-action:pan-y; }
+  .page .chemin:hover{ --leve:-8px;
+        transform:translateY(var(--leve)) rotateX(var(--rx)) rotateY(var(--ry)); }
+  @media (prefers-reduced-motion:reduce){
+    .page .chemin{ transform:none; transition:none; }
+  }
+
+  /* ---------- LES ANIMATIONS DES CARTES, SUR TÉLÉPHONE ----------
+     ⚠️ Lilian, 28/08/2026 : « sur la version mobile, pour les cartes de la section “Une
+     pergola sur mesure est un investissement pensé pour durer”, les animations ne se font
+     pas ». Normal : elles n'existaient qu'en `:hover`, et un téléphone n'a pas de survol.
+     Deux déclencheurs distincts, et deux classes distinctes exprès :
+       · `.actif`  — la carte est au milieu de l'écran pendant le défilement. C'est ce qui
+                     fait que quelque chose se passe même sans toucher à rien ;
+       · `.touche` — le doigt est posé dessus, et ça s'efface 900 ms après.
+     ⚠️ Les classes sont DOUBLÉES (`.actif.actif`) pour passer devant `.page .facteurs li`,
+        qui compte deux classes et gagnerait sinon à spécificité égale. Ce n'est pas une
+        coquille, c'est le même piège que sur la page de résultat. */
+  @media (hover:none){
+    .page .facteurs li.actif.actif,
+    .page .facteurs li.touche.touche{ transform:translateY(-8px); border-color:var(--teck);
+          box-shadow:0 20px 40px rgba(0,0,0,.08); }
+    .page .facteurs li.actif::before,
+    .page .facteurs li.touche::before{ transform:scaleX(1); }
+    /* ⚠️ LES 5 CASES DU GUIDE AUSSI (Lilian, 28/08/2026 : « mets-le aussi pour mobile
+       pour les cartes 1 à 5 de la section “Votre projet reste possible” »). Même
+       mécanique, mêmes deux classes. `.bcarte` n'a pas de `::before` : sa seule réaction
+       au survol est le soulèvement et la bordure, on ne lui en invente pas d'autre.
+       La classe est doublée pour la même raison que plus haut : passer devant
+       `.page .bcarte:hover`, qui compte deux classes. */
+    .page .bcarte.actif.actif,
+    .page .bcarte.touche.touche{ transform:translateY(-8px); border-color:var(--teck);
+          box-shadow:0 20px 40px rgba(0,0,0,.08); }
+  }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+     LA CARTE D'ESTIMATION EST CELLE DE `apercu-resultat/`, RECOPIÉE À L'IDENTIQUE.
+
+     Décision de Lilian, 28/08/2026 : « prends le code exact de la carte et implémente-le
+     sur la page moins de 15 000 €, ce sera plus simple que 500 000 allers-retours ».
+     La carte bleue d'origine de cette page (fond plat #0B2B4E, deux ronds flous) est donc
+     SUPPRIMÉE, remplacée par la plaque de métal validée le 27/08 : lueurs de flanc fixes,
+     nappe de lumière mobile, bascule au doigt et à la souris.
+
+     ⚠️ LES DEUX PAGES DOIVENT RESTER IDENTIQUES SUR CE BLOC. Si la carte change ici, elle
+        change là-bas, et réciproquement. Les seuls écarts volontaires sont les sélecteurs,
+        préfixés `.page ` parce que tout le contenu de cette page-ci vit dans `.page`.
+     ⚠️ Les identifiants du contenu (`montant`, `detail`) restent CEUX DE CETTE PAGE : le
+        script de calcul en bas de page écrit dedans. Ne pas les aligner sur ceux de la
+        page de résultat (`estim-montant`, `estim-detail`) sans corriger le calcul.
+     ═══════════════════════════════════════════════════════════════════════════ */
+  .page .estim-scene{ perspective:900px; }
+        /* ====== LA CARTE D'ESTIMATION — UNE PLAQUE DE MÉTAL EN ÉQUILIBRE ======
+           Demande de Lilian (27/08/2026) : une plaque de métal froid dans les bleus, qui
+           bascule au survol comme une feuille posée en équilibre sur un point unique au
+           centre, à la façon d'une balance à l'ancienne.
+
+           Comment ça marche, en trois pièces :
+             - `.estim-scene` porte la `perspective`. Elle doit être sur le PARENT, sinon
+               la rotation reste plate et ne donne aucune profondeur ;
+             - `.estim` tourne, avec `transform-origin: center center` : c'est ce point
+               central qui fait la balance. Le côté vers lequel va la souris s'enfonce,
+               l'autre se relève ;
+             - `.estim .nappe` est la lumière. Elle se déplace à l'opposé du curseur,
+               c'est-à-dire du côté qui SE RELÈVE : sous une lumière fixe, c'est la face
+               qui se redresse qui accroche le plus. C'est ce déplacement qui fait lire
+               le métal plutôt qu'un simple aplat bleu.
+
+           Les angles et la position de la nappe arrivent du script en bas de page, par
+           quatre variables. Leurs valeurs par défaut laissent la carte à plat : sans
+           JavaScript, elle reste une belle plaque immobile. */
+        .page .estim-scene {
+            perspective: 900px;
+            margin: 0 auto var(--gap-l);
+        }
+        .page .estim {
+            --rx: 0deg; --ry: 0deg; --lx: 50%; --ly: 0%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 26px;
+            padding: 34px 24px 30px;
+            text-align: center;
+            color: #fff;
+            transform-origin: center center;
+            transform: rotateX(var(--rx)) rotateY(var(--ry));
+            transition: transform .55s cubic-bezier(.22,.61,.36,1);
+            /* LE MÉTAL : plusieurs bandes de bleu à des angles voisins, pas un dégradé
+               unique. Un aplat dégradé fait du plastique ; ce sont les ruptures de
+               valeur qui font la tôle brossée. */
+            background:
+                linear-gradient(118deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 38%),
+                linear-gradient(160deg, #1B4570 0%, #0E3157 24%, #17406A 46%, #0A2444 70%, #123A61 100%);
+            /* L'arête haute prend un liseré clair, les autres restent sombres : c'est ce
+               qui donne l'épaisseur de la plaque. Et l'ombre portée est NETTE, posée
+               court, pas un halo diffus. */
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,.38),
+                inset 0 -1px 0 rgba(0,0,0,.35),
+                inset 1px 0 0 rgba(255,255,255,.08),
+                inset -1px 0 0 rgba(0,0,0,.22),
+                0 18px 34px -12px rgba(6,26,48,.55),
+                0 2px 6px rgba(6,26,48,.30);
+        }
+        /* LES DEUX LUEURS DE FLANC (Lilian, 27/08/2026) : « un petit effet de lumière à
+           gauche et à droite, très légèrement, un peu le même que celui qu'il y a quand
+           on déplace la souris dessus, mais qui soit déjà présent, et que quand on
+           déplace la souris, ce petit effet reste ».
+           Donc DEUX choses distinctes, et c'est voulu :
+             - ici, deux nappes FIXES accrochées aux flancs. Elles sont là au repos, sur
+               téléphone comme sur ordinateur, et elles ne bougent jamais ;
+             - plus bas, `.nappe`, la nappe MOBILE qui suit le curseur. Elle s'AJOUTE à
+               celles-ci au survol, elle ne les remplace pas.
+           Même matière que la nappe mobile : du blanc en `soft-light`, qui éclaircit le
+           métal sans laver le bleu. Le blanc y est très dilué exprès, la carte doit
+           rester la même au premier coup d'œil.
+           ⚠️ Rien n'est animé ici, donc rien à couper en mouvement réduit : les lueurs
+              fixes restent, seule la bascule s'arrête. */
+        .page .estim::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            border-radius: inherit;
+            background:
+                radial-gradient(42% 70% at 0% 50%,   rgba(255,255,255,.42) 0%, rgba(255,255,255,.13) 46%, rgba(255,255,255,0) 100%),
+                radial-gradient(42% 70% at 100% 50%, rgba(255,255,255,.36) 0%, rgba(255,255,255,.11) 46%, rgba(255,255,255,0) 100%);
+            mix-blend-mode: soft-light;
+        }
+        /* La nappe de lumière. `mix-blend-mode: soft-light` la pose SUR le métal au lieu
+           de la coller par-dessus : elle éclaircit sans laver la couleur. */
+        .page .estim .nappe {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            pointer-events: none;
+            background: radial-gradient(closest-side circle at var(--lx) var(--ly),
+                        rgba(255,255,255,.55) 0%, rgba(255,255,255,.16) 42%, rgba(255,255,255,0) 72%);
+            mix-blend-mode: soft-light;
+            transition: background .35s ease;
+        }
+        .page .estim > *:not(.nappe) { position: relative; z-index: 1; }
+        .page .estim .intitule { font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase;
+            color: #9FC6E8; margin: 0 0 14px; font-weight: 500; }
+        .page .estim .montant { font-size: 30px; font-weight: 600; letter-spacing: -.03em;
+            color: #fff; font-variant-numeric: tabular-nums; line-height: 1.1;
+            text-shadow: 0 1px 0 rgba(0,0,0,.35); }
+        @media (min-width: 768px) { .page .estim .montant { font-size: 46px; } }
+        .page .estim .detail { font-size: 13.5px; line-height: 1.6; color: #B9D4EC;
+            margin: 16px auto 0; max-width: 460px; }
+        /* Tant qu'aucune superficie n'arrive par l'URL, la carte n'affiche AUCUN montant :
+           elle dit ce qui manque et pourquoi. Jamais de chiffre faux, même « pour l'exemple ». */
+        .page .estim.absente .montant { font-size: 19px; font-weight: 500; color: #D7E6F4; }
+
+        /* ⚠️ LA BASCULE MARCHE AUSSI AU DOIGT DEPUIS LE 27/08/2026 (Lilian : « la carte
+           pour l'estimation, je peux pas du tout la bouger avec mon doigt comme on peut
+           le faire avec la souris sur l'ordinateur »).
+           La coupure tactile qui vivait ici a donc été RETIRÉE, et avec elle le
+           `transform: none !important` : c'est lui qui interdisait tout mouvement sur
+           téléphone. Ne pas le remettre en croyant réparer quelque chose.
+           `touch-action: pan-y` est le seul garde-fou qui reste, et il est indispensable :
+           il laisse le glissement VERTICAL au défilement de la page (sinon le doigt reste
+           piégé dans la carte, exactement le blocage constaté sur le calendrier), et ne
+           nous garde que le glissement horizontal, celui qui fait basculer la plaque. */
+        .page .estim { touch-action: pan-y;
+            /* 🐛 MÊME CORRECTIF QUE SUR LA PAGE -15K (Lilian, 28/08/2026) : sur iOS, dès
+               qu'une carte arrondie porte une rotation 3D, Safari cesse d'appliquer le
+               rayon de bordure au découpage et ne coupe plus qu'un rectangle. Les nappes
+               de lumière débordent alors par les angles, en carré et en plus pâle. Le
+               masque radial force un vrai découpage arrondi et ne change rien ailleurs.
+               Ne pas le retirer tant que la carte tourne. */
+            -webkit-mask-image: -webkit-radial-gradient(#fff, #000);
+            mask-image: radial-gradient(#fff, #000); }
+
 
   /* ------------------------------------------------------- LES 2 CHEMINS */
   .page .chemins{ display:grid; gap:16px; margin-top:34px; }
@@ -635,13 +888,29 @@
 <!-- ================== POURQUOI CET INVESTISSEMENT ================== -->
 <section class="sect">
   <div class="bloc large centre">
-    <span class="surtitre">Ce qui fait le prix</span>
-    <h2>Une pergola sur mesure est un investissement pensé pour durer</h2>
-    <p>
-      Sa conception, ses matériaux et son niveau de personnalisation influencent directement
-      son prix. Comme elle n'est pas produite en série à des prix d'usine, chaque projet est
-      dessiné pour votre extérieur et pour la façon dont vous voulez en profiter.
-    </p>
+    <!-- ⚠️ EN-TÊTE EN DEUX COLONNES (Lilian, 28/08/2026, après comparaison de trois
+         maquettes : « je valide l'option C, celle des deux colonnes, c'est ce qui rend le
+         mieux sur le téléphone »). Le reproche d'origine : « ça fait beaucoup de texte qui
+         est comme posé là ». Deux phrases centrées sur toute la largeur se lisent comme un
+         pavé ; adossées au titre, elles deviennent son chapô.
+         Sur téléphone, la grille retombe à une colonne : le titre garde alors sa place et
+         le texte passe en dessous, aligné à gauche. C'est l'alignement à gauche qui fait le
+         gain sur petit écran, pas les deux colonnes — un texte centré sur quatre lignes de
+         largeurs différentes n'a aucun bord auquel l'œil se raccroche. -->
+    <div class="tete-deux-col">
+      <span class="surtitre tete-pastille">Ce qui fait le prix</span>
+      <h2 class="tete-titre">Une pergola sur mesure est un investissement pensé pour durer</h2>
+      <div class="tete-texte">
+        <p>
+          Sa conception, ses matériaux et son niveau de personnalisation
+          <b class="marine">influencent directement son prix.</b>
+        </p>
+        <p>
+          Comme elle n'est pas produite en série à des prix d'usine, chaque projet est
+          dessiné pour votre extérieur et pour la façon dont vous voulez en profiter.
+        </p>
+      </div>
+    </div>
 
     <!-- ⏳ LISTE PROVISOIRE. Franck doit la valider à son retour fin août : elle est
          plausible mais sourcée nulle part, et la règle du projet interdit de publier une
@@ -658,7 +927,7 @@
         <span class="num">02</span>
         <span class="chapeau">Le type</span>
         <span class="txt">Adossée à la maison, ou posée librement dans le jardin</span>
-        <span class="prec">Une adossée prolonge la pièce de vie, une autoportante crée un lieu à part.</span>
+        <span class="prec">Une adossée prolonge la pièce de vie, une autoportante crée un lieu supplémentaire.</span>
       </li>
       <li class="reveal" style="--pause:.18s">
         <span class="num">03</span>
@@ -703,12 +972,20 @@
       grandeur plus précis que le vôtre. <b>Vous n'avez rien à ressaisir.</b>
     </p>
 
+    <!-- La bascule 3D (Lilian, 28/08/2026 : « l'effet d'une carte 3D […] doit être
+         ajouté sur cette page »). Même mécanique que `apercu-resultat` : c'est le
+         PARENT qui porte la perspective, sinon la rotation reste plate. -->
+    <div class="estim-scene" id="estim-scene">
     <div class="estim absente" id="estimation">
+      <!-- La nappe de lumière mobile. Elle suit le doigt ou la souris et fait lire le
+           métal ; sans elle, la plaque reste un aplat. Voir le script en bas de page. -->
+      <span class="nappe" aria-hidden="true"></span>
       <p class="intitule">Votre projet</p>
       <div class="montant" id="montant">Nous l'estimerons avec vous lors de l'échange</div>
       <p class="detail" id="detail">
         Estimation indicative, elle ne remplace pas un devis.
       </p>
+    </div>
     </div>
   </div>
 </section>
@@ -727,7 +1004,15 @@
     <div class="chemins" style="text-align:left">
       <!-- Le « oui » renvoie vers la page de profil, celle qui porte la vidéo de Franck.
            Les paramètres de l'URL sont recopiés pour que la page reste personnalisée. -->
-      <a class="chemin oui" id="chemin-oui" href="../561d79a-47b15060-85cc2f7b/">
+      <!-- ⚠️ POINTE VERS LA NOUVELLE PAGE DE RÉSULTAT (Lilian, 28/08/2026 : « si on
+           clique sur oui pour le budget, on n'est pas redirigé vers la bonne page »).
+           Elle menait à `561d79a-47b15060-85cc2f7b/`, la page en production, celle qui
+           deviendra l'ancienne quand Franck aura validé. Elle mène maintenant à
+           `apercu-resultat/`, la version retravaillée (halo, carte qui bascule,
+           animations sur téléphone, calendrier réparé).
+           ⏳ LE JOUR DE LA BASCULE, quand `apercu-resultat/` prendra la place de
+              l'ancienne URL, cette ligne devra repointer sur l'URL définitive. -->
+      <a class="chemin oui" id="chemin-oui" href="../apercu-resultat/">
         <span class="marque"><span class="pastille">✓</span>Oui</span>
         <span class="titre">Je pourrais envisager ce budget</span>
         <span class="sous">
@@ -780,8 +1065,10 @@
          côte […] sans aucun truc qui bouge ». Ni schéma, ni apparition au défilement : la
          seule chose qui réagit est le survol, et c'est le geste qu'ont déjà toutes les
          cartes de la page. Les intitulés n'ont pas bougé d'un mot.
-         ⚠️ L'ordre visuel voulu est 01, 02 en haut, puis 05, 03, 04 en bas : c'est son
-            croquis. Le DOM, lui, reste dans l'ordre de lecture 01→05. -->
+         ⚠️ L'ordre visuel est 01, 02 en haut, puis 03, 04, 05 en bas depuis la correction
+            de Franck du 01/09/2026. Le DOM a toujours été dans l'ordre de lecture 01→05,
+            donc la version téléphone, qui empile les cases sans grille, n'a jamais eu le
+            problème : c'est bien l'ordinateur qu'il regardait. -->
     <div class="bento">
       <article class="bcarte c1">
         <h3>Les principaux facteurs qui font varier le prix</h3>
@@ -1436,6 +1723,194 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 
     for (var b = 0; b < blocs.length; b++) oeil.observe(blocs[b]);
+})();
+</script>
+
+<script>
+/* ============================================================================
+   LA BASCULE 3D DE LA CARTE D'ESTIMATION, ET LES ANIMATIONS DE CARTES SUR TÉLÉPHONE
+   Ajouté le 28/08/2026 à la demande de Lilian. Repris de `apercu-resultat/index.html`,
+   où les deux mécanismes ont été validés le 27 et le 28/08.
+   ============================================================================ */
+(function () {
+    var scene = document.getElementById("estim-scene");
+    var carte = document.getElementById("estimation");
+    var doux = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    /* --- 1. La carte s'incline vers le curseur ou vers le doigt ---
+       Pas de garde `(hover:hover)` : la bascule marche à la souris ET au doigt, c'est
+       précisément ce qui manquait sur l'autre page (« je peux pas du tout avec mon doigt
+       la bouger »). Tous les écouteurs tactiles sont `passive`, aucun n'appelle
+       `preventDefault` : le défilement de la page n'est jamais confisqué. */
+    /* ⚠️ BASCULE RECOPIÉE DE `apercu-resultat/` (Lilian, 28/08/2026). Même carte,
+       donc même code : c'est la seule façon de garantir qu'elle se comporte pareil
+       sur les deux pages. Les évènements sont des `pointer`, pas des `touch` : les
+       `touch` ne parvenaient pas à la carte sur l'iPhone de Lilian. */
+    var scene = document.getElementById("estim-scene");
+            var carte = document.getElementById("estimation");
+            if (!scene || !carte || !window.matchMedia) return;
+
+            if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+            /* L'amplitude. 7 degrés, c'est le point où la bascule se voit franchement sans
+               que le texte parte en fuite : au-delà, les chiffres se déforment et la carte
+               cesse d'être lisible, ce qui est tout de même son premier travail. */
+            var ANGLE = 7;
+
+            var enCours = false;
+            var dernier = null;
+
+            function poser() {
+                enCours = false;
+                if (!dernier) return;
+
+                var r = carte.getBoundingClientRect();
+                if (!r.width || !r.height) return;
+
+                /* Position du curseur DANS la carte, ramenée entre 0 et 1, puis recentrée
+                   entre -1 et +1. Le centre vaut donc 0 : c'est le point d'équilibre. */
+                var x = ((dernier.clientX - r.left) / r.width - 0.5) * 2;
+                var y = ((dernier.clientY - r.top) / r.height - 0.5) * 2;
+                x = Math.max(-1, Math.min(1, x));
+                y = Math.max(-1, Math.min(1, y));
+
+                /* LES SIGNES, et c'est tout le sujet : le côté vers lequel va la souris doit
+                   S'ENFONCER. En CSS, rotateY positif éloigne le bord DROIT du regard, et
+                   rotateX positif rapproche le bord BAS. D'où le moins sur l'axe vertical. */
+                carte.style.setProperty("--ry", (x * ANGLE).toFixed(2) + "deg");
+                carte.style.setProperty("--rx", (-y * ANGLE).toFixed(2) + "deg");
+
+                /* La lumière se pose à l'OPPOSÉ du curseur, donc du côté qui se relève :
+                   sous une lumière fixe, c'est la face qui se redresse qui accroche le plus.
+                   C'est ce déplacement-là qui fait lire le métal. Pour la faire suivre le
+                   curseur à la place, il suffit de retirer les deux signes moins. */
+                carte.style.setProperty("--lx", (50 - x * 38).toFixed(1) + "%");
+                carte.style.setProperty("--ly", (50 - y * 38).toFixed(1) + "%");
+            }
+
+            /* On ne calcule qu'une fois par image affichée. Sans ça, un mouvement rapide
+               déclenche des dizaines de recalculs de position pour un seul rendu. */
+            function suivre(point) {
+                dernier = { clientX: point.clientX, clientY: point.clientY };
+                if (enCours) return;
+                enCours = true;
+                requestAnimationFrame(poser);
+            }
+
+            /* Retour à plat quand la souris sort, ou quand le doigt se lève. La transition
+               du CSS fait le reste : la carte se remet d'aplomb doucement, elle ne claque
+               pas. */
+            function aplat() {
+                dernier = null;
+                carte.style.setProperty("--rx", "0deg");
+                carte.style.setProperty("--ry", "0deg");
+                carte.style.setProperty("--lx", "50%");
+                carte.style.setProperty("--ly", "0%");
+            }
+
+            /* ⚠️ ÉVÈNEMENTS « POINTER », ET NON « TOUCH » (Lilian, 28/08/2026, sur la page
+               -15K qui portait le même code : « ça fonctionne sur l'ordinateur mais sur mobile
+               pas du tout »). Les `touchstart` / `touchmove` ne parvenaient pas à la carte sur
+               son iPhone. On passe donc à `pointerdown` / `pointermove`, qui sont exactement
+               ceux dont se sert le curseur de superficie du quiz — et lui répond au doigt
+               depuis sa réparation du 24/08. C'est la seule mécanique dont on ait la preuve
+               qu'elle marche sur son appareil, plutôt qu'une deuxième supposition.
+               Un seul jeu d'écouteurs couvre désormais la souris ET le doigt.
+               `setPointerCapture` garde le geste même si le doigt sort de la carte : sans lui,
+               la carte se fige de travers dès qu'on dépasse son bord. */
+            scene.addEventListener("pointerdown", function (e) {
+                try { scene.setPointerCapture(e.pointerId); } catch (err) {}
+                suivre(e);
+            });
+            scene.addEventListener("pointermove", function (e) {
+                /* À la souris on suit le survol ; au doigt il faut un contact. `e.buttons` vaut
+                   0 quand la souris survole sans appuyer, et 1 pendant un contact tactile. */
+                if (e.pointerType === "mouse" || e.buttons !== 0) suivre(e);
+            });
+            scene.addEventListener("pointerup", aplat);
+            scene.addEventListener("pointercancel", aplat);
+            scene.addEventListener("pointerleave", aplat);
+
+    /* --- 1 bis. Les cartes « Oui » et « Non » s'inclinent elles aussi ---
+       Même code que la carte d'estimation, appliqué aux deux cartes de choix. La
+       différence tient à la variable `--leve` : ces cartes se soulèvent AUSSI au survol,
+       et les deux effets partagent la propriété `transform`. On écrit donc l'angle dans
+       des variables plutôt que dans `style.transform`, sinon la rotation écraserait le
+       soulèvement et la carte retomberait au moment où la souris entre. */
+    var chemins = document.querySelector(".page .chemins");
+    if (chemins && !doux.matches) {
+        var AMPLI_CHEMIN = 5; // plus doux que la carte d'estimation : ce sont des liens.
+
+        function inclinerChemin(cible, point) {
+            var r = cible.getBoundingClientRect();
+            if (!r.width || !r.height) return;
+            var x = (point.clientX - r.left) / r.width - 0.5;
+            var y = (point.clientY - r.top) / r.height - 0.5;
+            cible.style.setProperty("--ry", (x * AMPLI_CHEMIN).toFixed(2) + "deg");
+            cible.style.setProperty("--rx", (-y * AMPLI_CHEMIN).toFixed(2) + "deg");
+        }
+        function aplatirChemin(cible) {
+            cible.style.setProperty("--rx", "0deg");
+            cible.style.setProperty("--ry", "0deg");
+        }
+        function carteDe(e) {
+            return e.target.closest ? e.target.closest(".page .chemin") : null;
+        }
+
+        /* Mêmes évènements « pointer » que la carte d'estimation, et pour la même
+           raison : c'est la seule mécanique dont on ait la preuve qu'elle répond au doigt
+           sur l'iPhone de Lilian. */
+        chemins.addEventListener("pointerdown", function (e) {
+            var c = carteDe(e); if (!c) return;
+            try { c.setPointerCapture(e.pointerId); } catch (err) {}
+            c.style.setProperty("--leve", "-8px");
+            inclinerChemin(c, e);
+        });
+        chemins.addEventListener("pointermove", function (e) {
+            var c = carteDe(e); if (!c) return;
+            if (e.pointerType === "mouse" || e.buttons !== 0) inclinerChemin(c, e);
+        });
+        function relacher(e) {
+            var c = carteDe(e);
+            if (c) { c.style.setProperty("--leve", "0px"); aplatirChemin(c); }
+        }
+        chemins.addEventListener("pointerup", relacher);
+        chemins.addEventListener("pointercancel", relacher);
+        chemins.addEventListener("pointerleave", relacher);
+    }
+
+    /* --- 2. Les cartes de « investissement pensé pour durer », sur téléphone ---
+       Deux déclencheurs, parce qu'ils ne racontent pas la même chose. La carte qui passe
+       au milieu de l'écran s'anime toute seule : c'est ce qui fait vivre la section quand
+       on se contente de faire défiler. Et la carte touchée s'anime aussi, parce que le
+       doigt attend une réponse. Le CSS ne s'applique que sous `@media (hover: none)`,
+       donc rien de tout ceci ne se voit sur ordinateur. */
+    /* Les deux familles de cartes réagissent de la même façon : les quatre facteurs de
+       prix, et les cinq cases du guide. */
+    var SELECTEUR = ".page .facteurs li, .page .bcarte";
+    var cartes = document.querySelectorAll(SELECTEUR);
+    if (cartes.length && !doux.matches) {
+        if ("IntersectionObserver" in window) {
+            /* La bande est étroite exprès (16 % de hauteur au centre) : une carte s'anime
+               quand elle est VRAIMENT au milieu, pas dès qu'elle entre par le bas. */
+            var oeil = new IntersectionObserver(function (entrees) {
+                for (var i = 0; i < entrees.length; i++) {
+                    entrees[i].target.classList.toggle("actif", entrees[i].isIntersecting);
+                }
+            }, { rootMargin: "-42% 0px -42% 0px" });
+            for (var i = 0; i < cartes.length; i++) oeil.observe(cartes[i]);
+        }
+        document.addEventListener("touchstart", function (e) {
+            var c = e.target.closest ? e.target.closest(SELECTEUR) : null;
+            if (c) c.classList.add("touche");
+        }, { passive: true });
+        document.addEventListener("touchend", function (e) {
+            var c = e.target.closest ? e.target.closest(SELECTEUR) : null;
+            /* 900 ms : le temps de voir la bordure devenir bleue. Retirer la classe tout
+               de suite ferait clignoter la carte sans qu'on ait rien vu. */
+            if (c) setTimeout(function () { c.classList.remove("touche"); }, 900);
+        }, { passive: true });
+    }
 })();
 </script>
 
