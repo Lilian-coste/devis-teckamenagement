@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="color-scheme" content="light" />
+<meta name="robots" content="noindex" />
+<title>Relance par SMS</title>
+
+<!-- ==========================================================================
+     LA PAGE DES TROIS SMS DE RELANCE, VERSION EN LIGNE.
+
+     Franck l'ouvre sur son téléphone depuis le mail interne « Relance SMS à faire »,
+     reçu à J+1 quand un prospect n'a pas accusé réception du mail de la veille. Il y
+     trouve la fiche du prospect, son numéro, et les trois messages prêts à copier.
+
+     ⚠️ CETTE PAGE EST LA MISE EN LIGNE DE `page-relance-sms.html`, la maquette locale
+     produite par `~/mes-clients/teck-amenagement/livrables/emails/generer-relance-directe.js`.
+     Le balisage, les couleurs, les boutons de copie et les deux formes de lien `sms:`
+     en sont repris à l'identique : cette version-là a été testée sur l'iPhone de Lilian
+     le 07/09/2026 et elle marche. La seule chose qui change ici est que les valeurs ne
+     sont plus figées dans le fichier, elles se lisent dans l'adresse de la page.
+
+     ⚠️ LES TROIS MESSAGES SONT ÉCRITS À DEUX ENDROITS, ici et dans le générateur.
+     Ils doivent rester identiques au caractère près. Le générateur le vérifie à chaque
+     exécution et se plaint si les deux divergent. Si un mot change, il change dans le
+     générateur, puis ici.
+
+     ⚠️ LE BLEU EST CELUI DU GABARIT MAIL, `#5399BC`, le carré du logo, et non le
+     `#0653A8` du reste du site. C'est la consigne de Lilian pour ce chantier : la page
+     et le mail qui y mène doivent se ressembler.
+
+     PERSONNALISATION PAR L'ADRESSE
+
+       /relance-sms/?prenom=Béatrice&nom=Dupont&commune=Aix-en-Provence&tel=0639982147
+
+     `prenom` et `tel` sont les deux qui comptent : le prénom entre dans le texte des
+     trois messages, le numéro dans les liens `sms:`. `nom` et `commune` ne servent qu'à
+     la fiche du haut. Tout paramètre absent est remplacé par l'exemple fictif, et la
+     page le dit en toutes lettres au lieu de le taire.
+
+     ⚠️ LE NUMÉRO PAR DÉFAUT EST FICTIF, et il doit le rester. 06 39 98 21 47 appartient
+     à la plage 06 39 98 XX XX réservée à la fiction par l'ARCEP : personne ne peut être
+     joint par erreur en tapant sur un bouton de cette page ouverte à nu.
+
+     Aucun pixel Meta ici : c'est un outil interne, pas une page de tunnel.
+     ========================================================================== -->
+
+<style>
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:#FFFFFF;color:#1D1D1F;-webkit-text-size-adjust:100%;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;}
+.page{max-width:480px;margin:0 auto;padding:22px 16px 56px;}
+.bandeau{font-size:12px;letter-spacing:1.1px;text-transform:uppercase;color:#86868B;}
+h1{font-size:24px;line-height:1.25;font-weight:700;margin:6px 0 14px;}
+.avert{background:#F4F7F9;border:1px solid #D9DEE3;border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.5;color:#1D1D1F;margin:0 0 20px;}
+.avert b{color:#3C7A99;}
+.fiche{border:1px solid #D9DEE3;border-radius:14px;padding:16px;margin:0 0 26px;}
+.fiche .nom{font-size:19px;font-weight:700;line-height:1.3;}
+.fiche .ville{font-size:14px;color:#86868B;margin-top:3px;}
+.numero{font-size:27px;font-weight:700;color:#5399BC;letter-spacing:.5px;margin:14px 0 12px;word-break:break-word;}
+.carte{border:1px solid #D9DEE3;border-radius:14px;padding:16px;margin:0 0 18px;}
+.rang{display:flex;align-items:center;justify-content:space-between;margin:0 0 10px;}
+.pastille{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#5399BC;color:#FFFFFF;font-size:14px;font-weight:700;}
+.compte{font-size:12px;color:#86868B;}
+.bulle{background:#F4F7F9;border-radius:12px;padding:13px 14px;font-size:15px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 12px;}
+.bouton{display:block;width:100%;min-height:46px;border-radius:10px;font-size:15px;font-weight:700;text-align:center;text-decoration:none;padding:13px 12px;margin:0 0 9px;font-family:inherit;cursor:pointer;line-height:1.25;}
+.plein{background:#5399BC;color:#FFFFFF;border:1px solid #5399BC;}
+.plein.ok{background:#1E7B45;border-color:#1E7B45;}
+.plein.rate{background:#A32B1E;border-color:#A32B1E;}
+.creux{background:#FFFFFF;color:#3C7A99;border:1px solid #5399BC;}
+.essai{font-size:12.5px;line-height:1.45;color:#86868B;margin:14px 0 9px;}
+.pied{font-size:13px;line-height:1.6;color:#86868B;margin:26px 0 0;}
+.pied b{color:#1D1D1F;}
+.pied code{font-size:12.5px;background:#F4F7F9;padding:1px 5px;border-radius:5px;}
+@media (min-width:430px){.duo{display:flex;gap:9px;}.duo .bouton{margin-bottom:0;}}
+</style>
+</head>
+<body>
+
+<div class="page">
+<div class="bandeau">Teck Aménagement</div>
+<h1>Relance par SMS</h1>
+
+<!-- Le texte écrit ici est celui de la page ouverte à nu, sans aucun paramètre.
+     Le script le remplace quand le lien porte un prospect, et le retire tout à fait
+     quand le lien est complet. Sans JavaScript, la page reste donc lisible et honnête :
+     elle affiche l'exemple fictif et elle annonce que c'en est un. -->
+<div class="avert" id="avert"><b>Aucun prospect dans le lien :</b> cette page se remplit toute seule quand elle est ouverte depuis le mail de relance.<br>Ouverte directement, elle montre l’exemple ci-dessous, dont le nom, la commune et le numéro sont fictifs. Le numéro appartient à la plage réservée à la fiction par l’ARCEP, il ne joint personne.</div>
+
+<section class="fiche">
+<div class="nom" id="fiche-nom">Béatrice Dupont</div>
+<div class="ville" id="fiche-ville">Aix-en-Provence</div>
+<div class="numero" id="numero">06 39 98 21 47</div>
+<button class="bouton plein" type="button" data-cible="numero">Copier le numéro</button>
+</section>
+
+<section class="carte">
+<div class="rang"><span class="pastille">1</span><span class="compte">127 caractères</span></div>
+<div class="bulle" id="msg1">Bonjour Béatrice, c’est Franck de chez Teck Aménagement, J’ai vu que vous n’avez pas répondu au mail que je vous ai envoyé hier</div>
+<button class="bouton plein" type="button" data-cible="msg1">Copier le message</button>
+<div class="essai">Deux formes de lien, à tester</div>
+<a class="bouton creux js-sms" data-forme="ios" href="sms:0639982147&amp;body=Bonjour%20B%C3%A9atrice%2C%20c%E2%80%99est%20Franck%20de%20chez%20Teck%20Am%C3%A9nagement%2C%20J%E2%80%99ai%20vu%20que%20vous%20n%E2%80%99avez%20pas%20r%C3%A9pondu%20au%20mail%20que%20je%20vous%20ai%20envoy%C3%A9%20hier">Ouvrir Messages &nbsp;·&nbsp; iOS (&amp;body=)</a>
+<a class="bouton creux js-sms" data-forme="std" href="sms:0639982147?body=Bonjour%20B%C3%A9atrice%2C%20c%E2%80%99est%20Franck%20de%20chez%20Teck%20Am%C3%A9nagement%2C%20J%E2%80%99ai%20vu%20que%20vous%20n%E2%80%99avez%20pas%20r%C3%A9pondu%20au%20mail%20que%20je%20vous%20ai%20envoy%C3%A9%20hier">Ouvrir Messages &nbsp;·&nbsp; standard (?body=)</a>
+</section>
+
+<section class="carte">
+<div class="rang"><span class="pastille">2</span><span class="compte">186 caractères</span></div>
+<div class="bulle" id="msg2">Je me permets de vous recontacter par SMS car ma demande est importante… Est-ce que vous pourriez m’envoyer une photo du lieu de votre future pergola, avec les dimensions et/ou un plan ?</div>
+<button class="bouton plein" type="button" data-cible="msg2">Copier le message</button>
+<div class="essai">Deux formes de lien, à tester</div>
+<a class="bouton creux js-sms" data-forme="ios" href="sms:0639982147&amp;body=Je%20me%20permets%20de%20vous%20recontacter%20par%20SMS%20car%20ma%20demande%20est%20importante%E2%80%A6%20Est-ce%20que%20vous%20pourriez%20m%E2%80%99envoyer%20une%20photo%20du%20lieu%20de%20votre%20future%20pergola%2C%20avec%20les%20dimensions%20et%2Fou%20un%20plan%20%3F">Ouvrir Messages &nbsp;·&nbsp; iOS (&amp;body=)</a>
+<a class="bouton creux js-sms" data-forme="std" href="sms:0639982147?body=Je%20me%20permets%20de%20vous%20recontacter%20par%20SMS%20car%20ma%20demande%20est%20importante%E2%80%A6%20Est-ce%20que%20vous%20pourriez%20m%E2%80%99envoyer%20une%20photo%20du%20lieu%20de%20votre%20future%20pergola%2C%20avec%20les%20dimensions%20et%2Fou%20un%20plan%20%3F">Ouvrir Messages &nbsp;·&nbsp; standard (?body=)</a>
+</section>
+
+<section class="carte">
+<div class="rang"><span class="pastille">3</span><span class="compte">188 caractères</span></div>
+<div class="bulle" id="msg3">Afin que j’affine votre projet avant de vous avoir au téléphone (Vous pouvez d’ailleurs, si ce n’est pas déjà fait, réserver le créneau qui vous conviendrait le mieux sur ce lien : [LIEN])</div>
+<button class="bouton plein" type="button" data-cible="msg3">Copier le message</button>
+<div class="essai">Deux formes de lien, à tester</div>
+<a class="bouton creux js-sms" data-forme="ios" href="sms:0639982147&amp;body=Afin%20que%20j%E2%80%99affine%20votre%20projet%20avant%20de%20vous%20avoir%20au%20t%C3%A9l%C3%A9phone%20(Vous%20pouvez%20d%E2%80%99ailleurs%2C%20si%20ce%20n%E2%80%99est%20pas%20d%C3%A9j%C3%A0%20fait%2C%20r%C3%A9server%20le%20cr%C3%A9neau%20qui%20vous%20conviendrait%20le%20mieux%20sur%20ce%20lien%20%3A%20%5BLIEN%5D)">Ouvrir Messages &nbsp;·&nbsp; iOS (&amp;body=)</a>
+<a class="bouton creux js-sms" data-forme="std" href="sms:0639982147?body=Afin%20que%20j%E2%80%99affine%20votre%20projet%20avant%20de%20vous%20avoir%20au%20t%C3%A9l%C3%A9phone%20(Vous%20pouvez%20d%E2%80%99ailleurs%2C%20si%20ce%20n%E2%80%99est%20pas%20d%C3%A9j%C3%A0%20fait%2C%20r%C3%A9server%20le%20cr%C3%A9neau%20qui%20vous%20conviendrait%20le%20mieux%20sur%20ce%20lien%20%3A%20%5BLIEN%5D)">Ouvrir Messages &nbsp;·&nbsp; standard (?body=)</a>
+</section>
+
+<div class="pied">
+<p><b>Les deux boutons d’ouverture sont un essai.</b> La syntaxe du lien <code>sms:</code> n’est pas la même partout : iOS accepte <code>&amp;body=</code>, le reste attend <code>?body=</code>. Dites-nous lequel des deux remplit vraiment le message sur votre téléphone, nous supprimerons l’autre.</p>
+<p><b>[LIEN]</b> reste à remplacer dans le message 3 : c’est le lien de réservation de créneau, il n’est pas encore arrêté.</p>
+<p>La seule variable des messages est <code>{{prenom}}</code>. Ici elle affiche « <span id="pied-prenom">Béatrice</span> ».</p>
+<p>La page se personnalise par son adresse, <code>?prenom=…&amp;tel=…</code>, avec <code>&amp;nom=…</code> et <code>&amp;commune=…</code> pour la fiche du haut.</p>
+</div>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────────────────────────────────────
+   LE PROSPECT SE LIT DANS L'ADRESSE
+
+   Rien n'est stocké, rien n'est appelé : la page se contente de recopier ce que le
+   mail lui passe. C'est la même mécanique que `apercu-resultat/`, qui reçoit déjà
+   `?prenom=` du quiz, et la même prudence : ce qui vient de l'URL n'entre dans la
+   page que par `textContent`, jamais par `innerHTML`.
+
+   ⚠️ TOUT PARAMÈTRE ABSENT RETOMBE SUR L'EXEMPLE FICTIF, et l'encadré du haut nomme
+   alors précisément ce qui manque. Le pire serait de laisser passer un `{{prenom}}`
+   en clair dans un SMS, ou un `sms:undefined` qui n'ouvre rien.
+   ───────────────────────────────────────────────────────────────────────────── */
+(function () {
+
+  /* L'exemple, fictif de bout en bout. Le numéro est dans la plage 06 39 98 XX XX
+     réservée à la fiction par l'ARCEP : il ne joint personne. */
+  var EXEMPLE = {
+    prenom: 'Béatrice',
+    nom: 'Dupont',
+    commune: 'Aix-en-Provence',
+    telephone: '06 39 98 21 47'
+  };
+
+  /* ⚠️ LES TROIS MESSAGES, RECOPIÉS AU CARACTÈRE PRÈS depuis
+     `generer-relance-directe.js`. Écrits par Lilian le 07/09/2026 : l'absence de point
+     final est volontaire, les points de suspension du message 2 aussi. Ne rien
+     réécrire ici. Si un mot doit changer, il change chez Lilian, puis dans le
+     générateur, puis ici. */
+  var MESSAGES = [
+    'Bonjour {{prenom}}, c’est Franck de chez Teck Aménagement, J’ai vu que vous n’avez pas répondu au mail que je vous ai envoyé hier',
+    'Je me permets de vous recontacter par SMS car ma demande est importante… Est-ce que vous pourriez m’envoyer une photo du lieu de votre future pergola, avec les dimensions et/ou un plan ?',
+    'Afin que j’affine votre projet avant de vous avoir au téléphone (Vous pouvez d’ailleurs, si ce n’est pas déjà fait, réserver le créneau qui vous conviendrait le mieux sur ce lien : [LIEN])'
+  ];
+
+  var q = new URLSearchParams(location.search);
+
+  /* Une valeur d'URL est bornée en longueur : la fiche doit rester lisible sur un
+     téléphone, quoi qu'on lui envoie. */
+  function lire(nom, max) {
+    var v = (q.get(nom) || '').replace(/\s+/g, ' ').trim();
+    return v ? v.slice(0, max) : '';
+  }
+
+  /* `tel` est le nom retenu pour le paramètre. `telephone` est accepté aussi, parce
+     que c'est le nom de la variable dans le mail (`{{ telephone }}`) et qu'une
+     automatisation pourrait le reprendre tel quel. */
+  var saisi = {
+    prenom: lire('prenom', 40),
+    nom: lire('nom', 60),
+    commune: lire('commune', 80),
+    tel: lire('tel', 30) || lire('telephone', 30)
+  };
+
+  /* Le numéro sert deux fois, sous deux formes : celle qu'on lit et celle qu'on
+     compose. Un numéro qui ne ressemble pas à un numéro est traité comme absent,
+     plutôt que de fabriquer un `sms:` qui n'ouvrirait rien. */
+  function composable(t) { return t.replace(/[^0-9+]/g, ''); }
+  function grouper(t) {
+    return /^0[0-9]{9}$/.test(t) ? t.replace(/([0-9]{2})(?=[0-9])/g, '$1 ') : t;
+  }
+
+  var telLien = composable(saisi.tel);
+  if (!/^\+?[0-9]{6,15}$/.test(telLien)) { saisi.tel = ''; telLien = ''; }
+
+  /* Ce qui manque est remplacé par l'exemple, et retenu pour l'encadré du haut. */
+  var manque = [];
+  function ou(valeur, etiquette, repli) {
+    if (valeur) return valeur;
+    manque.push(etiquette);
+    return repli;
+  }
+
+  var prenom  = ou(saisi.prenom,  'le prénom',  EXEMPLE.prenom);
+  var nom     = ou(saisi.nom,     'le nom',     EXEMPLE.nom);
+  var commune = ou(saisi.commune, 'la commune', EXEMPLE.commune);
+
+  var telAffiche;
+  if (saisi.tel) {
+    /* Un numéro français de dix chiffres arrivé collé se relit par paires, comme sur
+       le reste des documents Teck. Tout autre format est affiché tel qu'il arrive. */
+    telAffiche = /\s/.test(saisi.tel) ? saisi.tel : grouper(telLien);
+  } else {
+    manque.push('le numéro');
+    telAffiche = EXEMPLE.telephone;
+    telLien = composable(EXEMPLE.telephone);
+  }
+
+  /* ── L'encadré du haut ─────────────────────────────────────────────────────
+     Trois états, et un seul est muet : celui où le lien porte tout ce qu'il faut. */
+  var avert = document.getElementById('avert');
+  if (avert) {
+    if (!manque.length) {
+      avert.parentNode.removeChild(avert);
+    } else if (manque.length < 4) {
+      /* `manque` ne contient que des étiquettes écrites juste au-dessus, jamais une
+         valeur venue de l'URL : l'`innerHTML` est donc sans danger ici. */
+      var liste = manque.length === 1
+        ? manque[0]
+        : manque.slice(0, -1).join(', ') + ' et ' + manque[manque.length - 1];
+      avert.innerHTML =
+        '<b>Lien incomplet :</b> il manque ' + liste + ' dans l’adresse de cette page.' +
+        '<br>Ce qui manque est remplacé par l’exemple fictif, dont le numéro appartient ' +
+        'à la plage réservée à la fiction par l’ARCEP.';
+    }
+    /* Quatre manquants sur quatre : la page est ouverte à nu, le texte écrit dans le
+       HTML dit déjà exactement ça. */
+  }
+
+  /* ── La fiche ─────────────────────────────────────────────────────────────── */
+  function poser(id, texte) {
+    var n = document.getElementById(id);
+    if (n) n.textContent = texte;
+  }
+  poser('fiche-nom', (prenom + ' ' + nom).replace(/\s+/g, ' ').trim());
+  poser('fiche-ville', commune);
+  poser('numero', telAffiche);
+  poser('pied-prenom', prenom);
+
+  /* ── Les trois messages ────────────────────────────────────────────────────
+     ⚠️ DEUX FORMES DE LIEN `sms:`, CÔTE À CÔTE, ET C'EST TOUJOURS UN ESSAI.
+     iOS accepte `sms:0612345678&body=texte`, avec une esperluette ; `?body=` est la
+     forme attendue partout ailleurs, Android en tête. Les deux sont servies, étiquetées,
+     et une seule survivra quand Lilian aura tranché sur son téléphone.
+     Ici l'esperluette s'écrit `&` et non `&amp;` : on pose une valeur d'attribut par
+     `setAttribute`, pas du HTML à analyser. */
+  function lienSms(texte, forme) {
+    return 'sms:' + telLien + (forme === 'ios' ? '&' : '?') + 'body=' + encodeURIComponent(texte);
+  }
+
+  for (var i = 0; i < MESSAGES.length; i++) {
+    var bulle = document.getElementById('msg' + (i + 1));
+    if (!bulle) continue;
+
+    var texte = MESSAGES[i].replace(/\{\{prenom\}\}/g, prenom);
+    bulle.textContent = texte;
+
+    var carte = bulle.parentNode;
+    var compte = carte.querySelector('.compte');
+    if (compte) compte.textContent = texte.length + ' caractères';
+
+    var liens = carte.querySelectorAll('a.js-sms');
+    for (var j = 0; j < liens.length; j++) {
+      liens[j].setAttribute('href', lienSms(texte, liens[j].getAttribute('data-forme')));
+    }
+  }
+})();
+</script>
+
+<script>
+/* ── La copie, avec un repli ─────────────────────────────────────────────────
+   ⚠️ `navigator.clipboard` n'existe qu'en contexte sécurisé. Servie en HTTPS depuis
+   Vercel, la page l'a ; ouverte depuis un fichier local ou servie en clair pendant
+   un essai, non.
+   Sans repli, le bouton ne ferait rien du tout et rien ne le dirait. Le repli est
+   `document.execCommand('copy')` sur un champ temporaire, obsolète mais toujours
+   accepté partout. Et dans les deux cas le bouton le dit : « Copié » ou « Impossible
+   de copier », jamais le silence.
+
+   Ce bloc est repris tel quel de la maquette testée sur iPhone le 07/09/2026. */
+(function(){
+function replier(t){
+var z=document.createElement("textarea");z.value=t;z.setAttribute("readonly","");
+z.style.position="fixed";z.style.top="0";z.style.left="0";z.style.opacity="0";
+document.body.appendChild(z);z.focus();z.select();
+try{z.setSelectionRange(0,t.length);}catch(e){}
+var ok=false;try{ok=document.execCommand("copy");}catch(e){ok=false;}
+document.body.removeChild(z);return ok;}
+function dire(b,texte,classe){
+if(b.dataset.libelle===undefined)b.dataset.libelle=b.textContent;
+clearTimeout(b._t);b.textContent=texte;b.classList.remove("ok","rate");
+if(classe)b.classList.add(classe);
+b._t=setTimeout(function(){b.textContent=b.dataset.libelle;
+b.classList.remove("ok","rate");},1800);}
+document.addEventListener("click",function(ev){
+var b=ev.target.closest("[data-cible]");if(!b)return;
+var source=document.getElementById(b.dataset.cible);if(!source)return;
+var t=source.textContent.trim();
+function fini(ok){dire(b,ok?"Copié":"Impossible de copier",ok?"ok":"rate");}
+if(navigator.clipboard&&window.isSecureContext){
+navigator.clipboard.writeText(t).then(function(){fini(true);},
+function(){fini(replier(t));});}else{fini(replier(t));}
+});
+})();
+</script>
+
+</body>
+</html>

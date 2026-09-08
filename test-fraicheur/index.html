@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Teck Aménagement — Le test au thermomètre</title>
+
+    <!-- ⚠️ PAS DE PIXEL META SUR CETTE PAGE, ET C'EST VOLONTAIRE.
+         Cette page est la destination du lien de la séquence mail Brevo. Même règle
+         que /rdv-mail/ et /apercu-resultat/reserver/ : aucun événement ne doit partir
+         d'ici, sinon le trafic email viendrait polluer le signal qui pilote les
+         campagnes payantes de Franck. Ne jamais ajouter le pixel ici. -->
+
+    <!-- Inter : la police de tout le sous-domaine (page d'accueil pergola,
+         page de résultat, page de réservation). Même appel, mêmes graisses. -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        /* Repris de la page de résultat : sur iOS, les pages du domaine laissaient le
+           document défiler latéralement. On ferme la porte ici aussi, par principe. */
+        html, body { overflow-x: hidden; max-width: 100%; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #1D1D1F;
+            background-color: #f8f8f8;
+        }
+
+        /* Dégradé du hero de la page de résultat et de la section « Pourquoi choisir
+           Teck Aménagement », à la valeur près. Une seule teinte pour toute la page. */
+        .page {
+            min-height: 100svh;
+            background: linear-gradient(180deg, #EFF4FA 0%, #FFFFFF 88%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: clamp(30px, 5svh, 58px) 22px clamp(30px, 4svh, 52px);
+        }
+
+        /* Logo à la taille de la page de réservation (360px, 82% sur petit écran). */
+        .logo {
+            width: 360px;
+            max-width: 82%;
+            height: auto;
+            display: block;
+            margin: 0 auto clamp(24px, 4svh, 40px);
+        }
+
+        /* Typo de `.adv-ttl`, le titre de section de la page d'accueil pergola. */
+        h1 {
+            font-size: 28px;
+            font-weight: 500;
+            letter-spacing: -.02em;
+            line-height: 1.2;
+            color: #1D1D1F;
+            margin: 0 0 10px;
+            max-width: 20ch;
+        }
+        @media (min-width: 768px) { h1 { font-size: 38px; max-width: none; } }
+
+        /* Typo de `.adv-sub`, le sous-titre qui accompagne `.adv-ttl`. */
+        .sous-titre {
+            font-size: 14px;
+            line-height: 1.55;
+            color: #86868B;
+            margin: 0 auto;
+            max-width: 46ch;
+        }
+
+        /* Cadre de la vidéo repris de `.proof-section video` sur la page d'accueil :
+           même rayon, même ombre. Seule différence assumée : la hauteur est bornée par
+           la fenêtre, parce qu'ici la vidéo est seule à l'écran et doit tenir dedans
+           sans qu'on ait à faire défiler. `width`/`height` en auto avec les deux bornes
+           laisse le navigateur conserver le format 540 × 960 du fichier. */
+        video {
+            width: auto;
+            height: auto;
+            max-width: min(100%, 340px);
+            max-height: min(66svh, 620px);
+            aspect-ratio: 540 / 960;
+            display: block;
+            margin: clamp(24px, 4svh, 34px) auto 0;
+            border-radius: 18px;
+            box-shadow: 0 18px 38px rgba(0, 0, 0, .12);
+            background: #EFF4FA;
+        }
+
+        .mentions {
+            font-size: 12.5px;
+            color: #86868B;
+            margin: clamp(24px, 4svh, 36px) 0 0;
+        }
+        .mentions a { color: #86868B; font-style: italic; text-decoration: none; }
+        .separateur { color: #C7C7CC; }
+    </style>
+</head>
+<body>
+
+<main class="page">
+
+    <img class="logo"
+         src="../561d79a-47b15060-85cc2f7b/images/logo-teck.png"
+         alt="Teck Aménagement — Pergola, terrasse, mobilier en bois exotique">
+
+    <!-- Titre repris mot pour mot de la section « preuve » de la page d'accueil
+         pergola. Les deux chiffres sont ceux du test filmé, et eux seuls. -->
+    <h1>42°C en plein soleil contre 32°C sous la pergola</h1>
+
+    <p class="sous-titre">Cet été, nous avons fait un test au thermomètre sur la terrasse et sous la pergola, au même moment.</p>
+
+    <!-- Le fichier reste celui de la page d'accueil, il n'est ni copié ni réencodé.
+         Le montage est muet : la lecture automatique se fait donc sans son, et les
+         contrôles laissent la personne mettre en pause ou revoir le passage. -->
+    <video src="../pergola/page-accueil/assets/videos/test-thermometre.mp4"
+           controls
+           autoplay
+           muted
+           loop
+           playsinline
+           aria-label="Test au thermomètre filmé sur une terrasse et sous une pergola Teck Aménagement"></video>
+
+    <p class="mentions">
+        <a href="https://teckamenagement.fr/mentions-legales/">Politique de confidentialité</a>
+        <span class="separateur">·</span> © Teck Aménagement. Tous droits réservés.
+    </p>
+
+</main>
+
+</body>
+</html>
