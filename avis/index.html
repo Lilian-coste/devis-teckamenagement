@@ -134,8 +134,11 @@
     margin:0; white-space:pre-line;
   }
   /* Le surlignage bleu, jamais un soulignement : c'est la forme retenue pour Teck. */
+  /* Les valeurs viennent de `components/reviews/ReviewText.tsx`, côté quiz : c'est la
+     même encre et le même fond partout où un avis est surligné chez Teck. */
   .carte .texte mark{
-    background:#E3EDF9; color:#1D1D1F; padding:1px 2px; border-radius:3px;
+    background:rgba(6,83,168,.09); color:rgba(10,31,68,1);
+    padding:1px 4px; border-radius:4px;
     box-decoration-break:clone; -webkit-box-decoration-break:clone;
   }
   /* Replié : six lignes. Le texte entier est déjà là, c'est la hauteur qui change,

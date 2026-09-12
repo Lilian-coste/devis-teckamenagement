@@ -81,18 +81,23 @@
      rétracte, et la dernière rangée de points passait sous le pli. */
   .scene{
     position:relative;
-    height:calc(100svh - 190px);
+    height:calc(100svh - 234px);
     min-height:380px;
     max-height:860px;
   }
-  @media(max-width:768px){ .scene{ height:calc(100svh - 168px); min-height:340px; } }
+  @media(max-width:768px){ .scene{ height:calc(100svh - 212px); min-height:340px; } }
 
   .piste{
     display:flex; height:100%;
     overflow-x:auto; overflow-y:hidden;
     scroll-snap-type:x mandatory;
-    scroll-behavior:smooth;
     scrollbar-width:none;
+    /* ⚠️ PAS DE `scroll-behavior:smooth` EN CSS. Il s'appliquerait à TOUS les
+       défilements, y compris à ceux qu'on veut instantanés quand Lilian enchaîne les
+       clics. Le glissé est demandé au cas par cas dans le script. */
+    /* ⚠️ `touch-action:manipulation` : sans lui, un double appui rapide déclenche le
+       zoom du navigateur au lieu de faire défiler (Lilian, 12/09/2026, sur iPhone). */
+    touch-action:manipulation;
   }
   .piste::-webkit-scrollbar{ display:none; }
 
@@ -126,6 +131,9 @@
     cursor:pointer; z-index:4;
     box-shadow:0 6px 18px rgba(0,0,0,.08);
     transition:transform .25s, box-shadow .25s, border-color .25s;
+    /* Le double appui sur une flèche doit avancer de deux photos, pas zoomer. */
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;
   }
   .fleche:hover{ transform:translateY(-50%) scale(1.06); border-color:var(--teck); box-shadow:0 10px 26px rgba(0,0,0,.12); }
   .fleche:focus-visible{ outline:2px solid var(--teck); outline-offset:3px; }
@@ -134,10 +142,13 @@
   .fleche.suiv{ right:10px; }
   @media(min-width:768px){ .fleche{ width:54px; height:54px; font-size:22px; } .fleche.prec{ left:18px; } .fleche.suiv{ right:18px; } }
 
-  /* Le compteur et le plein écran, posés en haut à droite de la scène. */
+  /* ⚠️ LE COMPTEUR EST AU-DESSUS DE LA PHOTO, PAS DESSUS (Lilian, 12/09/2026).
+     Posé en haut à droite de la scène, il se retrouvait sur le ciel de la première
+     photo, et sur un téléphone il mordait franchement dessus. Une barre à lui, juste
+     au-dessus du carrousel, ne recouvre plus rien et se lit mieux. */
   .outils{
-    position:absolute; top:10px; right:14px; z-index:4;
-    display:flex; align-items:center; gap:8px;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    padding:12px 20px 10px;
   }
   .compteur{
     background:rgba(255,255,255,.92); border:1px solid #D2D2D7; border-radius:999px;
@@ -195,6 +206,14 @@
   .review-card:hover{ transform:translateY(-6px); border-color:var(--teck); box-shadow:0 18px 38px rgba(0,0,0,.08); }
   .review-card .stars{ color:var(--teck); font-size:13px; letter-spacing:1px; margin-bottom:12px; }
   .review-card .txt{ color:#424245; font-size:13.5px; line-height:1.55; font-weight:300; font-style:italic; flex:1; }
+  /* ⚠️ LE SURLIGNAGE BLEU DU BANDEAU, repris du quiz (`components/reviews/ReviewText.tsx`).
+     Mêmes valeurs exactement : un fond bleu à 9 %, une encre bleu nuit, jamais un
+     soulignement. Les six passages sont ceux que Lilian a choisis un par un le
+     16/07/2026 ; ils vivent aussi dans `lib/reviews.ts`, côté quiz. */
+  .review-card .txt .hl{
+    background:rgba(6,83,168,.09); color:rgba(10,31,68,1);
+    border-radius:4px; padding:1px 4px;
+  }
   .review-card .who{ display:flex; align-items:center; gap:10px; margin-top:18px; }
   .review-card .ava{ width:42px; height:42px; border-radius:50%; background:#F5F5F7; border:1px solid #D2D2D7;
     display:flex; align-items:center; justify-content:center; color:var(--teck); font-size:11px; font-weight:700; flex-shrink:0; }
@@ -245,6 +264,13 @@
 </header>
 
 <!-- ═══════════ LE CARROUSEL ═══════════ -->
+<div class="outils">
+  <span class="compteur" id="compteur" aria-live="polite">1 / 20</span>
+  <button class="plein" id="plein" type="button" aria-label="Afficher en plein écran">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+  </button>
+</div>
+
 <div class="scene" id="scene">
   <div class="piste" id="piste" tabindex="0" role="region" aria-roledescription="carrousel" aria-label="Photos du projet">
     <!-- LES VUES SONT ÉCRITES PAR LE SCRIPT, à partir de la liste plus bas : vingt et
@@ -255,12 +281,6 @@
   <button class="fleche prec" id="prec" type="button" aria-label="Photo précédente">&#10094;</button>
   <button class="fleche suiv" id="suiv" type="button" aria-label="Photo suivante">&#10095;</button>
 
-  <div class="outils">
-    <span class="compteur" id="compteur" aria-live="polite">1 / 21</span>
-    <button class="plein" id="plein" type="button" aria-label="Afficher en plein écran">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
-    </button>
-  </div>
 </div>
 
 <div class="points" id="points" role="tablist" aria-label="Aller à une photo"></div>
@@ -270,12 +290,12 @@
 <section class="reviews-section">
   <div class="marquee">
     <div class="mq-track mq-left" id="reviewsTrack">
-      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">Excellentes prestations avec Teck Aménagement pour la réalisation de nos deux pergolas / ombrières. Des artisans rigoureux, un travail soigné, des délais respectés et un très beau rendu esthétique. Nous recommandons vivement !</p><div class="who"><div class="ava">AC</div><div><div class="nm">Anne Cayron</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
-      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">Une superbe pergola, très design… à la hauteur de nos espérances. Une vraie plus-value pour la maison. Une entreprise sérieuse et réactive qui a respecté tous ses engagements.</p><div class="who"><div class="ava">MB</div><div><div class="nm">Muriel Baccigalupo</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
-      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">Nous sommes ravis ! Une prestation de qualité, des conseils avisés et un suivi au millimètre de la commande à l'installation. On réfléchit déjà à un autre projet avec eux, je recommande à 1000 % !</p><div class="who"><div class="ava">CT</div><div><div class="nm">Catherine Tonda</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
-      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">Je suis très satisfaite de la magnifique pergola. Franck a été très réactif, à l'écoute, et de très bons conseils. Son équipe était adorable et très pro ! Un design juste DE FOLIE !!!</p><div class="who"><div class="ava">AR</div><div><div class="nm">Adrienne Riera</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
-      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">Rénovation de nos extérieurs, terrasse en bois exotique et pergola sur toute la longueur de la maison. Une merveille, très belle prestation, chantier terminé dans les temps. Je recommande à 200 %.</p><div class="who"><div class="ava">FB</div><div><div class="nm">Fabienne Bongiovanni</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
-      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">Très grande satisfaction ! La luminosité reste la même à l'intérieur de la maison tout en protégeant ma terrasse du soleil. Résultat impeccable et conforme à ce qui avait été annoncé. Je recommande les yeux fermés.</p><div class="who"><div class="ava">M</div><div><div class="nm">Mathieu</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">Excellentes prestations avec Teck Aménagement pour la réalisation de nos deux pergolas / ombrières. <span class="hl">Des artisans rigoureux, un travail soigné, des délais respectés et un très beau rendu esthétique.</span> Nous recommandons vivement !</p><div class="who"><div class="ava">AC</div><div><div class="nm">Anne Cayron</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt"><span class="hl">Une superbe pergola, très design… à la hauteur de nos espérances. Une vraie plus-value pour la maison.</span> Une entreprise sérieuse et réactive qui a respecté tous ses engagements.</p><div class="who"><div class="ava">MB</div><div><div class="nm">Muriel Baccigalupo</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">Nous sommes ravis ! Une prestation de qualité, des conseils avisés et un suivi au millimètre de la commande à l'installation. <span class="hl">On réfléchit déjà à un autre projet avec eux, je recommande à 1000 % !</span></p><div class="who"><div class="ava">CT</div><div><div class="nm">Catherine Tonda</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">Je suis très satisfaite de la magnifique pergola. Franck a été très réactif, à l'écoute, et de très bons conseils. <span class="hl">Son équipe était adorable et très pro ! Un design juste DE FOLIE !!!</span></p><div class="who"><div class="ava">AR</div><div><div class="nm">Adrienne Riera</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">Rénovation de nos extérieurs, terrasse en bois exotique et pergola sur toute la longueur de la maison. <span class="hl">Une merveille, très belle prestation, chantier terminé dans les temps. Je recommande à 200 %.</span></p><div class="who"><div class="ava">FB</div><div><div class="nm">Fabienne Bongiovanni</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">Très grande satisfaction ! <span class="hl">La luminosité reste la même à l'intérieur de la maison tout en protégeant ma terrasse du soleil.</span> Résultat impeccable et conforme à ce qui avait été annoncé. Je recommande les yeux fermés.</p><div class="who"><div class="ava">M</div><div><div class="nm">Mathieu</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
     </div>
   </div>
 </section>
@@ -315,10 +335,9 @@
   var PHOTOS = [
     'pergola-01v.webp','pergola-02v.webp','pergola-03v.webp','pergola-04v.webp',
     'pergola-05v.webp','pergola-06v.webp','pergola-07v.webp','pergola-08v.webp',
-    'pergola-09v.webp',
-    'pergola-10h.webp','pergola-11h.webp','pergola-12h.webp','pergola-13h.webp',
-    'pergola-14h.webp','pergola-15h.webp','pergola-16h.webp','pergola-17h.webp',
-    'pergola-18h.webp','pergola-19h.webp','pergola-20h.webp','pergola-21h.webp'
+    'pergola-09h.webp','pergola-10h.webp','pergola-11h.webp','pergola-12h.webp',
+    'pergola-13h.webp','pergola-14h.webp','pergola-15h.webp','pergola-16h.webp',
+    'pergola-17h.webp','pergola-18h.webp','pergola-19h.webp','pergola-20h.webp'
   ];
 
   var piste = document.getElementById('piste');
@@ -328,10 +347,18 @@
   var suiv = document.getElementById('suiv');
   var scene = document.getElementById('scene');
   var plein = document.getElementById('plein');
-  var courante = 0;
 
-  /* Les deux premières photos se chargent tout de suite, les autres à l'approche :
-     vingt et une images d'un coup, ce sont cinq mégaoctets avant le premier regard. */
+  /* ⚠️ DEUX POSITIONS, ET C'EST VOLONTAIRE (12/09/2026).
+     `courante` est la photo réellement à l'écran, `cible` est celle qu'on a demandée.
+     La première version n'en avait qu'une, relue dans la barre de défilement : en
+     enchaînant les clics, chaque clic repartait d'une position intermédiaire, et le
+     carrousel n'avançait que d'une photo sur deux. En gardant la cible à part, dix
+     clics rapides font dix photos. */
+  var courante = 0;
+  var cible = 0;
+  var dernierClic = 0;
+  var finAnimation = 0;
+
   PHOTOS.forEach(function(nom, i){
     var vue = document.createElement('div');
     vue.className = 'vue';
@@ -341,8 +368,11 @@
     var img = document.createElement('img');
     img.src = 'images/' + nom;
     img.alt = 'Réalisation Teck Aménagement, photo ' + (i + 1);
-    img.loading = i < 2 ? 'eager' : 'lazy';
+    /* Les trois premières tout de suite, les autres à l'approche : vingt images d'un
+       coup, ce sont cinq mégaoctets avant le premier regard. */
+    img.loading = i < 3 ? 'eager' : 'lazy';
     img.decoding = 'async';
+    img.draggable = false;
     vue.appendChild(img);
     piste.appendChild(vue);
 
@@ -350,19 +380,13 @@
     p.className = 'point';
     p.type = 'button';
     p.setAttribute('aria-label', 'Photo ' + (i + 1));
-    p.addEventListener('click', function(){ aller(i); });
+    p.addEventListener('click', function(){ aller(i, false); });
     points.appendChild(p);
   });
 
-  function aller(i){
-    i = Math.max(0, Math.min(PHOTOS.length - 1, i));
-    piste.scrollTo({ left: i * piste.clientWidth, behavior: 'smooth' });
-  }
-
-  function marquer(){
-    /* On lit la position réelle plutôt que de compter les clics : le doigt qui
-       fait défiler ne passe par aucun bouton, et le compteur doit suivre quand même. */
-    var i = Math.round(piste.scrollLeft / piste.clientWidth);
+  /* Le compteur, les points et les flèches suivent la CIBLE, sans attendre la fin du
+     glissement : sinon l'affichage a toujours une photo de retard sur le doigt. */
+  function peindre(i){
     if (i === courante) return;
     courante = i;
     compteur.textContent = (i + 1) + ' / ' + PHOTOS.length;
@@ -374,18 +398,42 @@
     suiv.disabled = i === PHOTOS.length - 1;
   }
 
+  function aller(i, instant){
+    cible = Math.max(0, Math.min(PHOTOS.length - 1, i));
+    peindre(cible);
+    finAnimation = Date.now() + (instant ? 80 : 620);
+    piste.scrollTo({ left: cible * piste.clientWidth, behavior: instant ? 'auto' : 'smooth' });
+  }
+
+  /* Deux clics à moins de 420 ms d'intervalle : on saute sans glisser. C'est ce que
+     Lilian demande quand il veut parcourir vite, et c'est aussi ce qui rend le
+     défilement net au lieu de saccadé. */
+  function surClic(pas){
+    var maintenant = Date.now();
+    var rapide = maintenant - dernierClic < 420;
+    dernierClic = maintenant;
+    aller(cible + pas, rapide);
+  }
+
+  prec.addEventListener('click', function(){ surClic(-1); });
+  suiv.addEventListener('click', function(){ surClic(1); });
+
   var attente;
   piste.addEventListener('scroll', function(){
     window.clearTimeout(attente);
-    attente = window.setTimeout(marquer, 60);
+    attente = window.setTimeout(function(){
+      var i = Math.round(piste.scrollLeft / piste.clientWidth);
+      /* Pendant une animation qu'on a lancée, la position mesurée est en transit :
+         elle ne doit pas écraser la cible. Passé ce délai, c'est le doigt qui mène. */
+      if (Date.now() < finAnimation) return;
+      cible = i;
+      peindre(i);
+    }, 70);
   }, { passive: true });
 
-  prec.addEventListener('click', function(){ aller(courante - 1); });
-  suiv.addEventListener('click', function(){ aller(courante + 1); });
-
   piste.addEventListener('keydown', function(e){
-    if (e.key === 'ArrowRight'){ e.preventDefault(); aller(courante + 1); }
-    if (e.key === 'ArrowLeft'){ e.preventDefault(); aller(courante - 1); }
+    if (e.key === 'ArrowRight'){ e.preventDefault(); surClic(1); }
+    if (e.key === 'ArrowLeft'){ e.preventDefault(); surClic(-1); }
   });
 
   /* Le plein écran est un bonus : s'il n'existe pas dans ce navigateur, le bouton
@@ -405,7 +453,7 @@
   window.addEventListener('resize', function(){
     if (window.innerWidth === largeur) return;
     largeur = window.innerWidth;
-    piste.scrollLeft = courante * piste.clientWidth;
+    piste.scrollLeft = cible * piste.clientWidth;
   });
 
   points.children[0].setAttribute('aria-current', 'true');
