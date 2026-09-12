@@ -106,14 +106,19 @@
      (`column-count`) auraient été plus courtes à écrire, mais elles recomposent
      toute la page dès qu'une carte s'ouvre : le lecteur qui déplie un avis verrait
      tout le reste sauter. Ici, ouvrir une carte ne déplace que sa colonne. */
-  .mosaique{
-    display:grid; gap:32px; align-items:start;
-    max-width:1240px; margin:0 auto; padding:48px 22px 10px;
-    grid-template-columns:1fr;
-  }
-  @media(min-width:700px){ .mosaique{ grid-template-columns:1fr 1fr; } }
-  @media(min-width:1060px){ .mosaique{ grid-template-columns:1fr 1fr 1fr; gap:32px; } }
-  .colonne{ display:flex; flex-direction:column; gap:32px; }
+  /* ⚠️ DES RANGÉES, PAS TROIS COLONNES IDENTIQUES (Lilian, 12/09/2026 : « tout est
+     aligné pareil, ça fait mal à la tête »). La page reprend le rythme du bloc
+     « Parlent de nous » : une grande carte avec sa photo et une phrase en grand, deux
+     petites à côté, puis une rangée de trois. Une carte vedette toutes les trois
+     rangées, tant qu'il reste des avis dont on connaît la photo du chantier. */
+  .mosaique{ max-width:1240px; margin:0 auto; padding:48px 22px 10px; }
+  .rangee{ display:grid; gap:32px; align-items:start; grid-template-columns:1fr; }
+  .rangee + .rangee{ margin-top:32px; }
+  @media(min-width:700px){ .rangee{ grid-template-columns:1fr 1fr; } }
+  @media(min-width:1060px){ .rangee{ grid-template-columns:1fr 1fr 1fr; } }
+  /* La vedette occupe deux colonnes dès qu'il y en a plus d'une. */
+  @media(min-width:700px){ .vedette{ grid-column:span 2; } }
+  .pile{ display:flex; flex-direction:column; gap:32px; }
 
   /* ══════════════ UNE CARTE ══════════════ */
   /* ⚠️ LE DESSIN VIENT DU BLOC « PARLENT DE NOUS » des pages de résultat, que Lilian
@@ -133,13 +138,24 @@
      leurs adresses signées ont expiré. Poser une photo de chantier à côté d'un avis
      pris au hasard reviendrait à affirmer que cette personne parle de ce projet-là.
      Elles vivent donc dans leur propre carte, sans légende et sans nom. */
-  .photo{
-    border-radius:3rem; overflow:hidden; display:block;
-    border:1px solid #E5E7EB; box-shadow:0 4px 15px rgba(0,0,0,.03);
-    transition:all .5s cubic-bezier(.2,.8,.2,1);
+  /* ⚠️ LA PHOTO EST CELLE DU CHANTIER DE LA PERSONNE, jamais une illustration posée
+     là. Les trois paires viennent du bloc « Parlent de nous », où elles sont validées
+     depuis longtemps. Une photo à côté d'un avis affirme que cette personne parle de
+     ce chantier : pas de photo sans certitude. Cf. `VEDETTES` dans le préparateur. */
+  .carte.vedette{ padding:0; overflow:hidden; }
+  .carte.vedette .visuel{ display:block; aspect-ratio:16/10; overflow:hidden; }
+  .carte.vedette .visuel img{ display:block; width:100%; height:100%; object-fit:cover; }
+  .carte.vedette .dedans{ padding:34px 40px 32px; display:flex; flex-direction:column; }
+  @media(max-width:600px){ .carte.vedette .dedans{ padding:28px 26px 26px; } }
+  /* Les étoiles et la phrase mise en avant sont centrées, comme dans le bloc d'origine.
+     Le corps de l'avis reste à gauche : certains font mille caractères, et mille
+     caractères centrés ne se lisent plus. */
+  .carte.vedette .etoiles{ text-align:center; margin-bottom:16px; }
+  .carte.vedette .titre{
+    font-size:25px; line-height:1.25; font-weight:500; letter-spacing:-.01em;
+    color:var(--ink); text-align:center; margin:0 0 20px; text-wrap:balance;
   }
-  .photo:hover{ transform:translateY(-8px); box-shadow:0 20px 40px rgba(0,0,0,.06); }
-  .photo img{ display:block; width:100%; height:100%; object-fit:cover; }
+  @media(min-width:1060px){ .carte.vedette .titre{ font-size:31px; } }
   .carte .etoiles{ color:var(--teck); font-size:13px; letter-spacing:1px; margin-bottom:12px; }
 
   /* Ni italique ni guillemets, demande de Lilian du 12/09/2026. */
@@ -311,29 +327,22 @@
 (function(){
   'use strict';
 
-  var PAR_FOURNEE = 15;   /* cinq rangées de trois sur ordinateur */
-  var SEUIL_REPLI = 340;  /* au-delà, la carte s'ouvre avec « Voir plus » */
-
-  /* ⚠️ DES PHOTOS ENTRE LES AVIS, SANS AUCUNE ATTRIBUTION. Ce sont des réalisations de
-     Teck, les mêmes que celles du carrousel. Elles aèrent la page, comme dans le bloc
-     « parlent de nous » des pages de résultat. Aucune n'est présentée comme le chantier
-     de la personne dont l'avis est à côté : on ne le sait pas, donc on ne le dit pas. */
-  var PHOTOS = [
-    'pergola-01v.webp','pergola-10h.webp','pergola-05v.webp','pergola-13h.webp',
-    'pergola-07v.webp','pergola-16h.webp','pergola-02v.webp','pergola-18h.webp',
-    'pergola-06v.webp','pergola-11h.webp'
-  ];
-  /* Une photo toutes les cinq cartes : assez pour respirer, assez rare pour qu'elle
-     reste une respiration et non un catalogue. */
-  var TOUS_LES = 5;
-  var photoSuivante = 0;
+  /* Une fournée, c'est quatre rangées : la page en montre douze à quatorze avis à la
+     fois. La première version en posait quinze d'un coup, tous de la même taille, et
+     Lilian l'a dit sans détour : « ça fait mal à la tête ». */
+  var RANGEES_PAR_FOURNEE = 4;
+  var SEUIL_REPLI = 420;  /* au-delà, la carte s'ouvre avec « Voir plus » */
+  /* Une rangée vedette toutes les trois rangées, tant qu'il reste des avis dont on
+     connaît la photo du chantier. Ensuite, que des rangées de trois. */
+  var VEDETTE_TOUTES_LES = 3;
 
   var mosaique = document.getElementById('mosaique');
   var bouton = document.getElementById('plusDavis');
   var reste = document.getElementById('reste');
-  var AVIS = [];
-  var affiches = 0;
-  var colonnes = [];
+
+  var VEDETTES = [];   /* les avis qui ont une photo et une phrase mise en avant */
+  var SIMPLES = [];    /* tous les autres */
+  var poseesV = 0, poseesS = 0, rangees = 0;
 
   function elem(balise, classe, texte){
     var e = document.createElement(balise);
@@ -342,77 +351,28 @@
     return e;
   }
 
-  function nbColonnes(){
-    if (window.matchMedia('(min-width:1060px)').matches) return 3;
-    if (window.matchMedia('(min-width:700px)').matches) return 2;
-    return 1;
-  }
-
-  /* ⚠️ AUCUN HTML VENU D'UN AVIS N'EST INJECTÉ. Le texte d'un avis est écrit par un
-     client, pas par nous : il passe par `textContent` et par des nœuds, jamais par
-     une chaîne de balises. Le surlignage est fabriqué en découpant le texte en trois
-     morceaux, pas en collant une balise dedans. */
+  /* ⚠️ AUCUN HTML VENU D'UN AVIS N'EST INJECTÉ. Le texte est écrit par un client, pas
+     par nous : il passe par `textContent` et par des nœuds, jamais par une chaîne de
+     balises. Le surlignage est fabriqué en découpant le texte en trois morceaux. */
   function texteAvec(avis){
     var p = elem('p', 'texte');
     var t = avis.texte;
     var s = avis.surligne;
     var i = s ? t.indexOf(s) : -1;
-    if (i === -1){
-      p.textContent = t;
-      return p;
-    }
+    if (i === -1){ p.textContent = t; return p; }
     if (i > 0) p.appendChild(document.createTextNode(t.slice(0, i)));
     p.appendChild(elem('mark', null, s));
     p.appendChild(document.createTextNode(t.slice(i + s.length)));
     return p;
   }
 
-  function carteImage(){
-    var nom = PHOTOS[photoSuivante % PHOTOS.length];
-    photoSuivante += 1;
-    var fig = elem('figure', 'photo');
-    fig.style.margin = '0';
-    var img = elem('img');
-    img.src = '../carrousel-pergola/images/' + nom;
-    img.alt = 'Une réalisation de Teck Aménagement';
-    img.loading = 'lazy';
-    img.decoding = 'async';
-    fig.appendChild(img);
-    return fig;
-  }
-
-  function carteDe(avis){
-    var c = elem('article', 'carte');
-
-    var et = elem('div', 'etoiles', '★★★★★'.slice(0, avis.note));
-    et.setAttribute('aria-label', avis.note + ' étoiles sur 5');
-    c.appendChild(et);
-
-    var p = texteAvec(avis);
-    c.appendChild(p);
-
-    if (avis.texte.length > SEUIL_REPLI){
-      p.classList.add('replie');
-      var b = elem('button', 'voir-plus', 'Voir plus');
-      b.type = 'button';
-      b.setAttribute('aria-expanded', 'false');
-      b.addEventListener('click', function(){
-        var ouvert = p.classList.toggle('replie') === false;
-        b.textContent = ouvert ? 'Voir moins' : 'Voir plus';
-        b.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
-      });
-      c.appendChild(b);
-    }
-
+  function pied(avis){
     var pied = elem('div', 'pied-carte');
-
     var qui = elem('div', 'qui');
     var ava;
     if (avis.avatar){
       ava = elem('img', 'ava');
-      ava.src = avis.avatar;
-      ava.alt = '';
-      ava.loading = 'lazy';
+      ava.src = avis.avatar; ava.alt = ''; ava.loading = 'lazy';
     } else {
       ava = elem('div', 'ava', avis.initiales);
       ava.setAttribute('aria-hidden', 'true');
@@ -422,98 +382,122 @@
     var bloc = elem('div');
     bloc.appendChild(elem('div', 'nom', avis.nom));
     if (avis.lien){
-      var a = elem('a', 'lien-google', 'Voir l’avis sur Google');
-      a.href = avis.lien;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
+      var a = elem('a', 'lien-google', 'Voir l\u2019avis sur Google');
+      a.href = avis.lien; a.target = '_blank'; a.rel = 'noopener noreferrer';
       bloc.appendChild(a);
     }
     qui.appendChild(bloc);
     pied.appendChild(qui);
 
-    /* La mention 4,9★ sur chaque carte, comme sur le bandeau défilant. */
     var men = elem('div', 'mention');
     men.appendChild(document.createTextNode('4,9'));
-    men.appendChild(elem('span', 'ystar', '★'));
+    men.appendChild(elem('span', 'ystar', '\u2605'));
     men.appendChild(document.createTextNode('/5'));
     men.appendChild(elem('span', 'muted', '+140 avis'));
     pied.appendChild(men);
+    return pied;
+  }
 
-    c.appendChild(pied);
+  function repli(p, ou){
+    if (p.textContent.length <= SEUIL_REPLI) return;
+    p.classList.add('replie');
+    var b = elem('button', 'voir-plus', 'Voir plus');
+    b.type = 'button';
+    b.setAttribute('aria-expanded', 'false');
+    b.addEventListener('click', function(){
+      var ouvert = p.classList.toggle('replie') === false;
+      b.textContent = ouvert ? 'Voir moins' : 'Voir plus';
+      b.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
+    });
+    ou.appendChild(b);
+  }
+
+  function carteSimple(avis){
+    var c = elem('article', 'carte');
+    var et = elem('div', 'etoiles', '\u2605\u2605\u2605\u2605\u2605'.slice(0, avis.note));
+    et.setAttribute('aria-label', avis.note + ' étoiles sur 5');
+    c.appendChild(et);
+    var p = texteAvec(avis);
+    c.appendChild(p);
+    repli(p, c);
+    c.appendChild(pied(avis));
     return c;
   }
 
-  function refaireColonnes(){
-    var n = nbColonnes();
-    if (colonnes.length === n) return false;
-    mosaique.textContent = '';
-    colonnes = [];
-    for (var i = 0; i < n; i++){
-      var col = elem('div', 'colonne');
-      mosaique.appendChild(col);
-      colonnes.push(col);
-    }
-    return true;
+  function carteVedette(avis){
+    var c = elem('article', 'carte vedette');
+
+    var visuel = elem('figure', 'visuel');
+    visuel.style.margin = '0';
+    var img = elem('img');
+    img.src = 'photos/' + avis.photo;
+    img.alt = 'Le chantier de ' + avis.nom + ', réalisé par Teck Aménagement';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    visuel.appendChild(img);
+    c.appendChild(visuel);
+
+    var dedans = elem('div', 'dedans');
+    var et = elem('div', 'etoiles', '\u2605\u2605\u2605\u2605\u2605'.slice(0, avis.note));
+    et.setAttribute('aria-label', avis.note + ' étoiles sur 5');
+    dedans.appendChild(et);
+    /* Le titre est une phrase de l'avis, recopiée telle quelle. Cf. `VEDETTES` dans le
+       préparateur : aucune n'est écrite par nous. */
+    if (avis.titre) dedans.appendChild(elem('h2', 'titre', avis.titre));
+    var p = texteAvec(avis);
+    dedans.appendChild(p);
+    repli(p, dedans);
+    dedans.appendChild(pied(avis));
+    c.appendChild(dedans);
+    return c;
   }
 
-  /* On pose chaque carte dans la colonne la plus courte, mesurée pour de vrai.
-     Distribuer à tour de rôle produirait une colonne très longue dès qu'un avis de
-     mille caractères tombe toujours au même endroit. */
-  function plusCourte(){
-    var court = colonnes[0];
-    for (var i = 1; i < colonnes.length; i++){
-      if (colonnes[i].offsetHeight < court.offsetHeight) court = colonnes[i];
+  function rangeeVedette(){
+    var r = elem('div', 'rangee');
+    r.appendChild(carteVedette(VEDETTES[poseesV++]));
+    var pile = elem('div', 'pile');
+    for (var k = 0; k < 2 && poseesS < SIMPLES.length; k++){
+      pile.appendChild(carteSimple(SIMPLES[poseesS++]));
     }
-    return court;
+    r.appendChild(pile);
+    mosaique.appendChild(r);
   }
 
-  function poser(avis){ plusCourte().appendChild(carteDe(avis)); }
-  function poserPhoto(){ plusCourte().appendChild(carteImage()); }
-
-  function fournee(combien){
-    var fin = Math.min(affiches + combien, AVIS.length);
-    for (var i = affiches; i < fin; i++){
-      poser(AVIS[i]);
-      if ((i + 1) % TOUS_LES === 0 && i + 1 < AVIS.length) poserPhoto();
+  function rangeeSimple(){
+    var r = elem('div', 'rangee');
+    for (var k = 0; k < 3 && poseesS < SIMPLES.length; k++){
+      r.appendChild(carteSimple(SIMPLES[poseesS++]));
     }
-    affiches = fin;
-    var manque = AVIS.length - affiches;
+    mosaique.appendChild(r);
+  }
+
+  function fournee(){
+    for (var n = 0; n < RANGEES_PAR_FOURNEE; n++){
+      if (poseesS >= SIMPLES.length && poseesV >= VEDETTES.length) break;
+      var vedette = poseesV < VEDETTES.length &&
+                    (rangees === 0 || rangees % VEDETTE_TOUTES_LES === 0);
+      if (vedette) rangeeVedette(); else rangeeSimple();
+      rangees += 1;
+    }
+    var manque = (VEDETTES.length - poseesV) + (SIMPLES.length - poseesS);
     if (manque <= 0){
       bouton.style.display = 'none';
-      reste.textContent = 'Vous avez vu les ' + AVIS.length + ' avis publiés ici';
+      reste.textContent = 'Vous avez vu les ' + (VEDETTES.length + SIMPLES.length) + ' avis publiés ici';
     } else {
       reste.textContent = 'Encore ' + manque + ' avis';
     }
   }
 
-  /* Changer de nombre de colonnes remet tout à plat : on réaffiche exactement ce qui
-     était affiché, ni plus ni moins, pour ne pas renvoyer le lecteur en arrière. */
-  function toutRepartir(){
-    if (!refaireColonnes()) return;
-    var n = affiches;
-    affiches = 0;
-    photoSuivante = 0;
-    fournee(n);
-  }
-
-  bouton.addEventListener('click', function(){ fournee(PAR_FOURNEE); });
-
-  var largeur = window.innerWidth;
-  window.addEventListener('resize', function(){
-    if (window.innerWidth === largeur) return;
-    largeur = window.innerWidth;
-    toutRepartir();
-  });
+  bouton.addEventListener('click', fournee);
 
   fetch('avis.json')
     .then(function(r){ return r.json(); })
     .then(function(d){
-      AVIS = d;
-      refaireColonnes();
-      fournee(PAR_FOURNEE);
+      d.forEach(function(a){ (a.photo ? VEDETTES : SIMPLES).push(a); });
+      fournee();
     })
     .catch(function(){
-      reste.textContent = 'Les avis n’ont pas pu être chargés. Rechargez la page.';
+      reste.textContent = 'Les avis n\u2019ont pas pu être chargés. Rechargez la page.';
       bouton.style.display = 'none';
     });
 
