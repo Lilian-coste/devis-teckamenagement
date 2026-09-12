@@ -14,8 +14,8 @@
       "destination": "https://teck-quiz-demo.vercel.app/simulez-votre-projet/"
     },
     {
-      "source": "/simulez-votre-projet/:chemin*",
-      "destination": "https://teck-quiz-demo.vercel.app/simulez-votre-projet/:chemin*"
+      "source": "/simulez-votre-projet/:chemin(.*)",
+      "destination": "https://teck-quiz-demo.vercel.app/simulez-votre-projet/:chemin"
     }
   ]
 }
