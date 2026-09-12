@@ -197,17 +197,25 @@
   .mention .ystar{ color:#FBBF24; }
   .mention .muted{ display:block; font-weight:400; color:var(--gris); font-size:11px; }
 
-  /* ══════════════ LE BOUTON, CELUI DU SITE ══════════════ */
-  .zone-bouton{ text-align:center; padding:34px 20px 56px; }
+  /* ══════════════ LE BOUTON, CELUI DU SITE ══════════════
+     ⚠️ C'EST LE LIEN « ↗ Plus de projets » DE teckamenagement.fr, pas le pavé noir
+     (Lilian, 12/09/2026, capture à l'appui). Ni fond, ni cadre : une flèche fine, du
+     texte espacé, et c'est tout. Le pavé plein faisait bouton de formulaire au bas
+     d'une page qui, elle, est tenue au calme. */
+  .zone-bouton{ text-align:center; padding:40px 20px 60px; }
   .bouton-avis{
-    display:inline-block; background:#1D1D1F; color:#fff;
-    border:0; cursor:pointer; font-family:inherit;
-    font-size:13px; letter-spacing:.12em; text-transform:uppercase; font-weight:600;
-    padding:17px 34px; text-decoration:none;
-    transition:background .25s, transform .25s;
+    display:inline-flex; align-items:center; gap:14px;
+    background:none; border:0; padding:6px 4px; cursor:pointer;
+    font-family:inherit; font-size:21px; font-weight:500; letter-spacing:.14em;
+    color:var(--ink); text-decoration:none; line-height:1;
   }
-  .bouton-avis:hover{ background:#000; transform:translateY(-2px); }
-  .bouton-avis:focus-visible{ outline:2px solid var(--teck); outline-offset:3px; }
+  @media(max-width:600px){ .bouton-avis{ font-size:18px; letter-spacing:.1em; } }
+  .bouton-avis .fleche{
+    font-size:.92em; font-weight:400; line-height:1;
+    transition:transform .3s cubic-bezier(.2,.8,.2,1);
+  }
+  .bouton-avis:hover .fleche{ transform:translate(3px,-3px); }
+  .bouton-avis:focus-visible{ outline:2px solid var(--teck); outline-offset:4px; }
   .reste{ display:block; margin-top:12px; font-size:13px; color:var(--gris); }
 
   /* ══════════════ LA PRESSE ══════════════ */
@@ -271,7 +279,7 @@
 </main>
 
 <div class="zone-bouton">
-  <button class="bouton-avis" id="plusDavis" type="button">Voir plus d'avis</button>
+  <button class="bouton-avis" id="plusDavis" type="button"><span class="fleche" aria-hidden="true">&#8599;</span>Plus d'avis</button>
   <span class="reste" id="reste"></span>
 </div>
 
