@@ -21,6 +21,7 @@
   "initiales": "RV",
   "avatar": "",
   "surlignes": [
+   "tellement nous avons été satisfaits, nous leur avons également confié la réalisation de notre salon de jardin sur mesure",
    "Le résultat est tout simplement exceptionnel !",
    "Les finitions sont impeccables, les matériaux sont de grande qualité et tout a été réalisé avec beaucoup de soin.",
    "Toujours à l’écoute, réactif, de très bon conseil et force de proposition, il nous a accompagnés tout au long du projet avec beaucoup de sérieux.",
@@ -68,20 +69,6 @@
    "Une réalisation au-delà de nos attentes.",
    "Mr Joncheray est venu à notre domicile, il a eu des conseils techniques et esthétiques très pertinents."
   ]
- },
- {
-  "nom": "Adrienne Riera",
-  "note": 5,
-  "texte": "Je suis très satisfaite de la magnifique pergola posée l’année dernière.\nFranck a été très réactif, à l’écoute, et de très bons conseils.\nSon équipe était adorable et très pro !\nJe ne peux que vous recommander ces pergolas de très bonne qualité et au design juste DE FOLIE !!!",
-  "lien": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pKb1VHaFhXakJsUzBGaFltaHJZVGxaTld3dFRXYxAB!2m1!1s0x0:0xf7b46f6331934b93!3m1!1s2@1:CAIQACodChtycF9oOjJoUGhXWjBlS0FhYmhrYTlZNWwtTWc%7C%7C?hl=en",
-  "date": "2026-03-06",
-  "initiales": "AR",
-  "avatar": "",
-  "surlignes": [
-   "Je suis très satisfaite de la magnifique pergola posée l’année dernière."
-  ],
-  "photo": "adrienne-riera.webp",
-  "titre": "Franck a été très réactif, à l’écoute, et de très bons conseils."
  },
  {
   "nom": "Fred Fredo",
@@ -145,6 +132,45 @@
   "surlignes": [
    "Superbe équipe , travail appliqué réflexion en amont pour êtres sur du résultat final."
   ]
+ },
+ {
+  "nom": "Fred Reverchon",
+  "note": 5,
+  "texte": "Un grand merci pour cette superbe pergola!\nLe travail est impeccable, réalisé avec soin, précision et passion. Une entreprise fiable et minutieuse et qui respecte parfaitement ses engagements et les délais. Un grand merci à Franck et à son équipe, en particulier Mathias.\nJe suis ravi du résultat et je recommande Teck Aménagement sans hésiter!",
+  "lien": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnTUNZeUt2dVF3EAE!2m1!1s0x0:0xf7b46f6331934b93!3m1!1s2@1:CIHM0ogKEICAgMCYyKvuQw%7C%7C?hl=en",
+  "date": "2025-04-30",
+  "initiales": "FR",
+  "avatar": "",
+  "surlignes": [
+   "Un grand merci pour cette superbe pergola!",
+   "Une entreprise fiable et minutieuse et qui respecte parfaitement ses engagements et les délais."
+  ]
+ },
+ {
+  "nom": "David Guillermo",
+  "note": 5,
+  "texte": "Très professionnel,disponible, à l’écoute et très efficace, nous recommandons vivement Teck Aménagement et Franck pour la création et l’installation d’une pergola…qui par son esthétisme et sa personnalisation deviendra un atout majeur de votre maison! Nous sommes complètement satisfaits!",
+  "lien": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnTUNZc09TUnhnRRAB!2m1!1s0x0:0xf7b46f6331934b93!3m1!1s2@1:CIHM0ogKEICAgMCYsOSRxgE%7C%7C?hl=en",
+  "date": "2025-04-30",
+  "initiales": "DG",
+  "avatar": "",
+  "surlignes": [
+   "Nous sommes complètement satisfaits!"
+  ]
+ },
+ {
+  "nom": "Adrienne Riera",
+  "note": 5,
+  "texte": "Je suis très satisfaite de la magnifique pergola posée l’année dernière.\nFranck a été très réactif, à l’écoute, et de très bons conseils.\nSon équipe était adorable et très pro !\nJe ne peux que vous recommander ces pergolas de très bonne qualité et au design juste DE FOLIE !!!",
+  "lien": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pKb1VHaFhXakJsUzBGaFltaHJZVGxaTld3dFRXYxAB!2m1!1s0x0:0xf7b46f6331934b93!3m1!1s2@1:CAIQACodChtycF9oOjJoUGhXWjBlS0FhYmhrYTlZNWwtTWc%7C%7C?hl=en",
+  "date": "2026-03-06",
+  "initiales": "AR",
+  "avatar": "",
+  "surlignes": [
+   "Je ne peux que vous recommander ces pergolas de très bonne qualité et au design juste DE FOLIE !!!"
+  ],
+  "photo": "adrienne-riera.webp",
+  "titre": "Franck a été très réactif, à l’écoute, et de très bons conseils."
  },
  {
   "nom": "Mathieu",
@@ -234,31 +260,6 @@
    "Nous avons fait appel à Teck Aménagement pour l’installation d’un grande pergola (+/- 35m2 à Marseille) sur une structure métallique existante.",
    "Le matériel est de très grande qualité et encore plus  beau e une fois installé qu’en photo sur le catalogue.",
    "La qualité du service, le sérieux et le professionnalisme de l’ensemble des intervenants ont été remarquables."
-  ]
- },
- {
-  "nom": "Fred Reverchon",
-  "note": 5,
-  "texte": "Un grand merci pour cette superbe pergola!\nLe travail est impeccable, réalisé avec soin, précision et passion. Une entreprise fiable et minutieuse et qui respecte parfaitement ses engagements et les délais. Un grand merci à Franck et à son équipe, en particulier Mathias.\nJe suis ravi du résultat et je recommande Teck Aménagement sans hésiter!",
-  "lien": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnTUNZeUt2dVF3EAE!2m1!1s0x0:0xf7b46f6331934b93!3m1!1s2@1:CIHM0ogKEICAgMCYyKvuQw%7C%7C?hl=en",
-  "date": "2025-04-30",
-  "initiales": "FR",
-  "avatar": "",
-  "surlignes": [
-   "Un grand merci pour cette superbe pergola!",
-   "Une entreprise fiable et minutieuse et qui respecte parfaitement ses engagements et les délais."
-  ]
- },
- {
-  "nom": "David Guillermo",
-  "note": 5,
-  "texte": "Très professionnel,disponible, à l’écoute et très efficace, nous recommandons vivement Teck Aménagement et Franck pour la création et l’installation d’une pergola…qui par son esthétisme et sa personnalisation deviendra un atout majeur de votre maison! Nous sommes complètement satisfaits!",
-  "lien": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnTUNZc09TUnhnRRAB!2m1!1s0x0:0xf7b46f6331934b93!3m1!1s2@1:CIHM0ogKEICAgMCYsOSRxgE%7C%7C?hl=en",
-  "date": "2025-04-30",
-  "initiales": "DG",
-  "avatar": "",
-  "surlignes": [
-   "Nous sommes complètement satisfaits!"
   ]
  },
  {

@@ -332,8 +332,14 @@
      Lilian l'a dit sans détour : « ça fait mal à la tête ». */
   var RANGEES_PAR_FOURNEE = 4;
   var SEUIL_REPLI = 420;  /* au-delà, la carte s'ouvre avec « Voir plus » */
-  /* Une rangée vedette toutes les trois rangées, tant qu'il reste des avis dont on
-     connaît la photo du chantier. Ensuite, que des rangées de trois. */
+  /* ⚠️ OÙ TOMBENT LES RANGÉES À PHOTO, par leur numéro (la première est la rangée 0).
+     Le défaut serait une rangée vedette toutes les trois, et c'est encore ce qui se passe
+     au-delà de cette liste. Mais Lilian a déplacé la troisième à la main le 12/09/2026 :
+     « remonte de deux lignes l'avis de Anne Marie Spencer ». Sa rangée passe donc de la 6
+     à la 4, juste après celle de Karine Parra.
+     Pour redéplacer une carte vedette, il suffit de changer un numéro ici ; les deux avis
+     qui l'accompagnent, eux, se choisissent dans `TETE` (préparateur des avis). */
+  var VEDETTE_AUX_RANGEES = [0, 3, 4];
   var VEDETTE_TOUTES_LES = 3;
 
   var mosaique = document.getElementById('mosaique');
@@ -486,8 +492,10 @@
   function fournee(){
     for (var n = 0; n < RANGEES_PAR_FOURNEE; n++){
       if (poseesS >= SIMPLES.length && poseesV >= VEDETTES.length) break;
+      var apres = VEDETTE_AUX_RANGEES[VEDETTE_AUX_RANGEES.length - 1];
       var vedette = poseesV < VEDETTES.length &&
-                    (rangees === 0 || rangees % VEDETTE_TOUTES_LES === 0);
+                    (VEDETTE_AUX_RANGEES.indexOf(rangees) !== -1 ||
+                     (rangees > apres && (rangees - apres) % VEDETTE_TOUTES_LES === 0));
       if (vedette) rangeeVedette(); else rangeeSimple();
       rangees += 1;
     }
