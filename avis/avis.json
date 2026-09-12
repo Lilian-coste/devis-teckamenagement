@@ -7,7 +7,9 @@
   "date": "2026-03-03",
   "initiales": "MS",
   "avatar": "",
-  "surligne": "Une superbe pergola, très design… à la hauteur de nos espérances."
+  "surlignes": [
+   "Une superbe pergola, très design… à la hauteur de nos espérances."
+  ]
  },
  {
   "nom": "Romy Valentin",
@@ -18,7 +20,12 @@
   "texte": "Nous avons fait appel à cette entreprise pour refaire entièrement nos espaces extérieurs : une magnifique et très grande terrasse en bois exotique, deux pergolas sur mesure, puis, tellement nous avons été satisfaits, nous leur avons également confié la réalisation de notre salon de jardin sur mesure avec un canapé intégrant un bed.\nLe résultat est tout simplement exceptionnel ! Les finitions sont impeccables, les matériaux sont de grande qualité et tout a été réalisé avec beaucoup de soin.\nUn grand merci également aux équipes, qui ont été d’un professionnalisme exemplaire : toujours ponctuelles, respectueuses, polies et avec un chantier laissé parfaitement propre chaque soir, ce qui est vraiment appréciable.\nQuant à Franck, le patron, il a été d’une disponibilité rare. Toujours à l’écoute, réactif, de très bon conseil et force de proposition, il nous a accompagnés tout au long du projet avec beaucoup de sérieux.\nNous recommandons cette entreprise les yeux fermés. Si vous recherchez un travail de qualité, un vrai sens du service et des prestations sur mesure, vous pouvez leur faire confiance à 100 % !",
   "initiales": "RV",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "Le résultat est tout simplement exceptionnel !",
+   "Les finitions sont impeccables, les matériaux sont de grande qualité et tout a été réalisé avec beaucoup de soin.",
+   "Toujours à l’écoute, réactif, de très bon conseil et force de proposition, il nous a accompagnés tout au long du projet avec beaucoup de sérieux.",
+   "Nous recommandons cette entreprise les yeux fermés."
+  ]
  },
  {
   "nom": "Charles-Henri Deboysson",
@@ -29,7 +36,10 @@
   "texte": "L’ensemble de l’équipe de Teck Aménagement a été d’une très grande gentillesse et d’une très grande efficacité, des professionnels engagés pour la satisfaction du client et du travail bien fait.\nExpertise, professionnalisme, passion, disponibilité et tenu des engagements.\nMerci à Martial, Koko, Lino pour leur travail et à Franck Joncheray pour son accompagnement permanent dans la conduite de ce projet.\nJe recommande, votre projet sera bien suivi et réalisé selon vos souhaits.",
   "initiales": "CD",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "Expertise, professionnalisme, passion, disponibilité et tenu des engagements.",
+   "Merci à Martial, Koko, Lino pour leur travail et à Franck Joncheray pour son accompagnement permanent dans la conduite de ce projet."
+  ]
  },
  {
   "nom": "Emma Christo",
@@ -40,7 +50,10 @@
   "texte": "Avec Teck Aménagements, qualité, réactivité et délais sont du rendez-vous ! Notre terrasse en Cumaru est très réussie . M. Joncheray se tient ensuite disponible pour les petits ajustements inhérents à une terrasse en bois naturel. Les équipes intervenantes sont fort sympathiques, nous recommandons cette entreprise sans hésitation !",
   "initiales": "EC",
   "avatar": "",
-  "surligne": "Avec Teck Aménagements, qualité, réactivité et délais sont du rendez-vous !"
+  "surlignes": [
+   "Avec Teck Aménagements, qualité, réactivité et délais sont du rendez-vous !",
+   "Joncheray se tient ensuite disponible pour les petits ajustements inhérents à une terrasse en bois naturel."
+  ]
  },
  {
   "nom": "Mike BLAY",
@@ -50,7 +63,11 @@
   "date": "2026-05-03",
   "initiales": "MB",
   "avatar": "",
-  "surligne": "Travail de grande qualité."
+  "surlignes": [
+   "Travail de grande qualité.",
+   "Une réalisation au-delà de nos attentes.",
+   "Mr Joncheray est venu à notre domicile, il a eu des conseils techniques et esthétiques très pertinents."
+  ]
  },
  {
   "nom": "Adrienne Riera",
@@ -60,7 +77,9 @@
   "date": "2026-03-06",
   "initiales": "AR",
   "avatar": "",
-  "surligne": "",
+  "surlignes": [
+   "Je suis très satisfaite de la magnifique pergola posée l’année dernière."
+  ],
   "photo": "adrienne-riera.webp",
   "titre": "Franck a été très réactif, à l’écoute, et de très bons conseils."
  },
@@ -72,7 +91,10 @@
   "date": "2026-03-03",
   "initiales": "FF",
   "avatar": "",
-  "surligne": "On a fait faire notre terrasse en période de forte demande soit fin juin, et franck s est engagé a la finir avant qu on soit en vacances, pari tenu!"
+  "surlignes": [
+   "On a fait faire notre terrasse en période de forte demande soit fin juin, et franck s est engagé a la finir avant qu on soit en vacances, pari",
+   "Les équipes sont sympathiques, ponctuelle et très pro."
+  ]
  },
  {
   "nom": "Hadi AIT-SI-SELMI",
@@ -82,7 +104,10 @@
   "date": "2026-03-02",
   "initiales": "HS",
   "avatar": "",
-  "surligne": "Nous avons eu recours aux services de Teck Aménagement pour la pose d'un brise-vue, de type structure claustra en métal/bois."
+  "surlignes": [
+   "Nous avons eu recours aux services de Teck Aménagement pour la pose d'un brise-vue, de type structure claustra en métal/bois.",
+   "Nous n'hésiterons pas à recourir à nouveau aux services de cette entreprise et de son équipe toujours disponible et professionnelle."
+  ]
  },
  {
   "nom": "Catherine Tonda",
@@ -92,7 +117,10 @@
   "date": "2026-03-02",
   "initiales": "CT",
   "avatar": "",
-  "surligne": "Nous avons fait appel à Teck Aménagement pour notre pergola et sommes ravis!"
+  "surlignes": [
+   "Nous avons fait appel à Teck Aménagement pour notre pergola et sommes ravis!",
+   "On réfléchit déjà à un autre projet avec eux, je recommande à 1000% !"
+  ]
  },
  {
   "nom": "Anne CAYRON",
@@ -102,7 +130,9 @@
   "date": "2026-03-02",
   "initiales": "AC",
   "avatar": "",
-  "surligne": "Excellentes prestations avec Teck Aménagement pour la réalisation de nos deux pergolas / ombrières."
+  "surlignes": [
+   "Excellentes prestations avec Teck Aménagement pour la réalisation de nos deux pergolas / ombrières."
+  ]
  },
  {
   "nom": "Lionel Benzekri",
@@ -112,7 +142,9 @@
   "date": "2026-03-02",
   "initiales": "LB",
   "avatar": "",
-  "surligne": "Superbe équipe , travail appliqué réflexion en amont pour êtres sur du résultat final."
+  "surlignes": [
+   "Superbe équipe , travail appliqué réflexion en amont pour êtres sur du résultat final."
+  ]
  },
  {
   "nom": "Mathieu",
@@ -122,7 +154,10 @@
   "date": "2025-12-21",
   "initiales": "M",
   "avatar": "",
-  "surligne": "Très grande satisfaction !"
+  "surlignes": [
+   "Très grande satisfaction !",
+   "La luminosité reste la même à l’intérieur de la maison tout en protégeant ma terrasse du soleil ."
+  ]
  },
  {
   "nom": "Karine Parra",
@@ -132,7 +167,7 @@
   "date": "2025-10-07",
   "initiales": "KP",
   "avatar": "",
-  "surligne": "",
+  "surlignes": [],
   "photo": "karine-parra.webp",
   "titre": "Super produit, confort incroyable, design moderne et intemporel"
  },
@@ -144,7 +179,11 @@
   "date": "2025-08-08",
   "initiales": "OF",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "L’équipe a été professionnelle, rigoureuse et très impliquée tout au long du chantier.",
+   "Ce souci du travail bien fait est rare et très appréciable.",
+   "Le rendu final est magnifique, à la hauteur de nos attentes, voire au-delà."
+  ]
  },
  {
   "nom": "Dominique",
@@ -154,7 +193,9 @@
   "date": "2025-07-16",
   "initiales": "D",
   "avatar": "",
-  "surligne": "Entreprise très professionnelle et réactive en cas de problèmes."
+  "surlignes": [
+   "Entreprise très professionnelle et réactive en cas de problèmes."
+  ]
  },
  {
   "nom": "Alexandre Krieger",
@@ -164,7 +205,9 @@
   "date": "2025-07-15",
   "initiales": "AK",
   "avatar": "",
-  "surligne": "Travail soigné et de tres bonne qualité."
+  "surlignes": [
+   "Travail soigné et de tres bonne qualité."
+  ]
  },
  {
   "nom": "Stephanie APPAIX",
@@ -174,7 +217,10 @@
   "date": "2025-07-13",
   "initiales": "SA",
   "avatar": "",
-  "surligne": "Je suis ravie du conseil, de la conception, de la réactivité, de la mise en place, de l'équipe !"
+  "surlignes": [
+   "Je suis ravie du conseil, de la conception, de la réactivité, de la mise en place, de l'équipe !",
+   "j'espère que cela vieillira comme Franck me l'a dit et que cela ne bougera pas mais je n'en doute pas !"
+  ]
  },
  {
   "nom": "Music Bliss",
@@ -184,7 +230,11 @@
   "date": "2025-07-11",
   "initiales": "MB",
   "avatar": "",
-  "surligne": "Nous avons fait appel à Teck Aménagement pour l’installation d’un grande pergola (+/- 35m2 à Marseille) sur une structure métallique existante."
+  "surlignes": [
+   "Nous avons fait appel à Teck Aménagement pour l’installation d’un grande pergola (+/- 35m2 à Marseille) sur une structure métallique existante.",
+   "Le matériel est de très grande qualité et encore plus  beau e une fois installé qu’en photo sur le catalogue.",
+   "La qualité du service, le sérieux et le professionnalisme de l’ensemble des intervenants ont été remarquables."
+  ]
  },
  {
   "nom": "Fred Reverchon",
@@ -194,7 +244,10 @@
   "date": "2025-04-30",
   "initiales": "FR",
   "avatar": "",
-  "surligne": "Un grand merci pour cette superbe pergola!"
+  "surlignes": [
+   "Un grand merci pour cette superbe pergola!",
+   "Une entreprise fiable et minutieuse et qui respecte parfaitement ses engagements et les délais."
+  ]
  },
  {
   "nom": "David Guillermo",
@@ -204,7 +257,9 @@
   "date": "2025-04-30",
   "initiales": "DG",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "Nous sommes complètement satisfaits!"
+  ]
  },
  {
   "nom": "David GUILLERMO",
@@ -214,7 +269,9 @@
   "date": "2025-04-30",
   "initiales": "DG",
   "avatar": "",
-  "surligne": "Entreprise très sérieuse et Professionnelle."
+  "surlignes": [
+   "Entreprise très sérieuse et Professionnelle."
+  ]
  },
  {
   "nom": "Dominique VEZIAN",
@@ -224,7 +281,9 @@
   "date": "2025-04-15",
   "initiales": "DV",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "Avis de Mr Fassinotti La ciotat:"
+  ]
  },
  {
   "nom": "Guagliardo Valerie",
@@ -234,7 +293,10 @@
   "date": "2025-04-07",
   "initiales": "GV",
   "avatar": "",
-  "surligne": "Un immense merci à Franck et toute son équipe pour notre magnifique pergola !"
+  "surlignes": [
+   "Un immense merci à Franck et toute son équipe pour notre magnifique pergola",
+   "L'esthétique et le pratique en duo (c'est tellement rare)"
+  ]
  },
  {
   "nom": "Julien Domange",
@@ -244,7 +306,10 @@
   "date": "2025-04-02",
   "initiales": "JD",
   "avatar": "",
-  "surligne": "Teck Amenagement nous a fait une terrace IPE et une pergola."
+  "surlignes": [
+   "Teck Amenagement nous a fait une terrace IPE et une pergola.",
+   "Il a ete rassurant et de tres bon conseil sur tous les aspects techniques et esthetiques."
+  ]
  },
  {
   "nom": "Véro",
@@ -254,7 +319,10 @@
   "date": "2024-12-28",
   "initiales": "V",
   "avatar": "",
-  "surligne": "Nous recommandons vivement l’entreprise Teck Amenagement son directeur Mr Joncheray Franck et toute son équipe ."
+  "surlignes": [
+   "Nous recommandons vivement l’entreprise Teck Amenagement son directeur Mr Joncheray Franck et toute son équipe .",
+   "Chantier propre et très professionnel (merci Martial et toute son équipe )"
+  ]
  },
  {
   "nom": "Annick Lequeux",
@@ -264,7 +332,12 @@
   "date": "2024-11-23",
   "initiales": "AL",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "Ponctuel, toujours disponible et très réactif, Franck s'est totalement investi.",
+   "J'en profite pour saluer la belle chape de béton réalisée par les frères Avarello.",
+   "Martial et Gillian méritent eux aussi des compliments.",
+   "Toujours d'humeur agréable, ils laissaient chaque soir le lieu propre et rangé."
+  ]
  },
  {
   "nom": "Sébastien Ellena",
@@ -274,7 +347,10 @@
   "date": "2024-10-04",
   "initiales": "SE",
   "avatar": "",
-  "surligne": "Des professionnels, des vrais !"
+  "surlignes": [
+   "Des professionnels, des vrais !",
+   "Je recommande les yeux fermés, cette entreprise"
+  ]
  },
  {
   "nom": "Grégoire Sack",
@@ -284,7 +360,9 @@
   "date": "2024-10-03",
   "initiales": "GS",
   "avatar": "",
-  "surligne": "Grand professionnalisme de la part de Franck et son équipe."
+  "surlignes": [
+   "Grand professionnalisme de la part de Franck et son équipe."
+  ]
  },
  {
   "nom": "Hélène Gruter",
@@ -294,7 +372,10 @@
   "date": "2024-09-10",
   "initiales": "HG",
   "avatar": "",
-  "surligne": "Avec un peu de retard, je prends enfin le temps de partager notre expérience avec Teck Aménagement."
+  "surlignes": [
+   "Avec un peu de retard, je prends enfin le temps de partager notre expérience avec Teck Aménagement.",
+   "Vous pouvez foncer les yeux fermés !"
+  ]
  },
  {
   "nom": "Marco Friscia",
@@ -304,7 +385,9 @@
   "date": "2024-07-04",
   "initiales": "MF",
   "avatar": "",
-  "surligne": "Un professionnalisme exemplaire."
+  "surlignes": [
+   "Un professionnalisme exemplaire."
+  ]
  },
  {
   "nom": "Nathalie Mei",
@@ -314,7 +397,9 @@
   "date": "2024-06-22",
   "initiales": "NM",
   "avatar": "",
-  "surligne": "Nous avons fait appel à Franck et à ses équipes pour refaire notre pergola."
+  "surlignes": [
+   "Nous avons fait appel à Franck et à ses équipes pour refaire notre pergola."
+  ]
  },
  {
   "nom": "Mireille Poncet",
@@ -324,7 +409,10 @@
   "date": "2024-06-21",
   "initiales": "MP",
   "avatar": "",
-  "surligne": "Franck et son équipe ont réalisé notre projet de pergola bois et ont fait face à toutes les difficultés d'un accès difficile en étage."
+  "surlignes": [
+   "Franck et son équipe ont réalisé notre projet de pergola bois et ont fait face à toutes les difficultés d'un accès difficile en étage.",
+   "L'équipe à réalisé un travail sérieux, soigné, de qualité et dans les délais."
+  ]
  },
  {
   "nom": "annie Mossay",
@@ -334,7 +422,9 @@
   "date": "2024-06-20",
   "initiales": "AM",
   "avatar": "",
-  "surligne": "De la conception à la réalisation, un travail très professionnel de grande qualité, les délais respectés, une équipe enthousiaste."
+  "surlignes": [
+   "De la conception à la réalisation, un travail très professionnel de grande qualité, les délais respectés, une équipe enthousiaste."
+  ]
  },
  {
   "nom": "Brigitte Gouin",
@@ -344,7 +434,10 @@
   "date": "2024-04-03",
   "initiales": "BG",
   "avatar": "",
-  "surligne": "Après avoir réalisé la plage de la piscine , nous décidons de renouveler la terrasse."
+  "surlignes": [
+   "Après avoir réalisé la plage de la piscine , nous décidons de renouveler la terrasse.",
+   "Merci aussi à Martial etJulien pour leur bonne humeur pendant ces septs jours de travail"
+  ]
  },
  {
   "nom": "patrick G",
@@ -354,7 +447,10 @@
   "date": "2024-04-03",
   "initiales": "PG",
   "avatar": "",
-  "surligne": "Un grand merci à Franck ainsi qu'a Martial et Jeff qui ont ont réalisé notre  superbe plage de piscine."
+  "surlignes": [
+   "Un grand merci à Franck ainsi qu'a Martial et Jeff qui ont ont réalisé notre  superbe plage de piscine.",
+   "A bientôt pour une prochaine réalisation"
+  ]
  },
  {
   "nom": "Fabienne Bongiovanni",
@@ -364,7 +460,9 @@
   "date": "2024-03-13",
   "initiales": "FB",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "Une merveille, très belle prestation, chantier terminé dans les temps et une équipe très qualifiée et très sympathique."
+  ]
  },
  {
   "nom": "Jean-François MENARD",
@@ -374,7 +472,10 @@
   "date": "2024-02-08",
   "initiales": "JM",
   "avatar": "",
-  "surligne": "Mais que ça fait du bien de rencontrer quelqu’un comme Franck !"
+  "surlignes": [
+   "Mais que ça fait du bien de rencontrer quelqu’un comme Franck !",
+   "Le tout réalisé avec sympathie et professionnalisme !"
+  ]
  },
  {
   "nom": "Caroline Jacquin Bournaillie",
@@ -384,7 +485,9 @@
   "date": "2024-01-28",
   "initiales": "CB",
   "avatar": "",
-  "surligne": "Merci encore pour le travail réalisé chez nous tant sur la qualité que sur la finition ainsi que pour votre professionnalisme et votre sympathie !"
+  "surlignes": [
+   "Merci encore pour le travail réalisé chez nous tant sur la qualité que sur la finition ainsi que pour votre professionnalisme et votre sympathie"
+  ]
  },
  {
   "nom": "Fin Walravens",
@@ -394,7 +497,9 @@
   "date": "2024-01-26",
   "initiales": "FW",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "I asked for proof of sustainability and they shared information from their suppliers."
+  ]
  },
  {
   "nom": "Sylvie BEDEL",
@@ -404,7 +509,9 @@
   "date": "2024-01-26",
   "initiales": "SB",
   "avatar": "",
-  "surligne": "Trop contente de ma pergola !"
+  "surlignes": [
+   "Trop contente de ma pergola"
+  ]
  },
  {
   "nom": "Van Duuren",
@@ -414,7 +521,10 @@
   "date": "2024-01-25",
   "initiales": "VD",
   "avatar": "",
-  "surligne": "Nous sommes très content avec la pergola du Teck Amenagement chez notre maison des vancanses à Sainte Maxime."
+  "surlignes": [
+   "Nous sommes très content avec la pergola du Teck Amenagement chez notre maison des vancanses à Sainte Maxime.",
+   "Mais aussi la SAV c’etait rapidement et sans soucis."
+  ]
  },
  {
   "nom": "jean-claude Gastaut",
@@ -424,7 +534,10 @@
   "date": "2024-01-17",
   "initiales": "JG",
   "avatar": "",
-  "surligne": "Nous avons fait appel à Teck Aménagement pour rénover notre terrasse de 40 ans carrelée, quelle bonne idée nous avons eue!"
+  "surlignes": [
+   "Nous avons fait appel à Teck Aménagement pour rénover notre terrasse de 40 ans carrelée, quelle bonne idée nous avons eue!",
+   "L'entreprise gérée par Franck Joncheray nous a apporté entière satisfaction."
+  ]
  },
  {
   "nom": "Hedi Abbes",
@@ -434,7 +547,10 @@
   "date": "2023-09-26",
   "initiales": "HA",
   "avatar": "",
-  "surligne": "Pour la seconde fois nous avons fait appel à Franck et son équipe."
+  "surlignes": [
+   "Pour la seconde fois nous avons fait appel à Franck et son équipe.",
+   "Franck sait écouter les besoins de ses clients et offre un service de qualité et personnalisé."
+  ]
  },
  {
   "nom": "Eva Edery Moricelly",
@@ -444,7 +560,11 @@
   "date": "2023-07-16",
   "initiales": "EM",
   "avatar": "",
-  "surligne": "J ai fait appel à teck aménagement pour la réalisation d une terrasse bois/ plage piscine."
+  "surlignes": [
+   "J ai fait appel à teck aménagement pour la réalisation d une terrasse bois/ plage piscine.",
+   "Franck et son équipe ont réalisé un travail de grande qualite, tant dans l utilisation des matériaux que dans l exécution .",
+   "Le bois toujours magnifique!"
+  ]
  },
  {
   "nom": "Didier Brother",
@@ -454,7 +574,9 @@
   "date": "2023-07-13",
   "initiales": "DB",
   "avatar": "",
-  "surligne": "Teck Amenagement propose un conseil et un produit fini de grande qualité, adapté au besoin, au contraintes."
+  "surlignes": [
+   "Teck Amenagement propose un conseil et un produit fini de grande qualité, adapté au besoin, au contraintes."
+  ]
  },
  {
   "nom": "Philippe Laplace",
@@ -464,7 +586,10 @@
   "date": "2023-06-13",
   "initiales": "PL",
   "avatar": "",
-  "surligne": "Franck est une personne à l'écoute de ses clients et propose un projet qui cadre avec leurs souhaits."
+  "surlignes": [
+   "Franck est une personne à l'écoute de ses clients et propose un projet qui cadre avec leurs souhaits.",
+   "Ses équipes fournissent un travail de qualité."
+  ]
  },
  {
   "nom": "Morosini Bruno",
@@ -474,7 +599,7 @@
   "date": "2023-06-11",
   "initiales": "MB",
   "avatar": "",
-  "surligne": ""
+  "surlignes": []
  },
  {
   "nom": "Charles Mortreux",
@@ -484,7 +609,9 @@
   "date": "2023-03-13",
   "initiales": "CM",
   "avatar": "",
-  "surligne": "Superbe travail de Franck et son équipe."
+  "surlignes": [
+   "Superbe travail de Franck et son équipe."
+  ]
  },
  {
   "nom": "Jean-Marie Reverdel",
@@ -494,7 +621,11 @@
   "date": "2023-02-25",
   "initiales": "JR",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "Franck et son équipe ont réalisé pour nous 5 éléments de notre maison:",
+   "- terrasse bureau 10m2 en Ipe lames 120",
+   "été absolument sans reproche du début à la fin."
+  ]
  },
  {
   "nom": "Stephan Tayac",
@@ -504,7 +635,9 @@
   "date": "2023-02-22",
   "initiales": "ST",
   "avatar": "",
-  "surligne": "Des pros, travail bien et dans les temps."
+  "surlignes": [
+   "Des pros, travail bien et dans les temps."
+  ]
  },
  {
   "nom": "Fai Abbes",
@@ -514,7 +647,10 @@
   "date": "2023-02-06",
   "initiales": "FA",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "Le service de Franck et de son équipe sont d'une qualité exceptionnelle .",
+   "Ce sont des professionnels qui connaissent parfaitement leur métier."
+  ]
  },
  {
   "nom": "Pascal Flandin",
@@ -524,7 +660,9 @@
   "date": "2022-12-15",
   "initiales": "PF",
   "avatar": "",
-  "surligne": "Très bonne expérience avec Teck Aménagement pour une terrasse bois."
+  "surlignes": [
+   "Très bonne expérience avec Teck Aménagement pour une terrasse bois."
+  ]
  },
  {
   "nom": "ANNE LAURE Sauvat",
@@ -534,7 +672,10 @@
   "date": "2022-12-14",
   "initiales": "AS",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "L’expérience Teck Aménagement…",
+   "C’est la rencontre avec Franck qui nous a amenés à imaginer un espace où Vivre Dehors prend tout son sens."
+  ]
  },
  {
   "nom": "Goujon Marine",
@@ -544,7 +685,9 @@
   "date": "2022-12-03",
   "initiales": "GM",
   "avatar": "",
-  "surligne": "Frank et ses équipes c’est juste du bonheur on ne sait même pas qu’ils sont venus tant le chantier à été propre!"
+  "surlignes": [
+   "Frank et ses équipes c’est juste du bonheur on ne sait même pas qu’ils sont venus tant le chantier à été propre!"
+  ]
  },
  {
   "nom": "Sabine Laplace",
@@ -554,7 +697,9 @@
   "date": "2022-11-16",
   "initiales": "SL",
   "avatar": "",
-  "surligne": "Excellente prestation et un suivi de qualité."
+  "surlignes": [
+   "Excellente prestation et un suivi de qualité."
+  ]
  },
  {
   "nom": "Alexandre Sarribeyioglou",
@@ -564,7 +709,9 @@
   "date": "2022-11-15",
   "initiales": "AS",
   "avatar": "",
-  "surligne": "Très satisfait du rendement de Teck Aménagement."
+  "surlignes": [
+   "Très satisfait du rendement de Teck Aménagement."
+  ]
  },
  {
   "nom": "Emilie DONATINI",
@@ -574,7 +721,9 @@
   "date": "2022-11-05",
   "initiales": "ED",
   "avatar": "",
-  "surligne": "Equipe très sympathique, travail soigné et livré dans les délais."
+  "surlignes": [
+   "Equipe très sympathique, travail soigné et livré dans les délais."
+  ]
  },
  {
   "nom": "Joao B.",
@@ -584,7 +733,9 @@
   "date": "2022-11-01",
   "initiales": "JB",
   "avatar": "",
-  "surligne": "Réalisation d'une pergola et d'une terrasse."
+  "surlignes": [
+   "Réalisation d'une pergola et d'une terrasse."
+  ]
  },
  {
   "nom": "Véronique Hamdaoui",
@@ -594,7 +745,9 @@
   "date": "2022-10-28",
   "initiales": "VH",
   "avatar": "",
-  "surligne": "Je suis ravie d'avoir fait confiance à Franck et son équipe."
+  "surlignes": [
+   "Je suis ravie d'avoir fait confiance à Franck et son équipe."
+  ]
  },
  {
   "nom": "Louis Bon",
@@ -604,7 +757,11 @@
   "date": "2022-10-27",
   "initiales": "LB",
   "avatar": "",
-  "surligne": "J’ai engagé les services de Teck aménagement en 2021 pour installer une pergola dans ma propriété située en Provence."
+  "surlignes": [
+   "J’ai engagé les services de Teck aménagement en 2021 pour installer une pergola dans ma propriété située en Provence.",
+   "La prestation et la finition ont été excellentes, dans tous les details.",
+   "Le service après vente a été assuré efficacement là où nécessaire."
+  ]
  },
  {
   "nom": "Anne Marie Spencer",
@@ -614,7 +771,11 @@
   "date": "2022-10-26",
   "initiales": "AS",
   "avatar": "",
-  "surligne": "Les photos parlent d'elles-mêmes !",
+  "surlignes": [
+   "En effet nous n'avons pas trouvé mieux.",
+   "Une équipe vraiment au top, hyper efficace et très à l’écoute de leurs clients.",
+   "Le matériel est de qualité."
+  ],
   "photo": "anne-marie-spenser.webp",
   "titre": "Les photos parlent d’elles-mêmes !"
  },
@@ -626,7 +787,10 @@
   "date": "2022-09-03",
   "initiales": "S",
   "avatar": "",
-  "surligne": "Nous avons fait appel à Teck aménagement pour la réalisation d'une pergola à La Ciotat."
+  "surlignes": [
+   "Nous avons fait appel à Teck aménagement pour la réalisation d'une pergola à La Ciotat.",
+   "Pour avoir fait de nombreux devis et comparatifs, c'est la meilleure solution en termes de Design et qualité."
+  ]
  },
  {
   "nom": "Julien G.",
@@ -636,7 +800,9 @@
   "date": "2022-05-30",
   "initiales": "JG",
   "avatar": "",
-  "surligne": "Très professionnel,  Travail de qualité et à l'écoute de ses clients, ce qui est rare de nos jours."
+  "surlignes": [
+   "Très professionnel,  Travail de qualité et à l'écoute de ses clients, ce qui est rare de nos"
+  ]
  },
  {
   "nom": "Paul Bressy",
@@ -646,7 +812,9 @@
   "date": "2022-02-23",
   "initiales": "PB",
   "avatar": "",
-  "surligne": "Un super boulot, des gens très professionnels, disponibles et l'écoute, avec de bons conseils, je recommande."
+  "surlignes": [
+   "Un super boulot, des gens très professionnels, disponibles et l'écoute, avec de bons conseils, je recommande."
+  ]
  },
  {
   "nom": "Veronique R",
@@ -656,7 +824,11 @@
   "date": "2021-12-21",
   "initiales": "VR",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "Teck Amenagement : Une équipe exceptionnelle",
+   "Franck Joncheray sait s’entourer de collaborateurs qui aiment faire de belles réalisations , dans les règles de l’art.",
+   "Nous sommes très contents et nous envisageons d’autres travaux que nous confierons en tout confiance à Teck Amenagement"
+  ]
  },
  {
   "nom": "Julien Archenet",
@@ -666,7 +838,9 @@
   "date": "2021-12-12",
   "initiales": "JA",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "Merci encore pour votre bienveillance et votre professionnalisme sans faille."
+  ]
  },
  {
   "nom": "Matthieu Ribot",
@@ -676,7 +850,9 @@
   "date": "2021-12-11",
   "initiales": "MR",
   "avatar": "",
-  "surligne": "Terrasse et abords de piscine réalisés avec Teck Aménagement."
+  "surlignes": [
+   "Terrasse et abords de piscine réalisés avec Teck Aménagement."
+  ]
  },
  {
   "nom": "Jean Luc Vinet",
@@ -686,7 +862,11 @@
   "date": "2021-12-11",
   "initiales": "JV",
   "avatar": "",
-  "surligne": "Nous en avions rêvé, Teck Aménagement l'a fait."
+  "surlignes": [
+   "Nous en avions rêvé, Teck Aménagement l'a",
+   "Dès la première visite Franck Joncheray assure, et nous rassure !",
+   "Une équipe qui dit ce qu'elle fait, et fait ce qu'elle"
+  ]
  },
  {
   "nom": "Christian Moreau",
@@ -696,7 +876,10 @@
   "date": "2021-12-11",
   "initiales": "CM",
   "avatar": "",
-  "surligne": "Franck and his team did a fantastic job ( quality of work, on time, extremely professional)."
+  "surlignes": [
+   "Franck and his team did a fantastic job ( quality of work, on time, extremely professional).",
+   "Franck a son equipe on fait un travail fantastique."
+  ]
  },
  {
   "nom": "Pierre Bressy",
@@ -706,7 +889,12 @@
   "date": "2021-12-09",
   "initiales": "PB",
   "avatar": "",
-  "surligne": "Franck et tous ses employes nous ont vraiment demontré que le serieux et  l exactitude ne sont pas incompatibles avec des tarifs competitifs."
+  "surlignes": [
+   "Franck et tous ses employes nous ont vraiment demontré que le serieux et  l exactitude ne sont pas incompatibles avec des tarifs competitifs.",
+   "la gentillesse de tte son equipe est vraiment remarquable , et le professionalisme de tous est sans equivoque",
+   "la propreté du chantier est toujours irreprochable",
+   "Le respect des delais et des horaires est reel et facilite les rapports, entre client et entreprise ( tres"
+  ]
  },
  {
   "nom": "Sylvie Savas",
@@ -716,7 +904,11 @@
   "date": "2021-10-05",
   "initiales": "SS",
   "avatar": "",
-  "surligne": "Je suis heureuse d'avoir rencontrée Franck Joncheray et son équipe formidable."
+  "surlignes": [
+   "Je suis heureuse d'avoir rencontrée Franck Joncheray et son équipe formidable.",
+   "Franck est un homme qui aime son métier,  il est très méticuleux,  sérieux,  honnête,  a l'écoute du client et de très bon conseils.",
+   "N' hésitez pas si vous avez un projet de terrasse ou"
+  ]
  },
  {
   "nom": "Helios",
@@ -726,7 +918,11 @@
   "date": "2021-10-04",
   "initiales": "H",
   "avatar": "",
-  "surligne": "La mise en place de notre projet de pergola Bioclimatique dans la région de Marseille n'a pas été facile dans le dédale des artisans consultés."
+  "surlignes": [
+   "La mise en place de notre projet de pergola Bioclimatique dans la région de Marseille n'a pas été facile dans le dédale des artisans consultés.",
+   "Au final le travail est \"waouh\" et surtout dans les délais impartis.",
+   "Nous redécouvrons notre extérieur qui est tout juste sublime."
+  ]
  },
  {
   "nom": "Marie Megy",
@@ -736,7 +932,9 @@
   "date": "2021-09-19",
   "initiales": "MM",
   "avatar": "",
-  "surligne": "J'ai contacté Teck Aménagement à la lecture des avis google, et je les confirme."
+  "surlignes": [
+   "J'ai contacté Teck Aménagement à la lecture des avis google, et je les confirme."
+  ]
  },
  {
   "nom": "Guillaume Ledoux",
@@ -746,7 +944,9 @@
   "date": "2021-09-13",
   "initiales": "GL",
   "avatar": "",
-  "surligne": "Une équipe professionnelle,  un travail et bois de qualité."
+  "surlignes": [
+   "Une équipe professionnelle,  un travail et bois de qualité."
+  ]
  },
  {
   "nom": "Christopher Poron",
@@ -756,7 +956,9 @@
   "date": "2021-04-22",
   "initiales": "CP",
   "avatar": "",
-  "surligne": "Super content du travail effectué!"
+  "surlignes": [
+   "Super content du travail effectué!"
+  ]
  },
  {
   "nom": "Sofia Picchioni",
@@ -766,7 +968,10 @@
   "date": "2021-04-16",
   "initiales": "SP",
   "avatar": "",
-  "surligne": "Très contente de la prestation !"
+  "surlignes": [
+   "Très contente de la prestation !",
+   "La qualité des matériaux, la finition parfaite d’un travail réalisé en partie sur place ,( au vue de plusieurs angles morts !"
+  ]
  },
  {
   "nom": "Manon DIASSINOUS Psychologue Psychothérapeute",
@@ -776,7 +981,9 @@
   "date": "2021-03-03",
   "initiales": "MP",
   "avatar": "",
-  "surligne": "On savait que cela serait du travail de professionnel mais pas qu'on allait recevoir une équipe aussi agréable que performante !"
+  "surlignes": [
+   "On savait que cela serait du travail de professionnel mais pas qu'on allait recevoir une équipe aussi agréable que performante !"
+  ]
  },
  {
   "nom": "Christel Peter",
@@ -786,7 +993,9 @@
   "date": "2020-10-13",
   "initiales": "CP",
   "avatar": "",
-  "surligne": "Nous recommandons vivement Teck aménagement."
+  "surlignes": [
+   "Nous recommandons vivement Teck aménagement."
+  ]
  },
  {
   "nom": "De Brézé Martial",
@@ -796,7 +1005,9 @@
   "date": "2020-06-02",
   "initiales": "DM",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "Super équipe travail impeccable terrasse magnifique"
+  ]
  },
  {
   "nom": "Pierre Dailheu",
@@ -806,7 +1017,9 @@
   "date": "2020-05-16",
   "initiales": "PD",
   "avatar": "",
-  "surligne": "Très professionnel, à l’écoute, travail soigné je recommande ."
+  "surlignes": [
+   "Très professionnel, à l’écoute, travail soigné je recommande ."
+  ]
  },
  {
   "nom": "Florient SAVAL",
@@ -816,7 +1029,9 @@
   "date": "2020-05-14",
   "initiales": "FS",
   "avatar": "",
-  "surligne": "Ma terrasse en bois exotique est magnifique !"
+  "surlignes": [
+   "Ma terrasse en bois exotique est magnifique !"
+  ]
  },
  {
   "nom": "MARCEL CARAUDIORACING (Car Audio Racing)",
@@ -826,7 +1041,7 @@
   "date": "2020-05-10",
   "initiales": "MR",
   "avatar": "",
-  "surligne": ""
+  "surlignes": []
  },
  {
   "nom": "Cla M",
@@ -836,7 +1051,9 @@
   "date": "2020-04-24",
   "initiales": "CM",
   "avatar": "",
-  "surligne": "Nous sommes extrêmement satisfaits de la réactivité, des conseils et de la qualité de Teck Aménagement."
+  "surlignes": [
+   "Nous sommes extrêmement satisfaits de la réactivité, des conseils et de la qualité de Teck Aménagement."
+  ]
  },
  {
   "nom": "Jeremy Sozzi",
@@ -846,7 +1063,9 @@
   "date": "2020-04-21",
   "initiales": "JS",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "Très belle réalisation, travail propre, soigné et minutieux dans les finitions"
+  ]
  },
  {
   "nom": "Frédéric Faure",
@@ -856,7 +1075,9 @@
   "date": "2020-03-29",
   "initiales": "FF",
   "avatar": "",
-  "surligne": "Franck et son équipe sont des professionnels de qualité qui ont le sens du détail."
+  "surlignes": [
+   "Franck et son équipe sont des professionnels de qualité qui ont le sens du détail."
+  ]
  },
  {
   "nom": "Didier Labelle",
@@ -866,7 +1087,9 @@
   "date": "2020-02-25",
   "initiales": "DL",
   "avatar": "",
-  "surligne": "Franck et son équipe sont de véritable professionnel , rigueur, sérieux, sympa ."
+  "surlignes": [
+   "Franck et son équipe sont de véritable professionnel , rigueur, sérieux, sympa"
+  ]
  },
  {
   "nom": "Marion Cornus",
@@ -876,7 +1099,9 @@
   "date": "2019-12-11",
   "initiales": "MC",
   "avatar": "",
-  "surligne": "Nous avons été ravis de la réactivité, de l'écoute et de la qualité de Teck Aménagement."
+  "surlignes": [
+   "Nous avons été ravis de la réactivité, de l'écoute et de la qualité de Teck Aménagement."
+  ]
  },
  {
   "nom": "Pharmacie de la Gavotte",
@@ -886,7 +1111,9 @@
   "date": "2019-10-17",
   "initiales": "PG",
   "avatar": "",
-  "surligne": "Très Professionnel, méticuleux, ponctuel, réactif et sympathique."
+  "surlignes": [
+   "Très Professionnel, méticuleux, ponctuel, réactif et sympathique."
+  ]
  },
  {
   "nom": "Margot Ronda",
@@ -896,7 +1123,10 @@
   "date": "2019-09-23",
   "initiales": "MR",
   "avatar": "",
-  "surligne": "Je recommande sans la moindre hésitation l'entreprise Teck Aménagement."
+  "surlignes": [
+   "Je recommande sans la moindre hésitation l'entreprise Teck Aménagement.",
+   "Elle est intervenue chez moi pour la création d'une terrasse."
+  ]
  },
  {
   "nom": "William38500",
@@ -906,7 +1136,11 @@
   "date": "2019-09-20",
   "initiales": "W",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "Le projet de terrasse en bois en ipé a été réalisé avec un grand professionnalisme et une attention particulière à la finition.",
+   "Au delà de l’artisan, je le recommande pour la maîtrise et la rigueur  du travail irréprochable ce qui franchement fait la différence !",
+   "Je recommande sans hésitation !"
+  ]
  },
  {
   "nom": "Myriam Fresse",
@@ -916,7 +1150,9 @@
   "date": "2019-09-19",
   "initiales": "MF",
   "avatar": "",
-  "surligne": "Un excellent travail et un formidable professionnel à l écoute de son client tout en étant forcé de propositions."
+  "surlignes": [
+   "Un excellent travail et un formidable professionnel à l écoute de son client tout en étant forcé de propositions."
+  ]
  },
  {
   "nom": "JB Barbaroux",
@@ -926,7 +1162,9 @@
   "date": "2019-07-22",
   "initiales": "JB",
   "avatar": "",
-  "surligne": "Franck et son équipe de Teck Aménagement ont travaillé chez nous en juin 2019."
+  "surlignes": [
+   "Franck et son équipe de Teck Aménagement ont travaillé chez nous en juin 2019."
+  ]
  },
  {
   "nom": "Sébastien PARMENTIER",
@@ -936,7 +1174,9 @@
   "date": "2019-07-08",
   "initiales": "SP",
   "avatar": "",
-  "surligne": "Après une première réalisation, nous avons continué avec Teck Aménagement."
+  "surlignes": [
+   "Après une première réalisation, nous avons continué avec Teck Aménagement."
+  ]
  },
  {
   "nom": "Fabienne Madec",
@@ -946,7 +1186,10 @@
   "date": "2019-07-03",
   "initiales": "FM",
   "avatar": "",
-  "surligne": "Nous sommes ravis d’avoir fait appel à Teck Aménagement pour notre terrasse."
+  "surlignes": [
+   "Nous sommes ravis d’avoir fait appel à Teck Aménagement pour notre terrasse.",
+   "Nous avons apprécié l’écoute et le conseil en amont, la qualité du travail effectué, et la gentillesse au quotidien."
+  ]
  },
  {
   "nom": "Charles Mortreux",
@@ -956,7 +1199,9 @@
   "date": "2019-06-18",
   "initiales": "CM",
   "avatar": "",
-  "surligne": "Terrasse réalisée en mars 2018, travail très sérieux."
+  "surlignes": [
+   "Terrasse réalisée en mars 2018, travail très sérieux."
+  ]
  },
  {
   "nom": "Benjamin Oliva",
@@ -966,7 +1211,10 @@
   "date": "2019-06-14",
   "initiales": "BO",
   "avatar": "",
-  "surligne": "Extrêmement professionnel et la résultat est parfait."
+  "surlignes": [
+   "Extrêmement professionnel et la résultat est parfait.",
+   "Je suis vraiment ravi du résultat."
+  ]
  },
  {
   "nom": "Julien",
@@ -976,7 +1224,9 @@
   "date": "2019-06-12",
   "initiales": "J",
   "avatar": "",
-  "surligne": "Merci à Franck pour son travail soigneux et son professionnalisme."
+  "surlignes": [
+   "Merci à Franck pour son travail soigneux et son professionnalisme."
+  ]
  },
  {
   "nom": "Emmanuelle Dubout",
@@ -986,7 +1236,9 @@
   "date": "2019-06-10",
   "initiales": "ED",
   "avatar": "",
-  "surligne": "très belle terrasse réalisée chez nous !"
+  "surlignes": [
+   "très belle terrasse réalisée chez nous !"
+  ]
  },
  {
   "nom": "Marc Collet",
@@ -996,7 +1248,9 @@
   "date": "2019-06-09",
   "initiales": "MC",
   "avatar": "",
-  "surligne": "Travail soigné et de qualité réalisé par une équipe de professionnels, dans la bonne humeur."
+  "surlignes": [
+   "Travail soigné et de qualité réalisé par une équipe de professionnels, dans la bonne humeur."
+  ]
  },
  {
   "nom": "Nelli Torossian",
@@ -1006,7 +1260,9 @@
   "date": "2019-06-06",
   "initiales": "NT",
   "avatar": "",
-  "surligne": "Franck est d'une gentillesse et d'un professionnalisme rare !"
+  "surlignes": [
+   "Franck est d'une gentillesse et d'un professionnalisme rare !"
+  ]
  },
  {
   "nom": "Yves Aubert",
@@ -1016,7 +1272,9 @@
   "date": "2019-05-13",
   "initiales": "YA",
   "avatar": "",
-  "surligne": "Un excellent travail de professionnel dans les moindres détails."
+  "surlignes": [
+   "Un excellent travail de professionnel dans les moindres détails."
+  ]
  },
  {
   "nom": "Cyril Meyrand",
@@ -1026,7 +1284,9 @@
   "date": "2019-04-17",
   "initiales": "CM",
   "avatar": "",
-  "surligne": "Nous avons fait appel à Teck Aménagement pour notre terrasse et nous avons été ravis."
+  "surlignes": [
+   "Nous avons fait appel à Teck Aménagement pour notre terrasse et nous avons été ravis."
+  ]
  },
  {
   "nom": "Jean-Marc BRUNSWICK",
@@ -1036,7 +1296,10 @@
   "date": "2019-04-11",
   "initiales": "JB",
   "avatar": "",
-  "surligne": "Au mois de Mars, Teck Aménagement a construit une nouvelle terrasse en bois Massaranduba pour notre piscine."
+  "surlignes": [
+   "Au mois de Mars, Teck Aménagement a construit une nouvelle terrasse en bois Massaranduba pour notre piscine.",
+   "Nous tenons à féliciter Franck et son équipe pour la qualité de leur travail, leur engagement, leur réactivité et leur sens du service client."
+  ]
  },
  {
   "nom": "Armand Dembski",
@@ -1046,7 +1309,9 @@
   "date": "2019-03-08",
   "initiales": "AD",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "Société sérieuse  , nous sommes très satisfait de notre nouvelle terrasse en ipé , superbe finition dans le"
+  ]
  },
  {
   "nom": "Romain Olivier",
@@ -1056,7 +1321,9 @@
   "date": "2019-02-20",
   "initiales": "RO",
   "avatar": "",
-  "surligne": "Très contents de notre terrasse bois en frêne européen thermochauffé."
+  "surlignes": [
+   "Très contents de notre terrasse bois en frêne européen thermochauffé."
+  ]
  },
  {
   "nom": "Gisèle Minasso",
@@ -1066,7 +1333,9 @@
   "date": "2019-01-27",
   "initiales": "GM",
   "avatar": "",
-  "surligne": "Une équipe professionnelle, de bon conseil et très sympathique."
+  "surlignes": [
+   "Une équipe professionnelle, de bon conseil et très sympathique."
+  ]
  },
  {
   "nom": "Nathalie Bni",
@@ -1076,7 +1345,9 @@
   "date": "2018-11-30",
   "initiales": "NB",
   "avatar": "",
-  "surligne": "Trop contente, Pergola et terrasse au top."
+  "surlignes": [
+   "Trop contente, Pergola et terrasse au top."
+  ]
  },
  {
   "nom": "Julie Dubois",
@@ -1086,7 +1357,10 @@
   "date": "2018-11-02",
   "initiales": "JD",
   "avatar": "",
-  "surligne": "La terrasse réalisée par Teck Aménagement est vraiment une réussite en tous points."
+  "surlignes": [
+   "La terrasse réalisée par Teck Aménagement est vraiment une réussite en tous points.",
+   "Un travail particulièrement soigné correspondant tout à fait à notre souhait."
+  ]
  },
  {
   "nom": "Catherine BELLET",
@@ -1096,7 +1370,9 @@
   "date": "2018-10-10",
   "initiales": "CB",
   "avatar": "",
-  "surligne": "Artisan vraiment professionnel, sérieux et soigneux !"
+  "surlignes": [
+   "Artisan vraiment professionnel, sérieux et soigneux !"
+  ]
  },
  {
   "nom": "Veronique Marouze",
@@ -1106,7 +1382,10 @@
   "date": "2018-10-03",
   "initiales": "VM",
   "avatar": "",
-  "surligne": "Travail efficace, aussi discret que possible."
+  "surlignes": [
+   "Travail efficace, aussi discret que possible.",
+   "au final, une belle terrasse, très agréable à la vue et au toucher."
+  ]
  },
  {
   "nom": "Grillo Victor",
@@ -1116,7 +1395,9 @@
   "date": "2018-10-02",
   "initiales": "GV",
   "avatar": "",
-  "surligne": ""
+  "surlignes": [
+   "Ma pergola + amenagements sont vraiment tres beaux."
+  ]
  },
  {
   "nom": "Graeme Clarke",
@@ -1126,7 +1407,10 @@
   "date": "2017-11-26",
   "initiales": "GC",
   "avatar": "",
-  "surligne": "Franck de Teck Amenagement a construit une terrasse en bois pour nous."
+  "surlignes": [
+   "Franck de Teck Amenagement a construit une terrasse en bois pour nous.",
+   "Il utilise des matériaux haut de gamme, il est très méticuleux du détail et il fait son ouvrage avec fierté."
+  ]
  },
  {
   "nom": "Max Chaffanet",
@@ -1136,7 +1420,12 @@
   "date": "2017-11-22",
   "initiales": "MC",
   "avatar": "",
-  "surligne": "Le projet concernait la réalisation en bord de mer d’une terrasse de piscine en ipé."
+  "surlignes": [
+   "Le projet concernait la réalisation en bord de mer d’une terrasse de piscine en ipé.",
+   "Monsieur Franck JONCHERAY n’est pas qu’un artisan compétent, c’est un homme qui a des valeurs au travail, une ponctualité, du respect, de la rigueur.",
+   "Il écoute, partage sa connaissance pour vous permettre de faire des choix éclairés sur les produits de qualité en relation avec votre budget.",
+   "Merci +++ pour cette belle rencontre et pour votre œuvre."
+  ]
  },
  {
   "nom": "Florence Cheru",
@@ -1146,7 +1435,11 @@
   "date": "2017-09-25",
   "initiales": "FC",
   "avatar": "",
-  "surligne": "L'équipe de TECK AMENAGEMENT a su répondre à nos attentes en assurant un travail, aussi bien sur le plan technique que esthétique, de grande qualité."
+  "surlignes": [
+   "L'équipe de TECK AMENAGEMENT a su répondre à nos attentes en assurant un travail, aussi bien sur le plan technique que esthétique, de grande qualité.",
+   "L'entreprise a réalisé pour nous une terrasse de piscine, en IPE de 100 mètres carrés, ainsi que des bardages bois, il y a 4 ans.",
+   "À ce jour, l'ouvrage n'a subi aucune déformation ni défaut qui auraient suscité le déclenchement de la garantie."
+  ]
  },
  {
   "nom": "Mousse Confection",
@@ -1156,7 +1449,10 @@
   "date": "2017-07-11",
   "initiales": "MC",
   "avatar": "",
-  "surligne": "La société Teck Aménagement est un partenaire précieux pour l'excellente qualité de son travail."
+  "surlignes": [
+   "La société Teck Aménagement est un partenaire précieux pour l'excellente qualité de son travail.",
+   "Nous avons collaboré sur l'espace extérieur"
+  ]
  },
  {
   "nom": "Gueroult Gregory",
@@ -1166,7 +1462,9 @@
   "date": "2017-07-11",
   "initiales": "GG",
   "avatar": "",
-  "surligne": "De très bons conseils, un travail soigné et de qualité."
+  "surlignes": [
+   "De très bons conseils, un travail soigné et de qualité."
+  ]
  },
  {
   "nom": "Guillaume Manelli",
@@ -1176,7 +1474,9 @@
   "date": "2017-07-10",
   "initiales": "GM",
   "avatar": "",
-  "surligne": "Franck Joncheray a su me conseiller pour mettre en valeur ma plage de piscine tout en restant dans mon budget."
+  "surlignes": [
+   "Franck Joncheray a su me conseiller pour mettre en valeur ma plage de piscine tout en restant dans mon budget."
+  ]
  },
  {
   "nom": "Jm Santiago",
@@ -1186,7 +1486,10 @@
   "date": "2017-07-10",
   "initiales": "JS",
   "avatar": "",
-  "surligne": "Franck Joncheray est intervenu à deux reprises en moins d un an à notre domicile."
+  "surlignes": [
+   "Franck Joncheray est intervenu à deux reprises en moins d un an à notre domicile.",
+   "Il a réalisé une terrasse extérieur de plus de 100 mètres carrés et dernièrement un abri voiture en bois ."
+  ]
  },
  {
   "nom": "Mathieu Chanard",
@@ -1196,7 +1499,9 @@
   "date": "2017-07-07",
   "initiales": "MC",
   "avatar": "",
-  "surligne": "Je recommande sans hésitation cette société."
+  "surlignes": [
+   "Je recommande sans hésitation cette société."
+  ]
  },
  {
   "nom": "Nicolas Moingeon",
@@ -1206,7 +1511,9 @@
   "date": "2017-07-04",
   "initiales": "NM",
   "avatar": "",
-  "surligne": "En tant qu'Architecte Paysagiste, l'entreprise TECK AMENAGEMENT a réalisé différentes terrasses en bois ainsi que du mobilier pour mes clients."
+  "surlignes": [
+   "En tant qu'Architecte Paysagiste, l'entreprise TECK AMENAGEMENT a réalisé différentes terrasses en bois ainsi que du mobilier pour mes clients."
+  ]
  },
  {
   "nom": "Yoran Morvant",
@@ -1216,6 +1523,8 @@
   "date": "2017-07-04",
   "initiales": "YM",
   "avatar": "",
-  "surligne": "Artisan vraiment professionnel et sérieux !"
+  "surlignes": [
+   "Artisan vraiment professionnel et sérieux !"
+  ]
  }
 ]

@@ -354,15 +354,27 @@
   /* ⚠️ AUCUN HTML VENU D'UN AVIS N'EST INJECTÉ. Le texte est écrit par un client, pas
      par nous : il passe par `textContent` et par des nœuds, jamais par une chaîne de
      balises. Le surlignage est fabriqué en découpant le texte en trois morceaux. */
+  /* ⚠️ PLUSIEURS PASSAGES, PAS UN SEUL (Lilian, 12/09/2026) : un avis court en porte
+     un, un avis long jusqu'à quatre. Le découpage se fait dans l'ordre du texte, et
+     chaque morceau passe par `textContent` : aucun HTML venu d'un avis n'est injecté. */
   function texteAvec(avis){
     var p = elem('p', 'texte');
     var t = avis.texte;
-    var s = avis.surligne;
-    var i = s ? t.indexOf(s) : -1;
-    if (i === -1){ p.textContent = t; return p; }
-    if (i > 0) p.appendChild(document.createTextNode(t.slice(0, i)));
-    p.appendChild(elem('mark', null, s));
-    p.appendChild(document.createTextNode(t.slice(i + s.length)));
+    var liste = (avis.surlignes || []).filter(function(s){ return s && t.indexOf(s) !== -1; });
+    if (!liste.length){ p.textContent = t; return p; }
+
+    /* On les range par position pour découper d'une seule traite, de gauche à droite. */
+    liste.sort(function(a, b){ return t.indexOf(a) - t.indexOf(b); });
+
+    var curseur = 0;
+    liste.forEach(function(s){
+      var i = t.indexOf(s, curseur);
+      if (i === -1) return;                 /* déjà couvert par un passage précédent */
+      if (i > curseur) p.appendChild(document.createTextNode(t.slice(curseur, i)));
+      p.appendChild(elem('mark', null, s));
+      curseur = i + s.length;
+    });
+    if (curseur < t.length) p.appendChild(document.createTextNode(t.slice(curseur)));
     return p;
   }
 
