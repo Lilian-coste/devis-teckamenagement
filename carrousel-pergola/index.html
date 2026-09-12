@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nos réalisations en images — Teck Aménagement</title>
+<meta name="description" content="Le projet en entier, photo par photo : pergolas, claustras et terrasses en bois exotique réalisés par Teck Aménagement.">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="../pergola/page-accueil/assets/logo-teck.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<!--
+  ═══════════════════════════════════════════════════════════════════════════
+  LE CARROUSEL DES RÉALISATIONS
+  ═══════════════════════════════════════════════════════════════════════════
+
+  Demandé par Lilian le 12/09/2026, pour remplacer le lien Google Drive du mail 5
+  de la séquence de bienvenue. Le Drive obligeait le lecteur à quitter la marque,
+  à charger une grille de vignettes grises et parfois à se connecter ; ici il
+  reste chez Teck, sur le sous-domaine qui porte déjà tout le tunnel.
+
+  ⚠️ LILIAN A DEMANDÉ `teckamenagement.fr/carrousel-pergola`, PAS CE SOUS-DOMAINE.
+  Le domaine principal est le WordPress hébergé chez O2Switch, auquel nous n'avons
+  pas la main : y poser une page demande Franck ou son prestataire. La page vit
+  donc ici, `devis.teckamenagement.fr/carrousel-pergola/`, comme le reste du
+  tunnel. Elle se déplacera telle quelle le jour où l'accès existe.
+
+  ── L'ORDRE DES IMAGES ─────────────────────────────────────────────────────
+  Verticales d'abord (9), horizontales ensuite (12), demande de Lilian. La
+  raison tient au téléphone : une photo verticale y remplit l'écran, une photo
+  horizontale y occupe un tiers de la hauteur. En ouvrant sur les verticales, la
+  première impression est pleine, et les horizontales arrivent quand le visiteur
+  fait déjà défiler.
+
+  ⚠️ LES IMAGES VIENNENT DU DRIVE ET PLAFONNENT À 1280 px DE LARGE. C'est ce que
+  Google Drive a rendu, pas forcément l'original. Sur un grand écran Retina la
+  photo est donc légèrement adoucie. Si Franck a les fichiers d'origine, les
+  reprendre et relancer la conversion : rien d'autre ne change, les noms sont
+  numérotés dans l'ordre d'affichage.
+
+  ── CE QUI EST REPRIS AILLEURS, ET D'OÙ ────────────────────────────────────
+  · le fond `#f8f8f8` .......... apercu-resultat/index.html (pages de résultat)
+  · les cartes d'avis .......... pergola/page-accueil/index.html (.review-card)
+  · les deux bandeaux .......... pergola/page-accueil/index.html (.marquee)
+  · le pied de page ............ pergola/page-accueil/index.html (.footer)
+  Les logos de presse et le logo du pied de page ne sont pas recopiés : on
+  pointe sur ceux de la landing page, comme le fait déjà `apercu-resultat`.
+-->
+
+<style>
+  :root{
+    --teck:#0653A8;
+    --ink:#1D1D1F;
+    --fond:#f8f8f8;
+    --bleu-pale:#eff4fa;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; overflow-x:hidden; max-width:100%; }
+  body{
+    background:var(--fond);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{ max-width:100%; }
+
+  /* ══════════════ L'EN-TÊTE : le logo, centré ══════════════ */
+  .entete{ text-align:center; padding:26px 20px 6px; }
+  .entete img{ display:block; margin:0 auto; width:100%; max-width:300px; height:auto; }
+  @media(min-width:768px){ .entete{ padding:34px 20px 8px; } .entete img{ max-width:460px; } }
+  .entete .surtitre{
+    margin:16px 0 0; font-size:11px; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--teck); font-weight:600;
+  }
+
+  /* ══════════════ LE CARROUSEL ══════════════
+     La scène occupe ce qui reste de l'écran sous le logo. `100svh` (small viewport
+     height) plutôt que `100vh` : sur iPhone, `vh` compte la barre d'adresse qui se
+     rétracte, et la dernière rangée de points passait sous le pli. */
+  .scene{
+    position:relative;
+    height:calc(100svh - 190px);
+    min-height:380px;
+    max-height:860px;
+  }
+  @media(max-width:768px){ .scene{ height:calc(100svh - 168px); min-height:340px; } }
+
+  .piste{
+    display:flex; height:100%;
+    overflow-x:auto; overflow-y:hidden;
+    scroll-snap-type:x mandatory;
+    scroll-behavior:smooth;
+    scrollbar-width:none;
+  }
+  .piste::-webkit-scrollbar{ display:none; }
+
+  .vue{
+    flex:0 0 100%; height:100%;
+    scroll-snap-align:center;
+    display:flex; align-items:center; justify-content:center;
+    padding:0 16px;
+  }
+  @media(min-width:768px){ .vue{ padding:0 72px; } }
+
+  /* `contain` et jamais `cover` : une pergola recadrée perd sa ligne de toit, et
+     c'est précisément ce que le visiteur vient regarder. */
+  .vue img{
+    max-width:100%; max-height:100%;
+    width:auto; height:auto;
+    object-fit:contain;
+    border-radius:18px;
+    box-shadow:0 18px 44px rgba(10,61,92,.14);
+    background:#fff;
+  }
+
+  /* Les flèches. Cachées au clavier tant qu'on ne s'en sert pas, mais toujours
+     dans l'ordre de tabulation : ce sont de vrais boutons, pas des décorations. */
+  .fleche{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:46px; height:46px; border-radius:50%;
+    border:1px solid #D2D2D7; background:rgba(255,255,255,.92);
+    color:var(--ink); font-size:19px; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; z-index:4;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+    transition:transform .25s, box-shadow .25s, border-color .25s;
+  }
+  .fleche:hover{ transform:translateY(-50%) scale(1.06); border-color:var(--teck); box-shadow:0 10px 26px rgba(0,0,0,.12); }
+  .fleche:focus-visible{ outline:2px solid var(--teck); outline-offset:3px; }
+  .fleche[disabled]{ opacity:.34; cursor:default; transform:translateY(-50%); box-shadow:none; }
+  .fleche.prec{ left:10px; }
+  .fleche.suiv{ right:10px; }
+  @media(min-width:768px){ .fleche{ width:54px; height:54px; font-size:22px; } .fleche.prec{ left:18px; } .fleche.suiv{ right:18px; } }
+
+  /* Le compteur et le plein écran, posés en haut à droite de la scène. */
+  .outils{
+    position:absolute; top:10px; right:14px; z-index:4;
+    display:flex; align-items:center; gap:8px;
+  }
+  .compteur{
+    background:rgba(255,255,255,.92); border:1px solid #D2D2D7; border-radius:999px;
+    padding:5px 12px; font-size:12.5px; font-weight:600; color:var(--ink);
+    font-variant-numeric:tabular-nums;
+  }
+  .plein{
+    width:32px; height:32px; border-radius:50%;
+    border:1px solid #D2D2D7; background:rgba(255,255,255,.92);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; padding:0;
+  }
+  .plein:focus-visible{ outline:2px solid var(--teck); outline-offset:3px; }
+  .plein svg{ width:15px; height:15px; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; }
+  /* En plein écran, le fond blanc de la page ferait une bande claire autour de la
+     photo : on passe au noir, comme le fait n'importe quelle visionneuse. */
+  .scene:fullscreen{ background:#0B0B0C; height:100%; max-height:none; }
+  .scene:fullscreen .vue img{ border-radius:0; box-shadow:none; }
+
+  /* Les points. Vingt et un points feraient une frise illisible : on les garde
+     petits, et celui en cours s'allonge au lieu de changer de couleur seule. */
+  .points{
+    display:flex; justify-content:center; align-items:center; gap:6px;
+    flex-wrap:wrap; padding:14px 20px 4px; max-width:560px; margin:0 auto;
+  }
+  .point{
+    width:7px; height:7px; border-radius:999px; border:0; padding:0;
+    background:#C7C7CC; cursor:pointer; transition:width .3s, background .3s;
+  }
+  .point[aria-current="true"]{ width:22px; background:var(--teck); }
+  .point:focus-visible{ outline:2px solid var(--teck); outline-offset:2px; }
+
+  .legende{
+    text-align:center; font-size:13px; color:#86868B;
+    padding:8px 22px 26px;
+  }
+
+  /* ══════════════ LES AVIS QUI DÉFILENT ══════════════
+     Repris mot pour mot de pergola/page-accueil : mêmes cartes, même vitesse,
+     même sens de défilement. Le fond change, lui : la landing page projette la
+     photo du hero derrière, ici on reste sur le gris des pages de résultat. */
+  .marquee{ overflow:hidden; width:100%; }
+  .mq-track{ display:flex; width:max-content; gap:16px; align-items:center; }
+  #reviewsTrack{ align-items:flex-start; }
+  .mq-left{ animation:scrollLeft 48s linear infinite; }
+  .mq-right{ animation:scrollRight 40s linear infinite; }
+  .marquee:hover .mq-track{ animation-play-state:paused; }
+  @keyframes scrollLeft{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @keyframes scrollRight{ from{transform:translateX(-50%);} to{transform:translateX(0);} }
+
+  .reviews-section{ background:linear-gradient(180deg,#f8f8f8 0%,#ffffff 100%); padding:34px 0 30px; }
+  .review-card{ width:330px; flex-shrink:0; background:#fff; border:1px solid #D2D2D7; border-radius:28px;
+    padding:26px 24px; display:flex; flex-direction:column; box-shadow:0 4px 20px rgba(0,0,0,.04);
+    transition:transform .4s, box-shadow .4s, border-color .4s; }
+  .review-card:hover{ transform:translateY(-6px); border-color:var(--teck); box-shadow:0 18px 38px rgba(0,0,0,.08); }
+  .review-card .stars{ color:var(--teck); font-size:13px; letter-spacing:1px; margin-bottom:12px; }
+  .review-card .txt{ color:#424245; font-size:13.5px; line-height:1.55; font-weight:300; font-style:italic; flex:1; }
+  .review-card .who{ display:flex; align-items:center; gap:10px; margin-top:18px; }
+  .review-card .ava{ width:42px; height:42px; border-radius:50%; background:#F5F5F7; border:1px solid #D2D2D7;
+    display:flex; align-items:center; justify-content:center; color:var(--teck); font-size:11px; font-weight:700; flex-shrink:0; }
+  .review-card .nm{ font-size:13px; font-weight:600; color:var(--ink); text-align:left; }
+  .review-card .sub{ font-size:11px; color:#86868B; text-align:left; }
+  .review-card .rating{ margin-top:auto; padding-top:14px; display:flex; justify-content:center; gap:2px;
+    font-size:13px; font-weight:600; color:var(--ink); }
+  .review-card .rating .ystar{ color:#FBBF24; }
+  .review-card .rating .muted{ font-weight:400; opacity:.7; }
+
+  /* ══════════════ LA PRESSE ══════════════ */
+  .press-section{ background:#fff; padding:32px 0 56px; }
+  .press-ttl{ text-align:center; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#0653A8; font-weight:600; margin-bottom:34px; }
+  .press-section .marquee{ max-width:780px; margin:0 auto;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%);
+    mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%); }
+  .press-track{ gap:52px; align-items:center; padding:0 25px; }
+  .press-track img{ width:auto; object-fit:contain; display:block; mix-blend-mode:multiply; flex-shrink:0; }
+  .press-track .elle{ height:52px; }
+  .press-track .cotesud{ height:54px; }
+  .press-track .ideat{ height:50px; }
+  .press-track .cotemag{ height:40px; }
+  .press-track .ab{ height:60px; }
+  .press-track .anous{ height:42px; }
+  .press-track .artdeco{ height:42px; }
+  .press-logotext{ font-family:'Playfair Display',Georgia,serif; font-size:36px; font-weight:700; color:#1D1D1F; line-height:1; white-space:nowrap; }
+
+  /* ══════════════ LE PIED DE PAGE ══════════════ */
+  .footer{ background:#FFFFFF; text-align:center; padding:24px 16px 24px; }
+  .footer img{ display:block; margin:0 auto 10px; width:100%; max-width:334px; height:auto; }
+  @media (min-width:768px){ .footer img{ max-width:540px; } }
+  .footer .legal{ font-size:13px; color:#000; }
+  .footer .legal a{ color:#000; font-style:italic; text-decoration:none; }
+  .footer .legal .sep{ color:#C7C7CC; margin:0 8px; }
+
+  @media (prefers-reduced-motion: reduce){
+    .piste{ scroll-behavior:auto; }
+    .mq-left,.mq-right{ animation:none; }
+    .review-card{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="entete">
+  <img src="../pergola/page-accueil/assets/logo-teck.png" alt="Teck Aménagement">
+  <p class="surtitre">Le projet en images</p>
+</header>
+
+<!-- ═══════════ LE CARROUSEL ═══════════ -->
+<div class="scene" id="scene">
+  <div class="piste" id="piste" tabindex="0" role="region" aria-roledescription="carrousel" aria-label="Photos du projet">
+    <!-- LES VUES SONT ÉCRITES PAR LE SCRIPT, à partir de la liste plus bas : vingt et
+         une balises recopiées à la main se désynchroniseraient du dossier au premier
+         ajout de photo. -->
+  </div>
+
+  <button class="fleche prec" id="prec" type="button" aria-label="Photo précédente">&#10094;</button>
+  <button class="fleche suiv" id="suiv" type="button" aria-label="Photo suivante">&#10095;</button>
+
+  <div class="outils">
+    <span class="compteur" id="compteur" aria-live="polite">1 / 21</span>
+    <button class="plein" id="plein" type="button" aria-label="Afficher en plein écran">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="points" id="points" role="tablist" aria-label="Aller à une photo"></div>
+<p class="legende">Faites défiler, ou utilisez les flèches du clavier</p>
+
+<!-- ═══════════ LES AVIS ═══════════ -->
+<section class="reviews-section">
+  <div class="marquee">
+    <div class="mq-track mq-left" id="reviewsTrack">
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Excellentes prestations avec Teck Aménagement pour la réalisation de nos deux pergolas / ombrières. Des artisans rigoureux, un travail soigné, des délais respectés et un très beau rendu esthétique. Nous recommandons vivement !"</p><div class="who"><div class="ava">AC</div><div><div class="nm">Anne Cayron</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Une superbe pergola, très design… à la hauteur de nos espérances. Une vraie plus-value pour la maison. Une entreprise sérieuse et réactive qui a respecté tous ses engagements."</p><div class="who"><div class="ava">MB</div><div><div class="nm">Muriel Baccigalupo</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Nous sommes ravis ! Une prestation de qualité, des conseils avisés et un suivi au millimètre de la commande à l'installation. On réfléchit déjà à un autre projet avec eux, je recommande à 1000 % !"</p><div class="who"><div class="ava">CT</div><div><div class="nm">Catherine Tonda</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Je suis très satisfaite de la magnifique pergola. Franck a été très réactif, à l'écoute, et de très bons conseils. Son équipe était adorable et très pro ! Un design juste DE FOLIE !!!"</p><div class="who"><div class="ava">AR</div><div><div class="nm">Adrienne Riera</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Rénovation de nos extérieurs, terrasse en bois exotique et pergola sur toute la longueur de la maison. Une merveille, très belle prestation, chantier terminé dans les temps. Je recommande à 200 %."</p><div class="who"><div class="ava">FB</div><div><div class="nm">Fabienne Bongiovanni</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+      <div class="review-card"><div class="stars">★★★★★</div><p class="txt">"Très grande satisfaction ! La luminosité reste la même à l'intérieur de la maison tout en protégeant ma terrasse du soleil. Résultat impeccable et conforme à ce qui avait été annoncé. Je recommande les yeux fermés."</p><div class="who"><div class="ava">M</div><div><div class="nm">Mathieu</div><div class="sub">Avis Google</div></div></div><div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LA PRESSE ═══════════ -->
+<section class="press-section">
+  <div class="press-ttl">Vu dans la presse</div>
+  <div class="marquee">
+    <div class="mq-track mq-right press-track" id="pressTrack">
+      <img class="artdeco" src="../pergola/page-accueil/assets/presse/art-decoration.png" alt="Art&amp;Décoration">
+      <img class="elle" src="../pergola/page-accueil/assets/presse/elle-decoration.png" alt="Elle Décoration">
+      <img class="cotesud" src="../pergola/page-accueil/assets/presse/cote-sud.png" alt="Maisons Côté Sud">
+      <img class="ideat" src="../pergola/page-accueil/assets/presse/ideat.png" alt="IDEAT">
+      <img class="cotemag" src="../pergola/page-accueil/assets/presse/cote-magazine.png" alt="Côté Magazine">
+      <img class="ab" src="../pergola/page-accueil/assets/presse/architecture-bois.png" alt="Architecture Bois">
+      <img class="anous" src="../pergola/page-accueil/assets/presse/anous.png" alt="ANous Aix Marseille">
+      <span class="press-logotext" style="font-weight:600;">Décoration</span>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <img src="../pergola/page-accueil/assets/logo-teck.png" alt="Teck Aménagement — Pergola, terrasse, mobilier en bois exotique">
+  <div class="legal">
+    <a href="https://teckamenagement.fr/mentions-legales/">Politique de confidentialité</a>
+    <span class="sep">·</span>© Teck Aménagement. Tous droits réservés.
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ⚠️ LA LISTE EST L'ORDRE D'AFFICHAGE, et elle est déjà triée : les neuf verticales,
+     puis les douze horizontales. Le suffixe du nom rappelle l'orientation pour qu'un
+     tri alphabétique ne puisse pas les remélanger par accident. */
+  var PHOTOS = [
+    'pergola-01v.webp','pergola-02v.webp','pergola-03v.webp','pergola-04v.webp',
+    'pergola-05v.webp','pergola-06v.webp','pergola-07v.webp','pergola-08v.webp',
+    'pergola-09v.webp',
+    'pergola-10h.webp','pergola-11h.webp','pergola-12h.webp','pergola-13h.webp',
+    'pergola-14h.webp','pergola-15h.webp','pergola-16h.webp','pergola-17h.webp',
+    'pergola-18h.webp','pergola-19h.webp','pergola-20h.webp','pergola-21h.webp'
+  ];
+
+  var piste = document.getElementById('piste');
+  var points = document.getElementById('points');
+  var compteur = document.getElementById('compteur');
+  var prec = document.getElementById('prec');
+  var suiv = document.getElementById('suiv');
+  var scene = document.getElementById('scene');
+  var plein = document.getElementById('plein');
+  var courante = 0;
+
+  /* Les deux premières photos se chargent tout de suite, les autres à l'approche :
+     vingt et une images d'un coup, ce sont cinq mégaoctets avant le premier regard. */
+  PHOTOS.forEach(function(nom, i){
+    var vue = document.createElement('div');
+    vue.className = 'vue';
+    vue.setAttribute('role', 'group');
+    vue.setAttribute('aria-roledescription', 'diapositive');
+    vue.setAttribute('aria-label', (i + 1) + ' sur ' + PHOTOS.length);
+    var img = document.createElement('img');
+    img.src = 'images/' + nom;
+    img.alt = 'Réalisation Teck Aménagement, photo ' + (i + 1);
+    img.loading = i < 2 ? 'eager' : 'lazy';
+    img.decoding = 'async';
+    vue.appendChild(img);
+    piste.appendChild(vue);
+
+    var p = document.createElement('button');
+    p.className = 'point';
+    p.type = 'button';
+    p.setAttribute('aria-label', 'Photo ' + (i + 1));
+    p.addEventListener('click', function(){ aller(i); });
+    points.appendChild(p);
+  });
+
+  function aller(i){
+    i = Math.max(0, Math.min(PHOTOS.length - 1, i));
+    piste.scrollTo({ left: i * piste.clientWidth, behavior: 'smooth' });
+  }
+
+  function marquer(){
+    /* On lit la position réelle plutôt que de compter les clics : le doigt qui
+       fait défiler ne passe par aucun bouton, et le compteur doit suivre quand même. */
+    var i = Math.round(piste.scrollLeft / piste.clientWidth);
+    if (i === courante) return;
+    courante = i;
+    compteur.textContent = (i + 1) + ' / ' + PHOTOS.length;
+    var tous = points.children;
+    for (var k = 0; k < tous.length; k++){
+      tous[k].setAttribute('aria-current', k === i ? 'true' : 'false');
+    }
+    prec.disabled = i === 0;
+    suiv.disabled = i === PHOTOS.length - 1;
+  }
+
+  var attente;
+  piste.addEventListener('scroll', function(){
+    window.clearTimeout(attente);
+    attente = window.setTimeout(marquer, 60);
+  }, { passive: true });
+
+  prec.addEventListener('click', function(){ aller(courante - 1); });
+  suiv.addEventListener('click', function(){ aller(courante + 1); });
+
+  piste.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight'){ e.preventDefault(); aller(courante + 1); }
+    if (e.key === 'ArrowLeft'){ e.preventDefault(); aller(courante - 1); }
+  });
+
+  /* Le plein écran est un bonus : s'il n'existe pas dans ce navigateur, le bouton
+     disparaît plutôt que de rester là sans rien faire. */
+  if (!scene.requestFullscreen){
+    plein.style.display = 'none';
+  } else {
+    plein.addEventListener('click', function(){
+      if (document.fullscreenElement){ document.exitFullscreen(); }
+      else { scene.requestFullscreen().catch(function(){}); }
+    });
+  }
+
+  /* ⚠️ LA POSITION SE PERD QUAND LA FENÊTRE CHANGE DE LARGEUR, parce que le défilement
+     est en pixels et que la largeur d'une vue vient de changer. On la repose. */
+  var largeur = window.innerWidth;
+  window.addEventListener('resize', function(){
+    if (window.innerWidth === largeur) return;
+    largeur = window.innerWidth;
+    piste.scrollLeft = courante * piste.clientWidth;
+  });
+
+  points.children[0].setAttribute('aria-current', 'true');
+  prec.disabled = true;
+  compteur.textContent = '1 / ' + PHOTOS.length;
+
+  /* Duplique le contenu des bandeaux pour une boucle sans couture (cloneNode, pas
+     d'innerHTML : on ne réinjecte pas du HTML qu'on vient de lire). */
+  ['reviewsTrack','pressTrack'].forEach(function(id){
+    var t = document.getElementById(id);
+    if (!t) return;
+    var copie = t.cloneNode(true);
+    while (copie.firstChild){ t.appendChild(copie.firstChild); }
+  });
+})();
+</script>
+</body>
+</html>
