@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Les avis de nos clients — Teck Aménagement</title>
+<meta name="description" content="Les avis Google des clients de Teck Aménagement, dans leur intégralité, avec le lien vers chacun d'eux sur Google.">
+<link rel="icon" href="../pergola/page-accueil/assets/logo-teck.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<!--
+  ═══════════════════════════════════════════════════════════════════════════
+  LA PAGE DE TOUS LES AVIS
+  ═══════════════════════════════════════════════════════════════════════════
+
+  Demandée par Lilian le 12/09/2026, pour que le mail de preuve sociale envoie sur
+  une page de Teck plutôt que sur la fiche Google. Deux raisons, et il les a dites
+  dans cet ordre : la fiche Google montre aussi les deux avis à une étoile qui
+  portent sur un produit qui n'est pas celui de Franck, et une page tenue par nous
+  se présente mieux.
+
+  ⚠️ LES DEUX AVIS ÉCARTÉS SONT ÉCARTÉS POUR UNE RAISON, PAS PAR CONFORT. Sandrine
+  Ciano et Jean-Christophe Ciano portent sur une terrasse composite de marque
+  Millboard, qui n'est pas un produit de Teck. L'avis à quatre étoiles, lui, est
+  publié : écarter un avis positif parce qu'il n'est pas parfait reviendrait à
+  maquiller la note, et la note affichée serait alors fausse.
+
+  ── D'OÙ VIENT LE DESSIN ───────────────────────────────────────────────────
+  De l'enregistrement d'écran de Lilian du 12/09/2026, où il commente les deux
+  formes existantes et dit ce qu'il garde de chacune :
+   · du bandeau défilant ....... les étoiles bleues en haut à gauche, le texte
+                                 aligné à gauche, la phrase surlignée en bleu,
+                                 la pastille d'initiales, la mention 4,9★
+   · du bloc « parlent de nous » le survol : la carte se soulève et son contour
+                                 passe au bleu Teck
+   · de Google .................. « Plus » sous un avis long, qui ouvre le texte
+                                 entier et jamais un extrait figé
+   · du site de Teck ............ le bouton noir en capitales, celui de
+                                 « VOIR TOUS NOS PROJETS »
+
+  ⚠️ NI ITALIQUE, NI GUILLEMETS. Lilian, mot pour mot : « je veux pas que ce soit en
+  italique, parce que ce n'est pas très beau, et je ne veux même pas qu'il y ait de
+  guillemets ». Les cartes des autres pages en portent encore, et les guillemets y
+  ont été retirés le même jour, à sa demande.
+
+  ⚠️ LE TEXTE DES AVIS N'EST JAMAIS COUPÉ. Un avis long s'affiche replié, mais le
+  texte entier est déjà dans la page : « on laisse le début, on écrit voir plus, et
+  on ne prend pas qu'une seule partie, on laisse tout l'avis ». Couper pour de bon,
+  ce serait réécrire quelqu'un.
+
+  ⚠️ LES INITIALES PARTOUT, FAUTE DE PHOTOS. L'export Google ne porte aucune photo
+  de profil. Le champ `avatar` existe dans `avis.json` et la page s'en sert dès
+  qu'il est rempli : rien d'autre à changer le jour où on les a.
+
+  ── LA MATIÈRE ─────────────────────────────────────────────────────────────
+  `avis.json`, fabriqué par
+  ~/mes-clients/teck-amenagement/livrables/avis/preparer-avis.py
+  ⚠️ NE PAS ÉDITER `avis.json` À LA MAIN : la prochaine exécution du script
+  l'écrase. Un avis se corrige à la source, dans l'export, ou dans la liste
+  `APRES_EXPORT` du script.
+-->
+
+<style>
+  :root{
+    --teck:#0653A8;
+    --ink:#1D1D1F;
+    --fond:#f8f8f8;
+    --gris:#86868B;
+    --trait:#D2D2D7;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; overflow-x:hidden; max-width:100%; }
+  body{
+    background:var(--fond); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{ max-width:100%; }
+
+  /* ══════════════ L'EN-TÊTE ══════════════ */
+  .entete{ text-align:center; padding:30px 20px 0; }
+  .entete .logo{ display:block; margin:0 auto; width:100%; max-width:300px; height:auto; }
+  @media(min-width:768px){ .entete .logo{ max-width:460px; } }
+  .entete .surtitre{
+    margin:22px 0 0; font-size:11px; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--teck); font-weight:600;
+  }
+  .entete h1{
+    font-size:30px; font-weight:500; letter-spacing:-.02em; margin:10px 0 0; color:var(--ink);
+  }
+  @media(min-width:768px){ .entete h1{ font-size:40px; } }
+  .note-globale{
+    display:inline-flex; align-items:center; gap:7px;
+    margin:16px 0 0; padding:9px 16px;
+    background:#fff; border:1px solid var(--trait); border-radius:999px;
+    font-size:14px; font-weight:600; color:var(--ink);
+    box-shadow:0 4px 16px rgba(0,0,0,.04);
+  }
+  .note-globale .etoiles{ color:var(--teck); letter-spacing:1px; font-size:13px; }
+  .note-globale .muted{ font-weight:400; color:var(--gris); }
+  .entete .chapo{
+    max-width:620px; margin:18px auto 0; font-size:14.5px; line-height:1.6; color:var(--gris);
+  }
+
+  /* ══════════════ LA MOSAÏQUE ══════════════
+     Trois colonnes indépendantes, remplies par le script. Des colonnes CSS
+     (`column-count`) auraient été plus courtes à écrire, mais elles recomposent
+     toute la page dès qu'une carte s'ouvre : le lecteur qui déplie un avis verrait
+     tout le reste sauter. Ici, ouvrir une carte ne déplace que sa colonne. */
+  .mosaique{
+    display:grid; gap:18px; align-items:start;
+    max-width:1180px; margin:0 auto; padding:40px 18px 10px;
+    grid-template-columns:1fr;
+  }
+  @media(min-width:700px){ .mosaique{ grid-template-columns:1fr 1fr; } }
+  @media(min-width:1060px){ .mosaique{ grid-template-columns:1fr 1fr 1fr; } }
+  .colonne{ display:flex; flex-direction:column; gap:18px; }
+
+  /* ══════════════ UNE CARTE ══════════════ */
+  .carte{
+    background:#fff; border:1px solid var(--trait); border-radius:28px;
+    padding:26px 24px 22px; display:flex; flex-direction:column;
+    box-shadow:0 4px 20px rgba(0,0,0,.04);
+    transition:transform .4s, box-shadow .4s, border-color .4s;
+  }
+  .carte:hover{ transform:translateY(-6px); border-color:var(--teck); box-shadow:0 18px 38px rgba(0,0,0,.08); }
+  .carte .etoiles{ color:var(--teck); font-size:13px; letter-spacing:1px; margin-bottom:12px; }
+
+  /* Ni italique ni guillemets, demande de Lilian du 12/09/2026. */
+  .carte .texte{
+    color:#424245; font-size:13.5px; line-height:1.62; font-weight:300;
+    margin:0; white-space:pre-line;
+  }
+  /* Le surlignage bleu, jamais un soulignement : c'est la forme retenue pour Teck. */
+  .carte .texte mark{
+    background:#E3EDF9; color:#1D1D1F; padding:1px 2px; border-radius:3px;
+    box-decoration-break:clone; -webkit-box-decoration-break:clone;
+  }
+  /* Replié : six lignes. Le texte entier est déjà là, c'est la hauteur qui change,
+     jamais le contenu. */
+  .carte .texte.replie{
+    display:-webkit-box; -webkit-line-clamp:6; -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .voir-plus{
+    align-self:flex-start; margin-top:10px; padding:0;
+    background:none; border:0; cursor:pointer;
+    font-size:12.5px; font-weight:600; color:var(--teck);
+    font-family:inherit;
+  }
+  .voir-plus:hover{ text-decoration:underline; }
+  .voir-plus:focus-visible{ outline:2px solid var(--teck); outline-offset:3px; border-radius:3px; }
+
+  .pied-carte{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    margin-top:18px; padding-top:16px; border-top:1px solid #EDEDF0;
+  }
+  .qui{ display:flex; align-items:center; gap:10px; min-width:0; }
+  .ava{
+    width:42px; height:42px; border-radius:50%; flex-shrink:0;
+    background:#F5F5F7; border:1px solid var(--trait);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--teck); font-size:11px; font-weight:700;
+    object-fit:cover; overflow:hidden;
+  }
+  .qui .nom{ font-size:13px; font-weight:600; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  /* Petit, noir, souligné : c'est la forme demandée, et elle se lit comme un lien
+     sans crier plus fort que le nom juste au-dessus. */
+  .qui .lien-google{
+    display:inline-block; margin-top:2px;
+    font-size:11px; color:#000; text-decoration:underline; text-underline-offset:2px;
+  }
+  .qui .lien-google:hover{ color:var(--teck); }
+  .mention{
+    flex-shrink:0; text-align:right; font-size:12.5px; font-weight:600; color:var(--ink);
+    line-height:1.35;
+  }
+  .mention .ystar{ color:#FBBF24; }
+  .mention .muted{ display:block; font-weight:400; color:var(--gris); font-size:11px; }
+
+  /* ══════════════ LE BOUTON, CELUI DU SITE ══════════════ */
+  .zone-bouton{ text-align:center; padding:34px 20px 56px; }
+  .bouton-avis{
+    display:inline-block; background:#1D1D1F; color:#fff;
+    border:0; cursor:pointer; font-family:inherit;
+    font-size:13px; letter-spacing:.12em; text-transform:uppercase; font-weight:600;
+    padding:17px 34px; text-decoration:none;
+    transition:background .25s, transform .25s;
+  }
+  .bouton-avis:hover{ background:#000; transform:translateY(-2px); }
+  .bouton-avis:focus-visible{ outline:2px solid var(--teck); outline-offset:3px; }
+  .reste{ display:block; margin-top:12px; font-size:13px; color:var(--gris); }
+
+  /* ══════════════ LA PRESSE ══════════════ */
+  .marquee{ overflow:hidden; width:100%; }
+  .mq-track{ display:flex; width:max-content; gap:16px; align-items:center; }
+  .mq-right{ animation:scrollRight 40s linear infinite; }
+  .marquee:hover .mq-track{ animation-play-state:paused; }
+  @keyframes scrollRight{ from{transform:translateX(-50%);} to{transform:translateX(0);} }
+  .press-section{ background:#fff; padding:32px 0 56px; }
+  .press-ttl{ text-align:center; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--teck); font-weight:600; margin-bottom:34px; }
+  .press-section .marquee{ max-width:780px; margin:0 auto;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%);
+    mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%); }
+  .press-track{ gap:52px; align-items:center; padding:0 25px; }
+  .press-track img{ width:auto; object-fit:contain; display:block; mix-blend-mode:multiply; flex-shrink:0; }
+  .press-track .elle{ height:52px; }
+  .press-track .cotesud{ height:54px; }
+  .press-track .ideat{ height:50px; }
+  .press-track .cotemag{ height:40px; }
+  .press-track .ab{ height:60px; }
+  .press-track .anous{ height:42px; }
+  .press-track .artdeco{ height:42px; }
+  .press-logotext{ font-family:'Playfair Display',Georgia,serif; font-size:36px; font-weight:700; color:var(--ink); line-height:1; white-space:nowrap; }
+
+  /* ══════════════ LE PIED DE PAGE ══════════════ */
+  .footer{ background:#FFFFFF; text-align:center; padding:24px 16px 24px; }
+  .footer img{ display:block; margin:0 auto 10px; width:100%; max-width:334px; height:auto; }
+  @media (min-width:768px){ .footer img{ max-width:540px; } }
+  .footer .legal{ font-size:13px; color:#000; }
+  .footer .legal a{ color:#000; font-style:italic; text-decoration:none; }
+  .footer .legal .sep{ color:#C7C7CC; margin:0 8px; }
+
+  @media (prefers-reduced-motion: reduce){
+    .carte{ transition:none; }
+    .mq-right{ animation:none; }
+    .bouton-avis{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="entete">
+  <img class="logo" src="../pergola/page-accueil/assets/logo-teck.png" alt="Teck Aménagement">
+  <p class="surtitre">Les avis de nos clients</p>
+  <h1>Ce qu'ils disent de leur projet</h1>
+  <div class="note-globale">
+    <span class="etoiles">★★★★★</span>
+    <span>4,9<span class="muted">/5</span></span>
+    <span class="muted">·</span>
+    <span class="muted">+140 avis Google</span>
+  </div>
+  <p class="chapo">Chaque avis est repris tel qu'il a été publié sur Google, sans coupe, et chacun renvoie vers sa page d'origine.</p>
+</header>
+
+<main class="mosaique" id="mosaique" aria-live="polite">
+  <!-- Les colonnes et les cartes sont écrites par le script, depuis avis.json -->
+</main>
+
+<div class="zone-bouton">
+  <button class="bouton-avis" id="plusDavis" type="button">Voir plus d'avis</button>
+  <span class="reste" id="reste"></span>
+</div>
+
+<section class="press-section">
+  <div class="press-ttl">Vu dans la presse</div>
+  <div class="marquee">
+    <div class="mq-track mq-right press-track" id="pressTrack">
+      <img class="artdeco" src="../pergola/page-accueil/assets/presse/art-decoration.png" alt="Art&amp;Décoration">
+      <img class="elle" src="../pergola/page-accueil/assets/presse/elle-decoration.png" alt="Elle Décoration">
+      <img class="cotesud" src="../pergola/page-accueil/assets/presse/cote-sud.png" alt="Maisons Côté Sud">
+      <img class="ideat" src="../pergola/page-accueil/assets/presse/ideat.png" alt="IDEAT">
+      <img class="cotemag" src="../pergola/page-accueil/assets/presse/cote-magazine.png" alt="Côté Magazine">
+      <img class="ab" src="../pergola/page-accueil/assets/presse/architecture-bois.png" alt="Architecture Bois">
+      <img class="anous" src="../pergola/page-accueil/assets/presse/anous.png" alt="ANous Aix Marseille">
+      <span class="press-logotext" style="font-weight:600;">Décoration</span>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <img src="../pergola/page-accueil/assets/logo-teck.png" alt="Teck Aménagement — Pergola, terrasse, mobilier en bois exotique">
+  <div class="legal">
+    <a href="https://teckamenagement.fr/mentions-legales/">Politique de confidentialité</a>
+    <span class="sep">·</span>© Teck Aménagement. Tous droits réservés.
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  var PAR_FOURNEE = 15;   /* cinq rangées de trois sur ordinateur */
+  var SEUIL_REPLI = 340;  /* au-delà, la carte s'ouvre avec « Voir plus » */
+
+  var mosaique = document.getElementById('mosaique');
+  var bouton = document.getElementById('plusDavis');
+  var reste = document.getElementById('reste');
+  var AVIS = [];
+  var affiches = 0;
+  var colonnes = [];
+
+  function elem(balise, classe, texte){
+    var e = document.createElement(balise);
+    if (classe) e.className = classe;
+    if (texte !== undefined) e.textContent = texte;
+    return e;
+  }
+
+  function nbColonnes(){
+    if (window.matchMedia('(min-width:1060px)').matches) return 3;
+    if (window.matchMedia('(min-width:700px)').matches) return 2;
+    return 1;
+  }
+
+  /* ⚠️ AUCUN HTML VENU D'UN AVIS N'EST INJECTÉ. Le texte d'un avis est écrit par un
+     client, pas par nous : il passe par `textContent` et par des nœuds, jamais par
+     une chaîne de balises. Le surlignage est fabriqué en découpant le texte en trois
+     morceaux, pas en collant une balise dedans. */
+  function texteAvec(avis){
+    var p = elem('p', 'texte');
+    var t = avis.texte;
+    var s = avis.surligne;
+    var i = s ? t.indexOf(s) : -1;
+    if (i === -1){
+      p.textContent = t;
+      return p;
+    }
+    if (i > 0) p.appendChild(document.createTextNode(t.slice(0, i)));
+    p.appendChild(elem('mark', null, s));
+    p.appendChild(document.createTextNode(t.slice(i + s.length)));
+    return p;
+  }
+
+  function carteDe(avis){
+    var c = elem('article', 'carte');
+
+    var et = elem('div', 'etoiles', '★★★★★'.slice(0, avis.note));
+    et.setAttribute('aria-label', avis.note + ' étoiles sur 5');
+    c.appendChild(et);
+
+    var p = texteAvec(avis);
+    c.appendChild(p);
+
+    if (avis.texte.length > SEUIL_REPLI){
+      p.classList.add('replie');
+      var b = elem('button', 'voir-plus', 'Voir plus');
+      b.type = 'button';
+      b.setAttribute('aria-expanded', 'false');
+      b.addEventListener('click', function(){
+        var ouvert = p.classList.toggle('replie') === false;
+        b.textContent = ouvert ? 'Voir moins' : 'Voir plus';
+        b.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
+      });
+      c.appendChild(b);
+    }
+
+    var pied = elem('div', 'pied-carte');
+
+    var qui = elem('div', 'qui');
+    var ava;
+    if (avis.avatar){
+      ava = elem('img', 'ava');
+      ava.src = avis.avatar;
+      ava.alt = '';
+      ava.loading = 'lazy';
+    } else {
+      ava = elem('div', 'ava', avis.initiales);
+      ava.setAttribute('aria-hidden', 'true');
+    }
+    qui.appendChild(ava);
+
+    var bloc = elem('div');
+    bloc.appendChild(elem('div', 'nom', avis.nom));
+    if (avis.lien){
+      var a = elem('a', 'lien-google', 'Voir l’avis sur Google');
+      a.href = avis.lien;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      bloc.appendChild(a);
+    }
+    qui.appendChild(bloc);
+    pied.appendChild(qui);
+
+    /* La mention 4,9★ sur chaque carte, comme sur le bandeau défilant. */
+    var men = elem('div', 'mention');
+    men.appendChild(document.createTextNode('4,9'));
+    men.appendChild(elem('span', 'ystar', '★'));
+    men.appendChild(document.createTextNode('/5'));
+    men.appendChild(elem('span', 'muted', '+140 avis'));
+    pied.appendChild(men);
+
+    c.appendChild(pied);
+    return c;
+  }
+
+  function refaireColonnes(){
+    var n = nbColonnes();
+    if (colonnes.length === n) return false;
+    mosaique.textContent = '';
+    colonnes = [];
+    for (var i = 0; i < n; i++){
+      var col = elem('div', 'colonne');
+      mosaique.appendChild(col);
+      colonnes.push(col);
+    }
+    return true;
+  }
+
+  /* On pose chaque carte dans la colonne la plus courte, mesurée pour de vrai.
+     Distribuer à tour de rôle produirait une colonne très longue dès qu'un avis de
+     mille caractères tombe toujours au même endroit. */
+  function poser(avis){
+    var court = colonnes[0];
+    for (var i = 1; i < colonnes.length; i++){
+      if (colonnes[i].offsetHeight < court.offsetHeight) court = colonnes[i];
+    }
+    court.appendChild(carteDe(avis));
+  }
+
+  function fournee(combien){
+    var fin = Math.min(affiches + combien, AVIS.length);
+    for (var i = affiches; i < fin; i++) poser(AVIS[i]);
+    affiches = fin;
+    var manque = AVIS.length - affiches;
+    if (manque <= 0){
+      bouton.style.display = 'none';
+      reste.textContent = 'Vous avez vu les ' + AVIS.length + ' avis publiés ici';
+    } else {
+      reste.textContent = 'Encore ' + manque + ' avis';
+    }
+  }
+
+  /* Changer de nombre de colonnes remet tout à plat : on réaffiche exactement ce qui
+     était affiché, ni plus ni moins, pour ne pas renvoyer le lecteur en arrière. */
+  function toutRepartir(){
+    if (!refaireColonnes()) return;
+    var n = affiches;
+    affiches = 0;
+    fournee(n);
+  }
+
+  bouton.addEventListener('click', function(){ fournee(PAR_FOURNEE); });
+
+  var largeur = window.innerWidth;
+  window.addEventListener('resize', function(){
+    if (window.innerWidth === largeur) return;
+    largeur = window.innerWidth;
+    toutRepartir();
+  });
+
+  fetch('avis.json')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      AVIS = d;
+      refaireColonnes();
+      fournee(PAR_FOURNEE);
+    })
+    .catch(function(){
+      reste.textContent = 'Les avis n’ont pas pu être chargés. Rechargez la page.';
+      bouton.style.display = 'none';
+    });
+
+  /* Le bandeau presse boucle sans couture : on duplique sa piste. */
+  var t = document.getElementById('pressTrack');
+  var copie = t.cloneNode(true);
+  while (copie.firstChild){ t.appendChild(copie.firstChild); }
+})();
+</script>
+</body>
+</html>
