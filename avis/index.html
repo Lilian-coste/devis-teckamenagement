@@ -100,9 +100,6 @@
   }
   .note-globale .etoiles{ color:var(--teck); letter-spacing:1px; font-size:13px; }
   .note-globale .muted{ font-weight:400; color:var(--gris); }
-  .entete .chapo{
-    max-width:620px; margin:18px auto 0; font-size:14.5px; line-height:1.6; color:var(--gris);
-  }
 
   /* ══════════════ LA MOSAÏQUE ══════════════
      Trois colonnes indépendantes, remplies par le script. Des colonnes CSS
@@ -110,27 +107,44 @@
      toute la page dès qu'une carte s'ouvre : le lecteur qui déplie un avis verrait
      tout le reste sauter. Ici, ouvrir une carte ne déplace que sa colonne. */
   .mosaique{
-    display:grid; gap:18px; align-items:start;
-    max-width:1180px; margin:0 auto; padding:40px 18px 10px;
+    display:grid; gap:32px; align-items:start;
+    max-width:1240px; margin:0 auto; padding:48px 22px 10px;
     grid-template-columns:1fr;
   }
   @media(min-width:700px){ .mosaique{ grid-template-columns:1fr 1fr; } }
-  @media(min-width:1060px){ .mosaique{ grid-template-columns:1fr 1fr 1fr; } }
-  .colonne{ display:flex; flex-direction:column; gap:18px; }
+  @media(min-width:1060px){ .mosaique{ grid-template-columns:1fr 1fr 1fr; gap:32px; } }
+  .colonne{ display:flex; flex-direction:column; gap:32px; }
 
   /* ══════════════ UNE CARTE ══════════════ */
+  /* ⚠️ LE DESSIN VIENT DU BLOC « PARLENT DE NOUS » des pages de résultat, que Lilian
+     préfère nettement (12/09/2026) : rayon de 48 px, beaucoup d'air, et des photos de
+     chantier posées entre les avis. Mêmes valeurs de survol, au pixel : la carte se
+     soulève de 8 px et son contour passe au bleu Teck. */
   .carte{
-    background:#fff; border:1px solid var(--trait); border-radius:28px;
-    padding:26px 24px 22px; display:flex; flex-direction:column;
-    box-shadow:0 4px 20px rgba(0,0,0,.04);
-    transition:transform .4s, box-shadow .4s, border-color .4s;
+    background:#fff; border:1px solid #E5E7EB; border-radius:3rem;
+    padding:38px 34px 32px; display:flex; flex-direction:column;
+    box-shadow:0 4px 15px rgba(0,0,0,.03);
+    transition:all .5s cubic-bezier(.2,.8,.2,1);
   }
-  .carte:hover{ transform:translateY(-6px); border-color:var(--teck); box-shadow:0 18px 38px rgba(0,0,0,.08); }
+  .carte:hover{ transform:translateY(-8px); border-color:var(--teck); box-shadow:0 20px 40px rgba(0,0,0,.06); }
+
+  /* ⚠️ LES PHOTOS NE SONT RATTACHÉES À AUCUN AVIS, et c'est délibéré. Les 34 photos
+     que des clients avaient jointes à leurs avis Google ne sont plus téléchargeables,
+     leurs adresses signées ont expiré. Poser une photo de chantier à côté d'un avis
+     pris au hasard reviendrait à affirmer que cette personne parle de ce projet-là.
+     Elles vivent donc dans leur propre carte, sans légende et sans nom. */
+  .photo{
+    border-radius:3rem; overflow:hidden; display:block;
+    border:1px solid #E5E7EB; box-shadow:0 4px 15px rgba(0,0,0,.03);
+    transition:all .5s cubic-bezier(.2,.8,.2,1);
+  }
+  .photo:hover{ transform:translateY(-8px); box-shadow:0 20px 40px rgba(0,0,0,.06); }
+  .photo img{ display:block; width:100%; height:100%; object-fit:cover; }
   .carte .etoiles{ color:var(--teck); font-size:13px; letter-spacing:1px; margin-bottom:12px; }
 
   /* Ni italique ni guillemets, demande de Lilian du 12/09/2026. */
   .carte .texte{
-    color:#424245; font-size:13.5px; line-height:1.62; font-weight:300;
+    color:#424245; font-size:15px; line-height:1.7; font-weight:300;
     margin:0; white-space:pre-line;
   }
   /* Le surlignage bleu, jamais un soulignement : c'est la forme retenue pour Teck. */
@@ -144,7 +158,7 @@
   /* Replié : six lignes. Le texte entier est déjà là, c'est la hauteur qui change,
      jamais le contenu. */
   .carte .texte.replie{
-    display:-webkit-box; -webkit-line-clamp:6; -webkit-box-orient:vertical;
+    display:-webkit-box; -webkit-line-clamp:7; -webkit-box-orient:vertical;
     overflow:hidden;
   }
   .voir-plus{
@@ -202,7 +216,12 @@
   .mq-right{ animation:scrollRight 40s linear infinite; }
   .marquee:hover .mq-track{ animation-play-state:paused; }
   @keyframes scrollRight{ from{transform:translateX(-50%);} to{transform:translateX(0);} }
-  .press-section{ background:#fff; padding:32px 0 56px; }
+  /* ⚠️ PAS DE BLANC PLEIN ICI (Lilian, 12/09/2026 : « ne mets pas un fond full
+     blanc »). Sur les pages de résultat, le bandeau presse est blanc parce qu'il sépare
+     deux sections colorées. Ici il n'y a rien après lui, et un pavé blanc de cent
+     pixels sous une page grise se lit comme une coupure. Il reste donc transparent, la
+     plage grise descend jusqu'au pied de page. */
+  .press-section{ background:transparent; padding:44px 0 56px; }
   .press-ttl{ text-align:center; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--teck); font-weight:600; margin-bottom:34px; }
   .press-section .marquee{ max-width:780px; margin:0 auto;
     -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%);
@@ -245,7 +264,6 @@
     <span class="muted">·</span>
     <span class="muted">+140 avis Google</span>
   </div>
-  <p class="chapo">Chaque avis est repris tel qu'il a été publié sur Google, sans coupe, et chacun renvoie vers sa page d'origine.</p>
 </header>
 
 <main class="mosaique" id="mosaique" aria-live="polite">
@@ -288,6 +306,20 @@
   var PAR_FOURNEE = 15;   /* cinq rangées de trois sur ordinateur */
   var SEUIL_REPLI = 340;  /* au-delà, la carte s'ouvre avec « Voir plus » */
 
+  /* ⚠️ DES PHOTOS ENTRE LES AVIS, SANS AUCUNE ATTRIBUTION. Ce sont des réalisations de
+     Teck, les mêmes que celles du carrousel. Elles aèrent la page, comme dans le bloc
+     « parlent de nous » des pages de résultat. Aucune n'est présentée comme le chantier
+     de la personne dont l'avis est à côté : on ne le sait pas, donc on ne le dit pas. */
+  var PHOTOS = [
+    'pergola-01v.webp','pergola-10h.webp','pergola-05v.webp','pergola-13h.webp',
+    'pergola-07v.webp','pergola-16h.webp','pergola-02v.webp','pergola-18h.webp',
+    'pergola-06v.webp','pergola-11h.webp'
+  ];
+  /* Une photo toutes les cinq cartes : assez pour respirer, assez rare pour qu'elle
+     reste une respiration et non un catalogue. */
+  var TOUS_LES = 5;
+  var photoSuivante = 0;
+
   var mosaique = document.getElementById('mosaique');
   var bouton = document.getElementById('plusDavis');
   var reste = document.getElementById('reste');
@@ -325,6 +357,20 @@
     p.appendChild(elem('mark', null, s));
     p.appendChild(document.createTextNode(t.slice(i + s.length)));
     return p;
+  }
+
+  function carteImage(){
+    var nom = PHOTOS[photoSuivante % PHOTOS.length];
+    photoSuivante += 1;
+    var fig = elem('figure', 'photo');
+    fig.style.margin = '0';
+    var img = elem('img');
+    img.src = '../carrousel-pergola/images/' + nom;
+    img.alt = 'Une réalisation de Teck Aménagement';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    fig.appendChild(img);
+    return fig;
   }
 
   function carteDe(avis){
@@ -405,17 +451,23 @@
   /* On pose chaque carte dans la colonne la plus courte, mesurée pour de vrai.
      Distribuer à tour de rôle produirait une colonne très longue dès qu'un avis de
      mille caractères tombe toujours au même endroit. */
-  function poser(avis){
+  function plusCourte(){
     var court = colonnes[0];
     for (var i = 1; i < colonnes.length; i++){
       if (colonnes[i].offsetHeight < court.offsetHeight) court = colonnes[i];
     }
-    court.appendChild(carteDe(avis));
+    return court;
   }
+
+  function poser(avis){ plusCourte().appendChild(carteDe(avis)); }
+  function poserPhoto(){ plusCourte().appendChild(carteImage()); }
 
   function fournee(combien){
     var fin = Math.min(affiches + combien, AVIS.length);
-    for (var i = affiches; i < fin; i++) poser(AVIS[i]);
+    for (var i = affiches; i < fin; i++){
+      poser(AVIS[i]);
+      if ((i + 1) % TOUS_LES === 0 && i + 1 < AVIS.length) poserPhoto();
+    }
     affiches = fin;
     var manque = AVIS.length - affiches;
     if (manque <= 0){
@@ -432,6 +484,7 @@
     if (!refaireColonnes()) return;
     var n = affiches;
     affiches = 0;
+    photoSuivante = 0;
     fournee(n);
   }
 
