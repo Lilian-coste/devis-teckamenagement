@@ -10,8 +10,8 @@
   ],
   "rewrites": [
     {
-      "source": "/simulez-votre-projet",
-      "destination": "https://teck-quiz-demo.vercel.app/simulez-votre-projet"
+      "source": "/simulez-votre-projet/",
+      "destination": "https://teck-quiz-demo.vercel.app/simulez-votre-projet/"
     },
     {
       "source": "/simulez-votre-projet/:chemin*",
