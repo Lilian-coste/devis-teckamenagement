@@ -66,16 +66,15 @@
   :root{
     --teck:#0653A8;
     --ink:#1D1D1F;
-    /* Le bleu très pâle des pages de résultat (Lilian, 13/09/2026 : « le fond je l'aime
-       énormément, j'aimerais qu'il y ait ça pour cette page »). C'est la couleur haute du
-       dégradé de `.adv-section`, celui du bloc « Pourquoi choisir Teck Aménagement ».
-
-       ⚠️ PLAT, ET PAS LE DÉGRADÉ D'ORIGINE. Là-bas le dégradé descend vers le blanc sur
-       la hauteur d'une section ; ici la page fait plusieurs milliers de pixels, et le même
-       dégradé étiré donnerait du bleu en haut puis du blanc sur tout le reste. C'est donc
-       la couleur qu'on garde, pas la mécanique. Les cartes d'avis, elles, restent blanches
-       et ressortent mieux dessus que sur l'ancien gris. */
-    --fond:#EFF4FA;
+    /* ⚠️ LE FOND N'EST PAS BLEU, ET C'EST TOUT L'ENJEU (Lilian, 13/09/2026).
+       Premier essai : `#EFF4FA` sur toute la page. « Tout est un peu lavande, et c'est pas
+       le même fond que les pages de résultat ». Il avait raison, et la raison se lit dans
+       leur code : là-bas le `body` est en `#F8F8F8`, et le bleu n'apparaît QUE dans le
+       dégradé du bloc d'en-tête, sur 477 px. Étalé sur les 3 500 px de cette page-ci, le
+       même bleu vire au mauve.
+       Les trois valeurs ci-dessous sont relevées sur `resultat-budget-valide/` : fond de
+       page, dégradé d'en-tête, dégradé du bloc d'avis. */
+    --fond:#F8F8F8;
     --gris:#86868B;
     --trait:#D2D2D7;
   }
@@ -288,7 +287,13 @@
      Le fond uni de la page est la même couleur que le haut du dégradé, donc aucune
      couture. Le pied reste transparent, sinon son blanc recoupe le dégradé en plein
      milieu et recrée le bord net qu'on veut supprimer. */
-  .bas-de-page{ background:linear-gradient(180deg,#EFF4FA 0%,#FFFFFF 88%); }
+  /* L'en-tête : le seul endroit où le bleu apparaît, exactement comme `.hero-section`. */
+  .entete{ background:linear-gradient(180deg,#EFF4FA 0%,#FFFFFF 88%); }
+  /* Le bloc d'avis : le dégradé de `.avis-1`, au caractère près. Blanc aux deux bouts,
+     gris très clair au milieu, ce qui détache les cartes blanches sans jamais colorer. */
+  .zone-avis{ background:linear-gradient(180deg,#FFFFFF 0%,#F8F8F8 35%,#F8F8F8 52%,#FFFFFF 88%,#FFFFFF 100%); }
+  /* Presse et pied sur blanc franc, comme sur les pages de résultat. */
+  .bas-de-page{ background:#FFFFFF; }
   .press-section{ background:transparent; padding:44px 0 56px; }
   .press-ttl{ text-align:center; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--teck); font-weight:600; margin-bottom:34px; }
   .press-section .marquee{ max-width:780px; margin:0 auto;
@@ -334,6 +339,7 @@
   </div>
 </header>
 
+<div class="zone-avis">
 <main class="mosaique" id="mosaique" aria-live="polite">
   <!-- Les colonnes et les cartes sont écrites par le script, depuis avis.json -->
 </main>
@@ -341,6 +347,8 @@
 <div class="zone-bouton">
   <button class="bouton-avis" id="plusDavis" type="button"><span class="fleche" aria-hidden="true">&#8599;</span>Plus d'avis</button>
   <span class="reste" id="reste"></span>
+</div>
+
 </div>
 
 <div class="bas-de-page">
