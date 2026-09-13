@@ -7,7 +7,7 @@ publique**. Ce dossier existe pour ça, et il se redéploie tout seul à chaque
 push, comme le reste du sous-domaine.
 
 ⚠️ Les images sont **générées**, jamais retouchées ici. La source vit dans
-`~/mes-clients/teck-amenagement/livrables/emails/` :
+`~/os-marketing/QG/1-projets/teck-amenagement/production/publie/emails/` :
 
 | Script | Ce qu'il fabrique |
 | --- | --- |

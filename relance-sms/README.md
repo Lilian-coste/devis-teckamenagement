@@ -65,13 +65,13 @@ n'est pas encore arrêté, et une URL inventée serait pire que le crochet.
 ## Attention en modifiant
 
 ⚠️ **Les trois SMS sont écrits à deux endroits** : ici, et dans
-`~/mes-clients/teck-amenagement/livrables/emails/generer-relance-directe.js`, qui produit
+`~/os-marketing/QG/1-projets/teck-amenagement/production/publie/emails/generer-relance-directe.js`, qui produit
 les maquettes de mail. Ils doivent rester identiques au caractère près. Le générateur
 compare les deux à chaque exécution et se plaint s'ils divergent, donc après toute
 modification du texte d'un message, relancer :
 
 ```bash
-cd ~/mes-clients/teck-amenagement/livrables/emails && node generer-relance-directe.js
+cd ~/os-marketing/QG/1-projets/teck-amenagement/production/publie/emails && node generer-relance-directe.js
 ```
 
 ⚠️ **Le texte des SMS a été écrit par Lilian, l'absence de point final est volontaire.**

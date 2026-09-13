@@ -125,7 +125,7 @@ titre, la flèche ➱, les libellés de bouton, le calage de largeur sur la vid�
 `599e81d` ferait perdre tout ça.
 
 La procédure à jour est décrite pas à pas dans
-`~/mes-clients/teck-amenagement/_handover-quiz-resultat-pdf.md`, section 2.3. En résumé :
+`~/os-marketing/QG/1-projets/teck-amenagement/production/notes-de-chantier/_handover-quiz-resultat-pdf.md`, section 2.3. En résumé :
 copier `index.html` d'ici vers la vraie page, **y remettre le bloc pixel Meta**, retirer le
 `noindex`, copier `reserver/`, et régler la question de la vidéo (le dossier `videos/` de la
 vraie page est dans le `.gitignore`, il n'a jamais été déployé).
