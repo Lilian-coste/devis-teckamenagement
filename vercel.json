@@ -9,22 +9,32 @@
     },
     {
       "source": "/apercu-resultat",
-      "destination": "/resultat-budget-valide",
+      "destination": "/resultat-budget-valide/",
       "permanent": false
     },
     {
-      "source": "/apercu-resultat/:chemin*",
-      "destination": "/resultat-budget-valide/:chemin*",
+      "source": "/apercu-resultat/",
+      "destination": "/resultat-budget-valide/",
+      "permanent": false
+    },
+    {
+      "source": "/apercu-resultat/:chemin+",
+      "destination": "/resultat-budget-valide/:chemin+",
       "permanent": false
     },
     {
       "source": "/apercu-moins-15k",
-      "destination": "/resultat-budget-non-valide",
+      "destination": "/resultat-budget-non-valide/",
       "permanent": false
     },
     {
-      "source": "/apercu-moins-15k/:chemin*",
-      "destination": "/resultat-budget-non-valide/:chemin*",
+      "source": "/apercu-moins-15k/",
+      "destination": "/resultat-budget-non-valide/",
+      "permanent": false
+    },
+    {
+      "source": "/apercu-moins-15k/:chemin+",
+      "destination": "/resultat-budget-non-valide/:chemin+",
       "permanent": false
     }
   ],
