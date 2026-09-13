@@ -8,7 +8,7 @@
 <link rel="icon" href="../pergola/page-accueil/assets/logo-teck.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <!--
   ═══════════════════════════════════════════════════════════════════════════
@@ -87,26 +87,9 @@
      de page sur un Mac, et sur un très grand écran où la page ne remplit pas la fenêtre.
      Déclarer un fond sur `html` coupe cette propagation. */
   html{ background:#FFFFFF; }
-  /* ⚠️ LE DÉGRADÉ DE BAS DE PAGE, REPRIS DE LA LANDING (Lilian, 13/09/2026 : « à partir
-     du bandeau presse, fais le même dégradé que sur la landing avant le quiz, pour passer
-     du fond bleu au blanc »).
-
-     C'est le dégradé de `.adv-section` dans `pergola/page-accueil/index.html`, aux mêmes
-     valeurs : 180deg, #EFF4FA à 0 %, blanc à 88 %. Et à la MÊME TAILLE : cette section
-     mesure 620 px de haut sur la landing, mesuré plutôt que supposé.
-
-     Il est ancré EN BAS du document (`background-position:0 100%`) et ne se répète pas.
-     Le fond uni reste au-dessus, donc il n'y a aucune couture : le dégradé démarre à
-     exactement la couleur du fond. Les 620 px couvrent le bandeau presse et le pied.
-
-     ⚠️ Le pied redevient transparent, sinon son blanc opaque recoupe le dégradé en plein
-     milieu et on retrouve exactement le bord net qu'on cherchait à supprimer. */
   body{
     background-color:var(--fond); color:var(--ink);
-    background-image:linear-gradient(180deg,#EFF4FA 0%,#FFFFFF 88%);
-    background-repeat:no-repeat;
-    background-size:100% 620px;
-    background-position:0 100%;
+
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
   }
@@ -116,14 +99,26 @@
   .entete{ text-align:center; padding:30px 20px 0; }
   .entete .logo{ display:block; margin:0 auto; width:100%; max-width:300px; height:auto; }
   @media(min-width:768px){ .entete .logo{ max-width:460px; } }
-  .entete .surtitre{
-    margin:22px 0 0; font-size:11px; letter-spacing:.24em; text-transform:uppercase;
-    color:var(--teck); font-weight:600;
+  .entete /* ⚠️ LE COUPLE SURTITRE + TITRE EST CELUI DES PAGES DE RÉSULTAT (Lilian, 13/09/2026 :
+     « mets la police et la taille exactement comme c'est affiché sur les pages de
+     résultat »). Là-bas le même bloc existe déjà, écrit en classes Tailwind ; les valeurs
+     ci-dessous sont celles que le navigateur calcule pour lui, relevées sur la page plutôt
+     que traduites à la main depuis les classes.
+
+     ⚠️ La police est Inter, pas celle du système. C'est la différence qu'on voyait le
+     plus, avant même les tailles, et elle oblige à charger Inter ici aussi. */
+  .surtitre{
+    font-family:'Inter',sans-serif;
+    margin:22px 0 0; font-size:24px; line-height:32px; letter-spacing:.05em;
+    text-transform:uppercase; color:var(--teck); font-weight:300;
   }
   .entete h1{
-    font-size:30px; font-weight:500; letter-spacing:-.02em; margin:10px 0 0; color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:30px; line-height:1.25; font-weight:400; letter-spacing:-.025em;
+    margin:10px 0 0; color:var(--ink);
   }
-  @media(min-width:768px){ .entete h1{ font-size:40px; } }
+  /* 48 px et interligne 1, exactement comme le `text-5xl` de la page de résultat. */
+  @media(min-width:768px){ .entete h1{ font-size:48px; line-height:1; } }
   .note-globale{
     display:inline-flex; align-items:center; gap:7px;
     margin:16px 0 0; padding:9px 16px;
@@ -278,6 +273,22 @@
      deux sections colorées. Ici il n'y a rien après lui, et un pavé blanc de cent
      pixels sous une page grise se lit comme une coupure. Il reste donc transparent, la
      plage grise descend jusqu'au pied de page. */
+  /* ⚠️ LE DÉGRADÉ EST PORTÉ PAR LE BAS DE PAGE, PAS PAR LE `body`.
+     Premier essai : 620 px ancrés en bas du document, la taille exacte du dégradé de la
+     landing. Mesures bonnes, rendu raté. Le document fait 3 533 px, les 620 px démarraient
+     donc 200 px AU-DESSUS du bandeau presse, et la couleur était déjà aux deux tiers du
+     blanc quand le bandeau arrivait. Lilian l'a vu tout de suite : « y a pas de dégradé
+     en fait ». Le pixel du bas était bien blanc, ce qui n'aidait pas à comprendre.
+
+     Ici le dégradé s'étire sur le conteneur, qui va du HAUT DU BANDEAU PRESSE au bas de
+     la page. Il part donc à pleine couleur exactement là où Lilian l'a demandé, et
+     termine en blanc au pied. Sa hauteur suit le contenu au lieu d'être figée : dépliez
+     « Plus d'avis » et le bas de page ne bouge pas d'un pixel.
+
+     Le fond uni de la page est la même couleur que le haut du dégradé, donc aucune
+     couture. Le pied reste transparent, sinon son blanc recoupe le dégradé en plein
+     milieu et recrée le bord net qu'on veut supprimer. */
+  .bas-de-page{ background:linear-gradient(180deg,#EFF4FA 0%,#FFFFFF 88%); }
   .press-section{ background:transparent; padding:44px 0 56px; }
   .press-ttl{ text-align:center; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--teck); font-weight:600; margin-bottom:34px; }
   .press-section .marquee{ max-width:780px; margin:0 auto;
@@ -332,6 +343,7 @@
   <span class="reste" id="reste"></span>
 </div>
 
+<div class="bas-de-page">
 <section class="press-section">
   <div class="press-ttl">Vu dans la presse</div>
   <div class="marquee">
@@ -355,6 +367,7 @@
     <span class="sep">·</span>© Teck Aménagement. Tous droits réservés.
   </div>
 </footer>
+</div>
 
 <script>
 (function(){
