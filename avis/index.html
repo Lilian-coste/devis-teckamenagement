@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Les avis de nos clients — Teck Aménagement</title>
+<title>Nos clients parlent de nous — Teck Aménagement</title>
 <meta name="description" content="Les avis Google des clients de Teck Aménagement, dans leur intégralité, avec le lien vers chacun d'eux sur Google.">
 <link rel="icon" href="../pergola/page-accueil/assets/logo-teck.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,8 +81,32 @@
   }
   *{ box-sizing:border-box; }
   html,body{ margin:0; padding:0; overflow-x:hidden; max-width:100%; }
+  /* ⚠️ LE BLANC EST SUR `html`, ET CE N'EST PAS DÉCORATIF. Sans lui, le fond du `body` se
+     propage à toute la toile du navigateur : le bleu réapparaît alors SOUS le pied de
+     page, là où le dégradé s'est arrêté. Ça se voit à chaque rebond de défilement en bas
+     de page sur un Mac, et sur un très grand écran où la page ne remplit pas la fenêtre.
+     Déclarer un fond sur `html` coupe cette propagation. */
+  html{ background:#FFFFFF; }
+  /* ⚠️ LE DÉGRADÉ DE BAS DE PAGE, REPRIS DE LA LANDING (Lilian, 13/09/2026 : « à partir
+     du bandeau presse, fais le même dégradé que sur la landing avant le quiz, pour passer
+     du fond bleu au blanc »).
+
+     C'est le dégradé de `.adv-section` dans `pergola/page-accueil/index.html`, aux mêmes
+     valeurs : 180deg, #EFF4FA à 0 %, blanc à 88 %. Et à la MÊME TAILLE : cette section
+     mesure 620 px de haut sur la landing, mesuré plutôt que supposé.
+
+     Il est ancré EN BAS du document (`background-position:0 100%`) et ne se répète pas.
+     Le fond uni reste au-dessus, donc il n'y a aucune couture : le dégradé démarre à
+     exactement la couleur du fond. Les 620 px couvrent le bandeau presse et le pied.
+
+     ⚠️ Le pied redevient transparent, sinon son blanc opaque recoupe le dégradé en plein
+     milieu et on retrouve exactement le bord net qu'on cherchait à supprimer. */
   body{
-    background:var(--fond); color:var(--ink);
+    background-color:var(--fond); color:var(--ink);
+    background-image:linear-gradient(180deg,#EFF4FA 0%,#FFFFFF 88%);
+    background-repeat:no-repeat;
+    background-size:100% 620px;
+    background-position:0 100%;
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
   }
@@ -271,7 +295,7 @@
   .press-logotext{ font-family:'Playfair Display',Georgia,serif; font-size:36px; font-weight:700; color:var(--ink); line-height:1; white-space:nowrap; }
 
   /* ══════════════ LE PIED DE PAGE ══════════════ */
-  .footer{ background:#FFFFFF; text-align:center; padding:24px 16px 24px; }
+  .footer{ background:transparent; text-align:center; padding:24px 16px 24px; }
   .footer img{ display:block; margin:0 auto 10px; width:100%; max-width:334px; height:auto; }
   @media (min-width:768px){ .footer img{ max-width:540px; } }
   .footer .legal{ font-size:13px; color:#000; }
@@ -289,8 +313,8 @@
 
 <header class="entete">
   <img class="logo" src="../pergola/page-accueil/assets/logo-teck.png" alt="Teck Aménagement">
-  <p class="surtitre">Les avis de nos clients</p>
-  <h1>Ce qu'ils disent de leur projet</h1>
+  <p class="surtitre">Nos clients</p>
+  <h1>Parlent de nous</h1>
   <div class="note-globale">
     <span class="etoiles">★★★★★</span>
     <span>4,9<span class="muted">/5</span></span>
