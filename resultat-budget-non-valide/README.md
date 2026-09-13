@@ -7,7 +7,7 @@ validé la page et que Franck n'a pas confirmé les chiffres.
 
 ## Voir la page
 
-    http://192.168.0.111:3600/apercu-moins-15k/?prenom=Jean&m2=24&cp=83000
+    http://192.168.0.111:3600/resultat-budget-non-valide/?prenom=Jean&m2=24&cp=83000
 
 (serveur statique local : `python3 -m http.server 3600 --bind 0.0.0.0` depuis la racine du
 dépôt ; l'IP change avec le réseau, la retrouver avec `ipconfig getifaddr en0`)

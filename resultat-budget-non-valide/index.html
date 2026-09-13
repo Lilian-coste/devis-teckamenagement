@@ -110,7 +110,7 @@
                     50%    { transform:translate(-34px,32px) scale(1.12); } }
   /* ⚠️ SUR TÉLÉPHONE, LES DEUX MASSES SONT REDESSINÉES (Lilian, 28/08/2026 : « la manière
      dont on a mis le halo pour la page où le budget passe, je veux le même pour cette
-     page »). Valeurs reprises AU CARACTÈRE PRÈS de `apercu-resultat/index.html`, où elles
+     page »). Valeurs reprises AU CARACTÈRE PRÈS de `resultat-budget-valide/index.html`, où elles
      ont été validées le 27/08.
      La raison est géométrique : sur un écran de 390px, un rond de 440px posé à
      `margin-left:-340px` sort des deux côtés à la fois. On n'en voit que le milieu, donc
@@ -416,7 +416,7 @@
   }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-     LA CARTE D'ESTIMATION EST CELLE DE `apercu-resultat/`, RECOPIÉE À L'IDENTIQUE.
+     LA CARTE D'ESTIMATION EST CELLE DE `resultat-budget-valide/`, RECOPIÉE À L'IDENTIQUE.
 
      Décision de Lilian, 28/08/2026 : « prends le code exact de la carte et implémente-le
      sur la page moins de 15 000 €, ce sera plus simple que 500 000 allers-retours ».
@@ -650,7 +650,7 @@
      bandeau de réalisations, seconde série d'avis, « Pourquoi choisir », bandeau presse,
      bloc « Vivez » et son texte à la machine à écrire.
      ⚠️ Ne pas retoucher ces règles ici : elles doivent rester identiques à celles de
-        `apercu-resultat/index.html`, sinon les deux pages divergeront visuellement sans
+        `resultat-budget-valide/index.html`, sinon les deux pages divergeront visuellement sans
         que personne ne s'en aperçoive. */
 
         /* Titre du hero : exactement la typo de .adv-ttl (demande de Lilian, 15/08/2026). */
@@ -973,7 +973,7 @@
     </p>
 
     <!-- La bascule 3D (Lilian, 28/08/2026 : « l'effet d'une carte 3D […] doit être
-         ajouté sur cette page »). Même mécanique que `apercu-resultat` : c'est le
+         ajouté sur cette page »). Même mécanique que `resultat-budget-valide` : c'est le
          PARENT qui porte la perspective, sinon la rotation reste plate. -->
     <div class="estim-scene" id="estim-scene">
     <div class="estim absente" id="estimation">
@@ -1008,11 +1008,11 @@
            clique sur oui pour le budget, on n'est pas redirigé vers la bonne page »).
            Elle menait à `561d79a-47b15060-85cc2f7b/`, la page en production, celle qui
            deviendra l'ancienne quand Franck aura validé. Elle mène maintenant à
-           `apercu-resultat/`, la version retravaillée (halo, carte qui bascule,
+           `resultat-budget-valide/`, la version retravaillée (halo, carte qui bascule,
            animations sur téléphone, calendrier réparé).
-           ⏳ LE JOUR DE LA BASCULE, quand `apercu-resultat/` prendra la place de
+           ⏳ LE JOUR DE LA BASCULE, quand `resultat-budget-valide/` prendra la place de
               l'ancienne URL, cette ligne devra repointer sur l'URL définitive. -->
-      <a class="chemin oui" id="chemin-oui" href="../apercu-resultat/">
+      <a class="chemin oui" id="chemin-oui" href="../resultat-budget-valide/">
         <span class="marque"><span class="pastille">✓</span>Oui</span>
         <span class="titre">Je pourrais envisager ce budget</span>
         <span class="sous">
@@ -1729,7 +1729,7 @@
 <script>
 /* ============================================================================
    LA BASCULE 3D DE LA CARTE D'ESTIMATION, ET LES ANIMATIONS DE CARTES SUR TÉLÉPHONE
-   Ajouté le 28/08/2026 à la demande de Lilian. Repris de `apercu-resultat/index.html`,
+   Ajouté le 28/08/2026 à la demande de Lilian. Repris de `resultat-budget-valide/index.html`,
    où les deux mécanismes ont été validés le 27 et le 28/08.
    ============================================================================ */
 (function () {
@@ -1742,7 +1742,7 @@
        précisément ce qui manquait sur l'autre page (« je peux pas du tout avec mon doigt
        la bouger »). Tous les écouteurs tactiles sont `passive`, aucun n'appelle
        `preventDefault` : le défilement de la page n'est jamais confisqué. */
-    /* ⚠️ BASCULE RECOPIÉE DE `apercu-resultat/` (Lilian, 28/08/2026). Même carte,
+    /* ⚠️ BASCULE RECOPIÉE DE `resultat-budget-valide/` (Lilian, 28/08/2026). Même carte,
        donc même code : c'est la seule façon de garantir qu'elle se comporte pareil
        sur les deux pages. Les évènements sont des `pointer`, pas des `touch` : les
        `touch` ne parvenaient pas à la carte sur l'iPhone de Lilian. */

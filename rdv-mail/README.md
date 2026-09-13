@@ -8,7 +8,7 @@ Franck au téléphone.
 ## C'est la jumelle de la page du tunnel
 
 Depuis le 02/09/2026, cette page est une **copie conforme** de
-[`apercu-resultat/reserver/`](../apercu-resultat/reserver/) : le bandeau, le logo,
+[`resultat-budget-valide/reserver/`](../resultat-budget-valide/reserver/) : le bandeau, le logo,
 « Réservez votre appel », la mention 4,9★ et le calendrier, rien d'autre. Elle était
 jusque-là une longue page de vente avec les avis et le triptyque Créez / Révolutionnez /
 Vivez ; cette version est dans l'historique git.
@@ -20,7 +20,7 @@ UTM, donc on sait pour chaque rendez-vous pris s'il vient de la séquence ou du 
 | Page | `utmMedium` | `utmCampaign` |
 |---|---|---|
 | `/rdv-mail/` | `email` | `sequence-bienvenue` |
-| `/apercu-resultat/reserver/` | `page-resultat` | `tunnel-quiz` |
+| `/resultat-budget-valide/reserver/` | `page-resultat` | `tunnel-quiz` |
 
 Ça se lit dans le tableau de bord Calendly, réservation par réservation.
 

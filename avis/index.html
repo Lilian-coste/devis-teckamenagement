@@ -66,7 +66,16 @@
   :root{
     --teck:#0653A8;
     --ink:#1D1D1F;
-    --fond:#f8f8f8;
+    /* Le bleu très pâle des pages de résultat (Lilian, 13/09/2026 : « le fond je l'aime
+       énormément, j'aimerais qu'il y ait ça pour cette page »). C'est la couleur haute du
+       dégradé de `.adv-section`, celui du bloc « Pourquoi choisir Teck Aménagement ».
+
+       ⚠️ PLAT, ET PAS LE DÉGRADÉ D'ORIGINE. Là-bas le dégradé descend vers le blanc sur
+       la hauteur d'une section ; ici la page fait plusieurs milliers de pixels, et le même
+       dégradé étiré donnerait du bleu en haut puis du blanc sur tout le reste. C'est donc
+       la couleur qu'on garde, pas la mécanique. Les cartes d'avis, elles, restent blanches
+       et ressortent mieux dessus que sur l'ancien gris. */
+    --fond:#EFF4FA;
     --gris:#86868B;
     --trait:#D2D2D7;
   }

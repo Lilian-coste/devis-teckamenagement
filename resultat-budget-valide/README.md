@@ -1,6 +1,6 @@
 # Aperçu de la nouvelle page de résultat — TEMPORAIRE
 
-**URL** : [https://devis.teckamenagement.fr/apercu-resultat/](https://devis.teckamenagement.fr/apercu-resultat/)
+**URL** : [https://devis.teckamenagement.fr/resultat-budget-valide/](https://devis.teckamenagement.fr/resultat-budget-valide/)
 
 Créée le 15/08/2026. Copie de travail du chantier de la page de résultat, publiée sous le
 sous-domaine Teck **uniquement pour que Lilian puisse la faire analyser par une IA**, qui
@@ -38,10 +38,10 @@ C'est une page de travail, elle n'a pas vocation à rester.
 - `?m2=24&cp=83000` affiche la fourchette d'estimation ; sans eux, la carte dit ce qui lui
   manque et pourquoi (⚠️ le quiz ne pose pas encore ces deux paramètres, voir plus bas)
 
-## La grammaire visuelle vient de `apercu-moins-15k` (27/08/2026)
+## La grammaire visuelle vient de `resultat-budget-non-valide` (27/08/2026)
 
 Lilian, sur enregistrement : « je veux beaucoup m'inspirer de cette page-là ». Tout ce qui a
-été repris l'a été VALEUR PAR VALEUR depuis `apercu-moins-15k/index.html`, pas réécrit :
+été repris l'a été VALEUR PAR VALEUR depuis `resultat-budget-non-valide/index.html`, pas réécrit :
 
 | Élément | Source là-bas | Nom ici |
 |---|---|---|
