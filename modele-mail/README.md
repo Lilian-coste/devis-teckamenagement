@@ -79,6 +79,9 @@ Mesuré sur le fichier généré, bloc `<style>` retiré :
 Le point décisif est la deuxième ligne : les deux modèles d'ordinateur donnent
 enfin la **même** réponse. C'est leur désaccord qui produisait les allers-retours.
 
+Validé par Lilian le 14/09/2026, signature posée dans Mail et mail envoyé, lu
+correctement dans Gmail sur ordinateur et sur téléphone.
+
 ⚠️ Ce que ça change par rapport au gabarit : plus de centrage, et le bloc fait
 440 px au lieu de 600. L'en-tête garde exactement les 440 px validés par Franck.
 
