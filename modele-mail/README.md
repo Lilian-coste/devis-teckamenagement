@@ -42,6 +42,20 @@ Chaîne vérifiée de bout en bout le 14/09/2026 : signature posée, mail envoy�
 en-tête et logo corrects à la réception dans Gmail. La variante `nu-images/`
 n'a donc pas servi, elle reste au cas où un autre Mac se comporterait autrement.
 
-⚠️ Les media queries ne survivent pas au collage, comme dans Gmail. Le modèle
-posé porte la taille ordinateur partout ; sur un téléphone, l'en-tête se remet
-à la largeur de l'écran grâce au `max-width` de l'image.
+## Le conteneur est fluide ici, et fixe dans les treize autres mails
+
+Les media queries ne survivent à aucun collage, ni dans Mail ni dans Gmail. Or
+c'est le bloc `<style>` du gabarit qui repasse le conteneur de `width:600px` à
+`width:100%` sous 620 px. Sans lui, le message reste large de 600 px et Gmail
+sur téléphone dézoome le message entier pour le faire tenir : tout le texte
+descend à environ 65 % de sa taille. Constaté par Lilian le 14/09/2026, source
+du mail reçu à l'appui.
+
+`generer-modele-franck.js` réécrit donc le conteneur en `width:100%;max-width:600px`,
+qui n'a besoin d'aucune media query. L'en-tête suit toute seule, elle est déjà
+en `width:100%;max-width:440px`.
+
+⚠️ Cette réécriture ne vaut QUE pour le modèle. `gabarit-mail.js` n'est pas
+touché, et les treize mails de la séquence gardent exactement la forme validée
+par Franck. Le script échoue bruyamment si le gabarit change de forme, plutôt
+que de laisser le modèle repartir en 600 px fixes sans prévenir.
