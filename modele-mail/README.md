@@ -42,20 +42,45 @@ Chaîne vérifiée de bout en bout le 14/09/2026 : signature posée, mail envoy�
 en-tête et logo corrects à la réception dans Gmail. La variante `nu-images/`
 n'a donc pas servi, elle reste au cas où un autre Mac se comporterait autrement.
 
-## Le conteneur est fluide ici, et fixe dans les treize autres mails
+## La largeur fixe est sur l'en-tête, pas sur le conteneur
 
 Les media queries ne survivent à aucun collage, ni dans Mail ni dans Gmail. Or
 c'est le bloc `<style>` du gabarit qui repasse le conteneur de `width:600px` à
-`width:100%` sous 620 px. Sans lui, le message reste large de 600 px et Gmail
-sur téléphone dézoome le message entier pour le faire tenir : tout le texte
-descend à environ 65 % de sa taille. Constaté par Lilian le 14/09/2026, source
-du mail reçu à l'appui.
+`width:100%` sous 620 px. Le modèle collé doit donc s'adapter sans elles, et les
+deux Gmail se comportent de façon opposée. Mesuré sur le mail réellement reçu,
+le 14/09/2026 :
 
-`generer-modele-franck.js` réécrit donc le conteneur en `width:100%;max-width:600px`,
-qui n'a besoin d'aucune media query. L'en-tête suit toute seule, elle est déjà
-en `width:100%;max-width:440px`.
+- sur **téléphone**, Gmail dimensionne le message sur la largeur que son contenu
+  réclame, puis dézoome le tout pour le faire tenir. Le gabarit réclamant 624 px,
+  tout le message tombait à 62 %, texte compris ;
+- sur **ordinateur**, Gmail se rétracte sur le contenu. Un conteneur en
+  pourcentage s'y effondre, il est descendu à environ 250 px.
 
-⚠️ Cette réécriture ne vaut QUE pour le modèle. `gabarit-mail.js` n'est pas
-touché, et les treize mails de la séquence gardent exactement la forme validée
-par Franck. Le script échoue bruyamment si le gabarit change de forme, plutôt
-que de laisser le modèle repartir en 600 px fixes sans prévenir.
+Toute largeur fixe déclenche donc le dézoom sur téléphone, et son absence fait
+s'effondrer l'ordinateur. Sans media query, aucune écriture ne satisfait les deux.
+
+La sortie retenue déplace la largeur fixe du conteneur vers l'en-tête. Le
+conteneur passe en pourcentage, et c'est l'image d'en-tête, en 440 px fixes, qui
+donne sa largeur au bloc sur ordinateur. Comme 440 px tiennent presque dans un
+écran de téléphone, le dézoom devient négligeable là où il valait 62 %.
+
+Mesuré sur le fichier généré, bloc `<style>` retiré, dans les quatre contextes :
+
+| contexte | conteneur | en-tête | débordement |
+| --- | --- | --- | --- |
+| ordinateur, conteneur large | 600 px | 440 px | aucun |
+| ordinateur, conteneur rétractable | 440 px | 440 px | aucun |
+| téléphone 390 px | 366 px | 366 px | aucun |
+| téléphone 430 px | 406 px | 406 px | aucun |
+
+⚠️ Le prix payé : sur ordinateur le bloc peut faire 440 px au lieu de 600 selon
+la façon dont le client dimensionne le message. L'en-tête, elle, garde exactement
+les 440 px validés par Franck.
+
+Le numéro de téléphone reçoit `white-space:nowrap` : à 366 px il se coupait entre
+« 06 16 90 82 » et « 18 ».
+
+⚠️ Ces trois réécritures ne valent QUE pour le modèle. `gabarit-mail.js` n'est
+pas touché, et les treize mails de la séquence gardent exactement la forme validée
+par Franck. Le script échoue bruyamment si le gabarit change de forme, plutôt que
+de laisser le modèle repartir cassé sans prévenir.
