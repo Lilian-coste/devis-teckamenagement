@@ -13,6 +13,11 @@ Projet Vercel combiné qui sert l'intégralité du sous-domaine **devis.teckamen
 | Simulateur prix dépt 2 (900/600 €/m²) | [devis.teckamenagement.fr/simulez-votre-projet-65pc92/](https://devis.teckamenagement.fr/simulez-votre-projet-65pc92/) | Idem, autre département |
 | Réservation séquence mail Brevo | [devis.teckamenagement.fr/rdv-mail/](https://devis.teckamenagement.fr/rdv-mail/) | Séquence email — **sans pixel** |
 | Trois SMS de relance | [devis.teckamenagement.fr/relance-sms/](https://devis.teckamenagement.fr/relance-sms/) | **Franck seul** — outil interne, `noindex`, sans pixel · se personnalise par `?prenom=…&tel=…` |
+| Page de résultat, budget validé | [devis.teckamenagement.fr/resultat-budget-valide/](https://devis.teckamenagement.fr/resultat-budget-valide/) | Après quiz · anciennement `apercu-resultat`, redirection en place |
+| Page de résultat, budget non validé | [devis.teckamenagement.fr/resultat-budget-non-valide/](https://devis.teckamenagement.fr/resultat-budget-non-valide/) | Après quiz · anciennement `apercu-moins-15k`, redirection en place |
+| Avis clients | [devis.teckamenagement.fr/avis/](https://devis.teckamenagement.fr/avis/) | Page publique · même fond que les pages de résultat |
+| Linktree | [devis.teckamenagement.fr/lien/](https://devis.teckamenagement.fr/lien/) | Bio Instagram |
+| Modèle de mail | [devis.teckamenagement.fr/modele-mail/](https://devis.teckamenagement.fr/modele-mail/) | **Franck seul** — outil interne, `noindex` · voir `modele-mail/README.md` |
 
 La racine [devis.teckamenagement.fr/](https://devis.teckamenagement.fr/) redirige vers [teckamenagement.fr](https://teckamenagement.fr).
 
