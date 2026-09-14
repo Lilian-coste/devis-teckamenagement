@@ -42,71 +42,50 @@ Chaîne vérifiée de bout en bout le 14/09/2026 : signature posée, mail envoy�
 en-tête et logo corrects à la réception dans Gmail. La variante `nu-images/`
 n'a donc pas servi, elle reste au cas où un autre Mac se comporterait autrement.
 
-## La largeur fixe est sur l'en-tête, pas sur le conteneur
+## Le modèle coule à gauche, sans conteneur
 
-Les media queries ne survivent à aucun collage, ni dans Mail ni dans Gmail. Or
-c'est le bloc `<style>` du gabarit qui repasse le conteneur de `width:600px` à
-`width:100%` sous 620 px. Le modèle collé doit donc s'adapter sans elles, et les
-deux Gmail se comportent de façon opposée. Mesuré sur le mail réellement reçu,
-le 14/09/2026 :
+Les media queries ne survivent à aucun collage, ni dans Mail, ni dans Gmail, ni
+dans aucun éditeur de texte enrichi. Or c'est le bloc `<style>` du gabarit qui
+adapte le mail au téléphone. Les deux Gmail se comportent alors de façon opposée,
+mesuré sur le mail réellement reçu le 14/09/2026 :
 
 - sur **téléphone**, Gmail dimensionne le message sur la largeur que son contenu
   réclame, puis dézoome le tout pour le faire tenir. Le gabarit réclamant 624 px,
-  tout le message tombait à 62 %, texte compris ;
-- sur **ordinateur**, Gmail se rétracte sur le contenu. Un conteneur en
-  pourcentage s'y effondre, il est descendu à environ 250 px.
+  tout tombait à 62 %, texte compris ;
+- sur **ordinateur**, Gmail se rétracte sur le contenu, et un conteneur en
+  pourcentage s'y effondre, jusqu'à environ 250 px.
 
-Toute largeur fixe déclenche donc le dézoom sur téléphone, et son absence fait
-s'effondrer l'ordinateur. Sans media query, aucune écriture ne satisfait les deux.
+Quatre réglages ont été essayés, chacun réglant un côté en cassant l'autre. Il
+n'y avait pas de cinquième réglage à trouver : tant qu'il y a un conteneur de
+largeur fixe à faire tenir, les deux sont irréconciliables.
 
-La sortie retenue déplace la largeur fixe du conteneur vers l'en-tête. Le
-conteneur passe en pourcentage, et c'est l'image d'en-tête, en 440 px fixes, qui
-donne sa largeur au bloc sur ordinateur. Comme 440 px tiennent presque dans un
-écran de téléphone, le dézoom devient négligeable là où il valait 62 %.
+La sortie, proposée par Lilian : **supprimer le conteneur**. Plus de bloc de
+600 px centré, le mail coule à gauche comme n'importe quel mail écrit à la main,
+sur le principe des signatures Merlin. Il n'y a alors plus aucune largeur à faire
+tenir, donc plus rien à dézoomer ni à effondrer. La seule largeur qui reste est
+celle de l'image d'en-tête, 440 px, avec `max-width:100%` pour qu'elle redescende
+à la largeur de l'écran.
 
-Mesuré sur le fichier généré, bloc `<style>` retiré, dans les quatre contextes :
+Mesuré sur le fichier généré, bloc `<style>` retiré :
 
-| contexte | conteneur | en-tête | débordement |
+| contexte | bloc | en-tête | débordement |
 | --- | --- | --- | --- |
-| ordinateur, conteneur large | 600 px | 440 px | aucun |
+| ordinateur, conteneur large | 440 px | 440 px | aucun |
 | ordinateur, conteneur rétractable | 440 px | 440 px | aucun |
-| téléphone 390 px | 366 px | 366 px | aucun |
-| téléphone 430 px | 406 px | 406 px | aucun |
+| téléphone 390 px | 390 px | 390 px | aucun |
+| téléphone 430 px | 430 px | 430 px | aucun |
+| vieux téléphone 320 px | 320 px | 320 px | aucun |
 
-⚠️ Le prix payé : sur ordinateur le bloc peut faire 440 px au lieu de 600 selon
-la façon dont le client dimensionne le message. L'en-tête, elle, garde exactement
-les 440 px validés par Franck.
+Le point décisif est la deuxième ligne : les deux modèles d'ordinateur donnent
+enfin la **même** réponse. C'est leur désaccord qui produisait les allers-retours.
 
-Le numéro de téléphone reçoit `white-space:nowrap` : à 366 px il se coupait entre
-« 06 16 90 82 » et « 18 ».
+⚠️ Ce que ça change par rapport au gabarit : plus de centrage, et le bloc fait
+440 px au lieu de 600. L'en-tête garde exactement les 440 px validés par Franck.
 
-⚠️ Ces trois réécritures ne valent QUE pour le modèle. `gabarit-mail.js` n'est
-pas touché, et les treize mails de la séquence gardent exactement la forme validée
+Le numéro de téléphone reçoit `white-space:nowrap` : sur un écran étroit il se
+coupait entre « 06 16 90 82 » et « 18 ».
+
+⚠️ Ces réécritures ne valent QUE pour le modèle. `gabarit-mail.js` n'est pas
+touché, et les treize mails de la séquence gardent exactement la forme validée
 par Franck. Le script échoue bruyamment si le gabarit change de forme, plutôt que
 de laisser le modèle repartir cassé sans prévenir.
-
-## Ce qui reste ouvert, au 14/09/2026
-
-La voie du copier-coller dans une signature est un cul-de-sac, et c'est acquis :
-l'éditeur supprime le bloc `<style>`, donc la règle qui adapte le mail au
-téléphone. Sans elle, une largeur fixe fait dézoomer le téléphone et son absence
-fait s'effondrer l'ordinateur. Quatre essais l'ont montré, chacun réglant un côté
-en cassant l'autre. Il n'y a pas de cinquième réglage à trouver, il faut changer
-de voie.
-
-Le modèle reste en l'état, en ligne et fonctionnel, avec le compromis décrit
-plus haut. Rien n'a été transmis à Franck.
-
-Trois pistes à instruire, par ordre de solidité :
-
-1. **Une page pour écrire**, sur le modèle de `/relance-sms/` que Franck utilise
-   déjà. Il tape son destinataire et son message, le mail part par l'API avec le
-   gabarit exact, media queries comprises. Aucun collage, donc aucun de ces
-   problèmes. C'est la seule piste qui garantit le résultat.
-2. **Outlook**, évoqué par Lilian. À vérifier avant toute promesse : le moteur
-   Windows ignore `max-width` et les media queries, et l'Outlook récent sur Mac
-   n'a pas le même moteur. Rien ne dit pour l'instant que sa signature conserve
-   le `<style>`.
-3. **Écrire le fichier de signature directement** dans `~/Library/Mail`, avec le
-   `<style>` intact. Le dossier est protégé par macOS, il faudrait un accès disque
-   complet, et rien ne garantit que Mail conserve le bloc à l'envoi.
