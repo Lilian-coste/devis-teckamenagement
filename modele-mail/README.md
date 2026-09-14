@@ -84,3 +84,29 @@ Le numéro de téléphone reçoit `white-space:nowrap` : à 366 px il se coupait
 pas touché, et les treize mails de la séquence gardent exactement la forme validée
 par Franck. Le script échoue bruyamment si le gabarit change de forme, plutôt que
 de laisser le modèle repartir cassé sans prévenir.
+
+## Ce qui reste ouvert, au 14/09/2026
+
+La voie du copier-coller dans une signature est un cul-de-sac, et c'est acquis :
+l'éditeur supprime le bloc `<style>`, donc la règle qui adapte le mail au
+téléphone. Sans elle, une largeur fixe fait dézoomer le téléphone et son absence
+fait s'effondrer l'ordinateur. Quatre essais l'ont montré, chacun réglant un côté
+en cassant l'autre. Il n'y a pas de cinquième réglage à trouver, il faut changer
+de voie.
+
+Le modèle reste en l'état, en ligne et fonctionnel, avec le compromis décrit
+plus haut. Rien n'a été transmis à Franck.
+
+Trois pistes à instruire, par ordre de solidité :
+
+1. **Une page pour écrire**, sur le modèle de `/relance-sms/` que Franck utilise
+   déjà. Il tape son destinataire et son message, le mail part par l'API avec le
+   gabarit exact, media queries comprises. Aucun collage, donc aucun de ces
+   problèmes. C'est la seule piste qui garantit le résultat.
+2. **Outlook**, évoqué par Lilian. À vérifier avant toute promesse : le moteur
+   Windows ignore `max-width` et les media queries, et l'Outlook récent sur Mac
+   n'a pas le même moteur. Rien ne dit pour l'instant que sa signature conserve
+   le `<style>`.
+3. **Écrire le fichier de signature directement** dans `~/Library/Mail`, avec le
+   `<style>` intact. Le dossier est protégé par macOS, il faudrait un accès disque
+   complet, et rien ne garantit que Mail conserve le bloc à l'envoi.
