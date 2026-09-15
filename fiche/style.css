@@ -1,0 +1,740 @@
+/* ==========================================================================
+   FICHE PROJET TECK AMÉNAGEMENT — mise en page A4 pour impression PDF
+   --------------------------------------------------------------------------
+   Référence DA : ~/mes-clients/teck-amenagement/DA-teck-amenagement.md
+   (une seule famille, Helvetica Neue ; titres Light en CAPITALES ; texte courant
+   Regular en écriture normale ; aucune serif ; aucun jaune ni doré ; surlignage
+   en fond bleu Teck, texte blanc ; « épuré, haut de gamme, façon Apple ».)
+
+   ── LA GRILLE ────────────────────────────────────────────────────────────
+     Page 210 × 297 mm, fond perdu autorisé (les photos touchent les bords).
+     Marges : 24 mm gauche · 24 mm droite · 26 mm haut · 22 mm bas.
+     Empagement 162 mm, découpé en deux :
+        rail 40 mm  +  gouttière 8 mm  +  colonne de texte 114 mm.
+     Le rail ne porte qu'un repère : un petit label capitales très interlettré
+     (PARTIE I, CONSEIL 01, TECK AMÉNAGEMENT). Un quart de l'empagement reste
+     délibérément vide : c'est ce qui distingue un dossier dessiné d'un export
+     de traitement de texte.
+     La colonne de 114 mm donne 66 à 70 signes par ligne à 11 pt : la mesure de
+     lecture d'un livre, pas celle d'un rapport.
+
+   ── LA RÈGLE DE COMPOSITION (celle qui a été corrigée le 16/08/2026) ─────
+     Le blanc ne tombe JAMAIS au pied de la page. Trois cas, trois seulement :
+       · page de texte seul .......... le bloc est optiquement centré dans
+                                       l'empagement, le blanc se partage en
+                                       tête et au pied ;
+       · photo en tête ............... le bloc de texte est calé sur la marge
+                                       de pied, le blanc respire entre les deux ;
+       · photo au pied ............... le bloc est calé sur la marge de tête.
+     Une seule propriété porte cette règle : `align-content` sur `.corps`.
+     Conséquence : quand Franck réécrira les conseils, un texte plus long ou
+     plus court se recale tout seul, sans jamais laisser un pied vide.
+
+   ── LA TYPOGRAPHIE ───────────────────────────────────────────────────────
+     Helvetica Neue, deux graisses seulement.
+       Light 300  → titres, en CAPITALES, interlettrage ouvert (règle DA).
+       Regular 400 → texte courant, écriture normale, sans interlettrage.
+     La hiérarchie vient du corps, de la casse et de l'interlettrage, jamais
+     d'un second caractère.
+     ⚙️ Les titres de conseil sont en capitales, comme l'impose la DA. Ce sont
+        des phrases longues : si Lilian les préfère en bas-de-casse, il n'y a
+        qu'à commenter les deux lignes signalées dans `.titre-conseil`.
+
+   ── LA COULEUR ───────────────────────────────────────────────────────────
+     Encre #1D1D1F, gris #86868B, navy #0A1F44, bleu Teck #0653A8,
+     bleu clair #7AADDE (accents sur fond sombre) — tous chartés.
+     Le bleu Teck n'apparaît que deux fois dans le corps du document : les
+     numéros de partie et le surlignage de l'avis. Le navy porte les trois
+     pages « événement » : couverture, page-preuve des thermomètres, dos.
+     Aucun dégradé, aucune ombre portée, aucun angle arrondi, aucune icône.
+     Les seuls traits sont des filets d'un demi-point.
+   ========================================================================== */
+
+@page {
+  size: 210mm 297mm;
+  margin: 0;
+}
+
+:root {
+  --encre: #1d1d1f;
+  --gris: #86868b;
+  --gris-clair: #c9c9cd;
+  --navy: #0a1f44;
+  --bleu: #0653a8;
+  --bleu-clair: #7aadde;
+  /* Le bleu des filets sous les titres, demandé par Lilian le 27/08/2026.
+     C'est aussi le bleu du tableau de bord « To do de Franck ». */
+  --bleu-filet: #5399BC;
+  --papier: #ffffff;
+  --fond-clair: #f5f5f7;
+
+  --marge-h: 24mm;
+  --marge-haut: 26mm;
+  --marge-bas: 22mm;
+  --rail: 40mm;
+  --gouttiere: 8mm;
+  --colonne: 114mm;
+
+  /* Hauteurs des images en fond perdu. Une seule valeur pour les pages de
+     conseil : c'est elle qui donne son battement régulier au document.
+     ⚠️ `--photo-couverture` ne sert plus à la couverture ni au dos depuis le
+     27/08/2026 : les deux sont en pleine page. Il ne reste que la valeur de
+     chapitre et celle de conseil. */
+  --photo-conseil: 178mm;
+  --photo-chapitre: 208mm;
+  --photo-couverture: 219mm;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  color: var(--encre);
+  background: var(--papier);
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
+}
+
+/* --------------------------------------------------------------- la page */
+
+.page {
+  position: relative;
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  background: var(--papier);
+  break-after: page;
+  page-break-after: always;
+}
+.page:last-child {
+  break-after: auto;
+  page-break-after: auto;
+}
+
+/* Le corps de page : rail + colonne, calé sur les marges.
+   `align-content` décide de la position verticale du bloc (cf. la règle de
+   composition en tête de fichier). */
+.corps {
+  position: absolute;
+  top: var(--marge-haut);
+  left: var(--marge-h);
+  right: var(--marge-h);
+  bottom: var(--marge-bas);
+  display: grid;
+  grid-template-columns: var(--rail) var(--colonne);
+  column-gap: var(--gouttiere);
+  align-content: center;
+}
+.corps.au-pied {
+  align-content: end;
+}
+.corps.a-la-tete {
+  align-content: start;
+}
+
+/* Le folio est posé sur la PAGE, jamais dans le rail : c'est ce qui le faisait
+   tomber sur la photo (pages 06 et 08) et sous le bandeau d'avis (page 09) dans
+   la version du 15/08. Il se place dans la marge de pied, et passe en marge de
+   tête sur les pages dont le pied est occupé. */
+.folio {
+  position: absolute;
+  left: var(--marge-h);
+  bottom: 12mm;
+  font-size: 7pt;
+  letter-spacing: 0.2em;
+  color: var(--gris-clair);
+}
+.folio.en-tete {
+  bottom: auto;
+  top: 12mm;
+}
+
+/* ------------------------------------------------------- blocs de texte */
+
+/* Le repère du rail : un seul et même objet typographique dans tout le
+   document. C'est lui qui tient la marge de gauche. */
+.repere {
+  font-size: 7.5pt;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gris);
+  line-height: 1.4;
+}
+.repere.partie {
+  color: var(--bleu);
+}
+/* Cale optique : aligne le repère sur la hauteur de capitale du titre. */
+.corps .repere {
+  padding-top: 2.6mm;
+}
+.conseil .corps .repere {
+  padding-top: 1.4mm;
+}
+
+.titre-partie {
+  font-size: 25pt;
+  font-weight: 300;
+  line-height: 1.12;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Le seul titre du document qui ne soit pas en capitales : c'est une
+   salutation adressée à quelqu'un, pas une enseigne. */
+.titre-salutation {
+  font-size: 22pt;
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+}
+
+/* ⚠️ TOUT LE TEXTE COURANT EST PASSÉ EN GRAISSE 300 le 27/08/2026 (Lilian, après avoir
+   vu la page « Aujourd'hui, et demain » : « est-ce que la police que tu as utilisée pour
+   ce texte peut être appliquée au reste du texte, hormis les titres ? »).
+   Ce n'était pas une autre police, c'était la même Helvetica Neue en 300 au lieu de 400 :
+   c'est la graisse qui change, pas la fonte. `.scene`, `.recap .valeur` et `.avis`
+   étaient déjà en 300, ils faisaient tache au milieu d'un document en 400.
+   ⛔ NE PAS ÉTENDRE AUX PETITS LIBELLÉS : `.repere`, `.folio`, `.legende`,
+      `.recap .intitule`, `.signature-avis` et `.bandeau-note .note` restent en 400. En
+      dessous de 9 pt et en capitales espacées, la graisse 300 devient illisible à
+      l'impression, c'est le seul endroit où le 400 se justifie encore.
+   Les titres, eux, n'ont jamais été concernés : ils sont déjà en 300 ou en 200. */
+.chapo {
+  font-size: 11.5pt;
+  font-weight: 300;
+  line-height: 1.64;
+}
+.chapo p + p {
+  margin-top: 5mm;
+}
+
+.texte {
+  font-size: 11pt;
+  font-weight: 300;
+  line-height: 1.68;
+}
+.texte p + p {
+  margin-top: 4.5mm;
+}
+
+/* La lettre d'ouverture est la seule page posée en corps 12 : c'est la
+   première page lue, elle doit respirer plus que les autres. */
+.texte-intro {
+  font-size: 12pt;
+  font-weight: 300;
+  line-height: 1.72;
+}
+.texte-intro p + p {
+  margin-top: 6mm;
+}
+
+.filet {
+  height: 0.5pt;
+  background: var(--encre);
+  opacity: 0.18;
+}
+
+/* Le filet qui COIFFE un bloc de texte en se posant sous son titre (la salutation,
+   « VOTRE PROJET », « NOS CONSEILS », « LA SUITE »). Il est bleu et plein, là où le
+   filet nu reste un gris à 18 % qui sépare sans annoncer. Demande de Lilian, 27/08/2026.
+   ⚠️ Le second filet de la page « LA SUITE » (avant l'avis) reste volontairement gris :
+   il sépare deux blocs, il ne coiffe pas un titre. */
+.filet-titre {
+  height: 0.8pt;
+  background: var(--bleu-filet);
+  opacity: 1;
+}
+
+/* Filet qui traverse tout l'empagement, rail compris. Il coiffe le bloc de
+   texte des pages de conseil et l'articule à la photo en fond perdu. */
+.filet-empagement {
+  grid-column: 1 / -1;
+  height: 0.5pt;
+  background: var(--encre);
+  opacity: 0.18;
+}
+
+.legende {
+  font-size: 8pt;
+  line-height: 1.6;
+  color: var(--gris);
+}
+
+/* Note de pied de page, calée dans l'axe de la colonne de texte. */
+.note-pied {
+  position: absolute;
+  left: calc(var(--marge-h) + var(--rail) + var(--gouttiere));
+  right: var(--marge-h);
+  bottom: var(--marge-bas);
+}
+.note-pied .filet {
+  margin-bottom: 6mm;
+}
+
+/* --------------------------------------------------- photos en fond perdu */
+
+.photo {
+  position: absolute;
+  left: 0;
+  width: 210mm;
+  overflow: hidden;
+}
+.photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ============================================================ COUVERTURE
+
+   Refonte du 27/08/2026, sur le modèle du guide granulés de Groupe Merlin : photo en
+   fond perdu sur TOUTE la page, voile, logo blanc en haut à gauche, bloc de titre
+   centré en bas. Le DOS n'est pas touché : il garde le bandeau navy ci-dessous. */
+
+.couverture {
+  background: #0a1f44; /* filet de sécurité si la photo manque */
+}
+
+.photo-pleine {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.photo-pleine img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Le voile. Trois couches, et chacune a une raison d'être :
+   - du HAUT, parce que le logo blanc se pose sur un ciel clair ;
+   - du BAS, plus soutenu, parce que le titre se pose sur une terrasse en bois au soleil,
+     l'endroit le plus lumineux de la photo ;
+   - un voile uniforme très léger, qui unifie l'ensemble et retient le regard sur le texte.
+   ⚠️ Ne pas l'alléger sans regarder l'aperçu : sans lui, le texte blanc disparaît. */
+.voile {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(8, 16, 24, 0.5) 0%, rgba(8, 16, 24, 0.12) 24%, rgba(8, 16, 24, 0) 40%),
+    linear-gradient(to top, rgba(8, 16, 24, 0.88) 0%, rgba(8, 16, 24, 0.55) 20%, rgba(8, 16, 24, 0) 50%),
+    rgba(8, 16, 24, 0.1);
+}
+
+/* Même place que le logo GM du guide Merlin : marge haute et gauche, rien autour. */
+/* 95 mm, presque la moitié de la largeur de la page. Il faisait 58 mm au premier
+   rendu : « met le logo bien plus gros » (Lilian, 27/08/2026). À cette taille la ligne
+   « PERGOLA · TERRASSE · MOBILIER EN BOIS EXOTIQUE » intégrée au fichier se lit
+   franchement, ce qui n'était pas le cas avant. */
+.couverture .logo-couverture {
+  position: absolute;
+  top: 20mm;
+  left: 5mm;
+  width: 95mm;
+  display: block;
+}
+
+.couverture .bloc-couverture {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 24mm;
+  padding: 0 20mm;
+  text-align: center;
+  color: #fff;
+}
+
+/* Le petit filet centré tient la place du filet tricolore de Merlin. Bleu Teck, comme
+   ceux qui coiffent les titres à l'intérieur du document. */
+.couverture .filet-couverture {
+  width: 26mm;
+  height: 1pt;
+  background: var(--bleu-filet);
+  margin: 0 auto 9mm;
+}
+
+.couverture h1 {
+  font-size: 29pt;
+  font-weight: 300;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  line-height: 1.15;
+  /* ⚠️ L'OMBRE PORTÉE A ÉTÉ RETIRÉE LE 27/08/2026, et il ne faut pas la remettre.
+     Elle valait `text-shadow: 0 1px 16px rgba(8,16,24,.55)` et servait à décoller le
+     titre du bois clair. Le problème n'est pas visuel, il est dans le PDF : Chrome ne
+     sait pas écrire un flou en impression, alors il DESSINE LE TITRE DEUX FOIS, une
+     fois en noir à 1 pt plus bas pour l'ombre, une fois en blanc par-dessus. À l'œil on
+     ne voit rien, la copie noire est cachée sous la blanche. Mais dès qu'on sélectionne
+     ou qu'on surligne le titre dans un lecteur PDF, les deux copies sont prises
+     ensemble et le titre part en deux couleurs au milieu d'un mot (Lilian, capture
+     d'Aperçu du 27/08/2026 : « pourquoi il y a une partie du texte qui est blanc et une
+     autre qui est bleue ? »). Le titre était aussi copié en double au presse-papiers.
+     Le voile suffit largement : il monte à 0,88 d'opacité en pied de couverture, le
+     titre s'y détache tout seul. */
+}
+
+.couverture .destinataire {
+  margin-top: 9mm;
+  font-size: 9.5pt;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+/* ================================================= OUVERTURE DE CHAPITRE */
+
+.chapitre .photo {
+  top: 0;
+  height: var(--photo-chapitre);
+}
+
+/* ================================================== PAGE D'UN CONSEIL */
+
+.conseil .photo {
+  height: var(--photo-conseil);
+}
+.conseil.photo-haut .photo {
+  top: 0;
+}
+.conseil.photo-bas .photo {
+  bottom: 0;
+}
+
+/* ⚠️⚠️ LA RÉSERVE LAISSÉE AU TEXTE, ET C'EST UNE CORRECTION DE BUG (27/08/2026).
+   `.corps` va de la marge haute à la marge basse, sur TOUTE la page : il passe donc
+   DERRIÈRE le visuel. Tant que le texte tenait dans la place restante, personne ne le
+   voyait. Le jour où le conseil des thermomètres est passé à trois paragraphes plus une
+   mention, le bloc a grandi vers le haut (`align-content: end`) et son titre est parti
+   se cacher sous le bandeau noir. Lilian, capture à l'appui : « pourquoi la partie du
+   test est comme ça ? »
+   Les deux règles qui suivent bornent le bloc AU BORD DU VISUEL, plus 9 mm d'air. Un
+   texte trop long déborde désormais par le bas, là où ça se voit tout de suite, au lieu
+   de disparaître sous une photo, là où ça ne se voit pas.
+   Elles lisent `--photo-conseil`, donc elles suivent d'elles-mêmes les pages dont le
+   visuel est raccourci. Ne pas y écrire une valeur en dur. */
+.conseil.photo-haut .corps {
+  top: calc(var(--photo-conseil) + 9mm);
+}
+.conseil.photo-bas .corps {
+  bottom: calc(var(--photo-conseil) + 9mm);
+}
+
+/* LES DEUX VISUELS RACCOURCIS. `--photo-conseil` est redéfinie SUR LA SECTION : la
+   photo, la page-figure et la réserve du texte la lisent toutes les trois, une seule
+   valeur suffit donc à tout déplacer d'un coup.
+     · `visuel-courte`  — la page-figure des thermomètres. Son texte fait trois
+       paragraphes plus une mention, il lui faut 125 mm ;
+     · `visuel-reduit`  — le conseil du claustra (Lilian, 27/08/2026 : « on mettra une
+       image plus petite, c'est pas grave, et une image plus large que haute »). À
+       118 mm, la photo cadre en 210 × 118, soit un format nettement paysage. */
+.conseil.visuel-courte {
+  --photo-conseil: 140mm;
+}
+.conseil.visuel-reduite {
+  --photo-conseil: 118mm;
+}
+
+/* ⚠️ LA PAGE-FIGURE N'EST PAS UNE `.photo`, et il faut le savoir. Elle porte sa propre
+   classe, avec son propre `top: 0` écrit en dur : `.conseil.photo-bas .photo { bottom: 0 }`
+   ne la déplaçait donc pas, et le 27/08/2026 elle est restée collée en tête alors que la
+   page la voulait en pied. Le bloc de texte, lui, était bien descendu, donc il s'est
+   retrouvé caché DERRIÈRE le noir et la page est sortie vide sous le bandeau.
+   Cette règle est ce qui relie la figure à la position déclarée dans `contenu.mjs`. */
+.conseil.photo-bas .figure-thermometres {
+  top: auto;
+  bottom: 0;
+}
+
+/* Quand le visuel est raccourci, le texte remonte SOUS LUI au lieu de rester calé au
+   pied de page (Lilian, 27/08/2026, sur le conseil du claustra). Sinon le blanc gagné
+   sur la photo se transforme en trou de dix centimètres entre l'image et le titre, et la
+   page se lit comme une erreur. Le blanc part en bas, là où il fait une respiration. */
+.conseil.visuel-reduite .corps {
+  align-content: start;
+}
+
+.conseil .corps {
+  row-gap: 7mm;
+}
+
+.titre-conseil {
+  font-size: 14pt;
+  font-weight: 300;
+  line-height: 1.38;
+  margin-bottom: 7mm;
+  /* Règle DA : un titre est toujours en capitales. Ce sont des phrases longues,
+     donc l'interlettrage reste modéré. ⚙️ Pour repasser en bas-de-casse, il
+     suffit de commenter les deux lignes qui suivent (et de remonter à 17pt). */
+  text-transform: uppercase;
+  letter-spacing: 0.085em;
+  /* Évite les veuves : « … pas pour la / terrasse ». */
+  text-wrap: balance;
+}
+
+/* ==================================== PAGE-FIGURE DES DEUX THERMOMÈTRES */
+
+/* Elle occupe la place d'une photo de conseil et se traite comme un événement :
+   fond plein, comme la couverture et le dos. C'est la page-preuve du document,
+   elle doit se retenir.
+   ⚠️ LE FOND EST PASSÉ DU NAVY AU NOIR le 27/08/2026, à la demande de Lilian. C'est
+      l'encre du document (#1d1d1f), pas un noir pur : un #000 sur une page imprimée à
+      côté de pages blanches se voit comme un trou, alors que l'encre reste dans la
+      charte et laisse le bleu clair du 32° ressortir davantage. Le navy, lui, entrait
+      en concurrence avec ce bleu et écrasait l'écart entre les deux chiffres.
+      La couverture et le dos, eux, gardent leur photo : rien à harmoniser de ce côté.
+   ⚙️ Pour revenir au fond clair charté : remplacer var(--encre) par var(--fond-clair)
+      et rétablir les couleurs commentées. */
+.figure-thermometres {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 210mm;
+  height: var(--photo-conseil);
+  background: var(--encre);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30mm;
+}
+
+.releve {
+  text-align: center;
+}
+.releve .valeur {
+  font-size: 76pt;
+  font-weight: 200;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+}
+.releve .valeur .unite {
+  font-size: 30pt;
+  font-weight: 300;
+  letter-spacing: 0;
+  vertical-align: super;
+}
+.releve .legende-releve {
+  margin-top: 8mm;
+  font-size: 8pt;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+.releve.gain .valeur,
+.releve.gain .legende-releve {
+  color: var(--bleu-clair);
+}
+
+.separateur-releve {
+  width: 0.5pt;
+  height: 62mm;
+  background: #fff;
+  opacity: 0.22;
+}
+
+/* ============================================ I — RÉCAPITULATIF DU PROJET */
+
+.recap {
+  margin-top: 10mm;
+}
+/* ⚠️ 4,5 mm et non 7 : le récapitulatif est passé de six à onze lignes le 27/08/2026,
+   il ne tenait plus dans la page. Ne pas le rouvrir sans compter les lignes. */
+.recap .ligne {
+  display: grid;
+  grid-template-columns: 42mm 1fr;
+  column-gap: 6mm;
+  align-items: baseline;
+  padding: 4.5mm 0;
+  border-top: 0.5pt solid rgba(29, 29, 31, 0.16);
+}
+.recap .ligne:last-child {
+  border-bottom: 0.5pt solid rgba(29, 29, 31, 0.16);
+}
+.recap .intitule {
+  font-size: 7pt;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gris);
+}
+.recap .valeur {
+  font-size: 11.5pt;
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+/* La question facultative laissée sans réponse : un trait fin à la place de la valeur,
+   comme sur un formulaire papier resté vierge.
+
+   ⚠️ SA HAUTEUR EST CALCULÉE, PAS CHOISIE À L'ŒIL (Lilian, 28/08/2026 : « il est trop bas
+   par rapport au texte VOS PRÉCISIONS, je veux qu'il soit aligné au centre »). La ligne et
+   l'intitulé partagent la même ligne de base (`align-items: baseline` sur `.ligne`). Le
+   trait est donc posé sur cette base, puis remonté de la MOITIÉ DE LA HAUTEUR DE CAPITALE
+   de l'intitulé : 7pt × 0,72 = 5,04pt de capitale, donc 2,52pt. À cette hauteur il coupe
+   « VOS PRÉCISIONS » exactement en son milieu.
+   `height: 0` est volontaire : c'est la bordure qui dessine, pas la boîte. Lui donner une
+   hauteur remettrait une variable de plus entre la base et le trait. */
+.recap .valeur .vide {
+  display: inline-block;
+  width: 34mm;
+  height: 0;
+  border-bottom: 0.5pt solid var(--gris-clair);
+  vertical-align: baseline;
+  position: relative;
+  bottom: 2.52pt;
+}
+
+/* ================================================ I bis — L'ÉTÉ PROCHAIN
+
+   ⚠️ REFAIT LE 27/08/2026, en même temps que le texte. Ce qui a disparu : `.ecart`,
+   `.volet`, `.etiquette` et `.gene`, c'est-à-dire les deux volets étiquetés et la
+   citation de l'échelle du quiz. La page ne rend plus ses réponses à la personne, elle
+   lui raconte une scène. Ne pas les rétablir.
+
+   La scène est posée UN PEU PLUS GROS que le corps du document, comme une ouverture de
+   chapitre : c'est le seul endroit du document où l'on s'adresse à l'imagination et pas
+   à la mémoire, et le corps de texte courant l'aurait noyée dans le reste. */
+
+.scene {
+  margin-top: 13mm;
+  font-size: 12.5pt;
+  font-weight: 300;
+  line-height: 1.62;
+}
+.scene p + p {
+  margin-top: 6mm;
+}
+
+/* Le filet qui sépare la scène de la bascule : c'est le passage du point A au point B,
+   et il se voit. Même bleu et même épaisseur que les filets de titre, mais court et
+   calé à gauche, pour qu'il se lise comme une respiration et pas comme un nouveau
+   chapitre. */
+.filet-bascule {
+  width: 26mm;
+  height: 0.8pt;
+  background: var(--bleu-filet);
+  margin: 12mm 0;
+}
+
+.liaison {
+  font-size: 11.5pt;
+  font-weight: 300;
+  line-height: 1.64;
+}
+.liaison p + p {
+  margin-top: 5mm;
+}
+
+/* ================================================ III — L'AVIS CLIENT */
+
+.etoiles {
+  font-size: 11pt;
+  letter-spacing: 0.22em;
+  color: var(--bleu);
+}
+
+.avis {
+  font-size: 11pt;
+  font-weight: 300;
+  line-height: 1.86;
+  margin-top: 6mm;
+}
+/* Surlignage charté : fond bleu Teck, texte blanc. L'interligne large ci-dessus
+   existe pour que les bandes ne se touchent pas d'une ligne à l'autre. */
+.avis .surligne {
+  background: var(--bleu);
+  color: #fff;
+  padding: 0.7mm 1.1mm;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.signature-avis {
+  margin-top: 7mm;
+  font-size: 9pt;
+  letter-spacing: 0.02em;
+}
+.signature-avis .source {
+  color: var(--gris);
+}
+
+/* Le bandeau du bas : marque, long filet plein, note. Format arrêté par Lilian. */
+.bandeau-note {
+  position: absolute;
+  left: var(--marge-h);
+  right: var(--marge-h);
+  bottom: var(--marge-bas);
+  display: flex;
+  align-items: center;
+  gap: 6mm;
+}
+.bandeau-note .marque,
+.bandeau-note .note {
+  font-size: 8pt;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.bandeau-note .trait {
+  flex: 1;
+  height: 0.5pt;
+  background: var(--encre);
+  opacity: 0.25;
+}
+/* La page qui porte le bandeau réserve son pied : le bloc de texte s'arrête
+   au-dessus. */
+.avec-bandeau .corps {
+  bottom: 42mm;
+}
+
+/* ==================================================================== DOS
+
+   Refonte du 27/08/2026 : le bandeau navy disparaît, la photo prend toute la page,
+   comme sur la couverture. Les trois éléments gardent leur place, en bas à gauche.
+   La photo est `cloture-portrait.jpg`, recadrée en portrait depuis kar_teck_voinot_2
+   puis agrandie : la version paysage, posée en pleine page, perdait la maison. */
+
+.dos .bloc-dos {
+  position: absolute;
+  left: var(--marge-h);
+  right: var(--marge-h);
+  bottom: 18mm;
+  color: #fff;
+}
+
+/* Le filet passe au bleu Teck, comme ceux qui coiffent les titres à l'intérieur. */
+.dos .filet-marque {
+  height: 0.8pt;
+  background: var(--bleu-filet);
+  margin: 0 0 11mm;
+}
+
+/* 76 mm : en dessous, la ligne « PERGOLA · TERRASSE · MOBILIER EN BOIS EXOTIQUE »
+   intégrée au logo devient illisible. C'est ce qui rendait le dos du 15/08 sale. */
+.dos .logo {
+  width: 76mm;
+  display: block;
+}
+
+.dos .destinataire {
+  margin-top: 9mm;
+  font-size: 9.5pt;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+/* Le pied du dos portait deux mentions en capitales espacées : le crédit photo à gauche,
+   le nom et la date à droite. Les deux ont sauté le 16/08/2026 (Lilian). À la place, la
+   MÊME ligne de destinataire que sur la couverture : le document s'ouvre et se referme
+   sur le nom de la personne. Elle est composée à un seul endroit dans `gabarit.mjs`
+   (`ligneDestinataire`), les deux pages ne peuvent donc pas diverger. */
