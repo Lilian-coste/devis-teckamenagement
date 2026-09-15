@@ -50,6 +50,14 @@
   ],
   "rewrites": [
     {
+      "source": "/ma-fiche/:jeton",
+      "destination": "https://teck-quiz-demo.vercel.app/simulez-votre-projet/fiche/:jeton"
+    },
+    {
+      "source": "/ma-fiche/:jeton/",
+      "destination": "https://teck-quiz-demo.vercel.app/simulez-votre-projet/fiche/:jeton"
+    },
+    {
       "source": "/simulez-votre-projet/",
       "destination": "https://teck-quiz-demo.vercel.app/simulez-votre-projet/"
     },
