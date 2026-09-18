@@ -9,9 +9,17 @@
 <!--
   PAGE D'ATTERRISSAGE « BUDGET DÉCLARÉ SOUS 15 000 € » — VERSION DE TRAVAIL
 
-  ⚠️ AUCUN PIXEL META ICI, et c'est délibéré. La vraie page de résultat tire un `Lead` à
-     chaque chargement. Publier une copie sous le domaine Teck enverrait de fausses
-     conversions dans le pixel qui pilote les campagnes payantes de Franck.
+  ⚠️ LE PIXEL EST REVENU LE 18/09/2026, MAIS SANS `Lead`, ET C'EST LA NUANCE.
+     Cet avertissement disait « aucun pixel ici » parce qu'à l'époque du tunnel Fillout
+     la vraie page de résultat tirait un `Lead` à CHAQUE chargement : une copie sous le
+     domaine Teck aurait envoyé de fausses conversions dans le pixel qui pilote les
+     campagnes payantes de Franck. Ce n'est plus vrai. Cette page EST la vraie page, et
+     le `Lead` a quitté la page pour la fin du quiz, où il ne part qu'une fois et
+     seulement pour une demande qualifiée.
+     `suivi.js` charge donc le pixel et tire `PageView` + `ResultatNonQualifie`.
+     ⛔ CE QUI RESTE INTERDIT ICI, POUR TOUJOURS : l'événement `Lead`. Le tirer une
+     seconde fois doublerait chaque conversion en silence et ferait optimiser Meta sur
+     un coût par lead deux fois trop bas.
 
   Structure et copy : `saas-interne/Fillout/COPY-PAGE-MOINS-15K.md`.
   Règle de calcul   : `saas-interne/Fillout/REDIRECTION-CALCULEE.md`.
@@ -858,7 +866,8 @@
   @media (max-width:767px){ .page .avis-1{ padding-top:36px; } }
 </style>
 </head>
-<body class="page">
+<!-- `data-suivi` dit à `suivi.js` sur quelle page il tourne. Cf. /suivi.js. -->
+<body class="page" data-suivi="resultat-non-qualifie">
 
 <!-- ============================ HERO ============================ -->
 <header class="hero">
@@ -1012,7 +1021,11 @@
            animations sur téléphone, calendrier réparé).
            ⏳ LE JOUR DE LA BASCULE, quand `resultat-budget-valide/` prendra la place de
               l'ancienne URL, cette ligne devra repointer sur l'URL définitive. -->
-      <a class="chemin oui" id="chemin-oui" href="../resultat-budget-valide/">
+      <!-- ⚠️ LE CLIC LE PLUS IMPORTANT DE LA PAGE. Quelqu'un qui a déclaré un budget
+     insuffisant, qui a lu, et qui dit malgré tout « oui, je pourrais envisager
+     cette somme ». `suivi.js` l'enregistre, le rattache à sa demande et fait
+     suivre son `sid` à la page d'arrivée. -->
+<a class="chemin oui" id="chemin-oui" data-suivi-clic="chemin-oui" href="../resultat-budget-valide/">
         <span class="marque"><span class="pastille">✓</span>Oui</span>
         <span class="titre">Je pourrais envisager ce budget</span>
         <span class="sous">
@@ -1833,5 +1846,7 @@
 })();
 </script>
 
+<!-- Le suivi en dernier : il ne doit rien retarder de ce que la personne voit. -->
+<script src="/suivi.js" defer></script>
 </body>
 </html>

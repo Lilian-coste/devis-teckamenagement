@@ -6,12 +6,17 @@
     <meta name="robots" content="noindex, nofollow">
     <title>Teck Aménagement — Votre projet a été estimé</title>
 
-    <!-- ⚠️ PAS DE PIXEL META SUR CETTE PAGE, ET C'EST VOLONTAIRE.
-         La vraie page de résultat tire un événement Lead à chaque chargement.
-         Cette copie vit sur le même domaine, donc le garde-fou de la vraie page
-         l'aurait autorisé : chaque visite aurait envoyé une fausse conversion
-         dans le pixel qui pilote les campagnes payantes de Franck.
-         Le bloc a donc été retiré, pas désactivé. Ne jamais le remettre ici. -->
+    <!-- ⚠️ LE PIXEL EST REVENU LE 18/09/2026, MAIS SANS `Lead`, ET C'EST LA NUANCE.
+         Cet avertissement disait « pas de pixel ici » parce qu'à l'époque du tunnel
+         Fillout la vraie page de résultat tirait un `Lead` à CHAQUE chargement, et
+         qu'une copie sous le même domaine aurait envoyé de fausses conversions dans le
+         pixel qui pilote les campagnes payantes de Franck. Ce n'est plus vrai : cette
+         page EST la vraie page, et le `Lead` part maintenant de la fin du quiz, une
+         seule fois, et seulement pour une demande qualifiée.
+         `suivi.js` charge donc le pixel et tire `PageView` + `ResultatQualifie`.
+         ⛔ CE QUI RESTE INTERDIT ICI, POUR TOUJOURS : l'événement `Lead`. Le tirer une
+         seconde fois doublerait chaque conversion en silence, et l'ensemble de pub
+         optimiserait sur un coût par lead deux fois trop bas. -->
 
     <!-- Tailwind + Inter : une seule fois pour toute la page -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -1038,7 +1043,8 @@
     </style>
 </head>
 
-<body class="apple-font">
+<!-- `data-suivi` dit à `suivi.js` sur quelle page il tourne. Cf. /suivi.js. -->
+<body class="apple-font" data-suivi="resultat-qualifie">
 
     <!-- =========================================================
          1. HEADER — Réservez votre appel
@@ -2386,5 +2392,7 @@
     })();
     </script>
 
+<!-- Le suivi en dernier : il ne doit rien retarder de ce que la personne voit. -->
+<script src="/suivi.js" defer></script>
 </body>
 </html>

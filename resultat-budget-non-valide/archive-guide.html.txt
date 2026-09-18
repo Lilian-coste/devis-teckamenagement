@@ -11,6 +11,10 @@ POUR RÉTABLIR, dans l'ordre :
   2. recoller le BLOC 2 à la place du commentaire « Bouton du guide archivé » ;
   3. rendre son `href="#le-guide"` au chemin « Non » (chercher `class="chemin non"`) ;
   4. brancher `#btn-guide`, qui porte encore `href="#"`, sur l'adresse du PDF.
+  5. RIEN À FAIRE POUR LE SUIVI : les deux boutons portent déjà
+     `data-suivi-clic="guide-telecharge"`, et `suivi.js` les branche tout seul. Le
+     téléchargement remontera alors dans le tableau de bord, rattaché à la demande,
+     et tirera l'événement Meta `GuideTelecharge`.
 
 ═══════════════════════════════════════════════ BLOC 1 — la section « Pour aller plus loin »
 <section id="le-guide" class="sect vers-bleu">
@@ -77,7 +81,7 @@ POUR RÉTABLIR, dans l'ordre :
     <!-- La mention d'avis passe SOUS ce bouton (Lilian, 16/08/2026). Elle a quitté la fin
          de la première série d'avis, où elle coupait l'enchaînement vers la seconde. -->
     <div class="adv-cta" style="margin-top:34px">
-      <a class="btn-black" href="#" id="btn-guide">
+      <a class="btn-black" href="#" id="btn-guide" data-suivi-clic="guide-telecharge">
         <span class="btn-ligne">Comprendre le budget d'une pergola sur mesure
           <span class="btn-fleche">➱</span>
         </span>
@@ -90,7 +94,7 @@ POUR RÉTABLIR, dans l'ordre :
 
 ═══════════════════════════════════════════ BLOC 2 — le bouton noir de fin de page
             <div class="adv-cta" style="margin-top:40px;">
-                <a class="btn-black" href="#le-guide">
+                <a class="btn-black" href="#le-guide" data-suivi-clic="guide-telecharge">
                     <span class="btn-ligne">Comprendre le budget d'une pergola sur mesure
                         <span class="btn-fleche">➱</span>
                     </span>
