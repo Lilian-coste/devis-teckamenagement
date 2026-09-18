@@ -1,0 +1,100 @@
+⏳ ARCHIVÉ LE 18/09/2026 — le guide n'est pas encore validé par Franck.
+
+Ces deux blocs viennent de `resultat-budget-non-valide/index.html`. Ils proposaient le
+PDF « Comprendre le budget d'une pergola sur mesure », que Franck n'a pas encore relu et
+dont le chapitre 02 attend deux chantiers réellement facturés, un adossé et un
+autoportant. On ne laisse pas un bouton mort sur une page en production : une promesse
+qu'on ne tient pas coûte plus cher qu'une promesse qu'on ne fait pas.
+
+POUR RÉTABLIR, dans l'ordre :
+  1. recoller le BLOC 1 à la place du commentaire « SECTION DU GUIDE ARCHIVÉE » ;
+  2. recoller le BLOC 2 à la place du commentaire « Bouton du guide archivé » ;
+  3. rendre son `href="#le-guide"` au chemin « Non » (chercher `class="chemin non"`) ;
+  4. brancher `#btn-guide`, qui porte encore `href="#"`, sur l'adresse du PDF.
+
+═══════════════════════════════════════════════ BLOC 1 — la section « Pour aller plus loin »
+<section id="le-guide" class="sect vers-bleu">
+  <!-- `large` depuis le passage au bento : la colonne de lecture à 760px étranglait la
+       grille à trois colonnes. Même gabarit que la section « Ce qui fait le prix ». -->
+  <div class="bloc large centre">
+    <span class="surtitre">Pour aller plus loin</span>
+    <h2>Votre projet reste possible, même s'il n'est pas encore dans votre budget</h2>
+    <p>
+      Nous avons réuni ce qu'il faut savoir pour comprendre ce qui fait le prix d'une pergola
+      sur mesure et préparer votre projet sereinement.
+    </p>
+    <p>
+      <b>Ce guide est fait pour vous être utile, que vous réalisiez ce projet avec nous ou
+      avec un autre professionnel.</b>
+    </p>
+
+    <!-- ⏳ PARAGRAPHE EN ATTENTE DE FRANCK. Lilian veut dire qu'il est fréquent que des
+         personnes recontactent un an ou plus après leur première demande, le temps de
+         finir d'autres travaux ou de constituer leur enveloppe. C'est exactement le type
+         d'affirmation qui sonne vraie, que personne ne vérifie, et qu'un client réel peut
+         démentir. À confirmer avant publication, sinon la reformuler en ce que NOUS
+         proposons plutôt qu'en ce que LES CLIENTS font.
+    <p>Il n'est pas rare qu'un projet se concrétise un an ou plus après une première
+       demande, le temps de terminer d'autres travaux ou de constituer l'enveloppe prévue.</p>
+    -->
+
+    <!-- LES 5 CASES. La liste à filets a d'abord été remplacée par un bento animé calqué
+         sur BlueStar, écarté le jour même : « j'aime pas trop. Mets juste 5 cases côte à
+         côte […] sans aucun truc qui bouge ». Ni schéma, ni apparition au défilement : la
+         seule chose qui réagit est le survol, et c'est le geste qu'ont déjà toutes les
+         cartes de la page. Les intitulés n'ont pas bougé d'un mot.
+         ⚠️ L'ordre visuel est 01, 02 en haut, puis 03, 04, 05 en bas depuis la correction
+            de Franck du 01/09/2026. Le DOM a toujours été dans l'ordre de lecture 01→05,
+            donc la version téléphone, qui empile les cases sans grille, n'a jamais eu le
+            problème : c'est bien l'ordinateur qu'il regardait. -->
+    <div class="bento">
+      <article class="bcarte c1">
+        <h3>Les principaux facteurs qui font varier le prix</h3>
+        <span class="idx" aria-hidden="true">01</span>
+      </article>
+
+      <article class="bcarte c2">
+        <h3>Des exemples de projets par niveau de budget</h3>
+        <span class="idx" aria-hidden="true">02</span>
+      </article>
+
+      <article class="bcarte c3">
+        <h3>Ce qui différencie une pergola de série d'un projet sur mesure</h3>
+        <span class="idx" aria-hidden="true">03</span>
+      </article>
+
+      <article class="bcarte c4">
+        <h3>Les erreurs à éviter avant de demander des devis</h3>
+        <span class="idx" aria-hidden="true">04</span>
+      </article>
+
+      <article class="bcarte c5">
+        <h3>Comment déterminer une enveloppe réaliste pour votre extérieur</h3>
+        <span class="idx" aria-hidden="true">05</span>
+      </article>
+    </div>
+
+    <!-- La mention d'avis passe SOUS ce bouton (Lilian, 16/08/2026). Elle a quitté la fin
+         de la première série d'avis, où elle coupait l'enchaînement vers la seconde. -->
+    <div class="adv-cta" style="margin-top:34px">
+      <a class="btn-black" href="#" id="btn-guide">
+        <span class="btn-ligne">Comprendre le budget d'une pergola sur mesure
+          <span class="btn-fleche">➱</span>
+        </span>
+        <span class="btn-gratuit">Envoyé par email, vous n'avez rien à ressaisir</span>
+      </a>
+      <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
+    </div>
+  </div>
+</section>
+
+═══════════════════════════════════════════ BLOC 2 — le bouton noir de fin de page
+            <div class="adv-cta" style="margin-top:40px;">
+                <a class="btn-black" href="#le-guide">
+                    <span class="btn-ligne">Comprendre le budget d'une pergola sur mesure
+                        <span class="btn-fleche">➱</span>
+                    </span>
+                    <span class="btn-gratuit">Envoyé par email, vous n'avez rien à ressaisir</span>
+                </a>
+                <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
+            </div>
