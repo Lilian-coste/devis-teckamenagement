@@ -9,7 +9,8 @@ qu'on ne tient pas coûte plus cher qu'une promesse qu'on ne fait pas.
 POUR RÉTABLIR, dans l'ordre :
   1. recoller le BLOC 1 à la place du commentaire « SECTION DU GUIDE ARCHIVÉE » ;
   2. recoller le BLOC 2 à la place du commentaire « Bouton du guide archivé » ;
-  3. rendre son `href="#le-guide"` au chemin « Non » (chercher `class="chemin non"`) ;
+  3. rendre son `href="#le-guide"` au chemin « Non » (chercher `class="chemin non"`),
+     et lui recoller le BLOC 3, la phrase qui annonce le guide ;
   4. brancher `#btn-guide`, qui porte encore `href="#"`, sur l'adresse du PDF.
   5. RIEN À FAIRE POUR LE SUIVI : les deux boutons portent déjà
      `data-suivi-clic="guide-telecharge"`, et `suivi.js` les branche tout seul. Le
@@ -102,3 +103,8 @@ POUR RÉTABLIR, dans l'ordre :
                 </a>
                 <div class="rating"><b>4,9</b><span class="ystar">★</span><span class="muted">/5 · +140 avis</span></div>
             </div>
+
+═══════════════════════════════════════════ BLOC 3 — la phrase du chemin « Non »
+<span class="sous">
+          Nous avons préparé de quoi vous aider à préparer votre projet, juste en dessous.
+        </span>
