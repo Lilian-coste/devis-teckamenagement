@@ -23,7 +23,12 @@ if (location.hostname === 'devis.teckamenagement.fr') {
 src="https://www.facebook.com/tr?id=1276467600212409&ev=PageView&noscript=1"/></noscript>
 <!-- End Meta Pixel -->
 
-<!-- Préchargement du quiz Fillout (clic quasi instantané, mobile + ordi) -->
+<!-- ⚠️ IL Y AVAIT ICI TROIS BALISES DE PRÉCHARGEMENT VERS FILLOUT, retirées le
+     17/09/2026 avec la bascule vers notre quiz. Elles n'ont pas été remplacées, et
+     c'est volontaire : le quiz vit maintenant sous CE domaine
+     (`devis.teckamenagement.fr/simulez-votre-projet/`), donc il n'y a plus de
+     connexion à ouvrir d'avance. Le commentaire, lui, était resté seul et faisait
+     croire à une dépendance Fillout encore vivante. -->
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
