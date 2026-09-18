@@ -1403,14 +1403,14 @@
         + "un devis établi après visite.";
 })();
 
-/* Les paramètres de la page suivent la personne vers la page de profil : sans eux, elle
-   perdrait son prénom et son profil en cours de route. */
-(function () {
-    var suite = location.search.replace(/^\?/, "");
-    if (!suite) return;
-    var lien = document.getElementById("chemin-oui");
-    lien.setAttribute("href", lien.getAttribute("href") + "?" + suite);
-})();
+/* ⚠️ LA PROPAGATION DES PARAMÈTRES A DÉMÉNAGÉ DANS `/suivi.js` (18/09/2026).
+   Il y avait ici un bloc qui recopiait `location.search` en entier au bout du lien
+   « oui ». Il faisait le même geste que `propagerLien()`, mais sans liste fermée : tout
+   ce qui traînait dans l'URL partait avec, y compris ce que la page d'arrivée n'attend
+   pas. Et il collait un « ? » sans regarder si le lien en avait déjà un. Un seul
+   mécanisme vaut mieux que deux qui se marchent dessus, d'autant que celui de
+   `suivi.js` ajoute aussi `depuis=`, qui dit à la page d'arrivée d'où vient la
+   personne. Ne pas le réintroduire ici. */
 
 /* ------------------------------------------------------------------ FLÈCHE
 

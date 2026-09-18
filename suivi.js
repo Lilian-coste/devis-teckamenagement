@@ -65,8 +65,10 @@
 
   /* Les paramètres qu'on fait suivre d'une page à l'autre. Liste FERMÉE : recopier
      l'URL entière ferait voyager n'importe quoi, et `budget` changerait l'affichage de
-     la page d'arrivée, qui n'a rien demandé. */
-  var A_PROPAGER = ["sid", "prenom", "m2", "cp", "profil", "aussi", "source"];
+     la page d'arrivée, qui n'a rien demandé. `test` en fait partie : une relecture
+     d'essai doit rester un essai jusqu'au bout du tunnel, sinon la deuxième page
+     compte une visite que la première a refusé de compter. */
+  var A_PROPAGER = ["sid", "prenom", "m2", "cp", "profil", "aussi", "source", "test"];
 
   var params = new URLSearchParams(window.location.search);
   var estEssai = params.get("test") === "1";
