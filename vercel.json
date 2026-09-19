@@ -50,6 +50,10 @@
   ],
   "rewrites": [
     {
+      "source": "/brochure/",
+      "destination": "/brochure/brochure-teck-amenagement-collection-2026-2027.pdf"
+    },
+    {
       "source": "/ma-fiche/:jeton",
       "destination": "https://teck-quiz-demo.vercel.app/simulez-votre-projet/fiche/:jeton"
     },
@@ -64,6 +68,25 @@
     {
       "source": "/simulez-votre-projet/:chemin(.*)",
       "destination": "https://teck-quiz-demo.vercel.app/simulez-votre-projet/:chemin"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/brochure/(.*)",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "attachment; filename=\"Brochure Teck Amenagement - Collection 2026-2027.pdf\""
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/pdf"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
     }
   ]
 }
