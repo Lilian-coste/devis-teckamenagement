@@ -213,6 +213,18 @@
   .voir-plus:hover{ text-decoration:underline; }
   .voir-plus:focus-visible{ outline:2px solid var(--teck); outline-offset:3px; border-radius:3px; }
 
+  /* ⚠️ SEPT AVIS N'ONT PAS UNE SEULE LIGNE DE TEXTE, et ils sont publiés quand même.
+     Ces personnes ont mis cinq étoiles sans rien écrire. Elles comptent dans les avis
+     de la fiche Google et dans la note : les taire ferait mentir le total affiché en
+     haut de page. Leur carte n'a donc pas de citation, parce qu'il n'y a rien à citer.
+     ⚠️ NE JAMAIS Y METTRE LA RÉPONSE DE FRANCK. Elle existe pour les sept (« Merci »,
+     « Merci Emmanuel, j'espère à bientôt »), et c'est un piège : affichée là, elle se
+     lirait comme le témoignage du client. Le préparateur ne la fait pas sortir.
+     ⚠️ ET AUCUNE PHRASE ÉCRITE PAR NOUS non plus. Pas de « note laissée sans
+     commentaire » : la carte dit ce qu'elle sait, cinq étoiles et un nom, et s'arrête. */
+  .carte.compacte{ justify-content:center; padding:30px 34px 28px; }
+  .carte.compacte .pied-carte{ margin-top:0; padding-top:0; border-top:0; }
+
   .pied-carte{
     display:flex; align-items:center; justify-content:space-between; gap:12px;
     margin-top:18px; padding-top:16px; border-top:1px solid #EDEDF0;
@@ -484,7 +496,20 @@
     ou.appendChild(b);
   }
 
+  /* La carte d'une note laissée sans texte : les étoiles, le nom, le lien. Rien
+     d'autre, et surtout pas la réponse de Franck. Cf. `.carte.compacte` dans la
+     feuille de style. */
+  function carteCompacte(avis){
+    var c = elem('article', 'carte compacte');
+    var et = elem('div', 'etoiles', '\u2605\u2605\u2605\u2605\u2605'.slice(0, avis.note));
+    et.setAttribute('aria-label', avis.note + ' étoiles sur 5');
+    c.appendChild(et);
+    c.appendChild(pied(avis));
+    return c;
+  }
+
   function carteSimple(avis){
+    if (avis.sans_texte) return carteCompacte(avis);
     var c = elem('article', 'carte');
     var et = elem('div', 'etoiles', '\u2605\u2605\u2605\u2605\u2605'.slice(0, avis.note));
     et.setAttribute('aria-label', avis.note + ' étoiles sur 5');
